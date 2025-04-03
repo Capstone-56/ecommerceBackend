@@ -1,6 +1,7 @@
-from django.urls import path
-from . import views
+from rest_framework.routers import DefaultRouter
+from . import *
 
-urlpatterns = [
-  path("", views.getData),
-]
+router = DefaultRouter(trailing_slash="")  # No trailing slash
+router.register(r"user", UserViewSet, basename="user")
+
+urlpatterns = router.urls
