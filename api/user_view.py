@@ -2,28 +2,57 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 
-from base.models import *
+from base.models import UserModel
 
 from .serializers import UserModelSerializer
 
 class UserViewSet(viewsets.ViewSet):
     def list(self, request):
-        # Retrieve all UserModel records from the database
+        """
+        Retrieve all UserModel records.
+        GET /api/user
+        """
         users = UserModel.objects.all()
         serializer = UserModelSerializer(users, many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
-        # Retrieve a specific user or return a 404 if not found
+        """
+        Retrieve a specific user by primary key.
+        GET /api/user/{id}
+        """
         user = get_object_or_404(UserModel, pk=pk)
         serializer = UserModelSerializer(user)
         return Response(serializer.data)
 
+    def create(self, request):
+        """
+        Create a new user.
+        POST /api/user
+        """
+        serializer = UserModelSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     def update(self, request, pk=None):
-        # Retrieve the user, update with provided data, and validate
+        """
+        Update an existing user.
+        PUT /api/user/${id}
+        """
         user = get_object_or_404(UserModel, pk=pk)
         serializer = UserModelSerializer(user, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, pk=None):
+        """
+        Delete a specific user.
+        DELETE /api/user/${id}
+        """
+        user = get_object_or_404(UserModel, pk=pk)
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
