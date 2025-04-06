@@ -38,4 +38,17 @@ MacOS: source .venv/bin/activate
 
 __Step 3:__
 
-In an IDE of your choice (PyCharm Community, Visual Studio, Intellij, etc.), there should be a run config called runserver, choose that one and run. Otherwise let me know and run command `python manage.py runserver` in the meantime
+In an IDE of your choice (PyCharm Community, Visual Studio, Intellij, etc.), there should be a run config called runserver, choose that one and run.
+
+## Verify server's working with DB
+Go to PgAdmin, checks if this exist under the correct database![image](https://github.com/user-attachments/assets/9acc25f4-f9e5-419f-8a66-4bad7cb920e4)
+
+Right click on the table -> View/Edit data -> All Rows
+
+Add one or more entry to the table![image](https://github.com/user-attachments/assets/62938376-56f9-402a-b195-70c4bf36cb3f)
+
+Save data changes -> enter into the browser http://localhost:8000/api/user to see if the API returned the correct data from your local DB
+
+
+
+
