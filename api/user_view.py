@@ -1,32 +1,58 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
+
+from base.models import UserModel
 
 from .serializers import UserModelSerializer
 
-from base.models import *
-
 class UserViewSet(viewsets.ViewSet):
     def list(self, request):
-        fake_users = [
-            UserModel(id="0", name="Dan"),
-            UserModel(id="1", name="Ngo")
-        ]
-        serializer = UserModelSerializer(fake_users, many=True)
-
+        """
+        Retrieve all UserModel records.
+        GET /api/user
+        """
+        users = UserModel.objects.all()
+        serializer = UserModelSerializer(users, many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
-        # Create a fake user based on the provided pk
-        fake_user = UserModel(id=pk, name="Hello")
-        serializer = UserModelSerializer(fake_user)
-
+        """
+        Retrieve a specific user by primary key.
+        GET /api/user/{id}
+        """
+        user = get_object_or_404(UserModel, pk=pk)
+        serializer = UserModelSerializer(user)
         return Response(serializer.data)
+
+    def create(self, request):
+        """
+        Create a new user.
+        POST /api/user
+        """
+        serializer = UserModelSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, pk=None):
-        data = request.data
-        # Simulate an updated user instance using the data received.
-        # In a real implementation, you would query the database and update the record.
-        fake_updated_user = UserModel(id=pk, name=data.get("name", "Default Name"))
-        serializer = UserModelSerializer(fake_updated_user)
+        """
+        Update an existing user.
+        PUT /api/user/${id}
+        """
+        user = get_object_or_404(UserModel, pk=pk)
+        serializer = UserModelSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        return Response(serializer.data)
+    def destroy(self, request, pk=None):
+        """
+        Delete a specific user.
+        DELETE /api/user/${id}
+        """
+        user = get_object_or_404(UserModel, pk=pk)
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
