@@ -21,8 +21,9 @@
     <option name="INPUT_FILE" value="" />
     <method v="2">
       <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_Install dependencies" />
+      <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_Create migration files" />
+      <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_Apply migrations" />
       <option name="LaunchBrowser.Before.Run" url="http://127.0.0.1:8000 " />
-      <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_Init DB schema" />
     </method>
   </configuration>
 </component>

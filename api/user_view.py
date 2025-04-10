@@ -1,6 +1,13 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
+import bcrypt
+
+import logging
+
+# Set up basic configuration for logging
+logging.basicConfig(level=logging.DEBUG,  # Log messages with this level or higher
+                    format='%(asctime)s - %(levelname)s - %(message)s')  # Format for log messages
 
 from base.models import UserModel
 
@@ -18,10 +25,10 @@ class UserViewSet(viewsets.ViewSet):
 
     def retrieve(self, request, pk=None):
         """
-        Retrieve a specific user by primary key.
+        Retrieve a specific user by username.
         GET /api/user/{id}
         """
-        user = get_object_or_404(UserModel, pk=pk)
+        user = get_object_or_404(UserModel, username=pk)
         serializer = UserModelSerializer(user)
         return Response(serializer.data)
 
@@ -30,6 +37,8 @@ class UserViewSet(viewsets.ViewSet):
         Create a new user.
         POST /api/user
         """
+        hashed = bcrypt.hashpw(request.data.get("password").encode(encoding="utf-8"), bcrypt.gensalt())
+        request.data["password"] = hashed
         serializer = UserModelSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
