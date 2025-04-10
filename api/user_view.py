@@ -2,7 +2,6 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 import bcrypt
-import uuid
 
 import logging
 
@@ -12,7 +11,7 @@ logging.basicConfig(level=logging.DEBUG,  # Log messages with this level or high
 
 from base.models import UserModel
 
-from .serializers import UserModelSerializer, TestModelSerializer
+from .serializers import UserModelSerializer
 
 class UserViewSet(viewsets.ViewSet):
     def list(self, request):
@@ -40,7 +39,7 @@ class UserViewSet(viewsets.ViewSet):
         """
         hashed = bcrypt.hashpw(request.data.get("password").encode(encoding="utf-8"), bcrypt.gensalt())
         request.data["password"] = hashed
-        serializer = TestModelSerializer(data=request.data)
+        serializer = UserModelSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
