@@ -9,7 +9,7 @@ Download PostgreSQL (v17.4): https://www.enterprisedb.com/downloads/postgres-pos
 Download PgAdmin4 (v9.2): https://www.pgadmin.org/download/pgadmin-4-windows/
 
 #### For Mac
-Download Postgres.app: https://postgresapp.com/downloads.html!
+Download Postgres.app: https://postgresapp.com/downloads.html
 
 `Postgres.app with PostgreSQL 17 (Universal)`
 
@@ -32,13 +32,33 @@ python -m venv .venv
 
 __Step2:__
 
-Windows: .venv\Scripts\activate
+- Windows: .venv\Scripts\activate
 
-MacOS: source .venv/bin/activate
+- MacOS: source .venv/bin/activate
 
-__Step 3:__
+### If using IDE (PyCharm Community, Visual Studio, Intellij, etc.)
 
-In an IDE of your choice (PyCharm Community, Visual Studio, Intellij, etc.), there should be a run config called runserver, choose that one and run.
+    Step 3:
+    
+    In your IDE, there should be a run config called runserver, choose that one and run in debug mode.
+
+### If using code editor (e.g, VS Code) without the ability to run the config file
+
+    Step 3:
+    
+    pip install -r requirements.txt
+    
+    Step 4:
+    
+    python manage.py makemigrations
+    
+    Step 5:
+    
+    python manage.py migrate
+    
+    Step 6:
+    
+    python manage.py runserver
 
 ## Verify server's working with DB
 Go to PgAdmin, checks if this exists under the correct database![image](https://github.com/user-attachments/assets/9acc25f4-f9e5-419f-8a66-4bad7cb920e4)
