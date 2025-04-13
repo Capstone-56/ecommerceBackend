@@ -1,0 +1,20 @@
+[
+    {
+        "model": "base.ProductModel",
+        "pk": "d5f7d8e8-b9b7-47b7-9c9b-b764c5aada2b",
+        "fields": {
+            "NAME": "Product 1",
+            "DESCRIPTION": "Description of product 1",
+            "IMAGES": []
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "e4d96de0-8301-4c0e-a408-83d3991da3b1",
+        "fields": {
+            "NAME": "Product 2",
+            "DESCRIPTION": "Description of product 2",
+            "IMAGES": []
+        }
+    }
+]
