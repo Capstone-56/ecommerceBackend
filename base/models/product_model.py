@@ -2,15 +2,15 @@ from django.db import models
 from django.contrib.postgres.fields import ArrayField
 import uuid
 
-"""
-A model to generate the product table in a PostgreSQL database.
-Columns:
-    ID          UUID to store each product uniquely.
-    NAME        Name of the product to sell.
-    DESCRIPTION The associated description of what the product is.
-    IMAGES      Image urls to display on frontend.
-"""
 class ProductModel(models.Model):
+    """
+    A model to generate the product table in a PostgreSQL database.
+    Columns:
+        ID          UUID to store each product uniquely.
+        NAME        Name of the product to sell.
+        DESCRIPTION The associated description of what the product is.
+        IMAGES      Image urls to display on frontend.
+    """
     ID = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
     NAME = models.CharField(max_length=255)
     DESCRIPTION = models.CharField(max_length=255)
