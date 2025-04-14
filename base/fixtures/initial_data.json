@@ -5,7 +5,8 @@
         "fields": {
             "name": "Product 1",
             "description": "Description of product 1",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -14,7 +15,8 @@
         "fields": {
             "name": "Product 2",
             "description": "Description of product 2",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -23,7 +25,8 @@
         "fields": {
             "name": "Product 3",
             "description": "Description of product 3",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -32,7 +35,8 @@
         "fields": {
             "name": "Product 4",
             "description": "Description of product 4",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -41,7 +45,8 @@
         "fields": {
             "name": "Product 5",
             "description": "Description of product 5",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -50,7 +55,8 @@
         "fields": {
             "name": "Product 6",
             "description": "Description of product 6",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -59,7 +65,8 @@
         "fields": {
             "name": "Product 7",
             "description": "Description of product 7",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -68,7 +75,8 @@
         "fields": {
             "name": "Product 8",
             "description": "Description of product 8",
-            "images": []
+            "images": [],
+            "featured": true
         }
     },
     {
@@ -77,7 +85,8 @@
         "fields": {
             "name": "Product 9",
             "description": "Description of product 9",
-            "images": []
+            "images": [],
+            "featured": true
         }
     },
     {
@@ -86,7 +95,8 @@
         "fields": {
             "name": "Product 10",
             "description": "Description of product 10",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -95,7 +105,8 @@
         "fields": {
             "name": "Product 11",
             "description": "Description of product 11",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -104,7 +115,8 @@
         "fields": {
             "name": "Product 12",
             "description": "Description of product 12",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -113,7 +125,8 @@
         "fields": {
             "name": "Product 13",
             "description": "Description of product 13",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -122,7 +135,8 @@
         "fields": {
             "name": "Product 14",
             "description": "Description of product 14",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -131,7 +145,8 @@
         "fields": {
             "name": "Product 15",
             "description": "Description of product 15",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -140,7 +155,8 @@
         "fields": {
             "name": "Product 16",
             "description": "Description of product 16",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -149,7 +165,8 @@
         "fields": {
             "name": "Product 17",
             "description": "Description of product 17",
-            "images": []
+            "images": [],
+            "featured": true
         }
     },
     {
@@ -158,7 +175,8 @@
         "fields": {
             "name": "Product 18",
             "description": "Description of product 18",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -167,7 +185,8 @@
         "fields": {
             "name": "Product 19",
             "description": "Description of product 19",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -176,7 +195,8 @@
         "fields": {
             "name": "Product 20",
             "description": "Description of product 20",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -185,7 +205,8 @@
         "fields": {
             "name": "Product 21",
             "description": "Description of product 21",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -194,7 +215,8 @@
         "fields": {
             "name": "Product 22",
             "description": "Description of product 22",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -203,7 +225,8 @@
         "fields": {
             "name": "Product 23",
             "description": "Description of product 23",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -212,7 +235,8 @@
         "fields": {
             "name": "Product 24",
             "description": "Description of product 24",
-            "images": []
+            "images": [],
+            "featured": true
         }
     },
     {
@@ -221,7 +245,8 @@
         "fields": {
             "name": "Product 25",
             "description": "Description of product 25",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -230,7 +255,8 @@
         "fields": {
             "name": "Product 26",
             "description": "Description of product 26",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -239,7 +265,8 @@
         "fields": {
             "name": "Product 27",
             "description": "Description of product 27",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -248,7 +275,8 @@
         "fields": {
             "name": "Product 28",
             "description": "Description of product 28",
-            "images": []
+            "images": [],
+            "featured": true
         }
     },
     {
@@ -257,7 +285,8 @@
         "fields": {
             "name": "Product 29",
             "description": "Description of product 29",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -266,7 +295,8 @@
         "fields": {
             "name": "Product 30",
             "description": "Description of product 30",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -275,7 +305,8 @@
         "fields": {
             "name": "Product 31",
             "description": "Description of product 31",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -284,7 +315,8 @@
         "fields": {
             "name": "Product 32",
             "description": "Description of product 32",
-            "images": []
+            "images": [],
+            "featured": true
         }
     },
     {
@@ -293,7 +325,8 @@
         "fields": {
             "name": "Product 33",
             "description": "Description of product 33",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -302,7 +335,8 @@
         "fields": {
             "name": "Product 34",
             "description": "Description of product 34",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -311,7 +345,8 @@
         "fields": {
             "name": "Product 35",
             "description": "Description of product 35",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -320,7 +355,8 @@
         "fields": {
             "name": "Product 36",
             "description": "Description of product 36",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -329,7 +365,8 @@
         "fields": {
             "name": "Product 37",
             "description": "Description of product 37",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -338,7 +375,8 @@
         "fields": {
             "name": "Product 38",
             "description": "Description of product 38",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -347,7 +385,8 @@
         "fields": {
             "name": "Product 39",
             "description": "Description of product 39",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -356,7 +395,8 @@
         "fields": {
             "name": "Product 40",
             "description": "Description of product 40",
-            "images": []
+            "images": [],
+            "featured": true
         }
     },
     {
@@ -365,7 +405,8 @@
         "fields": {
             "name": "Product 41",
             "description": "Description of product 41",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -374,7 +415,8 @@
         "fields": {
             "name": "Product 42",
             "description": "Description of product 42",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -383,7 +425,8 @@
         "fields": {
             "name": "Product 43",
             "description": "Description of product 43",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -392,7 +435,8 @@
         "fields": {
             "name": "Product 44",
             "description": "Description of product 44",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -401,7 +445,8 @@
         "fields": {
             "name": "Product 45",
             "description": "Description of product 45",
-            "images": []
+            "images": [],
+            "featured": true
         }
     },
     {
@@ -410,7 +455,8 @@
         "fields": {
             "name": "Product 46",
             "description": "Description of product 46",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -419,7 +465,8 @@
         "fields": {
             "name": "Product 47",
             "description": "Description of product 47",
-            "images": []
+            "images": [],
+            "featured": true
         }
     },
     {
@@ -428,7 +475,8 @@
         "fields": {
             "name": "Product 48",
             "description": "Description of product 48",
-            "images": []
+            "images": [],
+            "featured": true
         }
     },
     {
@@ -437,7 +485,8 @@
         "fields": {
             "name": "Product 49",
             "description": "Description of product 49",
-            "images": []
+            "images": [],
+            "featured": false
         }
     },
     {
@@ -446,7 +495,8 @@
         "fields": {
             "name": "Product 50",
             "description": "Description of product 50",
-            "images": []
+            "images": [],
+            "featured": false
         }
     }
 ]
