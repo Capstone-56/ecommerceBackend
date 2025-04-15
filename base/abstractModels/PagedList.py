@@ -9,9 +9,9 @@ class PagedList(PageNumberPagination):
 
     def get_paginated_response(self, data):
         return Response({
-            "count"    : self.page.paginator.count,
-            "pageSize" : self.get_page_size(self.request),  # Return the current page size
-            "next"     : self.get_next_link(),
-            "previous" : self.get_previous_link(),
-            "results"  : data
+            "count": self.page.paginator.count,
+            "pageSize": self.get_page_size(self.request),  # Return the current page size
+            "next": self.get_next_link(),
+            "previous": self.get_previous_link(),
+            "results": data
         })
