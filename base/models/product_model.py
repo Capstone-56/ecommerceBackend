@@ -10,7 +10,7 @@ class ProductModel(models.Model):
         name        Name of the product to sell.
         description The associated description of what the product is.
         images      Image urls to display on frontend.
-         featured    Boolean flag indicating whether the product is featured.
+        featured    Boolean flag indicating whether the product is featured.
     """
     id          = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
     name        = models.CharField(max_length=255)
