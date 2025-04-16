@@ -1,7 +1,6 @@
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
-
 class PagedList(PageNumberPagination):
     """ A customised DRF's paginator """
 
