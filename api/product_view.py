@@ -1,4 +1,6 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
+from rest_framework.response import Response
 
 from base.abstractModels import PagedList
 from base.models import ProductModel
@@ -24,3 +26,13 @@ class ProductViewSet(viewsets.ViewSet):
         serializer = ProductModelSerializer(result_page, many=True)
 
         return paginator.get_paginated_response(serializer.data)
+    
+    def retrieve(self, request, pk=None):
+        """
+        Retrieve a specific ProductModel record based on an id.
+        GET /api/product/{id}
+        """
+        product = get_object_or_404(ProductModel, id=pk)
+        serializer = ProductModelSerializer(product)
+
+        return Response(serializer.data)
