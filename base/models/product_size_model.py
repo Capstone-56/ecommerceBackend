@@ -1,6 +1,6 @@
 from django.db import models
 import uuid
-from .product_model import ProductModel
+from .product_model import productModel
 
 class productSizeModel(models.Model):
     ID = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
