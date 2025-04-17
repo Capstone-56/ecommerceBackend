@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.response import Response
+from rest_framework.decorators import action
 
 from base.abstractModels import PagedList
 from base.models import ProductModel
@@ -34,5 +35,16 @@ class ProductViewSet(viewsets.ViewSet):
         """
         product = get_object_or_404(ProductModel, id=pk)
         serializer = ProductModelSerializer(product)
+
+        return Response(serializer.data)
+    
+    @action(detail=False, methods=['get'], url_path='featured')
+    def featured(self, request):
+        """
+        Retrieve a set of three featured products.
+        GET /api/product/featured
+        """
+        featured_products = ProductModel.objects.filter(featured=True)[:3]
+        serializer = ProductModelSerializer(featured_products, many=True)
 
         return Response(serializer.data)
