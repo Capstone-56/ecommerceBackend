@@ -3,18 +3,797 @@
         "model": "base.ProductModel",
         "pk": "d5f7d8e8-b9b7-47b7-9c9b-b764c5aada2b",
         "fields": {
-            "NAME": "Product 1",
-            "DESCRIPTION": "Description of product 1",
-            "IMAGES": []
+            "name": "Product 1",
+            "description": "Description of product 1",
+            "images": [],
+            "featured": false
         }
     },
     {
         "model": "base.ProductModel",
         "pk": "e4d96de0-8301-4c0e-a408-83d3991da3b1",
         "fields": {
-            "NAME": "Product 2",
-            "DESCRIPTION": "Description of product 2",
-            "IMAGES": []
+            "name": "Product 2",
+            "description": "Description of product 2",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "0565c85e-7a8d-4f30-ae9e-f5d9c4e5bddb",
+        "fields": {
+            "name": "Product 3",
+            "description": "Description of product 3",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "2d9e87d9-807d-4ff6-9855-e6dc53fa8bb2",
+        "fields": {
+            "name": "Product 4",
+            "description": "Description of product 4",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "6320cff3-46fa-4a03-b1ce-a31fc4e01c1c",
+        "fields": {
+            "name": "Product 5",
+            "description": "Description of product 5",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "f86708f4-3f42-4bfe-9ac2-744c06018182",
+        "fields": {
+            "name": "Product 6",
+            "description": "Description of product 6",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "d0a347de-003a-489e-96e6-cb8b67a26f75",
+        "fields": {
+            "name": "Product 7",
+            "description": "Description of product 7",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "966587bb-23b6-4bbd-b7f9-b39c85b9a8f6",
+        "fields": {
+            "name": "Product 8",
+            "description": "Description of product 8",
+            "images": [],
+            "featured": true
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "d506fdff-0867-4c1e-83e2-29ef99b0af53",
+        "fields": {
+            "name": "Product 9",
+            "description": "Description of product 9",
+            "images": [],
+            "featured": true
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "2f2e72dc-5a91-40fd-8159-95be9815e1bd",
+        "fields": {
+            "name": "Product 10",
+            "description": "Description of product 10",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "589157a4-d40b-45e8-8b41-72719ec88a47",
+        "fields": {
+            "name": "Product 11",
+            "description": "Description of product 11",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "a3819b44-aef3-439d-9d39-d620a4354b2f",
+        "fields": {
+            "name": "Product 12",
+            "description": "Description of product 12",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "bb6a14c0-2ea4-4f6a-b3bc-c07533b35d1e",
+        "fields": {
+            "name": "Product 13",
+            "description": "Description of product 13",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "51e63369-265f-4929-87db-f886cbccb0b7",
+        "fields": {
+            "name": "Product 14",
+            "description": "Description of product 14",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "504efcb4-5342-4f1b-822d-f86a00baf1df",
+        "fields": {
+            "name": "Product 15",
+            "description": "Description of product 15",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "b64e9718-441c-4588-a0cd-82f9bd1efed6",
+        "fields": {
+            "name": "Product 16",
+            "description": "Description of product 16",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "f547606e-4321-46db-a523-8d01d2b0dc1a",
+        "fields": {
+            "name": "Product 17",
+            "description": "Description of product 17",
+            "images": [],
+            "featured": true
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "186f7023-ab41-46d7-af46-53fd907ebeeb",
+        "fields": {
+            "name": "Product 18",
+            "description": "Description of product 18",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "54e5dd15-e2c0-45d0-9215-6c151590fc4b",
+        "fields": {
+            "name": "Product 19",
+            "description": "Description of product 19",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "6b8f845b-d939-4837-b186-5dfdc6ee4556",
+        "fields": {
+            "name": "Product 20",
+            "description": "Description of product 20",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "cb357c75-4921-4e5f-9a0c-af8110ae55d9",
+        "fields": {
+            "name": "Product 21",
+            "description": "Description of product 21",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "9e27445d-4484-45b4-87e5-75d86d700ce0",
+        "fields": {
+            "name": "Product 22",
+            "description": "Description of product 22",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "1d66eb35-1c70-48fe-9479-93f005da1cbd",
+        "fields": {
+            "name": "Product 23",
+            "description": "Description of product 23",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "c67183d5-b27a-487c-9b95-2423d52a0fe3",
+        "fields": {
+            "name": "Product 24",
+            "description": "Description of product 24",
+            "images": [],
+            "featured": true
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "67f6ee10-318d-481a-a8ab-8c2efbb8258a",
+        "fields": {
+            "name": "Product 25",
+            "description": "Description of product 25",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "91aa6439-14b2-45a9-a8b2-372d84296640",
+        "fields": {
+            "name": "Product 26",
+            "description": "Description of product 26",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "d5c61688-3c8a-4b86-ae91-a99b4f679539",
+        "fields": {
+            "name": "Product 27",
+            "description": "Description of product 27",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "ce05e7e0-94fc-42e2-a003-6af13aebc9f6",
+        "fields": {
+            "name": "Product 28",
+            "description": "Description of product 28",
+            "images": [],
+            "featured": true
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "1162a5df-cc3d-404a-a5c6-7cd35f721a9f",
+        "fields": {
+            "name": "Product 29",
+            "description": "Description of product 29",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "b91189bf-3a53-4c10-98c7-ac11cda9b927",
+        "fields": {
+            "name": "Product 30",
+            "description": "Description of product 30",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "940acc1c-c91d-4f84-b9ea-73e167229abf",
+        "fields": {
+            "name": "Product 31",
+            "description": "Description of product 31",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "c698f66f-36f3-43b1-a262-135d057b47dc",
+        "fields": {
+            "name": "Product 32",
+            "description": "Description of product 32",
+            "images": [],
+            "featured": true
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "882166de-df04-4d98-8e6d-65a7cc3b7e1c",
+        "fields": {
+            "name": "Product 33",
+            "description": "Description of product 33",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "095a695c-2de8-4468-8433-6b6a5902c9cc",
+        "fields": {
+            "name": "Product 34",
+            "description": "Description of product 34",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "c7741672-ed8b-43ff-9c2b-61168e2b76de",
+        "fields": {
+            "name": "Product 35",
+            "description": "Description of product 35",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "68412172-de81-400d-b78d-2e82f12b569b",
+        "fields": {
+            "name": "Product 36",
+            "description": "Description of product 36",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "873775ce-4d3a-4bf2-8d1c-47a68610958a",
+        "fields": {
+            "name": "Product 37",
+            "description": "Description of product 37",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "ecd6fcb2-d0ae-4c09-9383-fc4c2a593631",
+        "fields": {
+            "name": "Product 38",
+            "description": "Description of product 38",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "7f77671b-9914-4f12-9a55-10a6dd2dda04",
+        "fields": {
+            "name": "Product 39",
+            "description": "Description of product 39",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "db76dcd3-4b89-4d65-9c21-26c9aef86cfd",
+        "fields": {
+            "name": "Product 40",
+            "description": "Description of product 40",
+            "images": [],
+            "featured": true
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "c5a3422d-2647-4528-86f0-b49cdb37db15",
+        "fields": {
+            "name": "Product 41",
+            "description": "Description of product 41",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "5e17c308-75ce-4c0b-9b4e-18732d6ef609",
+        "fields": {
+            "name": "Product 42",
+            "description": "Description of product 42",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "50e9a2ed-6d96-4bdb-90aa-6cd42b63c6c8",
+        "fields": {
+            "name": "Product 43",
+            "description": "Description of product 43",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "dd3f845f-1afe-44fb-bd3e-580acb3b1d69",
+        "fields": {
+            "name": "Product 44",
+            "description": "Description of product 44",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "324bee74-c177-45ad-a73f-55f797725b26",
+        "fields": {
+            "name": "Product 45",
+            "description": "Description of product 45",
+            "images": [],
+            "featured": true
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "819caf63-5cb7-40a6-80f8-2fae0b52daae",
+        "fields": {
+            "name": "Product 46",
+            "description": "Description of product 46",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "23e547b2-be10-411b-ad2d-f486ffcb4592",
+        "fields": {
+            "name": "Product 47",
+            "description": "Description of product 47",
+            "images": [],
+            "featured": true
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "857f313b-8989-452b-ab57-dcd9ab3a8a37",
+        "fields": {
+            "name": "Product 48",
+            "description": "Description of product 48",
+            "images": [],
+            "featured": true
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "299e18c1-848d-4e89-b53c-69df7a56284b",
+        "fields": {
+            "name": "Product 49",
+            "description": "Description of product 49",
+            "images": [],
+            "featured": false
+        }
+    },
+    {
+        "model": "base.ProductModel",
+        "pk": "2e4dbacf-dc52-45e9-be82-591a87c8bb09",
+        "fields": {
+            "name": "Product 50",
+            "description": "Description of product 50",
+            "images": [],
+            "featured": false
+        }
+    },
+        {
+        "model": "base.CategoryModel",
+        "pk": "d576cdf7-b459-4df3-b93a-281e769cf2eb",
+        "fields": {
+            "name": "Apparel",
+            "description": "All clothing items",
+            "parentCategoryId": null
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "c65abcc3-8c87-4e30-a0af-c125f266d1b5",
+        "fields": {
+            "name": "Mens",
+            "description": "Mens clothing",
+            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "84013dfd-134f-4daf-9a91-7d2adf70042a",
+        "fields": {
+            "name": "Ladies",
+            "description": "Ladies clothing",
+            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "c77fbcf3-e88f-446a-aa4a-1e21bb943dff",
+        "fields": {
+            "name": "Boys",
+            "description": "Boys clothing",
+            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "d05eaa8a-1f60-4885-bc29-5b33e614b3d9",
+        "fields": {
+            "name": "Girls",
+            "description": "Girls clothing",
+            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "d168c432-60f0-4796-86cb-ba1c1403ef96",
+        "fields": {
+            "name": "Babies",
+            "description": "Babies clothing",
+            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "4ec2e7ce-ea44-4db2-965a-157dfc3c892a",
+        "fields": {
+            "name": "Shirt",
+            "description": "Shirts of all styles",
+            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "98fca3c2-ff76-4d2b-ada9-01d088d8abdd",
+        "fields": {
+            "name": "Pant",
+            "description": "Various styles of pants",
+            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "49d35b6c-1293-4199-a492-b1be544241fc",
+        "fields": {
+            "name": "Jacket",
+            "description": "Jackets for all seasons",
+            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "5563cbcd-a212-42b7-9683-28f0a6cfc9f6",
+        "fields": {
+            "name": "Pullover",
+            "description": "Pullovers and cardigans",
+            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "6728e110-77de-4454-940f-425075d1ce37",
+        "fields": {
+            "name": "Sweet Shirt",
+            "description": "Sweet shirts",
+            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "3bea95bb-af7d-45dc-a854-8250455d6605",
+        "fields": {
+            "name": "T Shirt",
+            "description": "T-shirts",
+            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "604d7c7c-78df-4d84-a4a2-d063331d188c",
+        "fields": {
+            "name": "Polo Shirt",
+            "description": "Polo shirts",
+            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "34400c56-58bb-4240-9af5-e7d29931b5bd",
+        "fields": {
+            "name": "Shari",
+            "description": "Indian women dress",
+            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "33268647-67fc-403d-9fb6-4638a4c9ca5f",
+        "fields": {
+            "name": "Three Pcs",
+            "description": "Indian/Pakistani girls dress",
+            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "3df688f3-1dce-4ac4-a343-a70377dabaf7",
+        "fields": {
+            "name": "CAP",
+            "description": "Caps and hats",
+            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "48a4efe7-a8c0-4b5b-b24c-449a6e6788fc",
+        "fields": {
+            "name": "School Uniform",
+            "description": "School uniforms",
+            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "9c15452d-304a-44ea-96d5-e23643f402fb",
+        "fields": {
+            "name": "Medical Uniform",
+            "description": "Medical uniforms",
+            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "c456c70c-76c8-47fa-83b5-4812bb873e4d",
+        "fields": {
+            "name": "Home Textile",
+            "description": "Textiles for home use",
+            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "5a5a66b8-9dd1-45c9-83b3-fa4991367dcb",
+        "fields": {
+            "name": "Cosmetics",
+            "description": "Cosmetic items",
+            "parentCategoryId": null
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "443e1fe3-baee-4bd0-b04f-b171bd9f72b8",
+        "fields": {
+            "name": "Lipsticks",
+            "description": "Lipsticks - 20 colors",
+            "parentCategoryId": "5a5a66b8-9dd1-45c9-83b3-fa4991367dcb"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "36f6df91-eca7-4a0c-8a8b-7b9b65405d5c",
+        "fields": {
+            "name": "Lip Gel",
+            "description": "Lip gel - 6 colors",
+            "parentCategoryId": "5a5a66b8-9dd1-45c9-83b3-fa4991367dcb"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "c25cd5e5-1729-4d84-8de8-b57f0d6d06a1",
+        "fields": {
+            "name": "Lip Balm",
+            "description": "Lip balm - 6 colors",
+            "parentCategoryId": "5a5a66b8-9dd1-45c9-83b3-fa4991367dcb"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "61692938-b4e8-4262-af34-35f8f6cdae17",
+        "fields": {
+            "name": "Eye",
+            "description": "Eye cosmetics - 4 colors",
+            "parentCategoryId": "5a5a66b8-9dd1-45c9-83b3-fa4991367dcb"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "535f9d14-1604-44b9-acc2-3360a325bd27",
+        "fields": {
+            "name": "Face",
+            "description": "Face products - 4 items",
+            "parentCategoryId": "5a5a66b8-9dd1-45c9-83b3-fa4991367dcb"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "ae2eff79-7f43-464c-ac25-7adb1778ae8a",
+        "fields": {
+            "name": "Face Toner",
+            "description": "Face toner - 4 types",
+            "parentCategoryId": "5a5a66b8-9dd1-45c9-83b3-fa4991367dcb"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "d21ef34f-705f-4dc7-b92a-934e8cb51e74",
+        "fields": {
+            "name": "Gift Items",
+            "description": "Gift items and accessories",
+            "parentCategoryId": null
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "5c46dd72-46bd-4f28-a1b1-9d819f3d3017",
+        "fields": {
+            "name": "Fashion Jewelry",
+            "description": "6 items",
+            "parentCategoryId": "d21ef34f-705f-4dc7-b92a-934e8cb51e74"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "8461a42d-5351-40b6-8926-6f87115cedcd",
+        "fields": {
+            "name": "Ladies Parts Bag",
+            "description": "6 items",
+            "parentCategoryId": "d21ef34f-705f-4dc7-b92a-934e8cb51e74"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "d46199cd-5389-4bda-aa09-bff723b0018e",
+        "fields": {
+            "name": "Shoes",
+            "description": "6 items",
+            "parentCategoryId": "d21ef34f-705f-4dc7-b92a-934e8cb51e74"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "62633663-2be7-40bd-a0e8-7320685b12b1",
+        "fields": {
+            "name": "Watch",
+            "description": "6 items",
+            "parentCategoryId": "d21ef34f-705f-4dc7-b92a-934e8cb51e74"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "2a1347f7-3deb-4228-bd93-f86f081ad3e6",
+        "fields": {
+            "name": "Books",
+            "description": "20 books",
+            "parentCategoryId": "d21ef34f-705f-4dc7-b92a-934e8cb51e74"
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "349014e8-3f0e-4d41-a284-543137fe0860",
+        "fields": {
+            "name": "Gift Voucher",
+            "description": "6 items",
+            "parentCategoryId": "d21ef34f-705f-4dc7-b92a-934e8cb51e74"
         }
     }
 ]
