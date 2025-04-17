@@ -1,7 +1,7 @@
 from django.db import models
 import uuid
-from .product_model import ProductModel
-from .category_model import CategoryModel
+from .product_model import productModel
+from .category_model import categoryModel
 
 class productCategoryModel(models.Model):
     ID = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
