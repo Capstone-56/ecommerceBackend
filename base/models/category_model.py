@@ -1,8 +1,7 @@
-
 from django.db import models
 import uuid
 
-class categoryModel(models.Model):
+class CategoryModel(models.Model):
     id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
@@ -13,4 +12,3 @@ class categoryModel(models.Model):
 
     class Meta:
         db_table = "category"
-
