@@ -1,6 +1,9 @@
 from django.contrib.auth.models import BaseUserManager
 
 class UserManager(BaseUserManager):
+    """
+    is_staff and is_superuser is Django naming convention, DO NOT OVERRIDE
+    """
     use_in_migrations = True
 
     def _create_user(self, username, email, password, **extra_fields):

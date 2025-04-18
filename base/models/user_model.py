@@ -6,6 +6,9 @@ from base.enums import ROLE
 from base.managers import UserManager
 
 class UserModel(AbstractBaseUser, PermissionsMixin):
+    """
+    is_staff and is_active is Django naming convention, DO NOT OVERRIDE
+    """
     id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
     username = models.CharField(max_length=255, unique=True)
     email = models.CharField(max_length=255, unique=True)

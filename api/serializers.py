@@ -8,13 +8,16 @@ Converts model instances to and from JSON format for API interactions.
 
 class UserModelSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
+    isActive = serializers.BooleanField(source="is_active", read_only=True)
+    isStaff = serializers.BooleanField(source="is_staff", read_only=True)
+    isSuperuser = serializers.BooleanField(source="is_superuser", read_only=True)
 
     class Meta:
         model = UserModel
         fields = [
             "id", "username", "email", "firstName", "lastName",
             "phone", "address", "city", "postcode", "state", "country",
-            "password", "role"
+            "password", "role", "isActive", "isStaff", "isSuperuser"
         ]
 
     def create(self, validated_data):
