@@ -12,7 +12,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
     def signup(self, request):
         """
         Register a new user.
-        POST /signup
+        POST /auth/signup
         """
         serializer = UserModelSerializer(data=request.data)
         if serializer.is_valid():
