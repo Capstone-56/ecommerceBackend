@@ -32,11 +32,12 @@ class UserViewSet(viewsets.ViewSet):
         serializer = UserModelSerializer(user)
         return Response(serializer.data)
 
+    """
     def create(self, request):
-        """
+        
         Create a new user.
         POST /api/user
-        """
+        
         hashed = bcrypt.hashpw(request.data.get("password").encode(encoding="utf-8"), bcrypt.gensalt())
         request.data["password"] = hashed
         serializer = UserModelSerializer(data=request.data)
@@ -44,6 +45,7 @@ class UserViewSet(viewsets.ViewSet):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    """
 
     def update(self, request, pk=None):
         """
