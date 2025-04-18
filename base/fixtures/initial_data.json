@@ -499,14 +499,14 @@
             "featured": false
         }
     },
-        {
+    {
         "model": "base.CategoryModel",
         "pk": "d576cdf7-b459-4df3-b93a-281e769cf2eb",
         "fields": {
             "name": "Apparel",
             "description": "All clothing items",
             "parentCategoryId": null
-        }
+    }
     },
     {
         "model": "base.CategoryModel",
