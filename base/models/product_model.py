@@ -17,6 +17,7 @@ class ProductModel(models.Model):
     description = models.CharField(max_length=255)
     images      = ArrayField(models.CharField(max_length=1000), blank=True)
     featured    = models.BooleanField(default=False)
+    gender      = models.CharField(max_length=10, default='Unisex', blank=False)          
 
     def __str__(self):
         return self.name
