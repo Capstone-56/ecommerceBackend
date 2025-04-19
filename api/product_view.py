@@ -22,8 +22,9 @@ class ProductViewSet(viewsets.ViewSet):
         - page: nullable number (the specific paged list client wants to retrieve from)
         - page_size: nullable number (number of items client wants to return, default is 10)
         """
-        # Retrieve the value of the 'categoryId' query parameter from the request URL. Defaults to None if not provided.
+        # Retrieve the query parameters from the request URL. Defaults to None if not provided.
         category_id = request.query_params.get('categoryId', None)
+        gender = request.query_params.get('gender', None)
 
         products = ProductModel.objects.all()
        
@@ -33,6 +34,10 @@ class ProductViewSet(viewsets.ViewSet):
             category_ids = category.get_all_subcategories()
             product_ids = ProductCategoryModel.objects.filter(categoryId__in=category_ids).values_list('productId', flat=True)
             products = products.filter(id__in=product_ids)
+
+        # Filter by gender if provided
+        if gender:
+            products = products.filter(gender=gender)
 
         paginator = PagedList()
         result_page = paginator.paginate_queryset(products, request)
