@@ -12,9 +12,10 @@ class UserModelSerializer(serializers.ModelSerializer):
         fields = ["username", "name", "email", "password"]
 
 class ProductModelSerializer(serializers.ModelSerializer):
+    price = serializers.DecimalField(source="price.price", max_digits=10, decimal_places=2, read_only=True)
     class Meta:
         model = ProductModel
-        fields = ["id", "name", "description", "images", "featured", "gender"]
+        fields = ["id", "name", "description", "images", "featured", "gender", "price"]
 
 class CategoryModelSerializer(serializers.ModelSerializer):
     class Meta:
