@@ -12,20 +12,31 @@ class ProductViewSet(viewsets.ViewSet):
     A ViewSet for the ProductModel, enabling CRUD operations to be used on
     product data.
     """
+
     def list(self, request):
         """
-        Retrieve all ProductModel records.
-        GET /api/product
-        Query params:
-        - page: nullable number (the specific paged list client wants to retrieve from)
-        - page_size: nullable number (number of items client wants to return, default is 10)
+        GET /api/product/
+        Optional query params:
+        - page (int)
+        - page_size (int)
+        - categories (comma‑separated UUIDs) e.g. ?categories=id1,id2
+
+        If categories is provided, returns products linked to *all* of those categories.
         """
-        products = ProductModel.objects.all()
+        querySet = ProductModel.objects.all()
+
+        categoriesParam = request.query_params.get("categories")
+        if categoriesParam:
+            # split on comma and strip whitespace
+            categoryIds = [c.strip() for c in categoriesParam.split(",") if c.strip()]
+            for cat in categoryIds:
+                querySet = querySet.filter(category_links__categoryId=cat)
+            querySet = querySet.distinct()
+
         paginator = PagedList()
+        pagedQuerySet = paginator.paginate_queryset(querySet, request)
 
-        result_page = paginator.paginate_queryset(products, request)
-        serializer = ProductModelSerializer(result_page, many=True)
-
+        serializer = ProductModelSerializer(pagedQuerySet, many=True)
         return paginator.get_paginated_response(serializer.data)
     
     def retrieve(self, request, pk=None):

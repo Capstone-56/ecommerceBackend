@@ -1,11 +1,31 @@
+import re
 from django.db import models
-import uuid
 
 class CategoryModel(models.Model):
-    id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
+    internalName = models.CharField(
+        max_length=255,
+        editable=False,
+        unique=True,
+        primary_key=True
+    )
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
-    parentCategoryId = models.UUIDField(null=True, blank=True)
+    parentCategory = models.ForeignKey(
+        "self",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        to_field="internalName",
+        db_column="parentCategory",
+        related_name="children"     # reverse relation: category.children.all()
+    )
+
+    def save(self, *args, **kwargs):
+        # Remove all whitespace and lowercase:
+        # "My Category Name" → "mycategoryname"
+        stripped = re.sub(r"\s+", "", self.name)
+        self.internalName = stripped.lower()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name

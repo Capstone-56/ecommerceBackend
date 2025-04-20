@@ -499,301 +499,967 @@
             "featured": false
         }
     },
-        {
+    {
         "model": "base.CategoryModel",
-        "pk": "d576cdf7-b459-4df3-b93a-281e769cf2eb",
+        "pk": "apparel",
         "fields": {
             "name": "Apparel",
-            "description": "All clothing items",
-            "parentCategoryId": null
+            "description": "Apparel",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "c65abcc3-8c87-4e30-a0af-c125f266d1b5",
+        "pk": "men",
         "fields": {
-            "name": "Mens",
-            "description": "Mens clothing",
-            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+            "name": "Men",
+            "description": "Men",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "84013dfd-134f-4daf-9a91-7d2adf70042a",
+        "pk": "women",
         "fields": {
-            "name": "Ladies",
-            "description": "Ladies clothing",
-            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+            "name": "Women",
+            "description": "Women",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "c77fbcf3-e88f-446a-aa4a-1e21bb943dff",
+        "pk": "boys",
         "fields": {
             "name": "Boys",
-            "description": "Boys clothing",
-            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+            "description": "Boys",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "d05eaa8a-1f60-4885-bc29-5b33e614b3d9",
+        "pk": "girls",
         "fields": {
             "name": "Girls",
-            "description": "Girls clothing",
-            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+            "description": "Girls",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "d168c432-60f0-4796-86cb-ba1c1403ef96",
+        "pk": "babies",
         "fields": {
             "name": "Babies",
-            "description": "Babies clothing",
-            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+            "description": "Babies",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "4ec2e7ce-ea44-4db2-965a-157dfc3c892a",
+        "pk": "shirt",
         "fields": {
             "name": "Shirt",
-            "description": "Shirts of all styles",
-            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+            "description": "Shirt",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "98fca3c2-ff76-4d2b-ada9-01d088d8abdd",
+        "pk": "regularfit",
         "fields": {
-            "name": "Pant",
-            "description": "Various styles of pants",
-            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+            "name": "Regular Fit",
+            "description": "Regular Fit",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "49d35b6c-1293-4199-a492-b1be544241fc",
+        "pk": "slimfit",
+        "fields": {
+            "name": "Slim Fit",
+            "description": "Slim Fit",
+            "parentCategory": null
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "casual",
+        "fields": {
+            "name": "Casual",
+            "description": "Casual",
+            "parentCategory": null
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "pants",
+        "fields": {
+            "name": "Pants",
+            "description": "Pants",
+            "parentCategory": null
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "denimpants",
+        "fields": {
+            "name": "Denim Pants",
+            "description": "Denim Pants",
+            "parentCategory": null
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "twillpants",
+        "fields": {
+            "name": "Twill Pants",
+            "description": "Twill Pants",
+            "parentCategory": null
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "cargopants",
+        "fields": {
+            "name": "Cargo Pants",
+            "description": "Cargo Pants",
+            "parentCategory": null
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "shortpants",
+        "fields": {
+            "name": "Short Pants",
+            "description": "Short Pants",
+            "parentCategory": null
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "hotpants",
+        "fields": {
+            "name": "Hot Pants",
+            "description": "Hot Pants",
+            "parentCategory": null
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "jacket",
         "fields": {
             "name": "Jacket",
-            "description": "Jackets for all seasons",
-            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+            "description": "Jacket",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "5563cbcd-a212-42b7-9683-28f0a6cfc9f6",
+        "pk": "summerjacket",
+        "fields": {
+            "name": "Summer Jacket",
+            "description": "Summer Jacket",
+            "parentCategory": null
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "winterjacket",
+        "fields": {
+            "name": "Winter Jacket",
+            "description": "Winter Jacket",
+            "parentCategory": null
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "longjacket",
+        "fields": {
+            "name": "Long Jacket",
+            "description": "Long Jacket",
+            "parentCategory": null
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "pullover",
         "fields": {
             "name": "Pullover",
-            "description": "Pullovers and cardigans",
-            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+            "description": "Pullover",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "6728e110-77de-4454-940f-425075d1ce37",
+        "pk": "cardigan",
         "fields": {
-            "name": "Sweet Shirt",
-            "description": "Sweet shirts",
-            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+            "name": "Cardigan",
+            "description": "Cardigan",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "3bea95bb-af7d-45dc-a854-8250455d6605",
+        "pk": "hoodie",
+        "fields": {
+            "name": "Hoodie",
+            "description": "Hoodie",
+            "parentCategory": null
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "sweatshirt",
+        "fields": {
+            "name": "Sweatshirt",
+            "description": "Sweatshirt",
+            "parentCategory": null
+        }
+    },
+    {
+        "model": "base.CategoryModel",
+        "pk": "tshirt",
         "fields": {
             "name": "T Shirt",
-            "description": "T-shirts",
-            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+            "description": "T Shirt",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "604d7c7c-78df-4d84-a4a2-d063331d188c",
+        "pk": "poloshirt",
         "fields": {
             "name": "Polo Shirt",
-            "description": "Polo shirts",
-            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+            "description": "Polo Shirt",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "34400c56-58bb-4240-9af5-e7d29931b5bd",
+        "pk": "sharis",
         "fields": {
-            "name": "Shari",
-            "description": "Indian women dress",
-            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+            "name": "Shari s",
+            "description": "Shari s (  Indian women Dress )",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "33268647-67fc-403d-9fb6-4638a4c9ca5f",
+        "pk": "threepcs",
         "fields": {
             "name": "Three Pcs",
-            "description": "Indian/Pakistani girls dress",
-            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+            "description": "Three Pcs ( Indian /Pki  girls Dress )",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "3df688f3-1dce-4ac4-a343-a70377dabaf7",
+        "pk": "cap",
         "fields": {
-            "name": "CAP",
-            "description": "Caps and hats",
-            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+            "name": "Cap",
+            "description": "Cap",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "48a4efe7-a8c0-4b5b-b24c-449a6e6788fc",
+        "pk": "schooluniform",
         "fields": {
             "name": "School Uniform",
-            "description": "School uniforms",
-            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+            "description": "School Uniform",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "9c15452d-304a-44ea-96d5-e23643f402fb",
+        "pk": "medicaluniform",
         "fields": {
             "name": "Medical Uniform",
-            "description": "Medical uniforms",
-            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+            "description": "Medical Uniform",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "c456c70c-76c8-47fa-83b5-4812bb873e4d",
+        "pk": "hometextile",
         "fields": {
             "name": "Home Textile",
-            "description": "Textiles for home use",
-            "parentCategoryId": "d576cdf7-b459-4df3-b93a-281e769cf2eb"
+            "description": "Home Textile",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "5a5a66b8-9dd1-45c9-83b3-fa4991367dcb",
+        "pk": "cosmetics",
         "fields": {
             "name": "Cosmetics",
-            "description": "Cosmetic items",
-            "parentCategoryId": null
+            "description": "Cosmetics",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "443e1fe3-baee-4bd0-b04f-b171bd9f72b8",
+        "pk": "lipstics",
         "fields": {
-            "name": "Lipsticks",
-            "description": "Lipsticks - 20 colors",
-            "parentCategoryId": "5a5a66b8-9dd1-45c9-83b3-fa4991367dcb"
+            "name": "Lipstics",
+            "description": "Lipistics",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "36f6df91-eca7-4a0c-8a8b-7b9b65405d5c",
+        "pk": "lipjel",
         "fields": {
-            "name": "Lip Gel",
-            "description": "Lip gel - 6 colors",
-            "parentCategoryId": "5a5a66b8-9dd1-45c9-83b3-fa4991367dcb"
+            "name": "Lip Jel",
+            "description": "Lip Jel",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "c25cd5e5-1729-4d84-8de8-b57f0d6d06a1",
+        "pk": "lipbam",
         "fields": {
-            "name": "Lip Balm",
-            "description": "Lip balm - 6 colors",
-            "parentCategoryId": "5a5a66b8-9dd1-45c9-83b3-fa4991367dcb"
+            "name": "Lip Bam",
+            "description": "Lip Bam",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "61692938-b4e8-4262-af34-35f8f6cdae17",
+        "pk": "eye",
         "fields": {
             "name": "Eye",
-            "description": "Eye cosmetics - 4 colors",
-            "parentCategoryId": "5a5a66b8-9dd1-45c9-83b3-fa4991367dcb"
+            "description": "Eye",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "535f9d14-1604-44b9-acc2-3360a325bd27",
+        "pk": "face",
         "fields": {
             "name": "Face",
-            "description": "Face products - 4 items",
-            "parentCategoryId": "5a5a66b8-9dd1-45c9-83b3-fa4991367dcb"
+            "description": "Face",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "ae2eff79-7f43-464c-ac25-7adb1778ae8a",
+        "pk": "facetoner",
         "fields": {
-            "name": "Face Toner",
-            "description": "Face toner - 4 types",
-            "parentCategoryId": "5a5a66b8-9dd1-45c9-83b3-fa4991367dcb"
+            "name": "Face toner",
+            "description": "Face toner",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "d21ef34f-705f-4dc7-b92a-934e8cb51e74",
+        "pk": "giftitems",
         "fields": {
             "name": "Gift Items",
-            "description": "Gift items and accessories",
-            "parentCategoryId": null
+            "description": "Gift Items",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "5c46dd72-46bd-4f28-a1b1-9d819f3d3017",
+        "pk": "fashionjewlery",
         "fields": {
-            "name": "Fashion Jewelry",
-            "description": "6 items",
-            "parentCategoryId": "d21ef34f-705f-4dc7-b92a-934e8cb51e74"
+            "name": "Fashion Jewlery",
+            "description": "Fashion Jewlery",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "8461a42d-5351-40b6-8926-6f87115cedcd",
+        "pk": "ladiespartsbag",
         "fields": {
-            "name": "Ladies Parts Bag",
-            "description": "6 items",
-            "parentCategoryId": "d21ef34f-705f-4dc7-b92a-934e8cb51e74"
+            "name": "Ladies parts bag",
+            "description": "Ladies parts bag",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "d46199cd-5389-4bda-aa09-bff723b0018e",
+        "pk": "shoes",
         "fields": {
-            "name": "Shoes",
-            "description": "6 items",
-            "parentCategoryId": "d21ef34f-705f-4dc7-b92a-934e8cb51e74"
+            "name": "shoes",
+            "description": "shoes",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "62633663-2be7-40bd-a0e8-7320685b12b1",
+        "pk": "watch",
         "fields": {
             "name": "Watch",
-            "description": "6 items",
-            "parentCategoryId": "d21ef34f-705f-4dc7-b92a-934e8cb51e74"
+            "description": "Watch",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "2a1347f7-3deb-4228-bd93-f86f081ad3e6",
+        "pk": "books",
         "fields": {
             "name": "Books",
-            "description": "20 books",
-            "parentCategoryId": "d21ef34f-705f-4dc7-b92a-934e8cb51e74"
+            "description": "Books",
+            "parentCategory": null
         }
     },
     {
         "model": "base.CategoryModel",
-        "pk": "349014e8-3f0e-4d41-a284-543137fe0860",
+        "pk": "giftvoucher",
         "fields": {
-            "name": "Gift Voucher",
-            "description": "6 items",
-            "parentCategoryId": "d21ef34f-705f-4dc7-b92a-934e8cb51e74"
+            "name": "Gift voucher",
+            "description": "Gift voucher",
+            "parentCategory": null
         }
-    }
+    },
+    {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000001",
+    "fields": { "productId": "d5f7d8e8-b9b7-47b7-9c9b-b764c5aada2b", "categoryId": "apparel" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000002",
+    "fields": { "productId": "d5f7d8e8-b9b7-47b7-9c9b-b764c5aada2b", "categoryId": "shirt" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000003",
+    "fields": { "productId": "e4d96de0-8301-4c0e-a408-83d3991da3b1", "categoryId": "men" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000004",
+    "fields": { "productId": "e4d96de0-8301-4c0e-a408-83d3991da3b1", "categoryId": "pants" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000005",
+    "fields": { "productId": "0565c85e-7a8d-4f30-ae9e-f5d9c4e5bddb", "categoryId": "women" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000006",
+    "fields": { "productId": "0565c85e-7a8d-4f30-ae9e-f5d9c4e5bddb", "categoryId": "jacket" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000007",
+    "fields": { "productId": "2d9e87d9-807d-4ff6-9855-e6dc53fa8bb2", "categoryId": "boys" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000008",
+    "fields": { "productId": "2d9e87d9-807d-4ff6-9855-e6dc53fa8bb2", "categoryId": "pullover" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000009",
+    "fields": { "productId": "6320cff3-46fa-4a03-b1ce-a31fc4e01c1c", "categoryId": "girls" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000010",
+    "fields": { "productId": "6320cff3-46fa-4a03-b1ce-a31fc4e01c1c", "categoryId": "sweatshirt" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000011",
+    "fields": { "productId": "f86708f4-3f42-4bfe-9ac2-744c06018182", "categoryId": "babies" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000012",
+    "fields": { "productId": "f86708f4-3f42-4bfe-9ac2-744c06018182", "categoryId": "tshirt" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000013",
+    "fields": { "productId": "d0a347de-003a-489e-96e6-cb8b67a26f75", "categoryId": "apparel" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000014",
+    "fields": { "productId": "d0a347de-003a-489e-96e6-cb8b67a26f75", "categoryId": "pants" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000015",
+    "fields": { "productId": "966587bb-23b6-4bbd-b7f9-b39c85b9a8f6", "categoryId": "men" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000016",
+    "fields": { "productId": "966587bb-23b6-4bbd-b7f9-b39c85b9a8f6", "categoryId": "jacket" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000017",
+    "fields": { "productId": "d506fdff-0867-4c1e-83e2-29ef99b0af53", "categoryId": "women" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000018",
+    "fields": { "productId": "d506fdff-0867-4c1e-83e2-29ef99b0af53", "categoryId": "pullover" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000019",
+    "fields": { "productId": "2f2e72dc-5a91-40fd-8159-95be9815e1bd", "categoryId": "boys" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000020",
+    "fields": { "productId": "2f2e72dc-5a91-40fd-8159-95be9815e1bd", "categoryId": "sweatshirt" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000021",
+    "fields": { "productId": "589157a4-d40b-45e8-8b41-72719ec88a47", "categoryId": "girls" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000022",
+    "fields": { "productId": "589157a4-d40b-45e8-8b41-72719ec88a47", "categoryId": "tshirt" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000023",
+    "fields": { "productId": "a3819b44-aef3-439d-9d39-d620a4354b2f", "categoryId": "babies" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000024",
+    "fields": { "productId": "a3819b44-aef3-439d-9d39-d620a4354b2f", "categoryId": "poloshirt" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000025",
+    "fields": { "productId": "bb6a14c0-2ea4-4f6a-b3bc-c07533b35d1e", "categoryId": "apparel" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000026",
+    "fields": { "productId": "bb6a14c0-2ea4-4f6a-b3bc-c07533b35d1e", "categoryId": "sharis" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000027",
+    "fields": { "productId": "51e63369-265f-4929-87db-f886cbccb0b7", "categoryId": "men" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000028",
+    "fields": { "productId": "51e63369-265f-4929-87db-f886cbccb0b7", "categoryId": "threepcs" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000029",
+    "fields": { "productId": "504efcb4-5342-4f1b-822d-f86a00baf1df", "categoryId": "women" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000030",
+    "fields": { "productId": "504efcb4-5342-4f1b-822d-f86a00baf1df", "categoryId": "cap" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000031",
+    "fields": { "productId": "b64e9718-441c-4588-a0cd-82f9bd1efed6", "categoryId": "boys" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000032",
+    "fields": { "productId": "b64e9718-441c-4588-a0cd-82f9bd1efed6", "categoryId": "schooluniform" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000033",
+    "fields": { "productId": "f547606e-4321-46db-a523-8d01d2b0dc1a", "categoryId": "girls" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000034",
+    "fields": { "productId": "f547606e-4321-46db-a523-8d01d2b0dc1a", "categoryId": "medicaluniform" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000035",
+    "fields": { "productId": "186f7023-ab41-46d7-af46-53fd907ebeeb", "categoryId": "babies" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000036",
+    "fields": { "productId": "186f7023-ab41-46d7-af46-53fd907ebeeb", "categoryId": "hometextile" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000037",
+    "fields": { "productId": "54e5dd15-e2c0-45d0-9215-6c151590fc4b", "categoryId": "apparel" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000038",
+    "fields": { "productId": "54e5dd15-e2c0-45d0-9215-6c151590fc4b", "categoryId": "cosmetics" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000039",
+    "fields": { "productId": "6b8f845b-d939-4837-b186-5dfdc6ee4556", "categoryId": "men" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000040",
+    "fields": { "productId": "6b8f845b-d939-4837-b186-5dfdc6ee4556", "categoryId": "lipstics" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000041",
+    "fields": { "productId": "cb357c75-4921-4e5f-9a0c-af8110ae55d9", "categoryId": "women" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000042",
+    "fields": { "productId": "cb357c75-4921-4e5f-9a0c-af8110ae55d9", "categoryId": "lipjel" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000043",
+    "fields": { "productId": "9e27445d-4484-45b4-87e5-75d86d700ce0", "categoryId": "boys" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000044",
+    "fields": { "productId": "9e27445d-4484-45b4-87e5-75d86d700ce0", "categoryId": "lipbam" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000045",
+    "fields": { "productId": "1d66eb35-1c70-48fe-9479-93f005da1cbd", "categoryId": "girls" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000046",
+    "fields": { "productId": "1d66eb35-1c70-48fe-9479-93f005da1cbd", "categoryId": "eye" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000047",
+    "fields": { "productId": "c67183d5-b27a-487c-9b95-2423d52a0fe3", "categoryId": "babies" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000048",
+    "fields": { "productId": "c67183d5-b27a-487c-9b95-2423d52a0fe3", "categoryId": "face" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000049",
+    "fields": { "productId": "67f6ee10-318d-481a-a8ab-8c2efbb8258a", "categoryId": "apparel" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000050",
+    "fields": { "productId": "67f6ee10-318d-481a-a8ab-8c2efbb8258a", "categoryId": "facetoner" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000051",
+    "fields": { "productId": "91aa6439-14b2-45a9-a8b2-372d84296640", "categoryId": "men" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000052",
+    "fields": { "productId": "91aa6439-14b2-45a9-a8b2-372d84296640", "categoryId": "giftitems" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000053",
+    "fields": { "productId": "d5c61688-3c8a-4b86-ae91-a99b4f679539", "categoryId": "women" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000054",
+    "fields": { "productId": "d5c61688-3c8a-4b86-ae91-a99b4f679539", "categoryId": "fashionjewlery" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000055",
+    "fields": { "productId": "ce05e7e0-94fc-42e2-a003-6af13aebc9f6", "categoryId": "boys" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000056",
+    "fields": { "productId": "ce05e7e0-94fc-42e2-a003-6af13aebc9f6", "categoryId": "ladiespartsbag" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000057",
+    "fields": { "productId": "1162a5df-cc3d-404a-a5c6-7cd35f721a9f", "categoryId": "girls" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000058",
+    "fields": { "productId": "1162a5df-cc3d-404a-a5c6-7cd35f721a9f", "categoryId": "shoes" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000059",
+    "fields": { "productId": "b91189bf-3a53-4c10-98c7-ac11cda9b927", "categoryId": "babies" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000060",
+    "fields": { "productId": "b91189bf-3a53-4c10-98c7-ac11cda9b927", "categoryId": "watch" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000061",
+    "fields": { "productId": "940acc1c-c91d-4f84-b9ea-73e167229abf", "categoryId": "apparel" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000062",
+    "fields": { "productId": "940acc1c-c91d-4f84-b9ea-73e167229abf", "categoryId": "books" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000063",
+    "fields": { "productId": "c698f66f-36f3-43b1-a262-135d057b47dc", "categoryId": "men" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000064",
+    "fields": { "productId": "c698f66f-36f3-43b1-a262-135d057b47dc", "categoryId": "giftvoucher" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000065",
+    "fields": { "productId": "882166de-df04-4d98-8e6d-65a7cc3b7e1c", "categoryId": "women" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000066",
+    "fields": { "productId": "882166de-df04-4d98-8e6d-65a7cc3b7e1c", "categoryId": "apparel" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000067",
+    "fields": { "productId": "095a695c-2de8-4468-8433-6b6a5902c9cc", "categoryId": "boys" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000068",
+    "fields": { "productId": "095a695c-2de8-4468-8433-6b6a5902c9cc", "categoryId": "men" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000069",
+    "fields": { "productId": "c7741672-ed8b-43ff-9c2b-61168e2b76de", "categoryId": "girls" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000070",
+    "fields": { "productId": "c7741672-ed8b-43ff-9c2b-61168e2b76de", "categoryId": "women" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000071",
+    "fields": { "productId": "68412172-de81-400d-b78d-2e82f12b569b", "categoryId": "babies" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000072",
+    "fields": { "productId": "68412172-de81-400d-b78d-2e82f12b569b", "categoryId": "boys" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000073",
+    "fields": { "productId": "873775ce-4d3a-4bf2-8d1c-47a68610958a", "categoryId": "apparel" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000074",
+    "fields": { "productId": "873775ce-4d3a-4bf2-8d1c-47a68610958a", "categoryId": "girls" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000075",
+    "fields": { "productId": "ecd6fcb2-d0ae-4c09-9383-fc4c2a593631", "categoryId": "men" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000076",
+    "fields": { "productId": "ecd6fcb2-d0ae-4c09-9383-fc4c2a593631", "categoryId": "babies" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000077",
+    "fields": { "productId": "7f77671b-9914-4f12-9a55-10a6dd2dda04", "categoryId": "women" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000078",
+    "fields": { "productId": "7f77671b-9914-4f12-9a55-10a6dd2dda04", "categoryId": "girls" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000079",
+    "fields": { "productId": "db76dcd3-4b89-4d65-9c21-26c9aef86cfd", "categoryId": "boys" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000080",
+    "fields": { "productId": "db76dcd3-4b89-4d65-9c21-26c9aef86cfd", "categoryId": "babies" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000081",
+    "fields": { "productId": "c5a3422d-2647-4528-86f0-b49cdb37db15", "categoryId": "girls" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000082",
+    "fields": { "productId": "c5a3422d-2647-4528-86f0-b49cdb37db15", "categoryId": "men" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000083",
+    "fields": { "productId": "5e17c308-75ce-4c0b-9b4e-18732d6ef609", "categoryId": "babies" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000084",
+    "fields": { "productId": "5e17c308-75ce-4c0b-9b4e-18732d6ef609", "categoryId": "women" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000085",
+    "fields": { "productId": "50e9a2ed-6d96-4bdb-90aa-6cd42b63c6c8", "categoryId": "apparel" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000086",
+    "fields": { "productId": "50e9a2ed-6d96-4bdb-90aa-6cd42b63c6c8", "categoryId": "boys" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000087",
+    "fields": { "productId": "dd3f845f-1afe-44fb-bd3e-580acb3b1d69", "categoryId": "men" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000088",
+    "fields": { "productId": "dd3f845f-1afe-44fb-bd3e-580acb3b1d69", "categoryId": "girls" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000089",
+    "fields": { "productId": "324bee74-c177-45ad-a73f-55f797725b26", "categoryId": "women" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000090",
+    "fields": { "productId": "324bee74-c177-45ad-a73f-55f797725b26", "categoryId": "babies" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000091",
+    "fields": { "productId": "819caf63-5cb7-40a6-80f8-2fae0b52daae", "categoryId": "boys" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000092",
+    "fields": { "productId": "819caf63-5cb7-40a6-80f8-2fae0b52daae", "categoryId": "apparel" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000093",
+    "fields": { "productId": "23e547b2-be10-411b-ad2d-f486ffcb4592", "categoryId": "girls" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000094",
+    "fields": { "productId": "23e547b2-be10-411b-ad2d-f486ffcb4592", "categoryId": "men" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000095",
+    "fields": { "productId": "857f313b-8989-452b-ab57-dcd9ab3a8a37", "categoryId": "babies" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000096",
+    "fields": { "productId": "857f313b-8989-452b-ab57-dcd9ab3a8a37", "categoryId": "women" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000097",
+    "fields": { "productId": "299e18c1-848d-4e89-b53c-69df7a56284b", "categoryId": "apparel" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000098",
+    "fields": { "productId": "299e18c1-848d-4e89-b53c-69df7a56284b", "categoryId": "girls" }
+  },
+
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000099",
+    "fields": { "productId": "2e4dbacf-dc52-45e9-be82-591a87c8bb09", "categoryId": "men" }
+  },
+  {
+    "model": "base.ProductCategoryModel",
+    "pk": "00000000-0000-0000-0000-000000000100",
+    "fields": { "productId": "2e4dbacf-dc52-45e9-be82-591a87c8bb09", "categoryId": "boys" }
+  }
 ]
