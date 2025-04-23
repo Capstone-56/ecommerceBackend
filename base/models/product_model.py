@@ -11,12 +11,14 @@ class ProductModel(models.Model):
         description The associated description of what the product is.
         images      Image urls to display on frontend.
         featured    Boolean flag indicating whether the product is featured.
+        avg_rating  Average rating of the product.
     """
     id          = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
     name        = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     images      = ArrayField(models.CharField(max_length=1000), blank=True)
     featured    = models.BooleanField(default=False)
+    avg_rating  = models.FloatField(null=True, blank=True, db_column="avg_rating")
 
     def __str__(self):
         return self.name

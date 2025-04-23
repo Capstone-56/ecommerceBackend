@@ -19,4 +19,4 @@ class ProductModelSerializer(serializers.ModelSerializer):
 class CategoryModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = CategoryModel
-        fields = ["id", "name", "description", "parentCategoryId"]
+        fields = ["internalName", "name", "description", "parentCategory"]
