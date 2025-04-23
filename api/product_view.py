@@ -30,7 +30,7 @@ class ProductViewSet(viewsets.ViewSet):
             # split on comma and strip whitespace
             categoryIds = [c.strip() for c in categoriesParam.split(",") if c.strip()]
             for cat in categoryIds:
-                querySet = querySet.filter(category_links__categoryId=cat)
+                querySet = querySet.filter(category_links__category=cat)
             querySet = querySet.distinct()
 
         paginator = PagedList()
