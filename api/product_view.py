@@ -19,6 +19,9 @@ class ProductViewSet(viewsets.ViewSet):
         Optional query params:
         - page (int)
         - page_size (int)
+        - color (string) e.g. ?color=red
+        - price_min (float) e.g. ?price_min=10.0
+        - price_max (float) e.g. ?price_max=100.0
         - categories (comma‑separated UUIDs) e.g. ?categories=id1,id2
 
         If categories is provided, returns products linked to *all* of those categories.
@@ -32,6 +35,23 @@ class ProductViewSet(viewsets.ViewSet):
             for cat in categoryIds:
                 querySet = querySet.filter(category_links__category=cat)
             querySet = querySet.distinct()
+
+        # Colour filtering (by variant value)
+        color = request.query_params.get("color")
+        if color:
+            querySet = querySet.filter(
+                productconfig__variantId__variationTypeId__name__iexact="Color",
+                productconfig__variantId__value__iexact=color
+            ).distinct()
+
+        # Price filtering (by related ProductItem)
+        price_min = request.query_params.get("price_min")
+        price_max = request.query_params.get("price_max")
+        if price_min:
+            querySet = querySet.filter(items__price__gte=price_min)
+        if price_max:
+            querySet = querySet.filter(items__price__lte=price_max)
+        querySet = querySet.distinct()
 
         paginator = PagedList()
         pagedQuerySet = paginator.paginate_queryset(querySet, request)

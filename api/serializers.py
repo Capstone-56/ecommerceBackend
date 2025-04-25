@@ -12,9 +12,16 @@ class UserModelSerializer(serializers.ModelSerializer):
         fields = ["username", "name", "email", "password"]
 
 class ProductModelSerializer(serializers.ModelSerializer):
+    price = serializers.SerializerMethodField()
     class Meta:
         model = ProductModel
-        fields = ["id", "name", "description", "images"]
+        fields = ["id", "name", "description", "images", "featured", "avg_rating", "price"]
+    # append the price field to the serializer (lowest price of all items)
+    def get_price(self, obj):
+        items = obj.items.all()
+        if items:
+            return min(item.price for item in items if item.price is not None)
+        return None
 
 class CategoryModelSerializer(serializers.ModelSerializer):
     class Meta:
