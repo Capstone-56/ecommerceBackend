@@ -16,6 +16,7 @@ class ProductModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductModel
         fields = ["id", "name", "description", "images", "featured", "avg_rating", "price"]
+    
     # append the price field to the serializer (lowest price of all items)
     def get_price(self, obj):
         items = obj.items.all()

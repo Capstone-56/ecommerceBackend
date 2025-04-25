@@ -19,9 +19,9 @@ class ProductViewSet(viewsets.ViewSet):
         Optional query params:
         - page (int)
         - page_size (int)
-        - color (string) e.g. ?color=red
-        - price_min (float) e.g. ?price_min=10.0
-        - price_max (float) e.g. ?price_max=100.0
+        - colour (string) e.g. ?colour=red
+        - price_min (float) e.g. ?price_min=10
+        - price_max (float) e.g. ?price_max=100
         - categories (comma‑separated UUIDs) e.g. ?categories=id1,id2
 
         If categories is provided, returns products linked to *all* of those categories.
