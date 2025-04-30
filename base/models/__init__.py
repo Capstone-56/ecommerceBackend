@@ -2,7 +2,7 @@ from .user_model import UserModel
 from .product_model import ProductModel
 from .category_model import CategoryModel
 from .product_category_model import ProductCategoryModel
-from .product_item_model import ProductItem
-from .product_config_model import ProductConfig
+from .product_item_model import ProductItemModel
+from .product_config_model import ProductConfigModel
 from .variant_model import VariantModel
 from .variation_type_model import VariationTypeModel

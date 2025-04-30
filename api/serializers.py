@@ -17,12 +17,13 @@ class ProductModelSerializer(serializers.ModelSerializer):
         model = ProductModel
         fields = ["id", "name", "description", "images", "featured", "avg_rating", "price"]
     
-    # append the price field to the serializer (lowest price of all items)
+    # Retrieve the price of an object based on the sorting context. If the sort is set to priceDesc, then the max_price is appended.
     def get_price(self, obj):
-        items = obj.items.all()
-        if items:
-            return min(item.price for item in items if item.price is not None)
-        return None
+        sort = self.context.get("sort")
+        if sort == "priceDesc":
+            return getattr(obj, "max_price", None)
+        # Default to min_price if priceAsc or no sort.
+        return getattr(obj, "min_price", None)
 
 class CategoryModelSerializer(serializers.ModelSerializer):
     class Meta:

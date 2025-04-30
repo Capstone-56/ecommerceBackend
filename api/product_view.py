@@ -1,10 +1,12 @@
 from django.shortcuts import get_object_or_404
+from django.db.models import Min, Max
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
 
 from base.abstractModels import PagedList
 from base.models import ProductModel
+from base.models.variant_model import VariantModel
 from .serializers import ProductModelSerializer
 
 class ProductViewSet(viewsets.ViewSet):
@@ -19,9 +21,11 @@ class ProductViewSet(viewsets.ViewSet):
         Optional query params:
         - page (int)
         - page_size (int)
-        - colour (string) e.g. ?colour=red
         - price_min (float) e.g. ?price_min=10
         - price_max (float) e.g. ?price_max=100
+        - sort (string) e.g. ?sort=priceAsc
+        - sort (string) e.g. ?sort=priceDesc
+        - colour (string) e.g. ?colour=red
         - categories (comma‑separated UUIDs) e.g. ?categories=id1,id2
 
         If categories is provided, returns products linked to *all* of those categories.
@@ -35,16 +39,14 @@ class ProductViewSet(viewsets.ViewSet):
             for cat in categoryIds:
                 querySet = querySet.filter(category_links__category=cat)
             querySet = querySet.distinct()
+        
+        # find the min and max price of all related productItems. These will be used to filter and sort the products.
+        querySet = ProductModel.objects.annotate(
+            min_price=Min("items__price"),
+            max_price=Max("items__price")
+        )
 
-        # Colour filtering (by variant value)
-        color = request.query_params.get("color")
-        if color:
-            querySet = querySet.filter(
-                productconfig__variantId__variationTypeId__name__iexact="Color",
-                productconfig__variantId__value__iexact=color
-            ).distinct()
-
-        # Price filtering (by related ProductItem)
+        # filter by min_price and max_price
         price_min = request.query_params.get("price_min")
         price_max = request.query_params.get("price_max")
         if price_min:
@@ -52,11 +54,28 @@ class ProductViewSet(viewsets.ViewSet):
         if price_max:
             querySet = querySet.filter(items__price__lte=price_max)
         querySet = querySet.distinct()
+        
+        # sort by highest or lowest price
+        sort = request.query_params.get("sort")
+        if sort == "priceAsc":
+            querySet = querySet.order_by("min_price")
+        elif sort == "priceDesc":
+            querySet = querySet.order_by("-max_price")
+
+        colour = request.query_params.get("colour") or request.query_params.get("color")
+        if colour:
+            # Find all Variant IDs for this colour
+            variant_ids = VariantModel.objects.filter(
+                value__iexact=colour,
+                variationType__name__iexact="colour"
+            ).values_list("id", flat=True)
+            # Filter products linked to these variants via ProductConfig
+            querySet = querySet.filter(items__productconfigmodel__variant__in=variant_ids).distinct()
 
         paginator = PagedList()
         pagedQuerySet = paginator.paginate_queryset(querySet, request)
 
-        serializer = ProductModelSerializer(pagedQuerySet, many=True)
+        serializer = ProductModelSerializer(pagedQuerySet, many=True, context={"sort": sort})
         return paginator.get_paginated_response(serializer.data)
     
     def retrieve(self, request, pk=None):
