@@ -41,7 +41,7 @@ class ProductViewSet(viewsets.ViewSet):
             querySet = querySet.distinct()
         
         # find the min and max price of all related productItems. These will be used to filter and sort the products.
-        querySet = ProductModel.objects.annotate(
+        querySet = querySet.annotate(
             min_price=Min("items__price"),
             max_price=Max("items__price")
         )
