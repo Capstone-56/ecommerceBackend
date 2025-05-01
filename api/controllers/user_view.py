@@ -1,7 +1,6 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-import bcrypt
 
 import logging
 
@@ -11,7 +10,7 @@ logging.basicConfig(level=logging.DEBUG,  # Log messages with this level or high
 
 from base.models import UserModel
 
-from .serializers import UserModelSerializer
+from api.serializers import UserModelSerializer
 
 class UserViewSet(viewsets.ViewSet):
     def list(self, request):

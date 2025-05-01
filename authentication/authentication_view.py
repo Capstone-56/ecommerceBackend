@@ -13,6 +13,16 @@ class AuthenticationViewSet(viewsets.ViewSet):
         """
         Register a new user.
         POST /auth/signup
+        Body:
+        {
+            "username": string,
+            "email": string,
+            "firstName": string,
+            "lastName": string,
+            "phone": string,
+            "password": string,
+            "role": string (correspond to the "role" enum)
+        }
         """
         serializer = UserModelSerializer(data=request.data)
         if serializer.is_valid():

@@ -7,19 +7,14 @@ from base.managers import UserManager
 
 class UserModel(AbstractBaseUser, PermissionsMixin):
     """
-    is_staff and is_active is Django naming convention, DO NOT OVERRIDE
+    is_staff and is_active is Django naming convention, DO NOT OVERWRITE
     """
     id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
     username = models.CharField(max_length=255, unique=True)
-    email = models.CharField(max_length=255, unique=True)
+    email = models.EmailField(max_length=255, unique=True)
     firstName = models.CharField(max_length=255)
     lastName = models.CharField(max_length=255)
     phone = models.CharField(max_length=20, blank=True)
-    address = models.CharField(max_length=255, blank=True)
-    city = models.CharField(max_length=100, blank=True)
-    postcode = models.CharField(max_length=10, blank=True)
-    state = models.CharField(max_length=100, blank=True)
-    country = models.CharField(max_length=100, blank=True)
     role = models.CharField(
         max_length=10,
         choices=[(role.value, role.name.title()) for role in ROLE],
@@ -27,6 +22,7 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
     )
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+
     objects = UserManager()
 
     USERNAME_FIELD = "username"
