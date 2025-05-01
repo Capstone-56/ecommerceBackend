@@ -61,6 +61,8 @@ class ProductViewSet(viewsets.ViewSet):
             querySet = querySet.order_by("min_price")
         elif sort == "priceDesc":
             querySet = querySet.order_by("-max_price")
+        elif sort == "featured":
+            querySet = querySet.order_by("-featured", "name")
 
         colour = request.query_params.get("colour") or request.query_params.get("color")
         if colour:
