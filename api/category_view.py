@@ -23,6 +23,6 @@ class CategoryViewSet(viewsets.ViewSet):
         Retrieve a specific CategoryModel record by ID.
         GET /api/category/{id}
         """
-        category = get_object_or_404(CategoryModel, id=pk)
+        category = get_object_or_404(CategoryModel, internalName=pk)
         serializer = CategoryModelSerializer(category)
         return Response(serializer.data)
