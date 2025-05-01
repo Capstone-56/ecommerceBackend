@@ -25,7 +25,7 @@ class UserViewSet(viewsets.ViewSet):
     def retrieve(self, request, pk=None):
         """
         Retrieve a specific user by username.
-        GET /api/user/{id}
+        GET /api/user/{username}
         """
         user = get_object_or_404(UserModel, username=pk)
         serializer = UserModelSerializer(user)
