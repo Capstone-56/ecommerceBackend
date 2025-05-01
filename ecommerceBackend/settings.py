@@ -138,7 +138,16 @@ APPEND_SLASH=False
 
 REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+
     "PAGE_SIZE": Constants.DEFAULT_PAGINATOR_PAGE_SIZE,
+
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
+
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.AllowAny",
+    ],
 }
 
 AUTH_USER_MODEL = "base.UserModel"
