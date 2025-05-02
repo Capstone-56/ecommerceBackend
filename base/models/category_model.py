@@ -1,7 +1,8 @@
 import re
 from django.db import models
+from mptt.models import MPTTModel, TreeForeignKey
 
-class CategoryModel(models.Model):
+class CategoryModel(MPTTModel):
     internalName = models.CharField(
         max_length=255,
         editable=False,
@@ -10,7 +11,7 @@ class CategoryModel(models.Model):
     )
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
-    parentCategory = models.ForeignKey(
+    parentCategory = TreeForeignKey(
         "self",
         on_delete=models.SET_NULL,
         null=True,
@@ -32,3 +33,7 @@ class CategoryModel(models.Model):
 
     class Meta:
         db_table = "category"
+    
+    class MPTTMeta:
+        parent_attr = 'parentCategory'
+        order_insertion_by = ['name']

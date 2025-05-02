@@ -26,6 +26,15 @@ class ProductModelSerializer(serializers.ModelSerializer):
         return getattr(obj, "min_price", None)
 
 class CategoryModelSerializer(serializers.ModelSerializer):
+    breadcrumb = serializers.SerializerMethodField()
+
     class Meta:
         model = CategoryModel
-        fields = ["internalName", "name", "description", "parentCategory"]
+        fields = ["internalName", "name", "description", "parentCategory", "breadcrumb"]
+
+    def get_breadcrumb(self, obj):
+        # MPTTModel provides get_ancestors()
+        return [
+            {"name": anc.name, "internal_name": anc.internalName}
+            for anc in obj.get_ancestors(include_self=True)
+        ]
