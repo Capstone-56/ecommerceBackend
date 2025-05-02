@@ -2,9 +2,10 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework_simplejwt.tokens import RefreshToken
 from api.serializers import UserModelSerializer
 from base.models import *
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.exceptions import TokenError
 from django.contrib.auth import logout
 
 class AuthenticationViewSet(viewsets.ViewSet):
@@ -75,10 +76,9 @@ class AuthenticationViewSet(viewsets.ViewSet):
             "message": "Login successful",
             "access": str(access),
             "refresh": str(refresh),
-            "user": UserModelSerializer(user).data
         }, status=200)
 
-    @action(detail=False, methods=["delete"], url_path="logout", permission_classes=[AllowAny], authentication_classes=[])
+    @action(detail=False, methods=["delete"], url_path="logout", permission_classes=[IsAuthenticated])
     def logout(self, request):
         """
         Invalidate a JWT session by blacklisting the provided refresh token.
@@ -97,12 +97,10 @@ class AuthenticationViewSet(viewsets.ViewSet):
             )
 
         try:
-            RefreshToken(refresh_token).blacklist()
-        except Exception:
-            return Response(
-                {"detail": "Invalid refresh token"},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+        except TokenError as e:
+            return Response({"detail": e.args[0]}, status=status.HTTP_400_BAD_REQUEST)
 
         return Response(
             {"message": "Logged out successfully"},

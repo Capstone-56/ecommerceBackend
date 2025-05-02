@@ -1,5 +1,6 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.shortcuts import get_object_or_404
 
 import logging
@@ -13,6 +14,13 @@ from base.models import UserModel
 from api.serializers import UserModelSerializer
 
 class UserViewSet(viewsets.ViewSet):
+
+    def get_permissions(self):
+        if self.action == "list":
+            return [IsAuthenticated()]
+
+        return [AllowAny()]
+
     def list(self, request):
         """
         Retrieve all UserModel records.
@@ -21,6 +29,7 @@ class UserViewSet(viewsets.ViewSet):
         users = UserModel.objects.all()
         serializer = UserModelSerializer(users, many=True)
         return Response(serializer.data)
+
 
     def retrieve(self, request, pk=None):
         """
