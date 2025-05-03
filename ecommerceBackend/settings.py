@@ -14,6 +14,8 @@ from pathlib import Path
 
 from base import Constants
 
+import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -138,3 +140,14 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": Constants.DEFAULT_PAGINATOR_PAGE_SIZE,
 }
+
+AUTH_USER_MODEL = "base.UserModel"
+
+# Pepper used in hashing (dev env)
+PEPPER = os.environ.get("PASSWORD_PEPPER", "A6vN3rZt5KqLp8UwXy9T0bGhJf2EsMc1QrZn7PdCiVoLwAxYeBuTsNgKhMfRxCvJ")
+
+# Use the custom password hasher
+PASSWORD_HASHERS = [
+    "base.password_hasher.BCryptPepperHasher",
+    "django.contrib.auth.hashers.PBKDF2PasswordHasher",  # fallback
+]

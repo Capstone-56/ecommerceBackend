@@ -5,7 +5,7 @@ from rest_framework.decorators import action
 
 from base.abstractModels import PagedList
 from base.models import ProductModel
-from .serializers import ProductModelSerializer
+from api.serializers import ProductModelSerializer
 
 class ProductViewSet(viewsets.ViewSet):
     """
