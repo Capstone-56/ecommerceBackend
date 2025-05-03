@@ -47,12 +47,30 @@ class UserModelSerializer(serializers.ModelSerializer):
 
 
 class ProductModelSerializer(serializers.ModelSerializer):
+    price = serializers.SerializerMethodField()
     class Meta:
         model = ProductModel
-        fields = ["id", "name", "description", "images"]
+        fields = ["id", "name", "description", "images", "featured", "avgRating", "price"]
+    
+    # Retrieve the price of an object based on the sorting context. If the sort is set to priceDesc, then the max_price is appended.
+    def get_price(self, obj):
+        sort = self.context.get("sort")
+        if sort == "priceDesc":
+            return getattr(obj, "maxPrice", None)
+        # Default to min_price if priceAsc or no sort.
+        return getattr(obj, "minPrice", None)
 
 
 class CategoryModelSerializer(serializers.ModelSerializer):
+    breadcrumb = serializers.SerializerMethodField()
+
     class Meta:
         model = CategoryModel
-        fields = ["id", "name", "description", "parentCategory"]
+        fields = ["internalName", "name", "description", "parentCategory", "breadcrumb"]
+
+    def get_breadcrumb(self, obj):
+        # MPTTModel provides get_ancestors()
+        return [
+            {"name": anc.name, "internalName": anc.internalName}
+            for anc in obj.get_ancestors(include_self=True)
+        ]
