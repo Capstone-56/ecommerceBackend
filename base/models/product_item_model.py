@@ -9,7 +9,7 @@ class ProductItemModel(models.Model):
     sku = models.CharField(max_length=255)
     stock = models.IntegerField()
     price = models.FloatField()
-    image_urls = ArrayField(models.CharField(max_length=1000), blank=True)
+    imageUrls = ArrayField(models.CharField(max_length=1000), blank=True)
 
     class Meta:
         db_table = "productItem"
