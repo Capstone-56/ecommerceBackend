@@ -41,8 +41,8 @@ class ProductViewSet(viewsets.ViewSet):
         
         # find the min and max price of all related productItems. These will be used to filter and sort the products.
         querySet = querySet.annotate(
-            min_price=Min("items__price"),
-            max_price=Max("items__price")
+            minPrice=Min("items__price"),
+            maxPrice=Max("items__price")
         )
 
         # filter by min_price and max_price
@@ -57,9 +57,9 @@ class ProductViewSet(viewsets.ViewSet):
         # sort by highest or lowest price
         sort = request.query_params.get("sort")
         if sort == "priceAsc":
-            querySet = querySet.order_by("min_price")
+            querySet = querySet.order_by("minPrice")
         elif sort == "priceDesc":
-            querySet = querySet.order_by("-max_price")
+            querySet = querySet.order_by("-maxPrice")
         elif sort == "featured":
             querySet = querySet.order_by("-featured", "name")
 

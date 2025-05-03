@@ -50,7 +50,7 @@ class ProductModelSerializer(serializers.ModelSerializer):
     price = serializers.SerializerMethodField()
     class Meta:
         model = ProductModel
-        fields = ["id", "name", "description", "images", "featured", "avg_rating", "price"]
+        fields = ["id", "name", "description", "images", "featured", "avgRating", "price"]
     
     # Retrieve the price of an object based on the sorting context. If the sort is set to priceDesc, then the max_price is appended.
     def get_price(self, obj):

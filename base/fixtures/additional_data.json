@@ -98,7 +98,7 @@
             "description": "Women's pants in brown only",
             "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
             "featured": false,
-            "avg_rating": 4
+            "avgRating": 4
         }
     },
     {
@@ -109,7 +109,7 @@
             "description": "A classic men's t-shirt",
             "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
             "featured": true,
-            "avg_rating": 4.5
+            "avgRating": 4.5
         }
     },
     {
@@ -120,7 +120,7 @@
             "description": "A sporty men's t-shirt",
             "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
             "featured": false,
-            "avg_rating": 4.2
+            "avgRating": 4.2
         }
     },
     {
@@ -131,7 +131,7 @@
             "description": "A classic women's t-shirt",
             "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
             "featured": true,
-            "avg_rating": 4.7
+            "avgRating": 4.7
         }
     },
     {
@@ -142,7 +142,7 @@
             "description": "A v-neck women's t-shirt",
             "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
             "featured": false,
-            "avg_rating": 4.3
+            "avgRating": 4.3
         }
     },
     {
@@ -153,7 +153,7 @@
             "description": "Classic men's pants",
             "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
             "featured": true,
-            "avg_rating": 4.6
+            "avgRating": 4.6
         }
     },
     {
@@ -164,7 +164,7 @@
             "description": "Men's pants in brown only",
             "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
             "featured": true,
-            "avg_rating": 4.1
+            "avgRating": 4.1
         }
     },
     {
@@ -175,14 +175,14 @@
             "description": "Classic women's pants",
             "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
             "featured": true,
-            "avg_rating": 4.8
+            "avgRating": 4.8
         }
     },
     {
         "model": "base.ProductConfigModel",
         "pk": 1,
         "fields": {
-            "product_item": "66666666-1111-1111-1111-111111111111",
+            "productItem": "66666666-1111-1111-1111-111111111111",
             "variant": "44444444-4444-4444-4444-444444444441"
         }
     },
@@ -190,7 +190,7 @@
         "model": "base.ProductConfigModel",
         "pk": 2,
         "fields": {
-            "product_item": "66666666-1111-1111-1111-111111111112",
+            "productItem": "66666666-1111-1111-1111-111111111112",
             "variant": "44444444-4444-4444-4444-444444444441"
         }
     },
@@ -198,7 +198,7 @@
         "model": "base.ProductConfigModel",
         "pk": 3,
         "fields": {
-            "product_item": "66666666-1111-1111-1111-111111111115",
+            "productItem": "66666666-1111-1111-1111-111111111115",
             "variant": "44444444-4444-4444-4444-444444444441"
         }
     },
@@ -206,7 +206,7 @@
         "model": "base.ProductConfigModel",
         "pk": 4,
         "fields": {
-            "product_item": "66666666-2222-2222-2222-222222222223",
+            "productItem": "66666666-2222-2222-2222-222222222223",
             "variant": "44444444-4444-4444-4444-444444444442"
         }
     },
@@ -214,7 +214,7 @@
         "model": "base.ProductConfigModel",
         "pk": 5,
         "fields": {
-            "product_item": "66666666-1111-1111-1111-111111111117",
+            "productItem": "66666666-1111-1111-1111-111111111117",
             "variant": "44444444-4444-4444-4444-444444444442"
         }
     },
@@ -222,7 +222,7 @@
         "model": "base.ProductConfigModel",
         "pk": 6,
         "fields": {
-            "product_item": "88888888-2222-2222-2222-222222222221",
+            "productItem": "88888888-2222-2222-2222-222222222221",
             "variant": "44444444-4444-4444-4444-444444444443"
         }
     },
@@ -288,7 +288,7 @@
             "sku": "MCT-RED-S",
             "stock": 10,
             "price": 19.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/mens-classic-tee-red-s.jpg"
             ]
         }
@@ -301,7 +301,7 @@
             "sku": "MCT-RED-M",
             "stock": 8,
             "price": 19.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/mens-classic-tee-red-m.jpg"
             ]
         }
@@ -314,7 +314,7 @@
             "sku": "MCT-BLU-S",
             "stock": 12,
             "price": 19.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/mens-classic-tee-blue-s.jpg"
             ]
         }
@@ -327,7 +327,7 @@
             "sku": "MCT-BLU-M",
             "stock": 7,
             "price": 19.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/mens-classic-tee-blue-m.jpg"
             ]
         }
@@ -340,7 +340,7 @@
             "sku": "MST-RED-S",
             "stock": 9,
             "price": 21.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/mens-sport-tee-red-s.jpg"
             ]
         }
@@ -353,7 +353,7 @@
             "sku": "MST-RED-M",
             "stock": 6,
             "price": 21.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/mens-sport-tee-red-m.jpg"
             ]
         }
@@ -366,7 +366,7 @@
             "sku": "MST-BLU-S",
             "stock": 11,
             "price": 21.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/mens-sport-tee-blue-s.jpg"
             ]
         }
@@ -379,7 +379,7 @@
             "sku": "MST-BLU-M",
             "stock": 5,
             "price": 21.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/mens-sport-tee-blue-m.jpg"
             ]
         }
@@ -392,7 +392,7 @@
             "sku": "WCT-RED-S",
             "stock": 15,
             "price": 18.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/womens-classic-tee-red-s.jpg"
             ]
         }
@@ -405,7 +405,7 @@
             "sku": "WCT-RED-M",
             "stock": 13,
             "price": 18.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/womens-classic-tee-red-m.jpg"
             ]
         }
@@ -418,7 +418,7 @@
             "sku": "WCT-BLU-S",
             "stock": 14,
             "price": 18.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/womens-classic-tee-blue-s.jpg"
             ]
         }
@@ -431,7 +431,7 @@
             "sku": "WCT-BLU-M",
             "stock": 10,
             "price": 18.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/womens-classic-tee-blue-m.jpg"
             ]
         }
@@ -444,7 +444,7 @@
             "sku": "WVT-RED-S",
             "stock": 8,
             "price": 20.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/womens-vneck-tee-red-s.jpg"
             ]
         }
@@ -457,7 +457,7 @@
             "sku": "WVT-RED-M",
             "stock": 7,
             "price": 20.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/womens-vneck-tee-red-m.jpg"
             ]
         }
@@ -470,7 +470,7 @@
             "sku": "WVT-BLU-S",
             "stock": 9,
             "price": 20.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/womens-vneck-tee-blue-s.jpg"
             ]
         }
@@ -483,7 +483,7 @@
             "sku": "WVT-BLU-M",
             "stock": 6,
             "price": 20.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/womens-vneck-tee-blue-m.jpg"
             ]
         }
@@ -496,7 +496,7 @@
             "sku": "MCP-RED-S",
             "stock": 10,
             "price": 29.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/mens-classic-pants-red-s.jpg"
             ]
         }
@@ -509,7 +509,7 @@
             "sku": "MCP-BLU-S",
             "stock": 8,
             "price": 29.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/mens-classic-pants-blue-s.jpg"
             ]
         }
@@ -522,7 +522,7 @@
             "sku": "MCP-BRN-S",
             "stock": 7,
             "price": 29.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/mens-classic-pants-brown-s.jpg"
             ]
         }
@@ -535,7 +535,7 @@
             "sku": "MCP-RED-M",
             "stock": 6,
             "price": 29.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/mens-classic-pants-red-m.jpg"
             ]
         }
@@ -548,7 +548,7 @@
             "sku": "MCP-BLU-M",
             "stock": 5,
             "price": 29.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/mens-classic-pants-blue-m.jpg"
             ]
         }
@@ -561,7 +561,7 @@
             "sku": "MCP-BRN-M",
             "stock": 4,
             "price": 29.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/mens-classic-pants-brown-m.jpg"
             ]
         }
@@ -574,7 +574,7 @@
             "sku": "WCP-RED-S",
             "stock": 12,
             "price": 31.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/womens-classic-pants-red-s.jpg"
             ]
         }
@@ -587,7 +587,7 @@
             "sku": "WCP-BLU-S",
             "stock": 10,
             "price": 31.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/womens-classic-pants-blue-s.jpg"
             ]
         }
@@ -600,7 +600,7 @@
             "sku": "WCP-BRN-S",
             "stock": 9,
             "price": 31.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/womens-classic-pants-brown-s.jpg"
             ]
         }
@@ -613,7 +613,7 @@
             "sku": "WCP-RED-M",
             "stock": 8,
             "price": 31.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/womens-classic-pants-red-m.jpg"
             ]
         }
@@ -626,7 +626,7 @@
             "sku": "WCP-BLU-M",
             "stock": 7,
             "price": 31.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/womens-classic-pants-blue-m.jpg"
             ]
         }
@@ -639,7 +639,7 @@
             "sku": "WCP-BRN-M",
             "stock": 6,
             "price": 31.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/womens-classic-pants-brown-m.jpg"
             ]
         }
@@ -652,7 +652,7 @@
             "sku": "MBP-BRN-S",
             "stock": 10,
             "price": 27.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/mens-brown-pants-brown-s.jpg"
             ]
         }
@@ -665,7 +665,7 @@
             "sku": "MBP-BRN-M",
             "stock": 8,
             "price": 27.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/mens-brown-pants-brown-m.jpg"
             ]
         }
@@ -678,7 +678,7 @@
             "sku": "WBP-BRN-S",
             "stock": 11,
             "price": 28.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/womens-brown-pants-brown-s.jpg"
             ]
         }
@@ -691,7 +691,7 @@
             "sku": "WBP-BRN-M",
             "stock": 9,
             "price": 28.99,
-            "image_urls": [
+            "imageUrls": [
                 "https://example.com/womens-brown-pants-brown-m.jpg"
             ]
         }
