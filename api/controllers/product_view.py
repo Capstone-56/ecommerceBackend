@@ -7,7 +7,7 @@ from rest_framework.decorators import action
 from base.abstractModels import PagedList
 from base.models import ProductModel
 from base.models.variant_model import VariantModel
-from .serializers import ProductModelSerializer
+from api.serializers import ProductModelSerializer
 
 class ProductViewSet(viewsets.ViewSet):
     """

@@ -3,7 +3,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 
 from base.models import CategoryModel
-from .serializers import CategoryModelSerializer
+from api.serializers import CategoryModelSerializer
 
 class CategoryViewSet(viewsets.ViewSet):
     """
