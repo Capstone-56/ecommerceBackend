@@ -40,6 +40,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
     @action(detail=False, methods=["post"], url_path="login", permission_classes=[AllowAny])
     def login(self, request):
         """
@@ -73,10 +74,10 @@ class AuthenticationViewSet(viewsets.ViewSet):
         access = refresh.access_token
 
         return Response({
-            "message": "Login successful",
-            "access": str(access),
-            "refresh": str(refresh),
+            "accessToken": str(access),
+            "refreshToken": str(refresh),
         }, status=200)
+
 
     @action(detail=False, methods=["delete"], url_path="logout", permission_classes=[IsAuthenticated])
     def logout(self, request):
@@ -84,20 +85,23 @@ class AuthenticationViewSet(viewsets.ViewSet):
         Invalidate a JWT session by blacklisting the provided refresh token.
 
         DELETE /auth/logout
+        Header:
+            Authorization: Bearer <access_token>
+
         Body (JSON):
         {
           "refresh": "<refresh_token>"
         }
         """
-        refresh_token = request.data.get("refresh")
-        if not refresh_token:
+        refreshToken = request.data.get("refreshToken")
+        if not refreshToken:
             return Response(
                 {"detail": "Refresh token required"},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
         try:
-            token = RefreshToken(refresh_token)
+            token = RefreshToken(refreshToken)
             token.blacklist()
         except TokenError as e:
             return Response({"detail": e.args[0]}, status=status.HTTP_400_BAD_REQUEST)
@@ -107,10 +111,11 @@ class AuthenticationViewSet(viewsets.ViewSet):
             status=status.HTTP_200_OK
         )
 
+
     @action(detail=False, methods=["post"], url_path="refresh")
     def refresh_token(self, request):
         """
-        Refresh an expiring JWT.
+        Refresh an expiring JWT. FrontEnd needs to call this to change the access token every less than 5 minutes
 
         POST /auth/refresh
         Request body JSON:
