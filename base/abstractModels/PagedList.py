@@ -4,7 +4,7 @@ from rest_framework.response import Response
 class PagedList(PageNumberPagination):
     """ A customised DRF's paginator """
 
-    page_size_query_param = "page_size"  # Optionally allow the client to override the default page size
+    page_size_query_param = "pageSize"  # Optionally allow the client to override the default page size
 
     def get_paginated_response(self, data):
         return Response({

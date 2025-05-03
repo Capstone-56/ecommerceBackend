@@ -20,13 +20,12 @@ class ProductViewSet(viewsets.ViewSet):
         GET /api/product/
         Optional query params:
         - page (int)
-        - page_size (int)
-        - price_min (float) e.g. ?price_min=10
-        - price_max (float) e.g. ?price_max=100
-        - sort (string) e.g. ?sort=priceAsc
-        - sort (string) e.g. ?sort=priceDesc
+        - pageSize (int)
+        - priceMin (float) e.g. ?priceMin=10
+        - priceMax (float) e.g. ?priceMax=100
+        - sort (string) e.g. ?sort=priceAsc, ?sort=priceDesc
         - colour (string) e.g. ?colour=red
-        - categories (comma‑separated UUIDs) e.g. ?categories=id1,id2
+        - categories (comma‑separated strings) e.g. ?categories=cat1, cat2
 
         If categories is provided, returns products linked to *all* of those categories.
         """
@@ -47,12 +46,12 @@ class ProductViewSet(viewsets.ViewSet):
         )
 
         # filter by min_price and max_price
-        price_min = request.query_params.get("price_min")
-        price_max = request.query_params.get("price_max")
-        if price_min:
-            querySet = querySet.filter(items__price__gte=price_min)
-        if price_max:
-            querySet = querySet.filter(items__price__lte=price_max)
+        priceMin = request.query_params.get("priceMin")
+        priceMax = request.query_params.get("priceMax")
+        if priceMin:
+            querySet = querySet.filter(items__price__gte=priceMin)
+        if priceMax:
+            querySet = querySet.filter(items__price__lte=priceMax)
         querySet = querySet.distinct()
         
         # sort by highest or lowest price

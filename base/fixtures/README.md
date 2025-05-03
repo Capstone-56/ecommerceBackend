@@ -7,5 +7,5 @@ following command:
 
 or run -> python manage.py loaddata base/fixtures/additional_data.json (temp fixtures for testing the new product and category schema)
 
-### To recalculate the MPTT treem run the following (after loading fixtures):
+### To recalculate the MPTT tree run the following (after loading fixtures):
 python manage.py shell -c "from base.models import CategoryModel; CategoryModel.objects.rebuild()"
