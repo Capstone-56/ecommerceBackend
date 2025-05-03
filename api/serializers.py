@@ -56,9 +56,9 @@ class ProductModelSerializer(serializers.ModelSerializer):
     def get_price(self, obj):
         sort = self.context.get("sort")
         if sort == "priceDesc":
-            return getattr(obj, "max_price", None)
+            return getattr(obj, "maxPrice", None)
         # Default to min_price if priceAsc or no sort.
-        return getattr(obj, "min_price", None)
+        return getattr(obj, "minPrice", None)
 
 
 class CategoryModelSerializer(serializers.ModelSerializer):
@@ -71,6 +71,6 @@ class CategoryModelSerializer(serializers.ModelSerializer):
     def get_breadcrumb(self, obj):
         # MPTTModel provides get_ancestors()
         return [
-            {"name": anc.name, "internal_name": anc.internalName}
+            {"name": anc.name, "internalName": anc.internalName}
             for anc in obj.get_ancestors(include_self=True)
         ]
