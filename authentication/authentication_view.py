@@ -1,6 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from rest_framework.permissions import AllowAny
 from api.serializers import UserModelSerializer
 
 class AuthenticationViewSet(viewsets.ViewSet):
@@ -8,7 +9,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
     Handles user authentication operations like sign-up, login, 2FA, etc.
     """
 
-    @action(detail=False, methods=["post"], url_path="signup")
+    @action(detail=False, methods=["post"], permission_classes=[AllowAny], url_path="signup", authentication_classes=[])
     def signup(self, request):
         """
         Register a new user.
