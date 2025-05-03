@@ -1,10 +1,12 @@
 asgiref==3.8.1
+bcrypt==4.3.0
 Django==5.2
+django-cors-headers==4.7.0
+django-js-asset==3.1.2
+django-mptt==0.17.0
 djangorestframework==3.16.0
 psycopg==3.2.6
 psycopg-binary==3.2.6
 sqlparse==0.5.3
 typing_extensions==4.13.1
 tzdata==2025.2
-bcrypt==4.3.0
-django-cors-headers==4.7.0
