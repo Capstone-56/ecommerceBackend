@@ -3,6 +3,9 @@ import uuid
 from .product_model import ProductModel
 
 class ProductSizeModel(models.Model):
+    """
+    TODO: might remove soon
+    """
     id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
     productId = models.ForeignKey(ProductModel, on_delete=models.CASCADE, db_column="productId")
     size = models.CharField(max_length=7)

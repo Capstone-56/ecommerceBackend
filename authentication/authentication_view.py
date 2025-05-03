@@ -13,7 +13,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
     Handles user authentication operations like sign-up, login, token refresh, 2FA, etc.
     """
 
-    @action(detail=False, methods=["post"], url_path="signup", permission_classes=[AllowAny])
+    @action(detail=False, methods=["post"], permission_classes=[AllowAny], url_path="signup", authentication_classes=[])
     def signup(self, request):
         """
         Register a new user.
