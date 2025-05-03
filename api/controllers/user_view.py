@@ -22,6 +22,7 @@ class UserViewSet(viewsets.ViewSet):
         serializer = UserModelSerializer(users, many=True)
         return Response(serializer.data)
 
+
     def retrieve(self, request, pk=None):
         """
         Retrieve a specific user by username.
@@ -31,20 +32,6 @@ class UserViewSet(viewsets.ViewSet):
         serializer = UserModelSerializer(user)
         return Response(serializer.data)
 
-    """
-    def create(self, request):
-        
-        Create a new user.
-        POST /api/user
-        
-        hashed = bcrypt.hashpw(request.data.get("password").encode(encoding="utf-8"), bcrypt.gensalt())
-        request.data["password"] = hashed
-        serializer = UserModelSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    """
 
     def update(self, request, pk=None):
         """
@@ -58,8 +45,10 @@ class UserViewSet(viewsets.ViewSet):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
     def destroy(self, request, pk=None):
         """
+        TODO: implement soft delete and self delete
         Delete a specific user.
         DELETE /api/user/${id}
         """
