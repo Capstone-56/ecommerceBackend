@@ -1,5 +1,6 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.shortcuts import get_object_or_404
 
 import logging
@@ -13,6 +14,16 @@ from base.models import UserModel
 from api.serializers import UserModelSerializer
 
 class UserViewSet(viewsets.ViewSet):
+
+    # for testing purposes, you need to be authenticated by attaching to request Headder:
+    # Authorization: Bearer <accessToken>
+    # to call GET /api/user
+    def get_permissions(self):
+        if self.action == "list":
+            return [IsAuthenticated()]
+
+        return [AllowAny()]
+
     def list(self, request):
         """
         Retrieve all UserModel records.
