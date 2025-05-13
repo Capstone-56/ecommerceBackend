@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from django.db.models import Min, Max
+from django.db.models import Min, Max, Q
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -26,6 +26,7 @@ class ProductViewSet(viewsets.ViewSet):
         - sort (string) e.g. ?sort=priceAsc, ?sort=priceDesc
         - colour (string) e.g. ?colour=red
         - categories (comma‑separated strings) e.g. ?categories=cat1, cat2
+        - search (string) e.g. ?search=pants
 
         If categories is provided, returns products linked to *all* of those categories.
         """
@@ -72,6 +73,13 @@ class ProductViewSet(viewsets.ViewSet):
             ).values_list("id", flat=True)
             # Filter products linked to these variants via ProductConfig
             querySet = querySet.filter(items__productconfigmodel__variant__in=variant_ids).distinct()
+
+        # Filter products based on name or description using a search query
+        searchQuery = request.query_params.get("search")
+        if searchQuery:
+            querySet = querySet.filter(
+                Q(name__icontains=searchQuery) | Q(description__icontains=searchQuery)
+            )
 
         paginator = PagedList()
         pagedQuerySet = paginator.paginate_queryset(querySet, request)
