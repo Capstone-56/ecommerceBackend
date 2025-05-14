@@ -66,8 +66,9 @@ class UserViewSet(viewsets.ViewSet):
         """
         user = get_object_or_404(UserModel, pk=pk)
 
-        if request.user != user or request.user.role != ROLE.ADMIN.value:
+        if request.user != user and request.user.role != ROLE.ADMIN.value:
             return Response({'error': 'Permission denied.'}, status=status.HTTP_403_FORBIDDEN)
 
-        user.delete()
+        user.is_active = False
+        user.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
