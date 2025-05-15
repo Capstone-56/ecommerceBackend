@@ -9,6 +9,7 @@ import logging
 logging.basicConfig(level=logging.DEBUG,  # Log messages with this level or higher
                     format='%(asctime)s - %(levelname)s - %(message)s')  # Format for log messages
 
+from base.enums.role import ROLE
 from base.models import UserModel
 
 from api.serializers import UserModelSerializer
@@ -19,7 +20,7 @@ class UserViewSet(viewsets.ViewSet):
     # Authorization: Bearer <accessToken>
     # to call GET /api/user
     def get_permissions(self):
-        if self.action == "list":
+        if self.action == "list" or "delete":
             return [IsAuthenticated()]
 
         return [AllowAny()]
@@ -59,10 +60,15 @@ class UserViewSet(viewsets.ViewSet):
 
     def destroy(self, request, pk=None):
         """
-        TODO: implement soft delete and self delete
-        Delete a specific user.
+        TODO: Implement soft delete
+        Delete a specific user. Authorized only for admins and users deleting their own accounts.
         DELETE /api/user/${id}
         """
         user = get_object_or_404(UserModel, pk=pk)
-        user.delete()
+
+        if request.user != user and request.user.role != ROLE.ADMIN.value:
+            return Response({'error': 'Permission denied.'}, status=status.HTTP_403_FORBIDDEN)
+
+        user.is_active = False
+        user.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
