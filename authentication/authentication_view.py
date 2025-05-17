@@ -2,11 +2,12 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from api.serializers import UserModelSerializer
-from base.models import *
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
-from django.contrib.auth import logout
+from api.serializers import UserModelSerializer
+from base import Constants
+from base.utils import store_hashed_refresh
+from base.models import *
 
 class AuthenticationViewSet(viewsets.ViewSet):
     """
@@ -32,11 +33,30 @@ class AuthenticationViewSet(viewsets.ViewSet):
         serializer = UserModelSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
-            return Response({
-                "message": "User registered successfully",
-                "user_id": user.id,
-                "email": user.email
-            }, status=status.HTTP_201_CREATED)
+
+            refreshToken = RefreshToken.for_user(user)
+            accessToken = refreshToken.access_token
+
+            store_hashed_refresh(user, str(refreshToken))
+
+            response = Response(status=200)
+
+            response.set_cookie(
+                "accessToken",
+                str(accessToken),
+                httponly=True,
+                secure=True,
+                samesite="Lax",
+                max_age=int(Constants.ACCESS_TOKEN_LIFETIME.total_seconds())
+            )
+
+            response.set_cookie(
+                "refreshToken", str(refreshToken),
+                httponly=True,
+                secure=True,
+                samesite="Lax",
+                max_age=int(Constants.REFRESH_TOKEN_LIFETIME.total_seconds())
+            )
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -59,24 +79,37 @@ class AuthenticationViewSet(viewsets.ViewSet):
         # Choose lookup on email vs username
         lookup = {"email": identifier} if "@" in identifier else {"username": identifier}
 
-        try:
-            user = UserModel.objects.get(**lookup)
-        except UserModel.DoesNotExist:
-            return Response({"detail": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
-
-        if not user.check_password(password):
+        user = UserModel.objects.filter(**lookup).first()
+        if not user or not user.check_password(password):
             return Response({"detail": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
         if not user.is_active:
             return Response({"detail": "Account disabled"}, status=status.HTTP_403_FORBIDDEN)
 
         # Issue JWTs
-        refresh = RefreshToken.for_user(user)
-        access = refresh.access_token
+        refreshToken = RefreshToken.for_user(user)
+        accessToken = refreshToken.access_token
+        store_hashed_refresh(user, str(refreshToken))
 
-        return Response({
-            "accessToken": str(access),
-            "refreshToken": str(refresh),
-        }, status=200)
+        response = Response(status=200)
+
+        response.set_cookie(
+            "accessToken",
+            str(accessToken),
+            httponly=True,
+            secure=True,
+            samesite="Lax",
+            max_age=int(Constants.ACCESS_TOKEN_LIFETIME.total_seconds())
+        )
+
+        response.set_cookie(
+            "refreshToken", str(refreshToken),
+            httponly=True,
+            secure=True,
+            samesite="Lax",
+            max_age=int(Constants.REFRESH_TOKEN_LIFETIME.total_seconds())
+        )
+
+        return response
 
 
     @action(detail=False, methods=["delete"], url_path="logout", permission_classes=[IsAuthenticated])
@@ -112,14 +145,14 @@ class AuthenticationViewSet(viewsets.ViewSet):
         )
 
 
-    @action(detail=False, methods=["post"], url_path="refresh")
-    def refresh_token(self, request):
-        """
-        Refresh an expiring JWT. FrontEnd needs to call this to change the access token every less than 5 minutes
-
-        POST /auth/refresh
-        Request body JSON:
-        { "refresh": "<refresh_token>" }
-        """
-        from rest_framework_simplejwt.views import TokenRefreshView
-        return TokenRefreshView.as_view()(request._request)
+    # @action(detail=False, methods=["post"], url_path="refresh")
+    # def refresh_token(self, request):
+    #     """
+    #     Refresh an expiring JWT. FrontEnd needs to call this to change the access token every less than 5 minutes
+    #
+    #     POST /auth/refresh
+    #     Request body JSON:
+    #     { "refresh": "<refresh_token>" }
+    #     """
+    #     from rest_framework_simplejwt.views import TokenRefreshView
+    #     return TokenRefreshView.as_view()(request._request)
