@@ -1,3 +1,4 @@
+from collections import defaultdict
 from rest_framework import serializers
 from base.models import *
 
@@ -48,9 +49,10 @@ class UserModelSerializer(serializers.ModelSerializer):
 
 class ProductModelSerializer(serializers.ModelSerializer):
     price = serializers.SerializerMethodField()
+    variations = serializers.SerializerMethodField()
     class Meta:
         model = ProductModel
-        fields = ["id", "name", "description", "images", "featured", "avgRating", "price"]
+        fields = ["id", "name", "description", "images", "featured", "avgRating", "price", "variations"]
     
     # Retrieve the price of an object based on the sorting context. If the sort is set to priceDesc, then the max_price is appended.
     def get_price(self, obj):
@@ -59,6 +61,17 @@ class ProductModelSerializer(serializers.ModelSerializer):
             return getattr(obj, "maxPrice", None)
         # Default to min_price if priceAsc or no sort.
         return getattr(obj, "minPrice", None)
+    
+    # Retrieve variations for the given product.
+    def get_variations(self, obj):
+        variants = VariantModel.objects.filter(
+            productconfigmodel__productItem__product=obj
+        ).select_related('variationType').distinct()
+
+        grouped = defaultdict(list)
+        for variant in variants:
+            grouped[variant.variationType.name].append(variant.value)
+        return grouped
 
 
 class CategoryModelSerializer(serializers.ModelSerializer):
