@@ -35,5 +35,5 @@ class CategoryModel(MPTTModel):
         db_table = "category"
     
     class MPTTMeta:
-        parent_attr = 'parentCategory'
-        order_insertion_by = ['name']
+        parent_attr = "parentCategory"
+        order_insertion_by = ["internalName"]
