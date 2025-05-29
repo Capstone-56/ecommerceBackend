@@ -76,10 +76,11 @@ class ProductModelSerializer(serializers.ModelSerializer):
 
 class CategoryModelSerializer(serializers.ModelSerializer):
     breadcrumb = serializers.SerializerMethodField()
+    children = serializers.SerializerMethodField()
 
     class Meta:
         model = CategoryModel
-        fields = ["internalName", "name", "description", "parentCategory", "breadcrumb"]
+        fields = ["internalName", "name", "description", "parentCategory", "breadcrumb", "children"]
 
     def get_breadcrumb(self, obj):
         # MPTTModel provides get_ancestors()
@@ -87,3 +88,8 @@ class CategoryModelSerializer(serializers.ModelSerializer):
             {"name": anc.name, "internalName": anc.internalName}
             for anc in obj.get_ancestors(include_self=True)
         ]
+
+    def get_children(self, obj):
+        # Recursively serialize children categories
+        children = obj.__class__.objects.filter(parentCategory=obj.internalName)
+        return CategoryModelSerializer(children, many=True).data

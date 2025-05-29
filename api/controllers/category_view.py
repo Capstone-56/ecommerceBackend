@@ -14,8 +14,9 @@ class CategoryViewSet(viewsets.ViewSet):
         Retrieve all CategoryModel records.
         GET /api/category
         """
-        categories = CategoryModel.objects.all()
-        serializer = CategoryModelSerializer(categories, many=True)
+        # Only get categories where parentCategory is None
+        top_level_categories = CategoryModel.objects.filter(parentCategory__isnull=True)
+        serializer = CategoryModelSerializer(top_level_categories, many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):

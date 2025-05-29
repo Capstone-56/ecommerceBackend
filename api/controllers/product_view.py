@@ -6,7 +6,7 @@ from rest_framework.decorators import action
 
 from base.abstractModels import PagedList
 from base.models import ProductModel, VariantModel, CategoryModel
-from api.serializers import ProductModelSerializer
+from api.serializers import ProductModelSerializer, CategoryModelSerializer
 
 class ProductViewSet(viewsets.ViewSet):
     """
@@ -96,11 +96,12 @@ class ProductViewSet(viewsets.ViewSet):
         # Serialize products
         serializer = ProductModelSerializer(products, many=True)
 
-        # Generate breadcrumb trail
-        breadcrumb = category.get_ancestors(include_self=True).values_list("name", flat=True)
+        # Use the CategoryModelSerializer to get the breadcrumb
+        category_serializer = CategoryModelSerializer(category)
+        breadcrumb = category_serializer.data.get("breadcrumb", [])
 
         return Response({
-            "breadcrumb": list(breadcrumb),
+            "breadcrumb": breadcrumb,
             "products": serializer.data
         })
     
