@@ -13,3 +13,7 @@ def verify_hashed_refresh(user, raw_refresh_token):
     Check a raw token against the stored hash.
     """
     return check_password(raw_refresh_token, user.refreshToken)
+
+def clear_hashed_refresh(user):
+    user.refreshToken = ""
+    user.save(update_fields=[Constants.REFRESH_TOKEN])

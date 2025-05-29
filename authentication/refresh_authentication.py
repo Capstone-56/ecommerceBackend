@@ -21,7 +21,7 @@ class RefreshAuthentication(JWTAuthentication):
         if rawAccess:
             try:
                 validated = self.get_validated_token(rawAccess)
-                return (self.get_user(validated), validated)
+                return self.get_user(validated), validated
             except TokenError:
                 pass
 
@@ -48,4 +48,4 @@ class RefreshAuthentication(JWTAuthentication):
         request._access = str(newAccess)
 
         validated = self.get_validated_token(request._access)
-        return (self.get_user(validated), validated)
+        return self.get_user(validated), validated

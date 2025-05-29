@@ -116,31 +116,32 @@ class AuthenticationViewSet(viewsets.ViewSet):
     @action(detail=False, methods=["delete"], url_path="logout", permission_classes=[IsAuthenticated])
     def logout(self, request):
         """
-        Invalidate a JWT session by blacklisting the provided refresh token.
-
         DELETE /auth/logout
-        Header:
-            Authorization: Bearer <access_token>
-
-        Body (JSON):
-        {
-          "refresh": "<refresh_token>"
-        }
+        - Reads the refreshToken cookie
+        - Blacklists it
+        - Clears the stored hash
+        - Deletes both JWT cookies
         """
-        refreshToken = request.data.get(Constants.REFRESH_TOKEN)
-        if not refreshToken:
+        raw_refresh = request.COOKIES.get(Constants.REFRESH_TOKEN)
+        if not raw_refresh:
             return Response(
-                {"detail": "Refresh token required"},
+                {"detail": "Refresh token cookie not found"},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
         try:
-            token = RefreshToken(refreshToken)
+            token = RefreshToken(raw_refresh)
             token.blacklist()
         except TokenError as e:
-            return Response({"detail": e.args[0]}, status=status.HTTP_400_BAD_REQUEST)
+            # if it’s already expired/blacklisted etc
+            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-        return Response(
-            {"message": "Logged out successfully"},
-            status=status.HTTP_200_OK
-        )
+        utils.clear_hashed_refresh(request.user)
+
+        response = Response(status.HTTP_200_OK)
+
+        # delete cookie on the scope of the whole website
+        response.delete_cookie(Constants.ACCESS_TOKEN, path="/")
+        response.delete_cookie(Constants.REFRESH_TOKEN, path="/")
+
+        return response
