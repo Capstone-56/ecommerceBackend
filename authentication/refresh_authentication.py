@@ -11,6 +11,7 @@ User = get_user_model()
 
 class RefreshAuthentication(JWTAuthentication):
     """
+    Default authentication class, customising based on JWTAuthentication class
     Try to authenticate via the HttpOnly accessToken cookie.
     If it’s expired, decode it (ignoring expiry) to get userId.
     Lookup the user and verify they still have a valid (hashed) refresh in DB.
