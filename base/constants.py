@@ -6,4 +6,3 @@ class Constants:
     REFRESH_TOKEN_LIFETIME = timedelta(days=1)
     ACCESS_TOKEN = "accessToken"
     REFRESH_TOKEN = "refreshToken"
-    
