@@ -1,11 +1,12 @@
 from django.shortcuts import get_object_or_404
-from django.db.models import Min, Max
+from django.db.models import Min, Max, Count
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
 
 from base.abstractModels import PagedList
 from base.models import ProductModel
+from base.models.product_category_model import ProductCategoryModel
 from base.models.variant_model import VariantModel
 from api.serializers import ProductModelSerializer
 
@@ -98,4 +99,35 @@ class ProductViewSet(viewsets.ViewSet):
         featured_products = ProductModel.objects.filter(featured=True)[:3]
         serializer = ProductModelSerializer(featured_products, many=True)
 
+        return Response(serializer.data)
+
+    @action(detail=True, methods=['get'], url_path='related')
+    def retrieveRelatedProducts(self, request, pk):
+        """
+        Retrieve related products based on their categories.
+        GET /api/product/{id}/related
+        """
+        product = get_object_or_404(ProductModel, id=pk)
+
+        # Filter for all category IDs based on supplied product.
+        category_ids = ProductCategoryModel.objects.filter(product=product).values_list('category_id', flat=True)
+
+        # Filter for related product IDs. It uses the category IDs from before and filters the ProductCategoryModel
+        # for products that have at least one of the category IDs. It then annotates each product with a count
+        # based on how many categories it matched, and is then filtered again based on number of categories matched.
+        # This should only ever return a list of product IDs that have the same grouping of categories.
+        related_products_ids = (
+            ProductCategoryModel.objects
+                .filter(category_id__in=category_ids)
+                .exclude(product_id=product.id)
+                .values('product_id')
+                .annotate(match_count=Count('category_id'))
+                .filter(match_count=len(category_ids))
+                .values_list('product_id', flat=True)
+        )
+
+        # Filter ProductModels for products that match the related product IDs.
+        related_products = ProductModel.objects.filter(id__in=related_products_ids) 
+
+        serializer = ProductModelSerializer(related_products, many=True)
         return Response(serializer.data)
