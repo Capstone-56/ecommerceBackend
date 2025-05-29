@@ -6,7 +6,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
 from api.serializers import UserModelSerializer
 from base import Constants
-from base.utils import store_hashed_refresh
+from base import utils
 from base.models import *
 
 class AuthenticationViewSet(viewsets.ViewSet):
@@ -37,12 +37,12 @@ class AuthenticationViewSet(viewsets.ViewSet):
             refreshToken = RefreshToken.for_user(user)
             accessToken = refreshToken.access_token
 
-            store_hashed_refresh(user, str(refreshToken))
+            utils.store_hashed_refresh(user, str(refreshToken))
 
             response = Response(status=200)
 
             response.set_cookie(
-                "accessToken",
+                Constants.ACCESS_TOKEN,
                 str(accessToken),
                 httponly=True,
                 secure=True,
@@ -51,7 +51,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
             )
 
             response.set_cookie(
-                "refreshToken", str(refreshToken),
+                Constants.REFRESH_TOKEN, str(refreshToken),
                 httponly=True,
                 secure=True,
                 samesite="Lax",
@@ -88,12 +88,12 @@ class AuthenticationViewSet(viewsets.ViewSet):
         # Issue JWTs
         refreshToken = RefreshToken.for_user(user)
         accessToken = refreshToken.access_token
-        store_hashed_refresh(user, str(refreshToken))
+        utils.store_hashed_refresh(user, str(refreshToken))
 
         response = Response(status=200)
 
         response.set_cookie(
-            "accessToken",
+            Constants.ACCESS_TOKEN,
             str(accessToken),
             httponly=True,
             secure=True,
@@ -102,7 +102,8 @@ class AuthenticationViewSet(viewsets.ViewSet):
         )
 
         response.set_cookie(
-            "refreshToken", str(refreshToken),
+            Constants.REFRESH_TOKEN,
+            str(refreshToken),
             httponly=True,
             secure=True,
             samesite="Lax",
@@ -126,7 +127,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
           "refresh": "<refresh_token>"
         }
         """
-        refreshToken = request.data.get("refreshToken")
+        refreshToken = request.data.get(Constants.REFRESH_TOKEN)
         if not refreshToken:
             return Response(
                 {"detail": "Refresh token required"},
@@ -143,16 +144,3 @@ class AuthenticationViewSet(viewsets.ViewSet):
             {"message": "Logged out successfully"},
             status=status.HTTP_200_OK
         )
-
-
-    # @action(detail=False, methods=["post"], url_path="refresh")
-    # def refresh_token(self, request):
-    #     """
-    #     Refresh an expiring JWT. FrontEnd needs to call this to change the access token every less than 5 minutes
-    #
-    #     POST /auth/refresh
-    #     Request body JSON:
-    #     { "refresh": "<refresh_token>" }
-    #     """
-    #     from rest_framework_simplejwt.views import TokenRefreshView
-    #     return TokenRefreshView.as_view()(request._request)

@@ -9,7 +9,7 @@ class RefreshCookieMiddleware:
         new_access = getattr(request, "_access", None)
         if new_access:
             response.set_cookie(
-                "accessToken",
+                Constants.ACCESS_TOKEN,
                 new_access,
                 httponly=True,
                 secure=True,
