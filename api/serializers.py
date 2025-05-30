@@ -86,8 +86,14 @@ class CategoryModelSerializer(serializers.ModelSerializer):
         super().__init__(*args, **kwargs)
         view = self.context.get("view", None)
         if getattr(view, "action", None) == "list":
-            # remove breadcrumb entirely
+            # remove breadcrumb, description & parentCategory entirely
+            # this is to save the amount of data returned when called GET /api/category
+            # if we don't exclude these fields, the trees when growing too large
+            # can make this API call returns a huge chunk of data
+            # and freezes the browser
             self.fields.pop("breadcrumb", None)
+            self.fields.pop("description", None)
+            self.fields.pop("parentCategory", None)
 
     def get_breadcrumb(self, obj):
         # MPTTModel provides get_ancestors()
