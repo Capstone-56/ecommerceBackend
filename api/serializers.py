@@ -82,6 +82,13 @@ class CategoryModelSerializer(serializers.ModelSerializer):
         model = CategoryModel
         fields = ["internalName", "name", "description", "parentCategory", "breadcrumb", "children"]
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        view = self.context.get("view", None)
+        if getattr(view, "action", None) == "list":
+            # remove breadcrumb entirely
+            self.fields.pop("breadcrumb", None)
+
     def get_breadcrumb(self, obj):
         # MPTTModel provides get_ancestors()
         return [
@@ -92,4 +99,4 @@ class CategoryModelSerializer(serializers.ModelSerializer):
     def get_children(self, obj):
         # Recursively serialize children categories
         children = obj.__class__.objects.filter(parentCategory=obj.internalName)
-        return CategoryModelSerializer(children, many=True).data
+        return CategoryModelSerializer(children, many=True, context=self.context).data

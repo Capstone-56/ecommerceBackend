@@ -1,0 +1,106 @@
+[
+  {
+    "model": "base.CategoryModel",
+    "pk": "mens",
+    "fields": {
+      "name": "Mens",
+      "description": "Mens clothing",
+      "parentCategory": null,
+      "lft": 1,
+      "rght": 10,
+      "tree_id": 1,
+      "level": 0
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "mens-shirt",
+    "fields": {
+      "name": "Shirt",
+      "description": "Mens Shirts",
+      "parentCategory": "mens",
+      "lft": 2,
+      "rght": 5,
+      "tree_id": 1,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "mens-tshirt",
+    "fields": {
+      "name": "T-Shirt",
+      "description": "Mens T-Shirts",
+      "parentCategory": "mens-shirt",
+      "lft": 3,
+      "rght": 4,
+      "tree_id": 1,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "mens-poloshirt",
+    "fields": {
+      "name": "Polo Shirt",
+      "description": "Mens Polo Shirts",
+      "parentCategory": "mens-shirt",
+      "lft": 4,
+      "rght": 5,
+      "tree_id": 1,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens",
+    "fields": {
+      "name": "Womens",
+      "description": "Womens clothing",
+      "parentCategory": null,
+      "lft": 1,
+      "rght": 10,
+      "tree_id": 2,
+      "level": 0
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-shirt",
+    "fields": {
+      "name": "Shirt",
+      "description": "Womens Shirts",
+      "parentCategory": "womens",
+      "lft": 2,
+      "rght": 5,
+      "tree_id": 2,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-tshirt",
+    "fields": {
+      "name": "T-Shirt",
+      "description": "Womens T-Shirts",
+      "parentCategory": "womens-shirt",
+      "lft": 3,
+      "rght": 4,
+      "tree_id": 2,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-sweatshirt",
+    "fields": {
+      "name": "Sweat Shirt",
+      "description": "Womens Sweat Shirts",
+      "parentCategory": "womens-shirt",
+      "lft": 4,
+      "rght": 5,
+      "tree_id": 2,
+      "level": 2
+    }
+  }
+]
