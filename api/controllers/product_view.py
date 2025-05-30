@@ -83,6 +83,8 @@ class ProductViewSet(viewsets.ViewSet):
         """
         Retrieve all products under a category and its subcategories,
         and generate a breadcrumb trail of parent categories.
+        this should replace the current GET /api/product endpoint in the near future
+        unless admins might need to list the full table of products
         GET /api/product/{internalName}/cat
         """
         category = get_object_or_404(CategoryModel, internalName=pk)
@@ -93,7 +95,6 @@ class ProductViewSet(viewsets.ViewSet):
         # Retrieve products in these categories
         products = ProductModel.objects.filter(category__in=categories)
 
-        # Serialize products
         serializer = ProductModelSerializer(products, many=True)
 
         # Use the CategoryModelSerializer to get the breadcrumb
