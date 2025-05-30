@@ -32,11 +32,21 @@ class ProductViewSet(viewsets.ViewSet):
 
         categoriesParam = request.query_params.get("categories")
         if categoriesParam:
-            # split on comma and strip whitespace
             categoryIds = [c.strip() for c in categoriesParam.split(",") if c.strip()]
-            for cat in categoryIds:
-                querySet = querySet.filter(category_links__category=cat)
-            querySet = querySet.distinct()
+            # Find all categories matching those internalNames (with descendants)
+            from base.models import CategoryModel
+            all_category_ids = set()
+            for internal_name in categoryIds:
+                try:
+                    cat = CategoryModel.objects.get(internalName=internal_name)
+                    descendants = cat.get_descendants(include_self=True)
+                    all_category_ids.update(descendants.values_list("internalName", flat=True))
+                except CategoryModel.DoesNotExist:
+                    pass  # Ignore invalid categories, or handle as needed
+            if all_category_ids:
+                querySet = querySet.filter(category__in=all_category_ids)
+            else:
+                querySet = querySet.none()
         
         # find the min and max price of all related productItems. These will be used to filter and sort the products.
         querySet = querySet.annotate(
