@@ -5,7 +5,7 @@ class RefreshCookieMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        # try to authenticate request, no matter it is defined as authenticated or not
+        # authenticate request
         response = self.get_response(request)
 
         # issue new access token if the current expired
