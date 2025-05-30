@@ -36,27 +36,9 @@ class AuthenticationViewSet(viewsets.ViewSet):
 
             refreshToken = RefreshToken.for_user(user)
             accessToken = refreshToken.access_token
-
             utils.store_hashed_refresh(user, str(refreshToken))
 
-            response = Response(status=200)
-
-            response.set_cookie(
-                Constants.ACCESS_TOKEN,
-                str(accessToken),
-                httponly=True,
-                secure=True,
-                samesite="Lax",
-                max_age=int(Constants.ACCESS_TOKEN_LIFETIME.total_seconds())
-            )
-
-            response.set_cookie(
-                Constants.REFRESH_TOKEN, str(refreshToken),
-                httponly=True,
-                secure=True,
-                samesite="Lax",
-                max_age=int(Constants.REFRESH_TOKEN_LIFETIME.total_seconds())
-            )
+            return setCookie(accessToken, refreshToken)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -90,27 +72,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
         accessToken = refreshToken.access_token
         utils.store_hashed_refresh(user, str(refreshToken))
 
-        response = Response(status=200)
-
-        response.set_cookie(
-            Constants.ACCESS_TOKEN,
-            str(accessToken),
-            httponly=True,
-            secure=True,
-            samesite="Lax",
-            max_age=int(Constants.ACCESS_TOKEN_LIFETIME.total_seconds())
-        )
-
-        response.set_cookie(
-            Constants.REFRESH_TOKEN,
-            str(refreshToken),
-            httponly=True,
-            secure=True,
-            samesite="Lax",
-            max_age=int(Constants.REFRESH_TOKEN_LIFETIME.total_seconds())
-        )
-
-        return response
+        return setCookie(accessToken, refreshToken)
 
 
     @action(detail=False, methods=["delete"], url_path="logout", permission_classes=[IsAuthenticated])
@@ -145,3 +107,27 @@ class AuthenticationViewSet(viewsets.ViewSet):
         response.delete_cookie(Constants.REFRESH_TOKEN, path="/")
 
         return response
+
+
+def setCookie(accessToken, refreshToken) -> Response:
+    response = Response(status=200)
+
+    response.set_cookie(
+        Constants.ACCESS_TOKEN,
+        str(accessToken),
+        httponly=True,
+        secure=True,
+        samesite="Lax",
+        max_age=int(Constants.ACCESS_TOKEN_LIFETIME.total_seconds())
+    )
+
+    response.set_cookie(
+        Constants.REFRESH_TOKEN,
+        str(refreshToken),
+        httponly=True,
+        secure=True,
+        samesite="Lax",
+        max_age=int(Constants.REFRESH_TOKEN_LIFETIME.total_seconds())
+    )
+
+    return response
