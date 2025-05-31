@@ -1116,7 +1116,7 @@
     "model": "base.VariationTypeModel",
     "pk": "880bef57-3b0a-42d9-b40b-7c52dd114ee7",
     "fields": {
-      "name": "Color",
+      "name": "colour",
       "category": null
     }
   },
