@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from base import Constants
-from datetime import timedelta
 
 
 import os
@@ -47,23 +46,32 @@ INSTALLED_APPS = [
     "rest_framework",
     "base",
 
+    "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',  # Add this middleware
+    "api.middleware.RefreshCookieMiddleware",
 ]
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
 ]
+
+CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]
+CSRF_COOKIE_SECURE   = True
+CSRF_COOKIE_SAMESITE = "Lax"
+SESSION_COOKIE_SECURE   = True
+SESSION_COOKIE_SAMESITE = "Lax"
 
 ROOT_URLCONF = 'ecommerceBackend.urls'
 
@@ -145,6 +153,7 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": Constants.DEFAULT_PAGINATOR_PAGE_SIZE,
 
     "DEFAULT_AUTHENTICATION_CLASSES": [
+        "authentication.refresh_authentication.RefreshAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
 
@@ -154,8 +163,9 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1)
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "ACCESS_TOKEN_LIFETIME": Constants.ACCESS_TOKEN_LIFETIME,
+    "REFRESH_TOKEN_LIFETIME": Constants.REFRESH_TOKEN_LIFETIME
 }
 
 AUTH_USER_MODEL = "base.UserModel"
