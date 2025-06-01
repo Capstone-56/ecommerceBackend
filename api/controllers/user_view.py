@@ -41,6 +41,9 @@ class UserViewSet(viewsets.ViewSet):
         GET /api/user/{username}
         """
         user = get_object_or_404(UserModel, username=pk)
+        if request.user != user and request.user.role != ROLE.ADMIN.value:
+            return Response({'error': 'Permission denied.'}, status=status.HTTP_403_FORBIDDEN)
+        
         serializer = UserModelSerializer(user)
         return Response(serializer.data)
 
