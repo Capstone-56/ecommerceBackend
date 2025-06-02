@@ -76,10 +76,24 @@ class ProductModelSerializer(serializers.ModelSerializer):
 
 class CategoryModelSerializer(serializers.ModelSerializer):
     breadcrumb = serializers.SerializerMethodField()
+    children = serializers.SerializerMethodField()
 
     class Meta:
         model = CategoryModel
-        fields = ["internalName", "name", "description", "parentCategory", "breadcrumb"]
+        fields = ["internalName", "name", "description", "parentCategory", "breadcrumb", "children"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        view = self.context.get("view", None)
+        if getattr(view, "action", None) == "list":
+            # remove breadcrumb, description & parentCategory entirely
+            # this is to save the amount of data returned when called GET /api/category
+            # if we don't exclude these fields, the trees when growing too large
+            # can make this API call returns a huge chunk of data
+            # and freezes the browser
+            self.fields.pop("breadcrumb", None)
+            self.fields.pop("description", None)
+            self.fields.pop("parentCategory", None)
 
     def get_breadcrumb(self, obj):
         # MPTTModel provides get_ancestors()
@@ -87,3 +101,8 @@ class CategoryModelSerializer(serializers.ModelSerializer):
             {"name": anc.name, "internalName": anc.internalName}
             for anc in obj.get_ancestors(include_self=True)
         ]
+
+    def get_children(self, obj):
+        # Recursively serialize children categories
+        children = obj.__class__.objects.filter(parentCategory=obj.internalName)
+        return CategoryModelSerializer(children, many=True, context=self.context).data

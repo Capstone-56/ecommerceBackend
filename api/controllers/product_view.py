@@ -5,10 +5,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 
 from base.abstractModels import PagedList
-from base.models import ProductModel
-from base.models.product_category_model import ProductCategoryModel
-from base.models.variant_model import VariantModel
-from api.serializers import ProductModelSerializer
+from base.models import ProductModel, VariantModel, CategoryModel
+from api.serializers import ProductModelSerializer, CategoryModelSerializer
 
 class ProductViewSet(viewsets.ViewSet):
     """
@@ -34,11 +32,21 @@ class ProductViewSet(viewsets.ViewSet):
 
         categoriesParam = request.query_params.get("categories")
         if categoriesParam:
-            # split on comma and strip whitespace
             categoryIds = [c.strip() for c in categoriesParam.split(",") if c.strip()]
-            for cat in categoryIds:
-                querySet = querySet.filter(category_links__category=cat)
-            querySet = querySet.distinct()
+            # Find all categories matching those internalNames (with descendants)
+            from base.models import CategoryModel
+            all_category_ids = set()
+            for internal_name in categoryIds:
+                try:
+                    cat = CategoryModel.objects.get(internalName=internal_name)
+                    descendants = cat.get_descendants(include_self=True)
+                    all_category_ids.update(descendants.values_list("internalName", flat=True))
+                except CategoryModel.DoesNotExist:
+                    pass  # Ignore invalid categories, or handle as needed
+            if all_category_ids:
+                querySet = querySet.filter(category__in=all_category_ids)
+            else:
+                querySet = querySet.none()
         
         # find the min and max price of all related productItems. These will be used to filter and sort the products.
         querySet = querySet.annotate(
@@ -79,6 +87,34 @@ class ProductViewSet(viewsets.ViewSet):
 
         serializer = ProductModelSerializer(pagedQuerySet, many=True, context={"sort": sort})
         return paginator.get_paginated_response(serializer.data)
+
+    @action(detail=True, methods=["get"], url_path="cat")
+    def listProductsByCategory(self, request, pk=None):
+        """
+        Retrieve all products under a category and its subcategories,
+        and generate a breadcrumb trail of parent categories.
+        this should replace the current GET /api/product endpoint in the near future
+        unless admins might need to list the full table of products
+        GET /api/product/{internalName}/cat
+        """
+        category = get_object_or_404(CategoryModel, internalName=pk)
+
+        # Get all descendant categories including the current one
+        categories = category.get_descendants(include_self=True)
+
+        # Retrieve products in these categories
+        products = ProductModel.objects.filter(category__in=categories)
+
+        serializer = ProductModelSerializer(products, many=True)
+
+        # Use the CategoryModelSerializer to get the breadcrumb
+        category_serializer = CategoryModelSerializer(category)
+        breadcrumb = category_serializer.data.get("breadcrumb", [])
+
+        return Response({
+            "breadcrumb": breadcrumb,
+            "products": serializer.data
+        })
     
     def retrieve(self, request, pk=None):
         """
@@ -109,25 +145,16 @@ class ProductViewSet(viewsets.ViewSet):
         """
         product = get_object_or_404(ProductModel, id=pk)
 
-        # Filter for all category IDs based on supplied product.
-        category_ids = ProductCategoryModel.objects.filter(product=product).values_list('category_id', flat=True)
+        # Get the category of current product
+        category = product.category
 
-        # Filter for related product IDs. It uses the category IDs from before and filters the ProductCategoryModel
-        # for products that have at least one of the category IDs. It then annotates each product with a count
-        # based on how many categories it matched, and is then filtered again based on number of categories matched.
-        # This should only ever return a list of product IDs that have the same grouping of categories.
-        related_products_ids = (
-            ProductCategoryModel.objects
-                .filter(category_id__in=category_ids)
-                .exclude(product_id=product.id)
-                .values('product_id')
-                .annotate(match_count=Count('category_id'))
-                .filter(match_count=len(category_ids))
-                .values_list('product_id', flat=True)
-        )
+        # Retrieve all child categories if any, including the current one
+        child_categories = category.get_descendants(include_self=True)
 
-        # Filter ProductModels for products that match the related product IDs.
-        related_products = ProductModel.objects.filter(id__in=related_products_ids) 
+        # Fetch products in these categories, excluding the current product
+        related_products = ProductModel.objects.filter(
+            category__in=child_categories
+        ).exclude(id=product.id)
 
         serializer = ProductModelSerializer(related_products, many=True)
         return Response(serializer.data)
