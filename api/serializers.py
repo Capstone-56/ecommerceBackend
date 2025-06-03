@@ -59,9 +59,14 @@ class ProductModelSerializer(serializers.ModelSerializer):
         sort = self.context.get("sort")
         if sort == "priceDesc":
             return getattr(obj, "maxPrice", None)
-        # Default to min_price if priceAsc or no sort.
-        return getattr(obj, "minPrice", None)
-    
+        elif sort =="priceAsc":
+            # Default to min_price if priceAsc or no sort.
+            return getattr(obj, "minPrice", None)
+        
+        # For product details it needs to be returned like this. Otherwise,
+        # the price field won't be populated.
+        return obj.items.values_list("price", flat=True).first()
+
     # Retrieve variations for the given product.
     def get_variations(self, obj):
         variants = VariantModel.objects.filter(
