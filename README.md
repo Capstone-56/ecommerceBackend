@@ -25,6 +25,18 @@ CREATE USER ecommerce_admin WITH LOGIN SUPERUSER CREATEDB CREATEROLE INHERIT NOR
 GRANT ALL PRIVILEGES ON DATABASE ecommerce_db TO ecommerce_admin;
 ```
 
+Make sure you install these two extensions in your DB.
+
+This is required for fuzzy matching to work
+```sql
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+```
+
+This removes accents from words (café → cafe)
+```sql
+CREATE EXTENSION IF NOT EXISTS unaccent;
+```
+
 ## Local Server Setup
 __Step 1:__
 
