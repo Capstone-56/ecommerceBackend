@@ -25,7 +25,7 @@ CREATE USER ecommerce_admin WITH LOGIN SUPERUSER CREATEDB CREATEROLE INHERIT NOR
 GRANT ALL PRIVILEGES ON DATABASE ecommerce_db TO ecommerce_admin;
 ```
 
-Make sure you install these two extensions in your DB.
+Make sure you install these two extensions in your DB for product searching functionality.
 
 This is required for fuzzy matching to work
 ```sql
