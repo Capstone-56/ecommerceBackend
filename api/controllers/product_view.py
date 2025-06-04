@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django.db.models import Min, Max, Count, Q
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank, TrigramSimilarity
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -83,12 +84,35 @@ class ProductViewSet(viewsets.ViewSet):
             # Filter products linked to these variants via ProductConfig
             querySet = querySet.filter(items__productconfigmodel__variant__in=variant_ids).distinct()
 
-        # Filter products based on name or description using a search query
+        # Search name and description using full-text search and fuzzy matching
         searchQuery = request.query_params.get("search")
         if searchQuery:
-            querySet = querySet.filter(
-                Q(name__icontains=searchQuery) | Q(description__icontains=searchQuery)
-            )
+            # Create search vector for full-text search
+            search_vector = SearchVector('name', weight='A') + SearchVector('description', weight='B')
+            search_query = SearchQuery(searchQuery, config='english')
+            
+            # rank products based on weight of search terms
+            full_text_results = querySet.annotate(
+                search=search_vector,
+                rank=SearchRank(search_vector, search_query)
+            ).filter(search=search_query).filter(rank__gte=0.1)
+            
+            # fuzzy matching
+            trigram_results = querySet.annotate(
+                similarity=TrigramSimilarity('name', searchQuery) + 
+                          TrigramSimilarity('description', searchQuery)
+            ).filter(similarity__gt=0.1)
+            
+            # Combine results, prioritizing full-text search
+            if full_text_results.exists():
+                querySet = full_text_results.order_by('-rank')
+            elif trigram_results.exists():
+                querySet = trigram_results.order_by('-similarity')
+            else:
+                # Fallback to basic icontains search
+                querySet = querySet.filter(
+                    Q(name__icontains=searchQuery) | Q(description__icontains=searchQuery)
+                )
 
         paginator = PagedList()
         pagedQuerySet = paginator.paginate_queryset(querySet, request)
