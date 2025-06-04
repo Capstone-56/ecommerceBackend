@@ -1,13 +1,12 @@
 from django.shortcuts import get_object_or_404
-from django.db.models import Min, Max, Q
+from django.db.models import Min, Max, Count, Q
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
 
 from base.abstractModels import PagedList
-from base.models import ProductModel
-from base.models.variant_model import VariantModel
-from api.serializers import ProductModelSerializer
+from base.models import ProductModel, VariantModel, CategoryModel
+from api.serializers import ProductModelSerializer, CategoryModelSerializer
 
 class ProductViewSet(viewsets.ViewSet):
     """
@@ -34,11 +33,21 @@ class ProductViewSet(viewsets.ViewSet):
 
         categoriesParam = request.query_params.get("categories")
         if categoriesParam:
-            # split on comma and strip whitespace
             categoryIds = [c.strip() for c in categoriesParam.split(",") if c.strip()]
-            for cat in categoryIds:
-                querySet = querySet.filter(category_links__category=cat)
-            querySet = querySet.distinct()
+            # Find all categories matching those internalNames (with descendants)
+            from base.models import CategoryModel
+            all_category_ids = set()
+            for internal_name in categoryIds:
+                try:
+                    cat = CategoryModel.objects.get(internalName=internal_name)
+                    descendants = cat.get_descendants(include_self=True)
+                    all_category_ids.update(descendants.values_list("internalName", flat=True))
+                except CategoryModel.DoesNotExist:
+                    pass  # Ignore invalid categories, or handle as needed
+            if all_category_ids:
+                querySet = querySet.filter(category__in=all_category_ids)
+            else:
+                querySet = querySet.none()
         
         # find the min and max price of all related productItems. These will be used to filter and sort the products.
         querySet = querySet.annotate(
@@ -86,6 +95,34 @@ class ProductViewSet(viewsets.ViewSet):
 
         serializer = ProductModelSerializer(pagedQuerySet, many=True, context={"sort": sort})
         return paginator.get_paginated_response(serializer.data)
+
+    @action(detail=True, methods=["get"], url_path="cat")
+    def listProductsByCategory(self, request, pk=None):
+        """
+        Retrieve all products under a category and its subcategories,
+        and generate a breadcrumb trail of parent categories.
+        this should replace the current GET /api/product endpoint in the near future
+        unless admins might need to list the full table of products
+        GET /api/product/{internalName}/cat
+        """
+        category = get_object_or_404(CategoryModel, internalName=pk)
+
+        # Get all descendant categories including the current one
+        categories = category.get_descendants(include_self=True)
+
+        # Retrieve products in these categories
+        products = ProductModel.objects.filter(category__in=categories)
+
+        serializer = ProductModelSerializer(products, many=True)
+
+        # Use the CategoryModelSerializer to get the breadcrumb
+        category_serializer = CategoryModelSerializer(category)
+        breadcrumb = category_serializer.data.get("breadcrumb", [])
+
+        return Response({
+            "breadcrumb": breadcrumb,
+            "products": serializer.data
+        })
     
     def retrieve(self, request, pk=None):
         """
@@ -106,4 +143,26 @@ class ProductViewSet(viewsets.ViewSet):
         featured_products = ProductModel.objects.filter(featured=True)[:3]
         serializer = ProductModelSerializer(featured_products, many=True)
 
+        return Response(serializer.data)
+
+    @action(detail=True, methods=['get'], url_path='related')
+    def retrieveRelatedProducts(self, request, pk):
+        """
+        Retrieve related products based on their categories.
+        GET /api/product/{id}/related
+        """
+        product = get_object_or_404(ProductModel, id=pk)
+
+        # Get the category of current product
+        category = product.category
+
+        # Retrieve all child categories if any, including the current one
+        child_categories = category.get_descendants(include_self=True)
+
+        # Fetch products in these categories, excluding the current product
+        related_products = ProductModel.objects.filter(
+            category__in=child_categories
+        ).exclude(id=product.id)
+
+        serializer = ProductModelSerializer(related_products, many=True)
         return Response(serializer.data)
