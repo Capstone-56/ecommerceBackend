@@ -11,6 +11,16 @@ from api.serializers import CartItemSerializer
 class CartViewSet(viewsets.ViewSet):
   permission_classes = [IsAuthenticated]
 
+  def list(self, request):
+    """
+    GET /api/cart
+    get the cart of the authenticated user
+    """
+    cart_items = ShoppingCartItemModel.objects.filter(user=request.user)
+    serializer = CartItemSerializer(cart_items, many=True)
+
+    return Response(serializer.data)
+
   def create(self, request):
     """
     POST /api/cart
@@ -24,7 +34,6 @@ class CartViewSet(viewsets.ViewSet):
     product_item_id = request.data.get("productItemId")
     quantity = request.data.get("quantity", 1)
 
-    # Validate product item exists
     product_item = get_object_or_404(ProductItemModel, id=product_item_id)
     
     # Check if item already exists in cart
@@ -35,22 +44,13 @@ class CartViewSet(viewsets.ViewSet):
     )
 
     if not created:
-        # Set quantity directly if item exists
-        cart_item.quantity = quantity
+        # increment quantity if item already exists
+        cart_item.quantity += quantity
         cart_item.save()
 
     serializer = CartItemSerializer(cart_item)
-    return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
-  def list(self, request):
-    """
-    GET /api/cart
-    get the cart of the authenticated user
-    """
-    cart_items = ShoppingCartItemModel.objects.filter(user=request.user)
-    serializer = CartItemSerializer(cart_items, many=True)
 
-    return Response(serializer.data)
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
 
   def update(self, request, pk=None):
     """
