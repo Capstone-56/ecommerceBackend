@@ -111,3 +111,18 @@ class CategoryModelSerializer(serializers.ModelSerializer):
         # Recursively serialize children categories
         children = obj.__class__.objects.filter(parentCategory=obj.internalName)
         return CategoryModelSerializer(children, many=True, context=self.context).data
+
+
+class CartItemSerializer(serializers.ModelSerializer):
+    productItem = ProductModelSerializer(source="productItem.product", read_only=True)
+    quantity = serializers.IntegerField(min_value=1)
+
+    # readonly, auto-calculated field that returns the total price of the item
+    totalPrice = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ShoppingCartItemModel
+        fields = ["id", "productItem", "quantity", "totalPrice"]
+
+    def get_totalPrice(self, obj):
+        return obj.quantity * obj.productItem.price

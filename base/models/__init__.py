@@ -7,3 +7,4 @@ from .variant_model import VariantModel
 from .variation_type_model import VariationTypeModel
 from .address_book_model import AddressBookModel
 from .user_address_model import UserAddressModel
+from .shopping_cart_item_model import ShoppingCartItemModel
