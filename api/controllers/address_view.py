@@ -1,11 +1,19 @@
+from django.shortcuts import get_object_or_404
+from django.db import transaction
+
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
+from rest_framework.decorators import action
 
 from base.models import *
-from api.serializers import AddressBookSerializer, UserAddressSerializer
+
+from api.serializers import AddressSerializer, UserAddressSerializer
 
 class AddressViewSet(viewsets.ViewSet):
+    addressSerializer = AddressSerializer
+    userAddressSerializer = UserAddressSerializer
+    
+
     def create(self, request):
         """
         POST /api/address
@@ -16,30 +24,285 @@ class AddressViewSet(viewsets.ViewSet):
           "state": string,
           "postcode": string,
           "country": string,
-          "make_default": boolean    # optional, defaults to False
+          "makeDefault": boolean
         }
         create a user's stored address in the database
         """
+        user = request.user
+        if not user.is_authenticated:
+            return Response({"error": "Authentication required"}, status=status.HTTP_401_UNAUTHORIZED)
 
-    def update(self, request):
-        """
-        PUT /api/address
-        update one of user's default addresses by
-        creating a new entry in the AddressBook table,
-        link it to the UserAddress table, then make that
-        one default and the old one not-default
-        """
+        makeDefault = request.data.get("makeDefault", False)
 
-    def addNewAddress(self, user, address, makeDefault=False):
+        body = {
+            "addressLine": request.data.get("addressLine"),
+            "city": request.data.get("city"),
+            "state": request.data.get("state"),
+            "postcode": request.data.get("postcode"),
+            "country": request.data.get("country")
+        }
+
+        addressSerializer = self.addressSerializer(data=body)
+        if not addressSerializer.is_valid():
+            return Response(addressSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            with transaction.atomic():
+                # Check if exact address already exists in address table
+                existingAddress = AddressModel.objects.filter(**body).first()
+                
+                if existingAddress:
+                    # Check if user already has this address
+                    existingUserAddress = UserAddressModel.objects.filter(
+                        user=user, address=existingAddress
+                    ).first()
+                    
+                    if existingUserAddress:
+                        return Response({
+                            "error": "You already have this address in your address book"
+                        }, status=status.HTTP_400_BAD_REQUEST)
+                    
+                    # Link existing address to user
+                    if makeDefault:
+                        UserAddressModel.objects.filter(user=user, isDefault=True).update(isDefault=False)
+                    
+                    userAddress = UserAddressModel.objects.create(
+                        user=user,
+                        address=existingAddress,
+                        isDefault=makeDefault
+                    )
+                else:
+                    # Create new address and link to user
+                    userAddress = self.addNewAddress(user, body, makeDefault)
+
+                return Response(self.userAddressSerializer(userAddress).data, status=status.HTTP_201_CREATED)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def list(self, request):
         """
-        Create an AddressBookModel entry and link it to the user.
+        GET /api/address
+        Get all addresses for the authenticated user
+        """
+        user = request.user
+        if not user.is_authenticated:
+            return Response({"error": "Authentication required"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        userAddresses = UserAddressModel.objects.filter(user=user).select_related("address")
+        return Response(self.userAddressSerializer(userAddresses, many=True).data)
+
+    def update(self, request, pk=None):
+        """
+        PUT /api/address/{id}
+        Body:
+        {
+          "addressLine": string,
+          "city": string,
+          "state": string,
+          "postcode": string,
+          "country": string,
+          "makeDefault": boolean
+        }
+        Update one of user's addresses by creating a new entry in the address table,
+        and link it to the UserAddress table
+        """
+        user = request.user
+        if not user.is_authenticated:
+            return Response({"error": "Authentication required"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        currentAddress = get_object_or_404(UserAddressModel, id=pk, user=user)
+        
+        makeDefault = request.data.get("makeDefault", currentAddress.isDefault)
+        
+        body = {
+            "addressLine": request.data.get("addressLine"),
+            "city": request.data.get("city"),
+            "state": request.data.get("state"),
+            "postcode": request.data.get("postcode"),
+            "country": request.data.get("country")
+        }
+
+        addressSerializer = self.addressSerializer(data=body)
+        if not addressSerializer.is_valid():
+            return Response(addressSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            with transaction.atomic():
+                # Check if user already has this address in their other saved addresses
+                if UserAddressModel.objects.filter(
+                    user=user,
+                    address__addressLine=body["addressLine"],
+                    address__city=body["city"],
+                    address__state=body["state"],
+                    address__postcode=body["postcode"],
+                    address__country=body["country"]
+                ).exists():
+                    return Response({
+                        "error": "You already have this address in your address book"
+                    }, status=status.HTTP_400_BAD_REQUEST)
+
+                # Check if exact address already exists in address table
+                existingAddress = AddressModel.objects.filter(**body).first()
+                
+                if existingAddress:
+                    # Reuse existing address record - update in place
+                    if makeDefault:
+                        UserAddressModel.objects.filter(user=user, isDefault=True).update(isDefault=False)
+                    
+                    currentAddress.address = existingAddress
+                    currentAddress.isDefault = makeDefault
+                    currentAddress.save()
+                    newUserAddress = currentAddress
+                else:
+                    # Create new address entry - update in place
+                    newAddress = AddressModel.objects.create(**body)
+                    
+                    if makeDefault:
+                        UserAddressModel.objects.filter(user=user, isDefault=True).update(isDefault=False)
+                    
+                    currentAddress.address = newAddress
+                    currentAddress.isDefault = makeDefault
+                    currentAddress.save()
+                    newUserAddress = currentAddress
+
+                return Response(self.userAddressSerializer(newUserAddress).data)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def destroy(self, request, pk=None):
+        """
+        DELETE /api/address/{id}
+        Remove an address from user's address book
+        (doesn't delete from address table - maintains immutability)
+        """
+        user = request.user
+        if not user.is_authenticated:
+            return Response({"error": "Authentication required"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        userAddress = get_object_or_404(UserAddressModel, id=pk, user=user)
+        
+        try:
+            with transaction.atomic():
+                wasDefault = userAddress.isDefault
+                userAddress.delete()
+                
+                # If this was the default address, make another address default if any exist
+                if wasDefault:
+                    remainingAddresses = UserAddressModel.objects.filter(user=user)
+                    if remainingAddresses.exists():
+                        # Make the first remaining address the default
+                        firstAddress = remainingAddresses.first()
+                        firstAddress.isDefault = True
+                        firstAddress.save()
+
+                return Response(status=status.HTTP_204_NO_CONTENT)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    @action(detail=True, methods=["put"])
+    def setDefault(self, request, pk=None):
+        """
+        PUT /api/address/{id}/setDefault
+        Set a specific address as the user's default address
+        """
+        user = request.user
+        if not user.is_authenticated:
+            return Response({"error": "Authentication required"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        userAddress = get_object_or_404(UserAddressModel, id=pk, user=user)
+        
+        try:
+            with transaction.atomic():
+                # Clear existing default
+                UserAddressModel.objects.filter(user=user, isDefault=True).update(isDefault=False)
+                
+                # Set new default
+                userAddress.isDefault = True
+                userAddress.save()
+
+                return Response(self.userAddressSerializer(userAddress).data)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    @action(detail=False, methods=["post"], url_path="checkout")
+    def createForCheckout(self, request):
+        """
+        POST /api/address/checkout
+        Body:
+        {
+          "addressLine": string,
+          "city": string,
+          "state": string,
+          "postcode": string,
+          "country": string,
+          "saveToAddressBook": boolean  # optional, defaults to False
+        }
+        Create address for checkout. Optionally save to user's address book.
+        Returns the address info needed for order processing.
+        """
+        user = request.user
+        if not user.is_authenticated:
+            return Response({"error": "Authentication required"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        saveToAddressBook = request.data.get("saveToAddressBook", False)
+        
+        body = {
+            "addressLine": request.data.get("addressLine"),
+            "city": request.data.get("city"),
+            "state": request.data.get("state"),
+            "postcode": request.data.get("postcode"),
+            "country": request.data.get("country")
+        }
+
+        addressSerializer = self.addressSerializer(data=body)
+        if not addressSerializer.is_valid():
+            return Response(addressSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            with transaction.atomic():
+                # Check for conflicts if user wants to save to address book
+                if saveToAddressBook and UserAddressModel.objects.filter(
+                    user=user,
+                    address__addressLine=body["addressLine"],
+                    address__city=body["city"],
+                    address__state=body["state"],
+                    address__postcode=body["postcode"],
+                    address__country=body["country"]
+                ).exists():
+                    saveToAddressBook = False
+                
+                # Get or create address record
+                addressRecord, _ = AddressModel.objects.get_or_create(**body)
+                
+                # Link to user if requested and no conflicts
+                if saveToAddressBook:
+                    UserAddressModel.objects.create(
+                        user=user,
+                        address=addressRecord,
+                        isDefault=False
+                    )
+
+                return Response(self.addressSerializer(addressRecord).data, status=status.HTTP_201_CREATED)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+    def addNewAddress(self, user, address, makeDefault=False) -> UserAddressModel:
+        """
+        Helper method: Create an AddressModel entry and link it to the user.
+        Used by the create() method for address book management.
         If makeDefault is True, clear the old default first.
         Returns the newly created UserAddressModel instance.
         """
-        addr = AddressBookModel.objects.create(**address)
+        addr = AddressModel.objects.create(**address)
 
         if makeDefault:
-            UserAddressModel.objects.filter(user=user, is_default=True).update(is_default=False)
+            UserAddressModel.objects.filter(user=user, isDefault=True).update(isDefault=False)
 
         userAddress = UserAddressModel.objects.create(
             user=user,
