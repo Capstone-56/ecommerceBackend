@@ -1,10 +1,11 @@
 from django.shortcuts import get_object_or_404
 from django.db import transaction
-from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseServerError
+from django.http import HttpResponseBadRequest, HttpResponseServerError
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from base.models import *
 
@@ -13,6 +14,16 @@ from api.serializers import AddressSerializer, UserAddressSerializer
 class AddressViewSet(viewsets.ViewSet):
     addressSerializer = AddressSerializer
     userAddressSerializer = UserAddressSerializer
+    
+    def get_permissions(self):
+        """
+        Allow createForCheckout for both authenticated and non-authenticated users.
+        All other endpoints require authentication.
+        """
+        if self.action == "createForCheckout":
+            return [AllowAny()]
+        
+        return [IsAuthenticated()]
     
     def create(self, request):
         """
@@ -29,9 +40,6 @@ class AddressViewSet(viewsets.ViewSet):
         create a user's stored address in the database
         """
         user = request.user
-        if not user.is_authenticated:
-            return HttpResponse("Authentication required", status=status.HTTP_401_UNAUTHORIZED)
-
         makeDefault = request.data.get("makeDefault", False)
 
         body = {
@@ -93,9 +101,6 @@ class AddressViewSet(viewsets.ViewSet):
         Get all addresses for the authenticated user
         """
         user = request.user
-        if not user.is_authenticated:
-            return HttpResponse("Authentication required", status=status.HTTP_401_UNAUTHORIZED)
-
         userAddresses = UserAddressModel.objects.filter(user=user).select_related("address")
         return Response(self.userAddressSerializer(userAddresses, many=True).data)
 
@@ -115,9 +120,6 @@ class AddressViewSet(viewsets.ViewSet):
         and link it to the UserAddress table
         """
         user = request.user
-        if not user.is_authenticated:
-            return HttpResponse("Authentication required", status=status.HTTP_401_UNAUTHORIZED)
-
         currentAddress = get_object_or_404(UserAddressModel, id=pk, user=user)
         
         makeDefault = request.data.get("makeDefault", currentAddress.isDefault)
@@ -174,9 +176,6 @@ class AddressViewSet(viewsets.ViewSet):
         (doesn't delete from address table - maintains immutability)
         """
         user = request.user
-        if not user.is_authenticated:
-            return HttpResponse("Authentication required", status=status.HTTP_401_UNAUTHORIZED)
-
         userAddress = get_object_or_404(UserAddressModel, id=pk, user=user)
         
         try:
@@ -204,9 +203,6 @@ class AddressViewSet(viewsets.ViewSet):
         Set a specific address as the user's default address
         """
         user = request.user
-        if not user.is_authenticated:
-            return HttpResponse("Authentication required", status=status.HTTP_401_UNAUTHORIZED)
-
         userAddress = get_object_or_404(UserAddressModel, id=pk, user=user)
         
         try:
@@ -239,10 +235,8 @@ class AddressViewSet(viewsets.ViewSet):
         Returns the address info needed for order processing.
         """
         user = request.user
-        if not user.is_authenticated:
-            return HttpResponse("Authentication required", status=status.HTTP_401_UNAUTHORIZED)
-
-        saveToAddressBook = request.data.get("saveToAddressBook", False)
+        # Only authenticated users can save to address book
+        saveToAddressBook = request.data.get("saveToAddressBook", False) and user.is_authenticated
         
         body = {
             "addressLine": request.data.get("addressLine"),
@@ -258,7 +252,7 @@ class AddressViewSet(viewsets.ViewSet):
 
         try:
             with transaction.atomic():
-                # Check for conflicts if user wants to save to address book
+                # Check for conflicts if user wants to save to address book (only for authenticated users)
                 if saveToAddressBook and UserAddressModel.objects.filter(
                     user=user,
                     address__addressLine=body["addressLine"],
