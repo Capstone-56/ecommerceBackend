@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django.db import transaction
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseServerError
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -13,24 +14,23 @@ class AddressViewSet(viewsets.ViewSet):
     addressSerializer = AddressSerializer
     userAddressSerializer = UserAddressSerializer
     
-
     def create(self, request):
         """
         POST /api/address
         Body:
         {
-          "addressLine": string,
-          "city": string,
-          "state": string,
-          "postcode": string,
-          "country": string,
-          "makeDefault": boolean
+            "addressLine": string,
+            "city": string,
+            "state": string,
+            "postcode": string,
+            "country": string,
+            "makeDefault": boolean (optional, defaults to False)
         }
         create a user's stored address in the database
         """
         user = request.user
         if not user.is_authenticated:
-            return Response({"error": "Authentication required"}, status=status.HTTP_401_UNAUTHORIZED)
+            return HttpResponse("Authentication required", status=status.HTTP_401_UNAUTHORIZED)
 
         makeDefault = request.data.get("makeDefault", False)
 
@@ -44,7 +44,7 @@ class AddressViewSet(viewsets.ViewSet):
 
         addressSerializer = self.addressSerializer(data=body)
         if not addressSerializer.is_valid():
-            return Response(addressSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return HttpResponseBadRequest(addressSerializer.errors)
 
         try:
             with transaction.atomic():
@@ -52,15 +52,11 @@ class AddressViewSet(viewsets.ViewSet):
                 existingAddress = AddressModel.objects.filter(**body).first()
                 
                 if existingAddress:
-                    # Check if user already has this address
-                    existingUserAddress = UserAddressModel.objects.filter(
+                    # Check if user already has this address         
+                    if UserAddressModel.objects.filter(
                         user=user, address=existingAddress
-                    ).first()
-                    
-                    if existingUserAddress:
-                        return Response({
-                            "error": "You already have this address in your address book"
-                        }, status=status.HTTP_400_BAD_REQUEST)
+                    ).exists():
+                        return HttpResponseBadRequest("You already have this address in your address book")
                     
                     # Link existing address to user
                     if makeDefault:
@@ -72,13 +68,24 @@ class AddressViewSet(viewsets.ViewSet):
                         isDefault=makeDefault
                     )
                 else:
-                    # Create new address and link to user
-                    userAddress = self.addNewAddress(user, body, makeDefault)
+                    # Create new address
+                    addr = AddressModel.objects.create(**body)
+
+                    # Clear existing default
+                    if makeDefault:
+                        UserAddressModel.objects.filter(user=user, isDefault=True).update(isDefault=False)
+
+                    # Link new address to user
+                    userAddress = UserAddressModel.objects.create(
+                        user=user,
+                        address=addr,
+                        isDefault=makeDefault
+                    )
 
                 return Response(self.userAddressSerializer(userAddress).data, status=status.HTTP_201_CREATED)
 
         except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return HttpResponseServerError(str(e))
 
     def list(self, request):
         """
@@ -87,7 +94,7 @@ class AddressViewSet(viewsets.ViewSet):
         """
         user = request.user
         if not user.is_authenticated:
-            return Response({"error": "Authentication required"}, status=status.HTTP_401_UNAUTHORIZED)
+            return HttpResponse("Authentication required", status=status.HTTP_401_UNAUTHORIZED)
 
         userAddresses = UserAddressModel.objects.filter(user=user).select_related("address")
         return Response(self.userAddressSerializer(userAddresses, many=True).data)
@@ -97,19 +104,19 @@ class AddressViewSet(viewsets.ViewSet):
         PUT /api/address/{id}
         Body:
         {
-          "addressLine": string,
-          "city": string,
-          "state": string,
-          "postcode": string,
-          "country": string,
-          "makeDefault": boolean
+            "addressLine": string,
+            "city": string,
+            "state": string,
+            "postcode": string,
+            "country": string,
+            "makeDefault": boolean
         }
         Update one of user's addresses by creating a new entry in the address table,
         and link it to the UserAddress table
         """
         user = request.user
         if not user.is_authenticated:
-            return Response({"error": "Authentication required"}, status=status.HTTP_401_UNAUTHORIZED)
+            return HttpResponse("Authentication required", status=status.HTTP_401_UNAUTHORIZED)
 
         currentAddress = get_object_or_404(UserAddressModel, id=pk, user=user)
         
@@ -125,7 +132,7 @@ class AddressViewSet(viewsets.ViewSet):
 
         addressSerializer = self.addressSerializer(data=body)
         if not addressSerializer.is_valid():
-            return Response(addressSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return HttpResponseBadRequest(addressSerializer.errors)
 
         try:
             with transaction.atomic():
@@ -137,39 +144,28 @@ class AddressViewSet(viewsets.ViewSet):
                     address__state=body["state"],
                     address__postcode=body["postcode"],
                     address__country=body["country"]
-                ).exists():
-                    return Response({
-                        "error": "You already have this address in your address book"
-                    }, status=status.HTTP_400_BAD_REQUEST)
+                ).exclude(id=currentAddress.id).exists():
+                    return HttpResponseBadRequest("You already have this address in your address book")
 
                 # Check if exact address already exists in address table
                 existingAddress = AddressModel.objects.filter(**body).first()
                 
                 if existingAddress:
                     # Reuse existing address record - update in place
-                    if makeDefault:
-                        UserAddressModel.objects.filter(user=user, isDefault=True).update(isDefault=False)
-                    
                     currentAddress.address = existingAddress
-                    currentAddress.isDefault = makeDefault
-                    currentAddress.save()
-                    newUserAddress = currentAddress
                 else:
                     # Create new address entry - update in place
-                    newAddress = AddressModel.objects.create(**body)
+                    currentAddress.address = AddressModel.objects.create(**body)
                     
-                    if makeDefault:
-                        UserAddressModel.objects.filter(user=user, isDefault=True).update(isDefault=False)
-                    
-                    currentAddress.address = newAddress
-                    currentAddress.isDefault = makeDefault
-                    currentAddress.save()
-                    newUserAddress = currentAddress
+                if makeDefault:
+                    UserAddressModel.objects.filter(user=user, isDefault=True).update(isDefault=False)
 
-                return Response(self.userAddressSerializer(newUserAddress).data)
+                currentAddress.isDefault = makeDefault
+                currentAddress.save()
 
+                return Response(self.userAddressSerializer(currentAddress).data)
         except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return HttpResponseServerError(str(e))
 
     def destroy(self, request, pk=None):
         """
@@ -179,7 +175,7 @@ class AddressViewSet(viewsets.ViewSet):
         """
         user = request.user
         if not user.is_authenticated:
-            return Response({"error": "Authentication required"}, status=status.HTTP_401_UNAUTHORIZED)
+            return HttpResponse("Authentication required", status=status.HTTP_401_UNAUTHORIZED)
 
         userAddress = get_object_or_404(UserAddressModel, id=pk, user=user)
         
@@ -198,9 +194,8 @@ class AddressViewSet(viewsets.ViewSet):
                         firstAddress.save()
 
                 return Response(status=status.HTTP_204_NO_CONTENT)
-
         except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return HttpResponseServerError(str(e))
 
     @action(detail=True, methods=["put"])
     def setDefault(self, request, pk=None):
@@ -210,7 +205,7 @@ class AddressViewSet(viewsets.ViewSet):
         """
         user = request.user
         if not user.is_authenticated:
-            return Response({"error": "Authentication required"}, status=status.HTTP_401_UNAUTHORIZED)
+            return HttpResponse("Authentication required", status=status.HTTP_401_UNAUTHORIZED)
 
         userAddress = get_object_or_404(UserAddressModel, id=pk, user=user)
         
@@ -224,9 +219,8 @@ class AddressViewSet(viewsets.ViewSet):
                 userAddress.save()
 
                 return Response(self.userAddressSerializer(userAddress).data)
-
         except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return HttpResponseServerError(str(e))
 
     @action(detail=False, methods=["post"], url_path="checkout")
     def createForCheckout(self, request):
@@ -234,19 +228,19 @@ class AddressViewSet(viewsets.ViewSet):
         POST /api/address/checkout
         Body:
         {
-          "addressLine": string,
-          "city": string,
-          "state": string,
-          "postcode": string,
-          "country": string,
-          "saveToAddressBook": boolean  # optional, defaults to False
+            "addressLine": string,
+            "city": string,
+            "state": string,
+            "postcode": string,
+            "country": string,
+            "saveToAddressBook": boolean  # optional, defaults to False
         }
         Create address for checkout. Optionally save to user's address book.
         Returns the address info needed for order processing.
         """
         user = request.user
         if not user.is_authenticated:
-            return Response({"error": "Authentication required"}, status=status.HTTP_401_UNAUTHORIZED)
+            return HttpResponse("Authentication required", status=status.HTTP_401_UNAUTHORIZED)
 
         saveToAddressBook = request.data.get("saveToAddressBook", False)
         
@@ -260,7 +254,7 @@ class AddressViewSet(viewsets.ViewSet):
 
         addressSerializer = self.addressSerializer(data=body)
         if not addressSerializer.is_valid():
-            return Response(addressSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return HttpResponseBadRequest(addressSerializer.errors)
 
         try:
             with transaction.atomic():
@@ -287,27 +281,5 @@ class AddressViewSet(viewsets.ViewSet):
                     )
 
                 return Response(self.addressSerializer(addressRecord).data, status=status.HTTP_201_CREATED)
-
         except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-    def addNewAddress(self, user, address, makeDefault=False) -> UserAddressModel:
-        """
-        Helper method: Create an AddressModel entry and link it to the user.
-        Used by the create() method for address book management.
-        If makeDefault is True, clear the old default first.
-        Returns the newly created UserAddressModel instance.
-        """
-        addr = AddressModel.objects.create(**address)
-
-        if makeDefault:
-            UserAddressModel.objects.filter(user=user, isDefault=True).update(isDefault=False)
-
-        userAddress = UserAddressModel.objects.create(
-            user=user,
-            address=addr,
-            isDefault=makeDefault
-        )
-
-        return userAddress
+            return HttpResponseServerError(str(e))
