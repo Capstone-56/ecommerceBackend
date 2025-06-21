@@ -91,7 +91,6 @@ class AddressViewSet(viewsets.ViewSet):
                     )
 
                 return Response(self.userAddressSerializer(userAddress).data, status=status.HTTP_201_CREATED)
-
         except Exception as e:
             return HttpResponseServerError(str(e))
 
@@ -100,8 +99,8 @@ class AddressViewSet(viewsets.ViewSet):
         GET /api/address
         Get all addresses for the authenticated user
         """
-        user = request.user
-        userAddresses = UserAddressModel.objects.filter(user=user).select_related("address")
+        userAddresses = UserAddressModel.objects.filter(user=request.user).select_related("address")
+
         return Response(self.userAddressSerializer(userAddresses, many=True).data)
 
     def update(self, request, pk=None):
