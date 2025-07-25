@@ -8,7 +8,7 @@ from base.models import ShoppingCartItemModel, ProductItemModel
 
 from api.serializers import CartItemSerializer
 
-class CartViewSet(viewsets.ViewSet):
+class ShoppingCartViewSet(viewsets.ViewSet):
   permission_classes = [IsAuthenticated]
 
   def list(self, request):
