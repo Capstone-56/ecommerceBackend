@@ -77,6 +77,11 @@ class ProductModelSerializer(serializers.ModelSerializer):
         for variant in variants:
             grouped[variant.variationType.name].append(variant.value)
         return grouped
+    
+class ProductItemModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductItemModel
+        fields = ["id", "product", "sku", "stock", "price", "imageUrls"]
 
 
 class CategoryModelSerializer(serializers.ModelSerializer):
