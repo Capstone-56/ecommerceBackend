@@ -125,7 +125,7 @@ class CartItemSerializer(serializers.ModelSerializer):
     productItem = ProductItemModelSerializer(read_only=True)
     quantity = serializers.IntegerField(min_value=1)
 
-    # readonly, auto-calculated field that returns the total price of the item
+    # readonly, computed property that returns the total price of the item
     totalPrice = serializers.SerializerMethodField()
 
     class Meta:
