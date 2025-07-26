@@ -52,3 +52,14 @@ class ProductItemViewSet(viewsets.ViewSet):
 
         serializer = ProductItemModelSerializer(matching_item)
         return Response({"id": serializer.data["id"]})
+    
+    @action(detail=True, methods=["get"], url_path="byProduct")
+    def getByProductId(self, request, pk):
+        """
+        Get all product items for a given productId.
+        GET /api/productItem/{productId}/byProduct
+        """
+        product_items = ProductItemModel.objects.filter(product_id=pk)
+
+        serializer = ProductItemModelSerializer(product_items, many=True)
+        return Response(serializer.data)
