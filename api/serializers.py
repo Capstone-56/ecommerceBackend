@@ -78,7 +78,10 @@ class ProductModelSerializer(serializers.ModelSerializer):
             grouped[variant.variationType.name].append(variant.value)
         return grouped
     
+
 class ProductItemModelSerializer(serializers.ModelSerializer):
+    product = ProductModelSerializer(read_only=True)
+    
     class Meta:
         model = ProductItemModel
         fields = ["id", "product", "sku", "stock", "price", "imageUrls"]
@@ -119,7 +122,7 @@ class CategoryModelSerializer(serializers.ModelSerializer):
 
 
 class CartItemSerializer(serializers.ModelSerializer):
-    productItem = ProductModelSerializer(source="productItem.product", read_only=True)
+    productItem = ProductItemModelSerializer(read_only=True)
     quantity = serializers.IntegerField(min_value=1)
 
     # readonly, auto-calculated field that returns the total price of the item
