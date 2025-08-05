@@ -7,14 +7,14 @@ Serializers for the corresponding models.
 Converts model instances to and from JSON format for API interactions.
 """
 
-class AddressBookSerializer(serializers.ModelSerializer):
+class AddressSerializer(serializers.ModelSerializer):
     class Meta:
-        model = AddressBookModel
+        model = AddressModel
         fields = ["addressLine", "city", "postcode", "state", "country"]
 
 
 class UserAddressSerializer(serializers.ModelSerializer):
-    address = AddressBookSerializer(read_only=True)
+    address = AddressSerializer(read_only=True)
 
     class Meta:
         model = UserAddressModel
