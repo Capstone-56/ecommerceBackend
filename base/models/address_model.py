@@ -1,7 +1,7 @@
 from django.db import models
 import uuid
 
-class AddressBookModel(models.Model):
+class AddressModel(models.Model):
     """
     Stores individual address records for reuse and snapshots.
     This table can only add new records, no record can be deleted or modified
@@ -14,7 +14,7 @@ class AddressBookModel(models.Model):
     country = models.CharField(max_length=100)
 
     class Meta:
-        db_table = "addressBook"
+        db_table = "address"
 
     def __str__(self):
         return f"{self.addressLine}, {self.city}, {self.state}, {self.country}"
