@@ -38,7 +38,7 @@ class BCryptPepperHasher(BasePasswordHasher):
         hashed = bcrypt.hashpw(peppered, salt.encode("utf-8"))
 
         # Prefix with algorithm name so Django knows which hasher to use
-        return f"{self.algorithm}${hashed.decode("utf-8")}"
+        return f"{self.algorithm}${hashed.decode('utf-8')}"
 
     def verify(self, password, encoded):
         """
