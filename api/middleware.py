@@ -10,6 +10,15 @@ class RefreshCookieMiddleware:
 
         # issue new access token if the current expired
         new_access = getattr(request, "_access", None)
+        
+        # Also check session if request attribute is not found
+        if not new_access and hasattr(request, "session"):
+            new_access = request.session.get("_new_access_token")
+            
+            if new_access:
+                # Clear from session after using
+                del request.session["_new_access_token"]
+        
         if new_access:
             response.set_cookie(
                 Constants.ACCESS_TOKEN,
@@ -19,4 +28,5 @@ class RefreshCookieMiddleware:
                 samesite="Lax",
                 max_age=int(Constants.ACCESS_TOKEN_LIFETIME.total_seconds()),
             )
+        
         return response
