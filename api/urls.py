@@ -7,5 +7,7 @@ router.register(r"user", UserViewSet, "user")
 router.register(r"product", ProductViewSet, "product")
 router.register(r"category", CategoryViewSet, "category")
 router.register(r"address", AddressViewSet, "address")
+router.register(r"cart", ShoppingCartViewSet, "cart")
+router.register(r"productItem", ProductItemViewSet, "productItem")
 
 urlpatterns = router.urls
