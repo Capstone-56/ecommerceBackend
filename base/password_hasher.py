@@ -21,6 +21,7 @@ class BCryptPepperHasher(BasePasswordHasher):
         # returns a bytes object, then decode to string for storage
         return bcrypt.gensalt().decode("utf-8")
 
+
     def encode(self, password, salt):
         """
         Hash the password with the given salt and the application pepper.
@@ -38,7 +39,8 @@ class BCryptPepperHasher(BasePasswordHasher):
         hashed = bcrypt.hashpw(peppered, salt.encode("utf-8"))
 
         # Prefix with algorithm name so Django knows which hasher to use
-        return f"{self.algorithm}${hashed.decode("utf-8")}"
+        return f"{self.algorithm}${hashed.decode('utf-8')}"
+
 
     def verify(self, password, encoded):
         """
@@ -60,18 +62,3 @@ class BCryptPepperHasher(BasePasswordHasher):
         # Re-apply pepper and check against stored bcrypt hash
         peppered = (password + settings.PEPPER).encode("utf-8")
         return bcrypt.checkpw(peppered, hashed.encode("utf-8"))
-
-    def safe_summary(self, encoded):
-        """
-        Return a redacted summary of the stored hash for admin/UIs, might be removed later as it's not being used
-
-        Args:
-            encoded (string): The stored hash string from the database.
-
-        Returns:
-            dictionary: A summary containing the algorithm and a truncated hash.
-        """
-        algorithm, hashed = encoded.split("$", 1)
-
-        # Only show the first 6 characters of the hash to avoid leaking full data
-        return {"algorithm": algorithm, "hash": hashed[:6] + "..."}

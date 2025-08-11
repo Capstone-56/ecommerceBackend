@@ -5,5 +5,6 @@ from .product_item_model import ProductItemModel
 from .product_config_model import ProductConfigModel
 from .variant_model import VariantModel
 from .variation_type_model import VariationTypeModel
-from .address_book_model import AddressBookModel
+from .address_model import AddressModel
 from .user_address_model import UserAddressModel
+from .shopping_cart_item_model import ShoppingCartItemModel

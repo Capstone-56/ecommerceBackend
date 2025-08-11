@@ -7,14 +7,14 @@ Serializers for the corresponding models.
 Converts model instances to and from JSON format for API interactions.
 """
 
-class AddressBookSerializer(serializers.ModelSerializer):
+class AddressSerializer(serializers.ModelSerializer):
     class Meta:
-        model = AddressBookModel
+        model = AddressModel
         fields = ["addressLine", "city", "postcode", "state", "country"]
 
 
 class UserAddressSerializer(serializers.ModelSerializer):
-    address = AddressBookSerializer(read_only=True)
+    address = AddressSerializer(read_only=True)
 
     class Meta:
         model = UserAddressModel
@@ -53,7 +53,7 @@ class ProductConfigSerializer(serializers.ModelSerializer):
         model = ProductConfigModel
         fields = ['variant']
 
-class ProductItemSerializer(serializers.ModelSerializer):
+class ProductItemModelSerializer(serializers.ModelSerializer):
     imageUrls = serializers.ListField(child=serializers.CharField(max_length=1000), required=False)
     variations = ProductConfigSerializer(many=True, write_only=True)
 
@@ -65,7 +65,7 @@ class ProductModelSerializer(serializers.ModelSerializer):
     price = serializers.SerializerMethodField()
     variations = serializers.SerializerMethodField()
     category = serializers.SlugRelatedField(slug_field='internalName', queryset=CategoryModel.objects.all())
-    product_items = ProductItemSerializer(many=True, write_only=True)
+    product_items = ProductItemModelSerializer(many=True, write_only=True)
 
     class Meta:
         model = ProductModel
@@ -152,3 +152,18 @@ class CategoryModelSerializer(serializers.ModelSerializer):
         # Recursively serialize children categories
         children = obj.__class__.objects.filter(parentCategory=obj.internalName)
         return CategoryModelSerializer(children, many=True, context=self.context).data
+
+
+class CartItemSerializer(serializers.ModelSerializer):
+    productItem = ProductItemModelSerializer(read_only=True)
+    quantity = serializers.IntegerField(min_value=1)
+
+    # readonly, computed property that returns the total price of the item
+    totalPrice = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ShoppingCartItemModel
+        fields = ["id", "productItem", "quantity", "totalPrice"]
+
+    def get_totalPrice(self, obj):
+        return obj.quantity * obj.productItem.price

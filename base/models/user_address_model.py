@@ -1,10 +1,10 @@
 from django.db import models
 import uuid
-from . import UserModel, AddressBookModel
+from . import UserModel, AddressModel
 
 class UserAddressModel(models.Model):
     """
-    Links Users to AddressBook entries, marking defaults.
+    Links Users to AddressModel entries, marking defaults.
     """
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
     user = models.ForeignKey(
@@ -14,7 +14,7 @@ class UserAddressModel(models.Model):
         db_column="userId"
     )
     address = models.ForeignKey(
-        AddressBookModel,
+        AddressModel,
         on_delete=models.CASCADE,
         related_name="address_users",
         db_column="addressId"
