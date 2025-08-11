@@ -59,7 +59,7 @@ class ProductItemModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductItemModel
-        fields = ['sku', 'stock', 'price', 'imageUrls', 'variations']
+        fields = fields = ["id", "sku", "stock", "price", "imageUrls", "variations"]
     
 class ProductModelSerializer(serializers.ModelSerializer):
     price = serializers.SerializerMethodField()
@@ -111,10 +111,10 @@ class ProductModelSerializer(serializers.ModelSerializer):
         Creates an entry into the product table, productItem table from the internal list of product information,
         and also productConfig table for the variations provided when creating a product e.g. "Blue", "M".
         """
-        product_list_data = validated_data.pop('product_items')
+        product_list_data = validated_data.pop("product_items")
         product = ProductModel.objects.create(**validated_data)
         for internal_product_info in product_list_data:
-            variations_data = internal_product_info.pop('variations')
+            variations_data = internal_product_info.pop("variations")
             product_item = ProductItemModel.objects.create(product=product, **internal_product_info)
             for variant in variations_data:
                 ProductConfigModel.objects.create(productItem=product_item, **variant)
