@@ -46,13 +46,41 @@ class UserModelSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+class ProductConfigSerializer(serializers.ModelSerializer):
+    variant = serializers.PrimaryKeyRelatedField(queryset=VariantModel.objects.all())
 
+    class Meta:
+        model = ProductConfigModel
+        fields = ['variant']
+
+class ProductItemSerializer(serializers.ModelSerializer):
+    imageUrls = serializers.ListField(child=serializers.CharField(max_length=1000), required=False)
+    variations = ProductConfigSerializer(many=True, write_only=True)
+
+    class Meta:
+        model = ProductItemModel
+        fields = ['sku', 'stock', 'price', 'imageUrls', 'variations']
+    
 class ProductModelSerializer(serializers.ModelSerializer):
     price = serializers.SerializerMethodField()
     variations = serializers.SerializerMethodField()
+    category = serializers.SlugRelatedField(slug_field='internalName', queryset=CategoryModel.objects.all())
+    product_items = ProductItemSerializer(many=True, write_only=True)
+
     class Meta:
         model = ProductModel
-        fields = ["id", "name", "description", "images", "featured", "avgRating", "price", "variations"]
+        fields = [
+            "id",
+            "name",
+            "description",
+            "images",
+            "featured",
+            "avgRating",
+            "price",
+            "category",
+            "product_items",
+            "variations"
+        ]
     
     # Retrieve the price of an object based on the sorting context. If the sort is set to priceDesc, then the max_price is appended.
     def get_price(self, obj):
@@ -77,7 +105,20 @@ class ProductModelSerializer(serializers.ModelSerializer):
         for variant in variants:
             grouped[variant.variationType.name].append(variant.value)
         return grouped
-
+    
+    def create(self, validated_data):
+        """
+        Creates an entry into the product table, productItem table from the internal list of product information,
+        and also productConfig table for the variations provided when creating a product e.g. "Blue", "M".
+        """
+        product_list_data = validated_data.pop('product_items')
+        product = ProductModel.objects.create(**validated_data)
+        for internal_product_info in product_list_data:
+            variations_data = internal_product_info.pop('variations')
+            product_item = ProductItemModel.objects.create(product=product, **internal_product_info)
+            for variant in variations_data:
+                ProductConfigModel.objects.create(productItem=product_item, **variant)
+        return product
 
 class CategoryModelSerializer(serializers.ModelSerializer):
     breadcrumb = serializers.SerializerMethodField()
