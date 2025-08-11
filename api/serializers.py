@@ -56,6 +56,10 @@ class ProductConfigSerializer(serializers.ModelSerializer):
 class ProductItemModelSerializer(serializers.ModelSerializer):
     imageUrls = serializers.ListField(child=serializers.CharField(max_length=1000), required=False)
     variations = ProductConfigSerializer(many=True, write_only=True)
+    product = serializers.SerializerMethodField()
+
+    def get_product(self, obj):
+        return ProductModelSerializer(obj.product).data
 
     class Meta:
         model = ProductItemModel
