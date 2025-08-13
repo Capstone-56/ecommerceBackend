@@ -201,7 +201,6 @@ class ProductViewSet(viewsets.ViewSet):
             "description": "100% cotton",
             "images": ["http://example.com/image1.jpg", "http://example.com/image2.jpg"],
             "featured": true,
-            "avgRating": 4.5,
             "category": "mens",
             "product_items": [
                 {
