@@ -13,4 +13,4 @@ sqlparse==0.5.3
 typing_extensions==4.13.1
 tzdata==2025.2
 requests==2.32.4
-python-dotenv
+python-dotenv==1.1.1
