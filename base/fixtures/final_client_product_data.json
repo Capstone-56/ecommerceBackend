@@ -747,7 +747,8 @@
       ],
       "featured": false,
       "avgRating": 4.3,
-      "category": "mens-jumpers-jackets"
+      "category": "mens-jumpers-jackets",
+      "locations": ["US", "CA"]
     }
   },
   {
@@ -761,7 +762,8 @@
       ],
       "featured": true,
       "avgRating": 4.5,
-      "category": "mens-jumpers-jackets"
+      "category": "mens-jumpers-jackets",
+      "locations": ["US", "UK", "CA"]
     }
   },
   {
@@ -775,7 +777,8 @@
       ],
       "featured": false,
       "avgRating": 4.0,
-      "category": "mens-shirt"
+      "category": "mens-shirt",
+      "locations": ["UK", "CA"]
     }
   },
   {
@@ -789,7 +792,8 @@
       ],
       "featured": false,
       "avgRating": 4.2,
-      "category": "mens-shirt"
+      "category": "mens-shirt",
+      "locations": ["US", "UK"]
     }
   },
   {
@@ -4674,6 +4678,31 @@
     "fields": {
       "productItem": "084dcb99-006f-403f-9f8a-3e3ffb9438a3",
       "variant": "ae6ce3d7-c3a3-4876-9e0f-b419d8eff2d6"
+    }
+  },
+
+  {
+    "model": "base.LocationModel",
+    "pk": "US",
+    "fields": {
+      "country_code": "US",
+      "country_name": "United States"
+    }
+  },
+  {
+    "model": "base.LocationModel",
+    "pk": "UK",
+    "fields": {
+      "country_code": "UK",
+      "country_name": "United Kingdom"
+    }
+  },
+  {
+    "model": "base.LocationModel",
+    "pk": "CA",
+    "fields": {
+      "country_code": "CA",
+      "country_name": "Canada"
     }
   }
 ]
