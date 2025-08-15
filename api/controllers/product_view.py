@@ -27,7 +27,8 @@ class ProductViewSet(viewsets.ViewSet):
         - colour (string) e.g. ?colour=red
         - categories (comma‑separated strings) e.g. ?categories=cat1, cat2
         - search (string) e.g. ?search=pants
-
+        - Location (string) e.g. ?location=au
+        
         If categories is provided, returns products linked to *all* of those categories.
         """
         querySet = ProductModel.objects.all()
