@@ -114,6 +114,11 @@ class ProductViewSet(viewsets.ViewSet):
                     Q(name__icontains=searchQuery) | Q(description__icontains=searchQuery)
                 )
 
+        # Filter by user's country if provided
+        location = request.query_params.get("location")
+        if location:
+            querySet = querySet.filter(locations__country_code__iexact=location)
+
         paginator = PagedList()
         pagedQuerySet = paginator.paginate_queryset(querySet, request)
 
