@@ -768,9 +768,9 @@
   },
   {
     "model": "base.CategoryModel",
-    "pk": "accessories-ladies-purses",
+    "pk": "accessories-womens-purses",
     "fields": {
-      "name": "Ladies Purses",
+      "name": "womens Purses",
       "description": "Women purses and wallet sets in leather and PU leather",
       "parentCategory": "accessories",
       "lft": 4,
@@ -1177,8 +1177,8 @@
     "model": "base.ProductModel",
     "pk": "b3a9f2c4-59e8-4d72-b2d9-f36e42f8a67a",
     "fields": {
-      "name": "Ladies Shirt - Long Sleeve",
-      "description": "Elegant ladies long sleeve shirt.",
+      "name": "womens Shirt - Long Sleeve",
+      "description": "Elegant womens long sleeve shirt.",
       "images": [
         "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
       ],
@@ -1192,7 +1192,7 @@
     "pk": "c19e245d-773a-4a49-8d7e-20c3c9d2c17e",
     "fields": {
       "name": "Saree With Blouse Piece",
-      "description": "Traditional ladies saree with blouse piece.",
+      "description": "Traditional womens saree with blouse piece.",
       "images": [
         "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
       ],
@@ -1206,7 +1206,7 @@
     "pk": "84f6c0b3-120d-4e72-bd17-d8256e6a7e6f",
     "fields": {
       "name": "Salwar Kameez",
-      "description": "Classic ladies salwar kameez set.",
+      "description": "Classic womens salwar kameez set.",
       "images": [
         "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
       ],
@@ -1219,8 +1219,8 @@
     "model": "base.ProductModel",
     "pk": "a5b2d5f8-5767-4dfe-87ea-8b67a253c1ab",
     "fields": {
-      "name": "Ladies Long Pant",
-      "description": "Comfortable ladies long pant.",
+      "name": "womens Long Pant",
+      "description": "Comfortable womens long pant.",
       "images": [
         "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
       ],
@@ -1233,8 +1233,8 @@
     "model": "base.ProductModel",
     "pk": "0a58b73d-d33b-4424-b917-f3e35c740312",
     "fields": {
-      "name": "Ladies Short Pant",
-      "description": "Casual ladies short pant.",
+      "name": "womens Short Pant",
+      "description": "Casual womens short pant.",
       "images": [
         "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
       ],
@@ -1247,8 +1247,8 @@
     "model": "base.ProductModel",
     "pk": "09d9db71-6774-4c4d-8c37-134bb2b769c0",
     "fields": {
-      "name": "Ladies Cardigan",
-      "description": "Stylish ladies cardigan for layering.",
+      "name": "womens Cardigan",
+      "description": "Stylish womens cardigan for layering.",
       "images": [
         "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
       ],
@@ -1261,8 +1261,8 @@
     "model": "base.ProductModel",
     "pk": "c4f0e3de-0655-4d25-b575-1b3b6a4f3c53",
     "fields": {
-      "name": "Ladies Winter Jacket",
-      "description": "Warm ladies winter jacket.",
+      "name": "womens Winter Jacket",
+      "description": "Warm womens winter jacket.",
       "images": [
         "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
       ],
@@ -1275,8 +1275,8 @@
     "model": "base.ProductModel",
     "pk": "9f8e84cb-6e36-4e9c-9d0b-7686a2c411f3",
     "fields": {
-      "name": "Ladies Summer Jacket",
-      "description": "Lightweight ladies summer jacket.",
+      "name": "womens Summer Jacket",
+      "description": "Lightweight womens summer jacket.",
       "images": [
         "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
       ],
@@ -1290,7 +1290,7 @@
     "pk": "25136f3d-243b-4574-9303-7ad810c15d65",
     "fields": {
       "name": "V-Neck Sweater",
-      "description": "Comfortable ladies V-neck sweater.",
+      "description": "Comfortable womens V-neck sweater.",
       "images": [
         "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
       ],
@@ -1304,7 +1304,7 @@
     "pk": "7a71ebbc-f4bb-42c5-82d3-cb56e5f95c23",
     "fields": {
       "name": "Crew Neck Sweater",
-      "description": "Classic ladies crew neck sweater.",
+      "description": "Classic womens crew neck sweater.",
       "images": [
         "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
       ],
@@ -1318,7 +1318,7 @@
     "pk": "9e1e3b0f-1c1d-43fa-9307-c61e3d9b8c90",
     "fields": {
       "name": "Hoodie Fleece",
-      "description": "Cozy ladies fleece hoodie.",
+      "description": "Cozy womens fleece hoodie.",
       "images": [
         "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
       ],
@@ -1331,8 +1331,8 @@
     "model": "base.ProductModel",
     "pk": "357ac10a-b6a8-4f8a-b412-2c2e50d86ed9",
     "fields": {
-      "name": "Ladies Tank Top",
-      "description": "Casual ladies tank top for summer.",
+      "name": "womens Tank Top",
+      "description": "Casual womens tank top for summer.",
       "images": [
         "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
       ],
@@ -1345,8 +1345,8 @@
     "model": "base.ProductModel",
     "pk": "4e09357b-735f-4a3e-a8a7-7b64ac314c6c",
     "fields": {
-      "name": "Ladies Top",
-      "description": "Stylish ladies casual top.",
+      "name": "womens Top",
+      "description": "Stylish womens casual top.",
       "images": [
         "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
       ],
@@ -2220,7 +2220,7 @@
       ],
       "featured": true,
       "avgRating": 4.5,
-      "category": "accessories-ladies-purses"
+      "category": "accessories-womens-purses"
     }
   },
   {
@@ -2234,7 +2234,7 @@
       ],
       "featured": false,
       "avgRating": 4.3,
-      "category": "accessories-ladies-purses"
+      "category": "accessories-womens-purses"
     }
   },
   {
@@ -2248,7 +2248,7 @@
       ],
       "featured": true,
       "avgRating": 4.6,
-      "category": "accessories-ladies-purses"
+      "category": "accessories-womens-purses"
     }
   },
   {
@@ -2262,7 +2262,7 @@
       ],
       "featured": false,
       "avgRating": 4.2,
-      "category": "accessories-ladies-purses"
+      "category": "accessories-womens-purses"
     }
   },
   {
