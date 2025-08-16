@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.db.models import Min, Max, Count, Q
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank, TrigramSimilarity
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 
@@ -206,3 +206,35 @@ class ProductViewSet(viewsets.ViewSet):
 
         serializer = ProductModelSerializer(related_products, many=True)
         return Response(serializer.data)
+
+    def create(self, request):
+        """
+        Creates a new product with its associated product items and variant configurations.
+        POST /api/product
+        Body:
+        {
+            "name": "Awesome T-Shirt 3",
+            "description": "100% cotton",
+            "images": ["http://example.com/image1.jpg", "http://example.com/image2.jpg"],
+            "featured": true,
+            "category": "mens",
+            "product_items": [
+                {
+                    "sku": "TSHIRT-001",
+                    "stock": 10,
+                    "price": 19.99,
+                    "imageUrls": ["http://example.com/item1.jpg"],
+                    "variations": [
+                        {"variant": "ebeb487d-67d5-498e-948f-02896e24526c"},
+                        {"variant": "82c5da0e-6dd1-474b-8f7c-69410cca7a62"}
+                    ]
+                }
+            ]
+        } 
+        """
+        serializer = ProductModelSerializer(data=request.data)
+        if serializer.is_valid():
+            product = serializer.save()
+            return Response(ProductModelSerializer(product).data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
