@@ -170,7 +170,12 @@ class ProductViewSet(viewsets.ViewSet):
         Retrieve a set of three featured products.
         GET /api/product/featured
         """
-        featured_products = ProductModel.objects.filter(featured=True)[:3]
+        featured_products = ProductModel.objects.filter(featured=True)
+        # Apply location filtering if provided, consistent with list()
+        location = request.query_params.get("location")
+        if location:
+            featured_products = featured_products.filter(locations__country_code__iexact=location)
+        featured_products = featured_products[:3]
         serializer = ProductModelSerializer(featured_products, many=True)
 
         return Response(serializer.data)
@@ -193,6 +198,11 @@ class ProductViewSet(viewsets.ViewSet):
         related_products = ProductModel.objects.filter(
             category__in=child_categories
         ).exclude(id=product.id)
+        
+        # Apply location filtering if provided, consistent with list()
+        location = request.query_params.get("location")
+        if location:
+            related_products = related_products.filter(locations__country_code__iexact=location)
 
         serializer = ProductModelSerializer(related_products, many=True)
         return Response(serializer.data)
