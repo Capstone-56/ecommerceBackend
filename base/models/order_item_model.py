@@ -10,7 +10,7 @@ class OrderItemModel(models.Model):
     Model that represents a product item in an order
     """
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
-    order = models.ForeignKey(OrderModel, on_delete=models.CASCADE, db_column="orderId")
+    order = models.ForeignKey(OrderModel, on_delete=models.CASCADE, db_column="orderId", related_name="items")
     productItem = models.ForeignKey(ProductItemModel, on_delete=models.CASCADE, db_column="productItemId")
     quantity = models.IntegerField(default=1)
     price = models.FloatField()

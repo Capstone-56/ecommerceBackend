@@ -13,6 +13,7 @@ class OrderModel(models.Model):
     Model that represents an order
     """
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+    createdAt = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE, db_column="userId")
     address = models.ForeignKey(AddressModel, on_delete=models.CASCADE, db_column="addressId")
     shippingVendor = models.ForeignKey(ShippingVendorModel, on_delete=models.CASCADE, db_column="shippingVendorId")

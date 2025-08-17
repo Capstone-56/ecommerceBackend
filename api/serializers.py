@@ -245,3 +245,33 @@ class CartItemSerializer(serializers.ModelSerializer):
 
     def get_totalPrice(self, obj):
         return obj.quantity * obj.productItem.price
+
+
+class ShippingVendorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShippingVendorModel
+        fields = ["id", "name", "logoUrl", "isActive"]
+
+    
+class OrderItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderItemModel
+        fields = ["id", "productItem", "quantity", "price"]
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderModel
+        fields = [
+            "id", "user", "address", "shippingVendor", 
+            "totalPrice", "status", "items"
+        ]
+
+
+class OrderListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderModel
+        fields = [
+            "id", "user", "address", "shippingVendor", 
+            "totalPrice", "status"
+        ]

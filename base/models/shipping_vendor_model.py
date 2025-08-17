@@ -7,6 +7,7 @@ class ShippingVendorModel(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=127)
     logoUrl = models.TextField()
+    isActive = models.BooleanField(default=True)
 
     class Meta:
         db_table = "shippingVendor"

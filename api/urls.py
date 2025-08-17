@@ -12,5 +12,7 @@ router.register(r"productItem", ProductItemViewSet, "productItem")
 router.register(r"stripe", StripeViewSet, "stripe")
 router.register(r"orderstatus", OrderStatusViewSet, "orderstatus")
 router.register(r"location", LocationViewSet, "location")
+router.register(r"shippingVendor", ShippingVendorViewSet, "shippingVendor")
+router.register(r"order", OrderViewSet, "order")
 
 urlpatterns = router.urls
