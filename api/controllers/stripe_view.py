@@ -7,10 +7,10 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-import uuid
 from typing import Tuple
-
+from rest_framework.permissions import AllowAny
 import stripe
+import uuid
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -30,14 +30,6 @@ def get_or_create_guest_id(request) -> Tuple[str, bool]:
     if gid:
         return gid, False
     return str(uuid.uuid4()), True
-
-from decimal import Decimal, ROUND_HALF_UP
-from django.apps import apps
-from django.db.models import Min
-from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
-from rest_framework import status
-import stripe
 
 def _to_cents(value: Decimal) -> int:
     return int((value * 100).quantize(Decimal("1"), rounding=ROUND_HALF_UP))
