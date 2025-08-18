@@ -8,3 +8,4 @@ from .variation_type_model import VariationTypeModel
 from .address_model import AddressModel
 from .user_address_model import UserAddressModel
 from .shopping_cart_item_model import ShoppingCartItemModel
+from .location_model import LocationModel
