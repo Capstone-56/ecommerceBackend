@@ -18,10 +18,10 @@ _STATUS_MAP = {
     "canceled": "failed",
 }
 
-class OrdersViewSet(viewsets.ViewSet):
+class OrderStatusViewSet(viewsets.ViewSet):
     """
     Route:
-      GET /api/orders/status?pi=...
+      GET /api/orderstatus/status?pi=...
     """
 
     @action(detail=False, methods=["get"], url_path="status")

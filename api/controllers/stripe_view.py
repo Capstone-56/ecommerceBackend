@@ -34,8 +34,9 @@ def get_or_create_guest_id(request) -> Tuple[str, bool]:
 class StripeViewSet(viewsets.ViewSet):
     """
     Routes:
-      POST  /api/payments/create-intent
-      PUT   /api/payments/{intent_id}/shipping
+      POST  /api/stripe/create-intent
+      PUT   /api/stripe/{intent_id}/shipping
+      POST  /api/stripe/webhook
     """
 
     @action(detail=False, methods=["post"], url_path="create-intent")
