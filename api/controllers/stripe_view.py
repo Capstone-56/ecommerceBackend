@@ -1,16 +1,17 @@
 from decimal import Decimal, ROUND_HALF_UP
-from django.apps import apps
-from django.conf import settings
-from django.db.models import Min
-from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
 from typing import Tuple
-from rest_framework.permissions import AllowAny
-import stripe
 import uuid
+import stripe
+
+from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from rest_framework.decorators import action
+from django.db.models import Min
+from base.models import ProductModel, ProductItemModel
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -25,27 +26,28 @@ def _to_cents(value: Decimal) -> int:
     return int((value * 100).quantize(Decimal("1"), rounding=ROUND_HALF_UP))
 
 def get_or_create_guest_id(request) -> Tuple[str, bool]:
-    """Return (guest_id, is_new)."""
     gid = request.COOKIES.get(GUEST_COOKIE)
     if gid:
         return gid, False
     return str(uuid.uuid4()), True
 
-def _to_cents(value: Decimal) -> int:
-    return int((value * 100).quantize(Decimal("1"), rounding=ROUND_HALF_UP))
+class StripeViewSet(viewsets.ViewSet):
+    """
+    Routes:
+      POST  /api/payments/create-intent
+      PUT   /api/payments/{intent_id}/shipping
+    """
 
-# need to eventually store cart in database
-class CreateIntentView(APIView):
-    # guests allowed to checkout
-    permission_classes = [AllowAny]
-
-    def post(self, request):
+    @action(detail=False, methods=["post"], url_path="create-intent")
+    def create_intent(self, request):
         body = request.data if hasattr(request, "data") else {}
         cart = body.get("cart") or []
         if not isinstance(cart, list) or not cart:
-            return Response({"error": "Cart is empty"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": "Cart is empty"}, status=status.HTTP_400_BAD_REQUEST
+            )
 
-        # Normalise cart & collect product ids
+        # Normalise input
         product_ids: list[str] = []
         lines_norm: list[dict] = []
         for line in cart:
@@ -57,17 +59,16 @@ class CreateIntentView(APIView):
             product_ids.append(pid)
             lines_norm.append({"product_id": pid, "qty": qty})
         if not lines_norm:
-            return Response({"error": "Cart is empty"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": "Cart is empty"}, status=status.HTTP_400_BAD_REQUEST
+            )
 
-        ProductItemModel = apps.get_model("base", "ProductItemModel")
-        ProductModel = apps.get_model("base", "ProductModel")
-
+        # pricing from DB, not client
         price_by_product: dict[str, Decimal] = {}
         name_by_product: dict[str, str] = {}
 
         price_rows = (
-            ProductItemModel.objects
-            .filter(product_id__in=product_ids)
+            ProductItemModel.objects.filter(product_id__in=product_ids)
             .values("product_id")
             .annotate(unit_price=Min("price"))
         )
@@ -78,7 +79,7 @@ class CreateIntentView(APIView):
         for r in name_rows:
             name_by_product[str(r["id"])] = r["name"] or "Product"
 
-        # sum + build summary for OrderComplete
+        # Sum + prepare summary
         missing_products: list[str] = []
         total = Decimal("0")
         items_summary: list[dict] = []
@@ -91,24 +92,32 @@ class CreateIntentView(APIView):
                 continue
             subtotal = unit * qty
             total += subtotal
-            items_summary.append({
-                "id": pid,
-                "kind": "product",
-                "name": name_by_product.get(pid, "Product"),
-                "quantity": qty,
-                "unit_price_cents": _to_cents(unit),
-                "subtotal_cents": _to_cents(subtotal),
-            })
+            items_summary.append(
+                {
+                    "id": pid,
+                    "kind": "product",
+                    "name": name_by_product.get(pid, "Product"),
+                    "quantity": qty,
+                    "unit_price_cents": _to_cents(unit),
+                    "subtotal_cents": _to_cents(subtotal),
+                }
+            )
 
         if missing_products:
             return Response(
-                {"error": "Some products have no priced variants", "missingProductIds": missing_products},
+                {
+                    "error": "Some products have no priced variants",
+                    "missingProductIds": missing_products,
+                },
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         amount_cents = _to_cents(total)
         if amount_cents <= 0:
-            return Response({"error": "Cart is empty or invalid"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": "Cart is empty or invalid"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         user = getattr(request, "user", None)
         is_authed = bool(user and getattr(user, "is_authenticated", False))
@@ -117,16 +126,16 @@ class CreateIntentView(APIView):
         if not is_authed:
             guest_id, is_new = get_or_create_guest_id(request)
 
-        # Create PI
+        # Create PaymentIntent
         try:
             intent = stripe.PaymentIntent.create(
                 amount=amount_cents,
                 currency=STORE_DEFAULT_CURRENCY,
                 automatic_payment_methods={"enabled": True},
                 metadata={
-                    "user_id": str(request.user.id) if is_authed else "",
+                    "user_id": str(user.id) if is_authed else "",
                     "guest_id": guest_id if not is_authed else "",
-                }
+                },
             )
             payload = {
                 "clientSecret": intent.client_secret,
@@ -151,11 +160,11 @@ class CreateIntentView(APIView):
         except stripe.error.StripeError as e:
             return Response({"error": str(e)}, status=400)
 
+    @action(detail=True, methods=["put"], url_path="shipping")
+    def shipping(self, request, pk=None):
+        intent_id = pk
 
-class UpdateIntentShippingView(APIView):
-    permission_classes = [AllowAny]
-
-    def put(self, request, intent_id: str):
+        # Verify PaymentIntent exists and user has access
         try:
             pi = stripe.PaymentIntent.retrieve(intent_id)
         except stripe.error.StripeError as e:
@@ -179,45 +188,56 @@ class UpdateIntentShippingView(APIView):
         body = request.data or {}
         shipping = body.get("shipping") or {}
         name = body.get("name") or shipping.get("name") or ""
-        
-        try:
-            stripe.PaymentIntent.modify(
-                intent_id,
-                shipping={
-                    "name": name,
-                    "address": {
-                        "line1": shipping.get("line1", ""),
-                        "line2": shipping.get("line2"),
-                        "city": shipping.get("city", ""),
-                        "state": shipping.get("state"),
-                        "postal_code": shipping.get("postal_code", ""),
-                        "country": shipping.get("country", ""),
-                    },
-                    "phone": shipping.get("phone"),
-                },
-            )
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        except stripe.error.StripeError as e:
-            return Response({"error": str(e)}, status=400)
 
+        # Just receive the shipping data for now, add it to order details later
+        shipping_data = {
+            "payment_intent_id": intent_id,
+            "name": name,
+            "line1": shipping.get("line1", ""),
+            "line2": shipping.get("line2", ""),
+            "city": shipping.get("city", ""),
+            "state": shipping.get("state", ""),
+            "postal_code": shipping.get("postal_code", ""),
+            "country": shipping.get("country", ""),
+            "phone": shipping.get("phone", ""),
+            "user_id": user.id if is_authed else None,
+            "guest_id": meta.get("guest_id") if not is_authed else None,
+        }
 
-# need to eventually use webhook as source of truth for payment status
-@csrf_exempt
-def stripe_webhook(request):
-    payload = request.body
-    sig_header = request.META.get("HTTP_STRIPE_SIGNATURE", "")
-    try:
-        event = stripe.Webhook.construct_event(
-            payload=payload,
-            sig_header=sig_header,
-            secret=settings.STRIPE_WEBHOOK_SECRET,
+        return Response(
+            {"message": "Shipping data received successfully", "intent_id": intent_id},
+            status=status.HTTP_200_OK,
         )
-    except (ValueError, stripe.error.SignatureVerificationError):
-        return HttpResponse(status=400)
 
-    if event['type'] == 'payment_intent.succeeded':
-        payment_intent = event['data']['object']
-        # TODO: Process successful payment (create order, send confirmation email, whatever...)
-        pass
+    @method_decorator(csrf_exempt)  # stripe posts without CSRF token
+    @action(
+        detail=False,
+        methods=["post"],
+        url_path="webhook",
+        authentication_classes=[],  # not needed for Stripe
+    )
+    def webhook(self, request):
+        # raw body for signature verification
+        payload = request.body
+        sig_header = request.META.get("HTTP_STRIPE_SIGNATURE", "")
 
-    return HttpResponse(status=200)
+        try:
+            event = stripe.Webhook.construct_event(
+                payload=payload,
+                sig_header=sig_header,
+                secret=settings.STRIPE_WEBHOOK_SECRET,
+            )
+        except (ValueError, stripe.error.SignatureVerificationError):
+            return Response(status=400)
+
+        etype = event.get("type")
+        obj = event.get("data", {}).get("object", {})
+
+        if etype == "payment_intent.succeeded":
+            # TODO: mark order as paid + notify
+            pass
+        elif etype == "payment_intent.payment_failed":
+            # TODO: mark order failed + notify
+            pass
+
+        return Response(status=200)
