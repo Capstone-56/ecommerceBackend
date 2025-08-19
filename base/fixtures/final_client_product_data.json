@@ -1,24 +1,89 @@
 [
   {
     "model": "base.CategoryModel",
-    "pk": "mens",
+    "pk": "men",
     "fields": {
-      "name": "Mens",
-      "description": "Mens clothing",
+      "name": "Men",
+      "description": "Men's clothing and accessories",
       "parentCategory": null,
       "lft": 1,
-      "rght": 8,
+      "rght": 32,
       "tree_id": 1,
       "level": 0
     }
   },
   {
     "model": "base.CategoryModel",
-    "pk": "mens-shirt",
+    "pk": "women",
+    "fields": {
+      "name": "Women",
+      "description": "Women's clothing and accessories",
+      "parentCategory": null,
+      "lft": 1,
+      "rght": 36,
+      "tree_id": 2,
+      "level": 0
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "kids-baby",
+    "fields": {
+      "name": "Kids & Baby",
+      "description": "Clothing and accessories for kids and babies",
+      "parentCategory": null,
+      "lft": 1,
+      "rght": 38,
+      "tree_id": 3,
+      "level": 0
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "home",
+    "fields": {
+      "name": "Home",
+      "description": "Home textile and decor",
+      "parentCategory": null,
+      "lft": 1,
+      "rght": 4,
+      "tree_id": 4,
+      "level": 0
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "tech",
+    "fields": {
+      "name": "Tech",
+      "description": "Electronics and gadgets",
+      "parentCategory": null,
+      "lft": 1,
+      "rght": 4,
+      "tree_id": 5,
+      "level": 0
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "health-beauty",
+    "fields": {
+      "name": "Health & Beauty",
+      "description": "Health and beauty products",
+      "parentCategory": null,
+      "lft": 1,
+      "rght": 18,
+      "tree_id": 6,
+      "level": 0
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "mens-shirts",
     "fields": {
       "name": "Shirts",
-      "description": "Mens shirts",
-      "parentCategory": "mens",
+      "description": "Men's shirts",
+      "parentCategory": "men",
       "lft": 2,
       "rght": 3,
       "tree_id": 1,
@@ -30,8 +95,8 @@
     "pk": "mens-pants",
     "fields": {
       "name": "Pants",
-      "description": "Mens pants",
-      "parentCategory": "mens",
+      "description": "Men's pants",
+      "parentCategory": "men",
       "lft": 4,
       "rght": 5,
       "tree_id": 1,
@@ -40,11 +105,11 @@
   },
   {
     "model": "base.CategoryModel",
-    "pk": "mens-jumpers-jackets",
+    "pk": "mens-jumpers",
     "fields": {
-      "name": "Jumpers and Jackets",
-      "description": "Mens jumpers and jackets",
-      "parentCategory": "mens",
+      "name": "Jumpers",
+      "description": "Men's jumpers",
+      "parentCategory": "men",
       "lft": 6,
       "rght": 7,
       "tree_id": 1,
@@ -53,132 +118,327 @@
   },
   {
     "model": "base.CategoryModel",
-    "pk": "boys",
+    "pk": "mens-jackets",
     "fields": {
-      "name": "Boys",
-      "description": "Boys clothing",
-      "parentCategory": null,
-      "lft": 1,
-      "rght": 8,
-      "tree_id": 2,
-      "level": 0
-    }
-  },
-  {
-    "model": "base.CategoryModel",
-    "pk": "boys-shirts",
-    "fields": {
-      "name": "Shirts",
-      "description": "Boys shirts",
-      "parentCategory": "boys",
-      "lft": 2,
-      "rght": 3,
-      "tree_id": 2,
+      "name": "Jackets",
+      "description": "Men's jackets",
+      "parentCategory": "men",
+      "lft": 8,
+      "rght": 9,
+      "tree_id": 1,
       "level": 1
     }
   },
   {
     "model": "base.CategoryModel",
-    "pk": "boys-pants",
+    "pk": "mens-shoes",
     "fields": {
-      "name": "Pants",
-      "description": "Boys pants",
-      "parentCategory": "boys",
-      "lft": 4,
-      "rght": 5,
-      "tree_id": 2,
+      "name": "Shoes",
+      "description": "Men's shoes",
+      "parentCategory": "men",
+      "lft": 10,
+      "rght": 19,
+      "tree_id": 1,
       "level": 1
     }
   },
   {
     "model": "base.CategoryModel",
-    "pk": "boys-jumpers-jackets",
+    "pk": "mens-running-shoes",
     "fields": {
-      "name": "Jumpers and Jackets",
-      "description": "Boys jumpers and jackets",
-      "parentCategory": "boys",
-      "lft": 6,
-      "rght": 7,
-      "tree_id": 2,
+      "name": "Running Shoes",
+      "description": "Men's running shoes",
+      "parentCategory": "mens-shoes",
+      "lft": 11,
+      "rght": 12,
+      "tree_id": 1,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "mens-leather-shoes",
+    "fields": {
+      "name": "Leather Shoes",
+      "description": "Men's leather shoes",
+      "parentCategory": "mens-shoes",
+      "lft": 13,
+      "rght": 14,
+      "tree_id": 1,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "mens-hiking-shoes",
+    "fields": {
+      "name": "Hiking Shoes",
+      "description": "Men's hiking shoes",
+      "parentCategory": "mens-shoes",
+      "lft": 15,
+      "rght": 16,
+      "tree_id": 1,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "mens-accessories",
+    "fields": {
+      "name": "Accessories",
+      "description": "Men's accessories",
+      "parentCategory": "men",
+      "lft": 20,
+      "rght": 23,
+      "tree_id": 1,
       "level": 1
     }
   },
   {
     "model": "base.CategoryModel",
-    "pk": "ladies",
+    "pk": "mens-caps",
     "fields": {
-      "name": "Ladies",
-      "description": "Ladies clothing",
-      "parentCategory": null,
-      "lft": 1,
-      "rght": 11,
-      "tree_id": 3,
-      "level": 0
+      "name": "Caps",
+      "description": "Men's caps",
+      "parentCategory": "mens-accessories",
+      "lft": 21,
+      "rght": 22,
+      "tree_id": 1,
+      "level": 2
     }
   },
   {
     "model": "base.CategoryModel",
-    "pk": "ladies-tops",
+    "pk": "mens-uniforms",
+    "fields": {
+      "name": "Uniforms",
+      "description": "Men's uniforms",
+      "parentCategory": "men",
+      "lft": 24,
+      "rght": 31,
+      "tree_id": 1,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "mens-school-uniform",
+    "fields": {
+      "name": "School Uniforms",
+      "description": "Men's school uniforms",
+      "parentCategory": "mens-uniforms",
+      "lft": 25,
+      "rght": 26,
+      "tree_id": 1,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "mens-medical-uniform",
+    "fields": {
+      "name": "Medical Uniforms",
+      "description": "Men's medical uniforms",
+      "parentCategory": "mens-uniforms",
+      "lft": 27,
+      "rght": 28,
+      "tree_id": 1,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-tops",
     "fields": {
       "name": "Tops",
-      "description": "Ladies tops",
-      "parentCategory": "ladies",
+      "description": "Women's tops",
+      "parentCategory": "women",
       "lft": 2,
       "rght": 3,
-      "tree_id": 3,
+      "tree_id": 2,
       "level": 1
     }
   },
   {
     "model": "base.CategoryModel",
-    "pk": "ladies-traditional",
+    "pk": "womens-traditional",
     "fields": {
       "name": "Traditional",
-      "description": "Ladies traditional clothing",
-      "parentCategory": "ladies",
+      "description": "Women's traditional clothing",
+      "parentCategory": "women",
       "lft": 4,
       "rght": 5,
-      "tree_id": 3,
+      "tree_id": 2,
       "level": 1
     }
   },
   {
     "model": "base.CategoryModel",
-    "pk": "ladies-pants",
+    "pk": "womens-pants",
     "fields": {
       "name": "Pants",
-      "description": "Ladies pants",
-      "parentCategory": "ladies",
+      "description": "Women's pants",
+      "parentCategory": "women",
       "lft": 6,
       "rght": 7,
-      "tree_id": 3,
+      "tree_id": 2,
       "level": 1
     }
   },
   {
     "model": "base.CategoryModel",
-    "pk": "ladies-jumpers-jackets",
+    "pk": "womens-jumpers",
     "fields": {
-      "name": "Jumpers and Jackets",
-      "description": "Ladies jumpers and jackets",
-      "parentCategory": "ladies",
-      "lft": 7,
-      "rght": 8,
-      "tree_id": 3,
+      "name": "Jumpers",
+      "description": "Women's jumpers",
+      "parentCategory": "women",
+      "lft": 8,
+      "rght": 9,
+      "tree_id": 2,
       "level": 1
     }
   },
   {
     "model": "base.CategoryModel",
-    "pk": "ladies-sweaters",
+    "pk": "womens-jackets",
+    "fields": {
+      "name": "Jackets",
+      "description": "Women's jackets",
+      "parentCategory": "women",
+      "lft": 10,
+      "rght": 11,
+      "tree_id": 2,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-shoes",
+    "fields": {
+      "name": "Shoes",
+      "description": "Women's shoes",
+      "parentCategory": "women",
+      "lft": 12,
+      "rght": 19,
+      "tree_id": 2,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-running-shoes",
+    "fields": {
+      "name": "Running Shoes",
+      "description": "Women's running shoes",
+      "parentCategory": "womens-shoes",
+      "lft": 13,
+      "rght": 14,
+      "tree_id": 2,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-dress-shoes",
+    "fields": {
+      "name": "Dress Shoes",
+      "description": "Women's dress shoes",
+      "parentCategory": "womens-shoes",
+      "lft": 15,
+      "rght": 16,
+      "tree_id": 2,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-hiking-shoes",
+    "fields": {
+      "name": "Hiking Shoes",
+      "description": "Women's hiking shoes",
+      "parentCategory": "womens-shoes",
+      "lft": 17,
+      "rght": 18,
+      "tree_id": 2,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-sweaters",
     "fields": {
       "name": "Sweaters",
-      "description": "Ladies sweaters",
-      "parentCategory": "ladies",
-      "lft": 9,
-      "rght": 10,
-      "tree_id": 3,
+      "description": "Women's sweaters",
+      "parentCategory": "women",
+      "lft": 20,
+      "rght": 21,
+      "tree_id": 2,
       "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-accessories",
+    "fields": {
+      "name": "Accessories",
+      "description": "Women's accessories",
+      "parentCategory": "women",
+      "lft": 22,
+      "rght": 27,
+      "tree_id": 2,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-caps",
+    "fields": {
+      "name": "Caps",
+      "description": "Women's caps",
+      "parentCategory": "womens-accessories",
+      "lft": 23,
+      "rght": 24,
+      "tree_id": 2,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-uniforms",
+    "fields": {
+      "name": "Uniforms",
+      "description": "Women's uniforms",
+      "parentCategory": "women",
+      "lft": 28,
+      "rght": 35,
+      "tree_id": 2,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-school-uniform",
+    "fields": {
+      "name": "School Uniforms",
+      "description": "Women's school uniforms",
+      "parentCategory": "womens-uniforms",
+      "lft": 29,
+      "rght": 30,
+      "tree_id": 2,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-medical-uniform",
+    "fields": {
+      "name": "Medical Uniforms",
+      "description": "Women's medical uniforms",
+      "parentCategory": "womens-uniforms",
+      "lft": 31,
+      "rght": 32,
+      "tree_id": 2,
+      "level": 2
     }
   },
   {
@@ -187,49 +447,10 @@
     "fields": {
       "name": "Girls",
       "description": "Girls clothing",
-      "parentCategory": null,
-      "lft": 1,
-      "rght": 13,
-      "tree_id": 4,
-      "level": 0
-    }
-  },
-  {
-    "model": "base.CategoryModel",
-    "pk": "girls-tops",
-    "fields": {
-      "name": "Tops",
-      "description": "Girls tops",
-      "parentCategory": "girls",
+      "parentCategory": "kids-baby",
       "lft": 2,
-      "rght": 3,
-      "tree_id": 4,
-      "level": 1
-    }
-  },
-  {
-    "model": "base.CategoryModel",
-    "pk": "girls-traditional",
-    "fields": {
-      "name": "Traditional",
-      "description": "Girls traditional clothing",
-      "parentCategory": "girls",
-      "lft": 4,
-      "rght": 5,
-      "tree_id": 4,
-      "level": 1
-    }
-  },
-  {
-    "model": "base.CategoryModel",
-    "pk": "girls-pants",
-    "fields": {
-      "name": "Pants",
-      "description": "Girls pants",
-      "parentCategory": "girls",
-      "lft": 6,
-      "rght": 7,
-      "tree_id": 4,
+      "rght": 9,
+      "tree_id": 3,
       "level": 1
     }
   },
@@ -240,23 +461,88 @@
       "name": "Jumpers and Jackets",
       "description": "Girls jumpers and jackets",
       "parentCategory": "girls",
-      "lft": 8,
-      "rght": 9,
-      "tree_id": 4,
+      "lft": 3,
+      "rght": 4,
+      "tree_id": 3,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "girls-tops",
+    "fields": {
+      "name": "Tops",
+      "description": "Girls tops",
+      "parentCategory": "girls",
+      "lft": 5,
+      "rght": 6,
+      "tree_id": 3,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "girls-pants",
+    "fields": {
+      "name": "Pants",
+      "description": "Girls pants",
+      "parentCategory": "girls",
+      "lft": 7,
+      "rght": 8,
+      "tree_id": 3,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "boys",
+    "fields": {
+      "name": "Boys",
+      "description": "Boys clothing",
+      "parentCategory": "kids-baby",
+      "lft": 10,
+      "rght": 17,
+      "tree_id": 3,
       "level": 1
     }
   },
   {
     "model": "base.CategoryModel",
-    "pk": "girls-sweaters",
+    "pk": "boys-jumpers-jackets",
     "fields": {
-      "name": "Sweaters",
-      "description": "Girls sweaters",
-      "parentCategory": "girls",
-      "lft": 10,
-      "rght": 11,
-      "tree_id": 4,
-      "level": 1
+      "name": "Jumpers and Jackets",
+      "description": "Boys jumpers and jackets",
+      "parentCategory": "boys",
+      "lft": 11,
+      "rght": 12,
+      "tree_id": 3,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "boys-pants",
+    "fields": {
+      "name": "Pants",
+      "description": "Boys pants",
+      "parentCategory": "boys",
+      "lft": 13,
+      "rght": 14,
+      "tree_id": 3,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "boys-tops",
+    "fields": {
+      "name": "Tops",
+      "description": "Boys tops",
+      "parentCategory": "boys",
+      "lft": 15,
+      "rght": 16,
+      "tree_id": 3,
+      "level": 2
     }
   },
   {
@@ -265,128 +551,128 @@
     "fields": {
       "name": "Babies",
       "description": "Babies clothing",
-      "parentCategory": null,
-      "lft": 1,
-      "rght": 13,
-      "tree_id": 5,
-      "level": 0
-    }
-  },
-  {
-    "model": "base.CategoryModel",
-    "pk": "babies-tops",
-    "fields": {
-      "name": "Tops",
-      "description": "Babies tops",
-      "parentCategory": "babies",
-      "lft": 2,
-      "rght": 3,
-      "tree_id": 5,
+      "parentCategory": "kids-baby",
+      "lft": 18,
+      "rght": 25,
+      "tree_id": 3,
       "level": 1
     }
   },
   {
     "model": "base.CategoryModel",
-    "pk": "babies-dresses",
-    "fields": {
-      "name": "Dresses",
-      "description": "Babies long sleeve dresses",
-      "parentCategory": "babies",
-      "lft": 4,
-      "rght": 5,
-      "tree_id": 5,
-      "level": 1
-    }
-  },
-  {
-    "model": "base.CategoryModel",
-    "pk": "babies-jumpers-jackets",
-    "fields": {
-      "name": "Jumpers and Jackets",
-      "description": "Babies winter and summer jackets",
-      "parentCategory": "babies",
-      "lft": 6,
-      "rght": 7,
-      "tree_id": 5,
-      "level": 1
-    }
-  },
-  {
-    "model": "base.CategoryModel",
-    "pk": "babies-sweaters",
-    "fields": {
-      "name": "Sweaters",
-      "description": "Babies sweaters and hoodies",
-      "parentCategory": "babies",
-      "lft": 8,
-      "rght": 9,
-      "tree_id": 5,
-      "level": 1
-    }
-  },
-  {
-    "model": "base.CategoryModel",
-    "pk": "caps",
-    "fields": {
-      "name": "Caps",
-      "description": "Caps",
-      "parentCategory": null,
-      "lft": 1,
-      "rght": 2,
-      "tree_id": 6,
-      "level": 0
-    }
-  },
-  {
-    "model": "base.CategoryModel",
-    "pk": "uniforms",
+    "pk": "kids-uniforms",
     "fields": {
       "name": "Uniforms",
-      "description": "Uniforms",
-      "parentCategory": null,
-      "lft": 1,
-      "rght": 6,
-      "tree_id": 7,
-      "level": 0
-    }
-  },
-  {
-    "model": "base.CategoryModel",
-    "pk": "school-uniform",
-    "fields": {
-      "name": "School uniforms",
-      "description": "School uniforms",
-      "parentCategory": "uniforms",
-      "lft": 2,
-      "rght": 3,
-      "tree_id": 7,
+      "description": "Kids uniforms",
+      "parentCategory": "kids-baby",
+      "lft": 26,
+      "rght": 27,
+      "tree_id": 3,
       "level": 1
     }
   },
   {
     "model": "base.CategoryModel",
-    "pk": "medical-uniform",
+    "pk": "kids-accessories",
     "fields": {
-      "name": "Medical uniforms",
-      "description": "Medical uniforms",
-      "parentCategory": "uniforms",
-      "lft": 4,
-      "rght": 5,
-      "tree_id": 7,
+      "name": "Accessories",
+      "description": "Kids accessories",
+      "parentCategory": "kids-baby",
+      "lft": 28,
+      "rght": 29,
+      "tree_id": 3,
       "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "kids-shoes",
+    "fields": {
+      "name": "Shoes",
+      "description": "Kids shoes",
+      "parentCategory": "kids-baby",
+      "lft": 30,
+      "rght": 37,
+      "tree_id": 3,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "boys-shoes",
+    "fields": {
+      "name": "Boys Shoes",
+      "description": "Shoes for boys",
+      "parentCategory": "kids-shoes",
+      "lft": 31,
+      "rght": 32,
+      "tree_id": 3,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "girls-shoes",
+    "fields": {
+      "name": "Girls Shoes",
+      "description": "Shoes for girls",
+      "parentCategory": "kids-shoes",
+      "lft": 33,
+      "rght": 34,
+      "tree_id": 3,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "baby-shoes",
+    "fields": {
+      "name": "Baby Shoes",
+      "description": "Shoes for babies",
+      "parentCategory": "kids-shoes",
+      "lft": 35,
+      "rght": 36,
+      "tree_id": 3,
+      "level": 2
     }
   },
   {
     "model": "base.CategoryModel",
     "pk": "home-textile",
     "fields": {
-      "name": "Home textile",
-      "description": "Home textile",
-      "parentCategory": null,
-      "lft": 1,
-      "rght": 2,
-      "tree_id": 8,
-      "level": 0
+      "name": "Home Textile",
+      "description": "Home textile products",
+      "parentCategory": "home",
+      "lft": 2,
+      "rght": 3,
+      "tree_id": 4,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "essentials-electronics",
+    "fields": {
+      "name": "Essentials & Electronics",
+      "description": "Electronics and gadgets",
+      "parentCategory": "tech",
+      "lft": 2,
+      "rght": 3,
+      "tree_id": 5,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "otc-supplement",
+    "fields": {
+      "name": "OTC & Supplements",
+      "description": "Over-the-counter medicines and supplements",
+      "parentCategory": "health-beauty",
+      "lft": 2,
+      "rght": 3,
+      "tree_id": 6,
+      "level": 1
     }
   },
   {
@@ -394,12 +680,12 @@
     "pk": "cosmetics",
     "fields": {
       "name": "Cosmetics",
-      "description": "All cosmetic products",
-      "parentCategory": null,
-      "lft": 1,
+      "description": "Makeup and beauty products",
+      "parentCategory": "health-beauty",
+      "lft": 4,
       "rght": 17,
-      "tree_id": 9,
-      "level": 0
+      "tree_id": 6,
+      "level": 1
     }
   },
   {
@@ -409,23 +695,23 @@
       "name": "Lipsticks",
       "description": "Matte and Gloss Lipsticks in various shades",
       "parentCategory": "cosmetics",
-      "lft": 2,
-      "rght": 3,
-      "tree_id": 9,
-      "level": 1
+      "lft": 5,
+      "rght": 6,
+      "tree_id": 6,
+      "level": 2
     }
   },
   {
     "model": "base.CategoryModel",
-    "pk": "cosmetics-eye-products",
+    "pk": "cosmetics-eye-makeup",
     "fields": {
-      "name": "Eye Products",
-      "description": "Eyeliner and Mascara in various shades",
+      "name": "Eye Makeup",
+      "description": "Eye makeup products",
       "parentCategory": "cosmetics",
-      "lft": 4,
-      "rght": 5,
-      "tree_id": 9,
-      "level": 1
+      "lft": 7,
+      "rght": 8,
+      "tree_id": 6,
+      "level": 2
     }
   },
   {
@@ -433,12 +719,12 @@
     "pk": "cosmetics-face-makeup",
     "fields": {
       "name": "Face Makeup",
-      "description": "Blush, Foundation, Bronzer, and Setting Powder/Spray",
+      "description": "Face makeup products",
       "parentCategory": "cosmetics",
-      "lft": 6,
-      "rght": 7,
-      "tree_id": 9,
-      "level": 1
+      "lft": 9,
+      "rght": 10,
+      "tree_id": 6,
+      "level": 2
     }
   },
   {
@@ -446,12 +732,12 @@
     "pk": "cosmetics-skincare",
     "fields": {
       "name": "Skincare",
-      "description": "Moisturizers and face cleaners",
+      "description": "Skincare products",
       "parentCategory": "cosmetics",
-      "lft": 8,
-      "rght": 9,
-      "tree_id": 9,
-      "level": 1
+      "lft": 11,
+      "rght": 12,
+      "tree_id": 6,
+      "level": 2
     }
   },
   {
@@ -459,11 +745,11 @@
     "pk": "accessories",
     "fields": {
       "name": "Accessories",
-      "description": "Fashion accessories including jewelry, purses, and watches",
+      "description": "Fashion accessories",
       "parentCategory": null,
       "lft": 1,
-      "rght": 11,
-      "tree_id": 10,
+      "rght": 8,
+      "tree_id": 7,
       "level": 0
     }
   },
@@ -476,20 +762,20 @@
       "parentCategory": "accessories",
       "lft": 2,
       "rght": 3,
-      "tree_id": 10,
+      "tree_id": 7,
       "level": 1
     }
   },
   {
     "model": "base.CategoryModel",
-    "pk": "accessories-ladies-purses",
+    "pk": "accessories-womens-purses",
     "fields": {
-      "name": "Ladies Purses",
+      "name": "womens Purses",
       "description": "Women purses and wallet sets in leather and PU leather",
       "parentCategory": "accessories",
       "lft": 4,
       "rght": 5,
-      "tree_id": 10,
+      "tree_id": 7,
       "level": 1
     }
   },
@@ -502,111 +788,7 @@
       "parentCategory": "accessories",
       "lft": 6,
       "rght": 7,
-      "tree_id": 10,
-      "level": 1
-    }
-  },
-  {
-    "model": "base.CategoryModel",
-    "pk": "otc-supplement",
-    "fields": {
-      "name": "OTC & Supplements",
-      "description": "Healthy Supplements",
-      "parentCategory": null,
-      "lft": 1,
-      "rght": 2,
-      "tree_id": 11,
-      "level": 0
-    }
-  },
-  {
-    "model": "base.CategoryModel",
-    "pk": "essentials-electronics",
-    "fields": {
-      "name": "Essentials & Electronics",
-      "description": "Various essentials and electronics",
-      "parentCategory": null,
-      "lft": 1,
-      "rght": 2,
-      "tree_id": 12,
-      "level": 1
-    }
-  },
-  {
-    "model": "base.CategoryModel",
-    "pk": "shoes",
-    "fields": {
-      "name": "Shoes",
-      "description": "All types of shoes",
-      "parentCategory": null,
-      "lft": 1,
-      "rght": 12,
-      "tree_id": 13,
-      "level": 0
-    }
-  },
-  {
-    "model": "base.CategoryModel",
-    "pk": "mens-shoes",
-    "fields": {
-      "name": "Mens Shoes",
-      "description": "Men's shoes",
-      "parentCategory": "shoes",
-      "lft": 2,
-      "rght": 3,
-      "tree_id": 13,
-      "level": 1
-    }
-  },
-  {
-    "model": "base.CategoryModel",
-    "pk": "shoes-running",
-    "fields": {
-      "name": "Running Shoes",
-      "description": "All running shoes",
-      "parentCategory": "shoes",
-      "lft": 4,
-      "rght": 5,
-      "tree_id": 13,
-      "level": 1
-    }
-  },
-  {
-    "model": "base.CategoryModel",
-    "pk": "shoes-leather",
-    "fields": {
-      "name": "Leather Shoes",
-      "description": "Leather shoes",
-      "parentCategory": "shoes",
-      "lft": 6,
-      "rght": 7,
-      "tree_id": 13,
-      "level": 1
-    }
-  },
-  {
-    "model": "base.CategoryModel",
-    "pk": "womens-shoes",
-    "fields": {
-      "name": "Womens Shoes",
-      "description": "Women's shoes",
-      "parentCategory": "shoes",
-      "lft": 8,
-      "rght": 9,
-      "tree_id": 13,
-      "level": 1
-    }
-  },
-  {
-    "model": "base.CategoryModel",
-    "pk": "babies-shoes",
-    "fields": {
-      "name": "Babies Shoes",
-      "description": "Shoes for babies",
-      "parentCategory": "shoes",
-      "lft": 10,
-      "rght": 11,
-      "tree_id": 13,
+      "tree_id": 7,
       "level": 1
     }
   },
@@ -621,7 +803,7 @@
       ],
       "featured": true,
       "avgRating": 4.3,
-      "category": "mens-shirt"
+      "category": "mens-shirts"
     }
   },
   {
@@ -635,7 +817,7 @@
       ],
       "featured": false,
       "avgRating": 4.1,
-      "category": "mens-shirt"
+      "category": "mens-shirts"
     }
   },
   {
@@ -649,7 +831,7 @@
       ],
       "featured": false,
       "avgRating": 4.0,
-      "category": "mens-shirt"
+      "category": "mens-shirts"
     }
   },
   {
@@ -705,7 +887,7 @@
       ],
       "featured": true,
       "avgRating": 4.7,
-      "category": "mens-jumpers-jackets"
+      "category": "mens-jackets"
     }
   },
   {
@@ -719,7 +901,7 @@
       ],
       "featured": false,
       "avgRating": 4.0,
-      "category": "mens-jumpers-jackets"
+      "category": "mens-jackets"
     }
   },
   {
@@ -733,7 +915,7 @@
       ],
       "featured": false,
       "avgRating": 4.1,
-      "category": "mens-jumpers-jackets"
+      "category": "mens-jackets"
     }
   },
   {
@@ -747,7 +929,11 @@
       ],
       "featured": false,
       "avgRating": 4.3,
-      "category": "mens-jumpers-jackets"
+      "category": "mens-jackets",
+      "locations": [
+        "US",
+        "CA"
+      ]
     }
   },
   {
@@ -761,7 +947,12 @@
       ],
       "featured": true,
       "avgRating": 4.5,
-      "category": "mens-jumpers-jackets"
+      "category": "mens-jackets",
+      "locations": [
+        "US",
+        "UK",
+        "CA"
+      ]
     }
   },
   {
@@ -775,7 +966,11 @@
       ],
       "featured": false,
       "avgRating": 4.0,
-      "category": "mens-shirt"
+      "category": "mens-shirts",
+      "locations": [
+        "UK",
+        "CA"
+      ]
     }
   },
   {
@@ -789,7 +984,11 @@
       ],
       "featured": false,
       "avgRating": 4.2,
-      "category": "mens-shirt"
+      "category": "mens-shirts",
+      "locations": [
+        "US",
+        "UK"
+      ]
     }
   },
   {
@@ -798,10 +997,12 @@
     "fields": {
       "name": "Dress Shirt - Long Sleeve",
       "description": "Classic boys' long sleeve dress shirt.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.2,
-      "category": "boys-shirts"
+      "category": "boys-tops"
     }
   },
   {
@@ -810,10 +1011,12 @@
     "fields": {
       "name": "Casual Shirt - Long Sleeve",
       "description": "Comfortable boys' casual long sleeve shirt.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.0,
-      "category": "boys-shirts"
+      "category": "boys-tops"
     }
   },
   {
@@ -822,10 +1025,12 @@
     "fields": {
       "name": "Casual Shirt - Short Sleeve",
       "description": "Lightweight boys' casual short sleeve shirt.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.1,
-      "category": "boys-shirts"
+      "category": "boys-tops"
     }
   },
   {
@@ -834,7 +1039,9 @@
     "fields": {
       "name": "Denim Pant",
       "description": "Durable boys' denim pant.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.0,
       "category": "boys-pants"
@@ -846,7 +1053,9 @@
     "fields": {
       "name": "Cargo Long Pant",
       "description": "Functional boys' cargo long pant.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 3.9,
       "category": "boys-pants"
@@ -858,7 +1067,9 @@
     "fields": {
       "name": "Cargo Half Pant",
       "description": "Casual boys' cargo half pant.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 3.8,
       "category": "boys-pants"
@@ -870,7 +1081,9 @@
     "fields": {
       "name": "Winter Jacket",
       "description": "Warm boys' winter jacket.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.5,
       "category": "boys-jumpers-jackets"
@@ -882,7 +1095,9 @@
     "fields": {
       "name": "Summer Jacket",
       "description": "Light boys' summer jacket.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.1,
       "category": "boys-jumpers-jackets"
@@ -894,7 +1109,9 @@
     "fields": {
       "name": "V-Neck Sweater",
       "description": "Cozy boys' V-neck sweater.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.0,
       "category": "boys-jumpers-jackets"
@@ -906,7 +1123,9 @@
     "fields": {
       "name": "Crew Neck Sweater",
       "description": "Classic boys' crew neck sweater.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.1,
       "category": "boys-jumpers-jackets"
@@ -918,7 +1137,9 @@
     "fields": {
       "name": "Hoodie Fleece",
       "description": "Warm boys' fleece hoodie.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.3,
       "category": "boys-jumpers-jackets"
@@ -930,10 +1151,12 @@
     "fields": {
       "name": "T-Shirt",
       "description": "Casual boys' T-shirt.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.0,
-      "category": "boys-shirts"
+      "category": "boys-tops"
     }
   },
   {
@@ -942,22 +1165,26 @@
     "fields": {
       "name": "Polo Shirt",
       "description": "Classic boys' polo shirt.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.1,
-      "category": "boys-shirts"
+      "category": "boys-tops"
     }
   },
   {
     "model": "base.ProductModel",
     "pk": "b3a9f2c4-59e8-4d72-b2d9-f36e42f8a67a",
     "fields": {
-      "name": "Ladies Shirt - Long Sleeve",
-      "description": "Elegant ladies long sleeve shirt.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "name": "womens Shirt - Long Sleeve",
+      "description": "Elegant womens long sleeve shirt.",
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.1,
-      "category": "ladies-tops"
+      "category": "womens-tops"
     }
   },
   {
@@ -965,11 +1192,13 @@
     "pk": "c19e245d-773a-4a49-8d7e-20c3c9d2c17e",
     "fields": {
       "name": "Saree With Blouse Piece",
-      "description": "Traditional ladies saree with blouse piece.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "description": "Traditional womens saree with blouse piece.",
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.4,
-      "category": "ladies-traditional"
+      "category": "womens-traditional"
     }
   },
   {
@@ -977,71 +1206,83 @@
     "pk": "84f6c0b3-120d-4e72-bd17-d8256e6a7e6f",
     "fields": {
       "name": "Salwar Kameez",
-      "description": "Classic ladies salwar kameez set.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "description": "Classic womens salwar kameez set.",
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.3,
-      "category": "ladies-traditional"
+      "category": "womens-traditional"
     }
   },
   {
     "model": "base.ProductModel",
     "pk": "a5b2d5f8-5767-4dfe-87ea-8b67a253c1ab",
     "fields": {
-      "name": "Ladies Long Pant",
-      "description": "Comfortable ladies long pant.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "name": "womens Long Pant",
+      "description": "Comfortable womens long pant.",
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.0,
-      "category": "ladies-pants"
+      "category": "womens-pants"
     }
   },
   {
     "model": "base.ProductModel",
     "pk": "0a58b73d-d33b-4424-b917-f3e35c740312",
     "fields": {
-      "name": "Ladies Short Pant",
-      "description": "Casual ladies short pant.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "name": "womens Short Pant",
+      "description": "Casual womens short pant.",
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 3.8,
-      "category": "ladies-pants"
+      "category": "womens-pants"
     }
   },
   {
     "model": "base.ProductModel",
     "pk": "09d9db71-6774-4c4d-8c37-134bb2b769c0",
     "fields": {
-      "name": "Ladies Cardigan",
-      "description": "Stylish ladies cardigan for layering.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "name": "womens Cardigan",
+      "description": "Stylish womens cardigan for layering.",
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.2,
-      "category": "ladies-jumpers-jackets"
+      "category": "womens-jackets"
     }
   },
   {
     "model": "base.ProductModel",
     "pk": "c4f0e3de-0655-4d25-b575-1b3b6a4f3c53",
     "fields": {
-      "name": "Ladies Winter Jacket",
-      "description": "Warm ladies winter jacket.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "name": "womens Winter Jacket",
+      "description": "Warm womens winter jacket.",
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.6,
-      "category": "ladies-jumpers-jackets"
+      "category": "womens-jackets"
     }
   },
   {
     "model": "base.ProductModel",
     "pk": "9f8e84cb-6e36-4e9c-9d0b-7686a2c411f3",
     "fields": {
-      "name": "Ladies Summer Jacket",
-      "description": "Lightweight ladies summer jacket.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "name": "womens Summer Jacket",
+      "description": "Lightweight womens summer jacket.",
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.1,
-      "category": "ladies-jumpers-jackets"
+      "category": "womens-jackets"
     }
   },
   {
@@ -1049,11 +1290,13 @@
     "pk": "25136f3d-243b-4574-9303-7ad810c15d65",
     "fields": {
       "name": "V-Neck Sweater",
-      "description": "Comfortable ladies V-neck sweater.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "description": "Comfortable womens V-neck sweater.",
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.3,
-      "category": "ladies-sweaters"
+      "category": "womens-sweaters"
     }
   },
   {
@@ -1061,11 +1304,13 @@
     "pk": "7a71ebbc-f4bb-42c5-82d3-cb56e5f95c23",
     "fields": {
       "name": "Crew Neck Sweater",
-      "description": "Classic ladies crew neck sweater.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "description": "Classic womens crew neck sweater.",
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.2,
-      "category": "ladies-sweaters"
+      "category": "womens-sweaters"
     }
   },
   {
@@ -1073,35 +1318,41 @@
     "pk": "9e1e3b0f-1c1d-43fa-9307-c61e3d9b8c90",
     "fields": {
       "name": "Hoodie Fleece",
-      "description": "Cozy ladies fleece hoodie.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "description": "Cozy womens fleece hoodie.",
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.5,
-      "category": "ladies-jumpers-jackets"
+      "category": "womens-jackets"
     }
   },
   {
     "model": "base.ProductModel",
     "pk": "357ac10a-b6a8-4f8a-b412-2c2e50d86ed9",
     "fields": {
-      "name": "Ladies Tank Top",
-      "description": "Casual ladies tank top for summer.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "name": "womens Tank Top",
+      "description": "Casual womens tank top for summer.",
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.0,
-      "category": "ladies-tops"
+      "category": "womens-tops"
     }
   },
   {
     "model": "base.ProductModel",
     "pk": "4e09357b-735f-4a3e-a8a7-7b64ac314c6c",
     "fields": {
-      "name": "Ladies Top",
-      "description": "Stylish ladies casual top.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "name": "womens Top",
+      "description": "Stylish womens casual top.",
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.1,
-      "category": "ladies-tops"
+      "category": "womens-tops"
     }
   },
   {
@@ -1110,7 +1361,9 @@
     "fields": {
       "name": "Girls Shirt - Long Sleeve",
       "description": "Classic girls' long sleeve shirt.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.2,
       "category": "girls-tops"
@@ -1122,10 +1375,12 @@
     "fields": {
       "name": "Saree With Blouse Piece",
       "description": "Elegant girls' saree with matching blouse piece.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.5,
-      "category": "girls-traditional"
+      "category": "girls"
     }
   },
   {
@@ -1134,10 +1389,12 @@
     "fields": {
       "name": "Salwar",
       "description": "Comfortable girls' salwar.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.1,
-      "category": "girls-traditional"
+      "category": "girls"
     }
   },
   {
@@ -1146,10 +1403,12 @@
     "fields": {
       "name": "Kameaz",
       "description": "Traditional girls' kameaz.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.3,
-      "category": "girls-traditional"
+      "category": "girls"
     }
   },
   {
@@ -1158,7 +1417,9 @@
     "fields": {
       "name": "Girls Long Pant",
       "description": "Girls' comfortable long pant.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.0,
       "category": "girls-pants"
@@ -1170,7 +1431,9 @@
     "fields": {
       "name": "Girls Short Pant",
       "description": "Cool girls' short pant for casual wear.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.1,
       "category": "girls-pants"
@@ -1182,7 +1445,9 @@
     "fields": {
       "name": "Girls Hot Pant",
       "description": "Trendy girls' hot pant.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 3.9,
       "category": "girls-pants"
@@ -1194,7 +1459,9 @@
     "fields": {
       "name": "Girls Winter Jacket",
       "description": "Warm and cozy girls' winter jacket.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.6,
       "category": "girls-jumpers-jackets"
@@ -1206,7 +1473,9 @@
     "fields": {
       "name": "Girls Summer Jacket",
       "description": "Lightweight girls' summer jacket.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.0,
       "category": "girls-jumpers-jackets"
@@ -1218,10 +1487,12 @@
     "fields": {
       "name": "Girls V-Neck Sweater",
       "description": "Comfortable girls' v-neck sweater.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.2,
-      "category": "girls-sweaters"
+      "category": "girls-jumpers-jackets"
     }
   },
   {
@@ -1230,10 +1501,12 @@
     "fields": {
       "name": "Girls Crew Neck Sweater",
       "description": "Classic girls' crew neck sweater.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.3,
-      "category": "girls-sweaters"
+      "category": "girls-jumpers-jackets"
     }
   },
   {
@@ -1242,7 +1515,9 @@
     "fields": {
       "name": "Girls Hoodie Fleece",
       "description": "Warm fleece hoodie for girls.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.4,
       "category": "girls-jumpers-jackets"
@@ -1254,7 +1529,9 @@
     "fields": {
       "name": "Girls Tank Top",
       "description": "Comfortable girls' tank top.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.0,
       "category": "girls-tops"
@@ -1266,7 +1543,9 @@
     "fields": {
       "name": "Girls Top",
       "description": "Stylish girls' top.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.1,
       "category": "girls-tops"
@@ -1278,10 +1557,12 @@
     "fields": {
       "name": "Babies Shirt Long Sleeve",
       "description": "Soft and comfortable long sleeve shirt for babies.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.5,
-      "category": "babies-tops"
+      "category": "babies"
     }
   },
   {
@@ -1290,10 +1571,12 @@
     "fields": {
       "name": "Babies Shirt Short Sleeve",
       "description": "Light and breezy short sleeve shirt for babies.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.3,
-      "category": "babies-tops"
+      "category": "babies"
     }
   },
   {
@@ -1302,10 +1585,12 @@
     "fields": {
       "name": "Babies Long Sleeve Dress 1",
       "description": "Cute long sleeve dress for babies.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.6,
-      "category": "babies-dresses"
+      "category": "babies"
     }
   },
   {
@@ -1314,10 +1599,12 @@
     "fields": {
       "name": "Babies Long Sleeve Dress 2",
       "description": "Adorable long sleeve dress for babies.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.4,
-      "category": "babies-dresses"
+      "category": "babies"
     }
   },
   {
@@ -1326,10 +1613,12 @@
     "fields": {
       "name": "Babies Long Sleeve Dress 3",
       "description": "Stylish long sleeve dress for babies.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.3,
-      "category": "babies-dresses"
+      "category": "babies"
     }
   },
   {
@@ -1338,10 +1627,12 @@
     "fields": {
       "name": "Babies Long Sleeve Dress 4",
       "description": "Comfortable long sleeve dress for babies.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.2,
-      "category": "babies-dresses"
+      "category": "babies"
     }
   },
   {
@@ -1350,10 +1641,12 @@
     "fields": {
       "name": "Babies Long Sleeve Dress 5",
       "description": "Elegant long sleeve dress for babies.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.5,
-      "category": "babies-dresses"
+      "category": "babies"
     }
   },
   {
@@ -1362,10 +1655,12 @@
     "fields": {
       "name": "Babies Winter Jacket",
       "description": "Warm winter jacket for babies.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.7,
-      "category": "babies-jumpers-jackets"
+      "category": "babies"
     }
   },
   {
@@ -1374,10 +1669,12 @@
     "fields": {
       "name": "Babies Summer Jacket",
       "description": "Lightweight summer jacket for babies.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.1,
-      "category": "babies-jumpers-jackets"
+      "category": "babies"
     }
   },
   {
@@ -1386,10 +1683,12 @@
     "fields": {
       "name": "Babies V-Neck Sweater",
       "description": "Cozy V-neck sweater for babies.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.3,
-      "category": "babies-sweaters"
+      "category": "babies"
     }
   },
   {
@@ -1398,10 +1697,12 @@
     "fields": {
       "name": "Babies Crew Neck Sweater",
       "description": "Classic crew neck sweater for babies.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.2,
-      "category": "babies-sweaters"
+      "category": "babies"
     }
   },
   {
@@ -1410,10 +1711,12 @@
     "fields": {
       "name": "Babies Hoodie Fleece",
       "description": "Warm fleece hoodie for babies.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.4,
-      "category": "babies-jumpers-jackets"
+      "category": "babies"
     }
   },
   {
@@ -1422,10 +1725,12 @@
     "fields": {
       "name": "Babies Long Sleeve Dress 6",
       "description": "Comfortable long sleeve dress for babies.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.3,
-      "category": "babies-dresses"
+      "category": "babies"
     }
   },
   {
@@ -1434,10 +1739,12 @@
     "fields": {
       "name": "Babies Long Sleeve Dress 7",
       "description": "Stylish long sleeve dress for babies.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.4,
-      "category": "babies-dresses"
+      "category": "babies"
     }
   },
   {
@@ -1446,10 +1753,12 @@
     "fields": {
       "name": "Babies Long Sleeve Dress 8",
       "description": "Elegant long sleeve dress for babies.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.5,
-      "category": "babies-dresses"
+      "category": "babies"
     }
   },
   {
@@ -1458,10 +1767,12 @@
     "fields": {
       "name": "Babies Long Sleeve Dress 9",
       "description": "Soft long sleeve dress for babies.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.3,
-      "category": "babies-dresses"
+      "category": "babies"
     }
   },
   {
@@ -1470,10 +1781,12 @@
     "fields": {
       "name": "Cap Denim 1",
       "description": "Classic denim cap for everyday wear.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.2,
-      "category": "caps"
+      "category": "mens-caps"
     }
   },
   {
@@ -1482,10 +1795,12 @@
     "fields": {
       "name": "Cap Twill 1",
       "description": "Durable twill fabric cap for casual style.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.1,
-      "category": "caps"
+      "category": "mens-caps"
     }
   },
   {
@@ -1494,10 +1809,12 @@
     "fields": {
       "name": "Cap Denim 2",
       "description": "Stylish denim cap with adjustable strap.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.3,
-      "category": "caps"
+      "category": "mens-caps"
     }
   },
   {
@@ -1506,10 +1823,12 @@
     "fields": {
       "name": "Cap Twill 2",
       "description": "Comfortable twill cap for outdoor activities.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.0,
-      "category": "caps"
+      "category": "mens-caps"
     }
   },
   {
@@ -1518,10 +1837,12 @@
     "fields": {
       "name": "Cap Denim 3",
       "description": "Denim cap with classic design and fit.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.4,
-      "category": "caps"
+      "category": "mens-caps"
     }
   },
   {
@@ -1530,10 +1851,12 @@
     "fields": {
       "name": "Long Sleeve Shirt & Denim Long Pant",
       "description": "Classic long sleeve shirt paired with denim long pants, perfect for school uniforms.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.2,
-      "category": "school-uniform"
+      "category": "kids-uniforms"
     }
   },
   {
@@ -1542,10 +1865,12 @@
     "fields": {
       "name": "Polo Shirt and Denim Long Pant",
       "description": "Comfortable polo shirt paired with denim long pants, ideal for school wear.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.3,
-      "category": "school-uniform"
+      "category": "kids-uniforms"
     }
   },
   {
@@ -1554,10 +1879,12 @@
     "fields": {
       "name": "Long Sleeve Shirt and Twill Long Pant",
       "description": "Durable long sleeve shirt with twill long pants for school uniform use.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.1,
-      "category": "school-uniform"
+      "category": "kids-uniforms"
     }
   },
   {
@@ -1566,10 +1893,12 @@
     "fields": {
       "name": "Polo Shirt and Twill Long Pant",
       "description": "Casual polo shirt combined with twill long pants for school uniforms.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.2,
-      "category": "school-uniform"
+      "category": "kids-uniforms"
     }
   },
   {
@@ -1578,10 +1907,12 @@
     "fields": {
       "name": "Medical Uniform Set 1",
       "description": "Complete medical uniform set including top and bottom - Set 1, comfortable and durable.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.6,
-      "category": "medical-uniform"
+      "category": "mens-medical-uniform"
     }
   },
   {
@@ -1590,10 +1921,12 @@
     "fields": {
       "name": "Medical Uniform Set 2",
       "description": "Complete medical uniform set including top and bottom - Set 2, professional and breathable.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.4,
-      "category": "medical-uniform"
+      "category": "mens-medical-uniform"
     }
   },
   {
@@ -1602,10 +1935,12 @@
     "fields": {
       "name": "Medical Uniform Set 3",
       "description": "Complete medical uniform set including top and bottom - Set 3, lightweight and easy to maintain.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.5,
-      "category": "medical-uniform"
+      "category": "mens-medical-uniform"
     }
   },
   {
@@ -1614,10 +1949,12 @@
     "fields": {
       "name": "Medical Uniform Set 4",
       "description": "Complete medical uniform set including top and bottom - Set 4, designed for maximum comfort.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.7,
-      "category": "medical-uniform"
+      "category": "mens-medical-uniform"
     }
   },
   {
@@ -1626,7 +1963,9 @@
     "fields": {
       "name": "Single Bed Set",
       "description": "Complete single bed set including bedsheet, pillow covers, and duvet cover.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.5,
       "category": "home-textile"
@@ -1638,7 +1977,9 @@
     "fields": {
       "name": "Double Bed Set",
       "description": "Complete double bed set with high-quality fabric and elegant design.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.7,
       "category": "home-textile"
@@ -1650,7 +1991,9 @@
     "fields": {
       "name": "Queen Bed Set",
       "description": "Queen size bed set with soft and durable materials for a comfortable sleep.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.6,
       "category": "home-textile"
@@ -1662,7 +2005,9 @@
     "fields": {
       "name": "King Bed Set",
       "description": "King size bed set with luxurious fabric and premium quality stitching.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.8,
       "category": "home-textile"
@@ -1674,7 +2019,9 @@
     "fields": {
       "name": "Lipstick - Matt + Gloss",
       "description": "Lipsticks available in matt and gloss finishes with vibrant colors.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.4,
       "category": "cosmetics-lipsticks"
@@ -1686,10 +2033,12 @@
     "fields": {
       "name": "Eyeliner",
       "description": "Smooth, long-lasting eyeliners for precise application.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.2,
-      "category": "cosmetics-eye-products"
+      "category": "cosmetics-eye-makeup"
     }
   },
   {
@@ -1698,7 +2047,9 @@
     "fields": {
       "name": "Mascara",
       "description": "Volumizing and lengthening mascara for fuller lashes.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.5,
       "category": "cosmetics-face-makeup"
@@ -1710,7 +2061,9 @@
     "fields": {
       "name": "Blush",
       "description": "Natural-looking blush to add a healthy glow to your cheeks.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.3,
       "category": "cosmetics-face-makeup"
@@ -1722,7 +2075,9 @@
     "fields": {
       "name": "Moisturizer",
       "description": "Hydrating moisturizer suitable for all skin types.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.6,
       "category": "cosmetics-skincare"
@@ -1734,7 +2089,9 @@
     "fields": {
       "name": "Foundation",
       "description": "Lightweight foundation for smooth and even skin tone.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.4,
       "category": "cosmetics-face-makeup"
@@ -1746,7 +2103,9 @@
     "fields": {
       "name": "Bronzer",
       "description": "Bronzer for a sun-kissed glow and natural contour.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.3,
       "category": "cosmetics-face-makeup"
@@ -1758,7 +2117,9 @@
     "fields": {
       "name": "Setting Spray / Powder",
       "description": "Setting spray and powder to keep your makeup flawless all day.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.1,
       "category": "cosmetics-skincare"
@@ -1770,7 +2131,9 @@
     "fields": {
       "name": "Face Cleaner",
       "description": "Gentle face cleanser suitable for daily use.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.5,
       "category": "cosmetics-skincare"
@@ -1782,7 +2145,9 @@
     "fields": {
       "name": "Earrings",
       "description": "Stylish earrings in various designs to complement any outfit.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.6,
       "category": "accessories-fashion-jewelry"
@@ -1794,7 +2159,9 @@
     "fields": {
       "name": "Rings",
       "description": "Elegant rings crafted with precision and style.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.4,
       "category": "accessories-fashion-jewelry"
@@ -1806,7 +2173,9 @@
     "fields": {
       "name": "Necklaces",
       "description": "Beautiful necklaces for every occasion and style.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.7,
       "category": "accessories-fashion-jewelry"
@@ -1818,7 +2187,9 @@
     "fields": {
       "name": "Bracelets",
       "description": "Chic bracelets designed to add elegance to your wrist.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.5,
       "category": "accessories-fashion-jewelry"
@@ -1830,7 +2201,9 @@
     "fields": {
       "name": "Hoops",
       "description": "Trendy hoop earrings available in multiple sizes and finishes.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.6,
       "category": "accessories-fashion-jewelry"
@@ -1842,10 +2215,12 @@
     "fields": {
       "name": "Women Purse",
       "description": "Stylish and spacious women’s purse for daily use.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.5,
-      "category": "accessories-ladies-purses"
+      "category": "accessories-womens-purses"
     }
   },
   {
@@ -1854,10 +2229,12 @@
     "fields": {
       "name": "Women Wallet Set",
       "description": "Elegant wallet set perfect for organizing essentials.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.3,
-      "category": "accessories-ladies-purses"
+      "category": "accessories-womens-purses"
     }
   },
   {
@@ -1866,10 +2243,12 @@
     "fields": {
       "name": "Women Wallet Set Leather",
       "description": "Premium leather wallet set with classic design.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.6,
-      "category": "accessories-ladies-purses"
+      "category": "accessories-womens-purses"
     }
   },
   {
@@ -1878,10 +2257,12 @@
     "fields": {
       "name": "Women Wallet Set PU Leather",
       "description": "Affordable PU leather wallet set with multiple compartments.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.2,
-      "category": "accessories-ladies-purses"
+      "category": "accessories-womens-purses"
     }
   },
   {
@@ -1890,7 +2271,9 @@
     "fields": {
       "name": "Mens Shoes",
       "description": "Men's shoes collection.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.5,
       "category": "mens-shoes"
@@ -1902,10 +2285,12 @@
     "fields": {
       "name": "Running Shoes",
       "description": "Comfortable and durable running shoes.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.6,
-      "category": "shoes-running"
+      "category": "mens-running-shoes"
     }
   },
   {
@@ -1914,10 +2299,12 @@
     "fields": {
       "name": "Leather Shoes",
       "description": "Classic leather shoes for all occasions.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.7,
-      "category": "shoes-leather"
+      "category": "mens-leather-shoes"
     }
   },
   {
@@ -1926,7 +2313,9 @@
     "fields": {
       "name": "Womens shoes",
       "description": "Stylish and comfortable shoes for women.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.4,
       "category": "womens-shoes"
@@ -1938,10 +2327,12 @@
     "fields": {
       "name": "Babies Shoes 1-5",
       "description": "Soft and safe shoes for babies.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.8,
-      "category": "babies-shoes"
+      "category": "baby-shoes"
     }
   },
   {
@@ -1950,10 +2341,12 @@
     "fields": {
       "name": "Babies Shoes 1-5",
       "description": "Soft and safe shoes for babies.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.7,
-      "category": "babies-shoes"
+      "category": "baby-shoes"
     }
   },
   {
@@ -1962,10 +2355,12 @@
     "fields": {
       "name": "Babies Shoes 1-5",
       "description": "Soft and safe shoes for babies.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.6,
-      "category": "babies-shoes"
+      "category": "baby-shoes"
     }
   },
   {
@@ -1974,10 +2369,12 @@
     "fields": {
       "name": "Babies Shoes 1-5",
       "description": "Soft and safe shoes for babies.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.7,
-      "category": "babies-shoes"
+      "category": "baby-shoes"
     }
   },
   {
@@ -1986,10 +2383,12 @@
     "fields": {
       "name": "Babies Shoes 1-5",
       "description": "Soft and safe shoes for babies.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.8,
-      "category": "babies-shoes"
+      "category": "baby-shoes"
     }
   },
   {
@@ -1998,10 +2397,12 @@
     "fields": {
       "name": "Babies Shoes 1-5",
       "description": "Soft and safe shoes for babies.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": false,
       "avgRating": 4.7,
-      "category": "babies-shoes"
+      "category": "baby-shoes"
     }
   },
   {
@@ -2010,7 +2411,9 @@
     "fields": {
       "name": "Mens Watch",
       "description": "Men's wrist watch collection.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.5,
       "category": "accessories-watches"
@@ -2022,7 +2425,9 @@
     "fields": {
       "name": "Women Watch",
       "description": "Women's wrist watch collection.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.6,
       "category": "accessories-watches"
@@ -2034,7 +2439,9 @@
     "fields": {
       "name": "Women Bracelet Watch",
       "description": "Elegant bracelet watches for women.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.7,
       "category": "accessories-watches"
@@ -2046,7 +2453,9 @@
     "fields": {
       "name": "Unisex Watch 1",
       "description": "Unisex watch model 1.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.4,
       "category": "accessories-watches"
@@ -2058,7 +2467,9 @@
     "fields": {
       "name": "Unisex Watch 2",
       "description": "Unisex watch model 2.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.5,
       "category": "accessories-watches"
@@ -2070,7 +2481,9 @@
     "fields": {
       "name": "Unisex Watch 3",
       "description": "Unisex watch model 3.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.6,
       "category": "accessories-watches"
@@ -2082,7 +2495,9 @@
     "fields": {
       "name": "Unisex Watch 4",
       "description": "Unisex watch model 4.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.7,
       "category": "accessories-watches"
@@ -2094,7 +2509,9 @@
     "fields": {
       "name": "Unisex Watch 5",
       "description": "Unisex watch model 5.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.5,
       "category": "accessories-watches"
@@ -2106,7 +2523,9 @@
     "fields": {
       "name": "Unisex Watch 6",
       "description": "Unisex watch model 6.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.6,
       "category": "accessories-watches"
@@ -2118,7 +2537,9 @@
     "fields": {
       "name": "Unisex Watch 7",
       "description": "Unisex watch model 7.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.4,
       "category": "accessories-watches"
@@ -2130,7 +2551,9 @@
     "fields": {
       "name": "Eye Drop 1",
       "description": "Eye Drop product 1 for eye care.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.2,
       "category": "otc-supplement"
@@ -2142,7 +2565,9 @@
     "fields": {
       "name": "Eye Drop 2",
       "description": "Eye Drop product 2 for eye care.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.3,
       "category": "otc-supplement"
@@ -2154,7 +2579,9 @@
     "fields": {
       "name": "Hylo-Comod",
       "description": "Hylo-Comod eye drops for dry eyes.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.5,
       "category": "otc-supplement"
@@ -2166,7 +2593,9 @@
     "fields": {
       "name": "Vitamin D",
       "description": "Vitamin D supplement.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.6,
       "category": "otc-supplement"
@@ -2178,7 +2607,9 @@
     "fields": {
       "name": "Vitamin C",
       "description": "Vitamin C supplement.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.6,
       "category": "otc-supplement"
@@ -2190,7 +2621,9 @@
     "fields": {
       "name": "Vitamin E",
       "description": "Vitamin E supplement.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.4,
       "category": "otc-supplement"
@@ -2202,7 +2635,9 @@
     "fields": {
       "name": "Magnesium Cream",
       "description": "Magnesium cream for muscle relief.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.7,
       "category": "otc-supplement"
@@ -2214,7 +2649,9 @@
     "fields": {
       "name": "Tiger Balm",
       "description": "Tiger Balm for pain relief.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.8,
       "category": "otc-supplement"
@@ -2226,7 +2663,9 @@
     "fields": {
       "name": "Arnica",
       "description": "Arnica for topical pain relief.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.5,
       "category": "otc-supplement"
@@ -2238,7 +2677,9 @@
     "fields": {
       "name": "Vitamin B",
       "description": "Vitamin B supplement.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.6,
       "category": "otc-supplement"
@@ -2250,7 +2691,9 @@
     "fields": {
       "name": "Honey Cold Pressed Olive Oil (EVOO)",
       "description": "Honey infused cold pressed extra virgin olive oil.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.7,
       "category": "otc-supplement"
@@ -2262,7 +2705,9 @@
     "fields": {
       "name": "Data Cable",
       "description": "High-quality data cable for mobile devices.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.4,
       "category": "essentials-electronics"
@@ -2274,7 +2719,9 @@
     "fields": {
       "name": "Power Connector",
       "description": "Reliable power connector for electronics.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.3,
       "category": "essentials-electronics"
@@ -2286,7 +2733,9 @@
     "fields": {
       "name": "Power Bank",
       "description": "Portable power bank for mobile charging.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.5,
       "category": "essentials-electronics"
@@ -2298,7 +2747,9 @@
     "fields": {
       "name": "Mobile Cover - MOBILE 1",
       "description": "Protective mobile phone cover - Model 1.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.1,
       "category": "essentials-electronics"
@@ -2310,7 +2761,9 @@
     "fields": {
       "name": "Mobile Cover - MOBILE 2",
       "description": "Protective mobile phone cover - Model 2.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.2,
       "category": "essentials-electronics"
@@ -2322,7 +2775,9 @@
     "fields": {
       "name": "Mobile Phone 3",
       "description": "Latest mobile phone model 3.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.6,
       "category": "essentials-electronics"
@@ -2334,7 +2789,9 @@
     "fields": {
       "name": "Shower Gel",
       "description": "Refreshing shower gel for all skin types.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.5,
       "category": "essentials-electronics"
@@ -2346,7 +2803,9 @@
     "fields": {
       "name": "Shampoo",
       "description": "Nourishing shampoo for healthy hair.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.4,
       "category": "essentials-electronics"
@@ -2358,7 +2817,9 @@
     "fields": {
       "name": "Hair Oil",
       "description": "Natural hair oil for hair growth and shine.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.5,
       "category": "essentials-electronics"
@@ -2370,7 +2831,9 @@
     "fields": {
       "name": "Men's Perfume",
       "description": "Elegant men's perfume with long-lasting fragrance.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.6,
       "category": "essentials-electronics"
@@ -2382,7 +2845,9 @@
     "fields": {
       "name": "Women's Perfume",
       "description": "Floral and fresh women's perfume.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.7,
       "category": "essentials-electronics"
@@ -2394,7 +2859,9 @@
     "fields": {
       "name": "Mouth Wash",
       "description": "Refreshing mouth wash for oral hygiene.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.3,
       "category": "essentials-electronics"
@@ -2406,7 +2873,9 @@
     "fields": {
       "name": "Body Soap",
       "description": "Gentle body soap for daily use.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.4,
       "category": "essentials-electronics"
@@ -2418,7 +2887,9 @@
     "fields": {
       "name": "Face Wash",
       "description": "Refreshing face wash for clean skin.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.5,
       "category": "essentials-electronics"
@@ -2430,7 +2901,9 @@
     "fields": {
       "name": "Toothpaste",
       "description": "Fluoride toothpaste for healthy teeth.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.4,
       "category": "essentials-electronics"
@@ -2442,7 +2915,9 @@
     "fields": {
       "name": "Air Freshener 1",
       "description": "Fresh scent air freshener for home.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.2,
       "category": "essentials-electronics"
@@ -2454,7 +2929,9 @@
     "fields": {
       "name": "Air Freshener 2",
       "description": "Long-lasting air freshener with pleasant fragrance.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.3,
       "category": "essentials-electronics"
@@ -2466,7 +2943,9 @@
     "fields": {
       "name": "Towels",
       "description": "Soft and absorbent towels for everyday use.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.6,
       "category": "essentials-electronics"
@@ -2478,7 +2957,9 @@
     "fields": {
       "name": "Cotton",
       "description": "Pure cotton fabric for various uses.",
-      "images": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"],
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
       "featured": true,
       "avgRating": 4.5,
       "category": "essentials-electronics"
@@ -2636,7 +3117,9 @@
       "sku": "DRE-RED-S",
       "stock": 10,
       "price": 29.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2647,7 +3130,9 @@
       "sku": "DRE-RED-M",
       "stock": 10,
       "price": 29.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2658,7 +3143,9 @@
       "sku": "DRE-RED-L",
       "stock": 10,
       "price": 29.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2669,7 +3156,9 @@
       "sku": "DRE-RED-XL",
       "stock": 10,
       "price": 29.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2680,7 +3169,9 @@
       "sku": "DRE-BLUE-S",
       "stock": 10,
       "price": 29.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2691,7 +3182,9 @@
       "sku": "DRE-BLUE-M",
       "stock": 10,
       "price": 29.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2702,7 +3195,9 @@
       "sku": "DRE-BLUE-L",
       "stock": 10,
       "price": 29.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2713,7 +3208,9 @@
       "sku": "DRE-BLUE-XL",
       "stock": 10,
       "price": 29.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2724,7 +3221,9 @@
       "sku": "DRE-GREEN-S",
       "stock": 10,
       "price": 29.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2735,7 +3234,9 @@
       "sku": "DRE-GREEN-M",
       "stock": 10,
       "price": 29.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2746,7 +3247,9 @@
       "sku": "DRE-GREEN-L",
       "stock": 10,
       "price": 29.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2757,7 +3260,9 @@
       "sku": "DRE-GREEN-XL",
       "stock": 10,
       "price": 29.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2768,7 +3273,9 @@
       "sku": "DRE-BLACK-S",
       "stock": 10,
       "price": 29.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2779,7 +3286,9 @@
       "sku": "DRE-BLACK-M",
       "stock": 10,
       "price": 29.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2790,7 +3299,9 @@
       "sku": "DRE-BLACK-L",
       "stock": 10,
       "price": 29.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2801,7 +3312,9 @@
       "sku": "DRE-BLACK-XL",
       "stock": 10,
       "price": 29.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2812,7 +3325,9 @@
       "sku": "DRE-WHITE-S",
       "stock": 10,
       "price": 29.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2823,7 +3338,9 @@
       "sku": "DRE-WHITE-M",
       "stock": 10,
       "price": 29.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2834,7 +3351,9 @@
       "sku": "DRE-WHITE-L",
       "stock": 10,
       "price": 29.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2845,7 +3364,9 @@
       "sku": "DRE-WHITE-XL",
       "stock": 10,
       "price": 29.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2856,7 +3377,9 @@
       "sku": "CAS-BLUE-S",
       "stock": 10,
       "price": 24.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2867,7 +3390,9 @@
       "sku": "CAS-BLUE-M",
       "stock": 10,
       "price": 24.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2878,7 +3403,9 @@
       "sku": "CAS-BLUE-L",
       "stock": 10,
       "price": 24.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2889,7 +3416,9 @@
       "sku": "CAS-BLUE-XL",
       "stock": 10,
       "price": 24.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2900,7 +3429,9 @@
       "sku": "CAS-BLACK-S",
       "stock": 10,
       "price": 24.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2911,7 +3442,9 @@
       "sku": "CAS-BLACK-M",
       "stock": 10,
       "price": 24.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2922,7 +3455,9 @@
       "sku": "CAS-BLACK-L",
       "stock": 10,
       "price": 24.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2933,7 +3468,9 @@
       "sku": "CAS-BLACK-XL",
       "stock": 10,
       "price": 24.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2944,7 +3481,9 @@
       "sku": "CAS-WHITE-S",
       "stock": 10,
       "price": 24.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2955,7 +3494,9 @@
       "sku": "CAS-WHITE-M",
       "stock": 10,
       "price": 24.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2966,7 +3507,9 @@
       "sku": "CAS-WHITE-L",
       "stock": 10,
       "price": 24.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2977,7 +3520,9 @@
       "sku": "CAS-WHITE-XL",
       "stock": 10,
       "price": 24.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2988,7 +3533,9 @@
       "sku": "CSS-RED-S",
       "stock": 10,
       "price": 21.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -2999,7 +3546,9 @@
       "sku": "CSS-RED-M",
       "stock": 10,
       "price": 21.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3010,7 +3559,9 @@
       "sku": "CSS-RED-L",
       "stock": 10,
       "price": 21.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3021,7 +3572,9 @@
       "sku": "CSS-RED-XL",
       "stock": 10,
       "price": 21.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3032,7 +3585,9 @@
       "sku": "CSS-BLUE-S",
       "stock": 10,
       "price": 21.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3043,7 +3598,9 @@
       "sku": "CSS-BLUE-M",
       "stock": 10,
       "price": 21.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3054,7 +3611,9 @@
       "sku": "CSS-BLUE-L",
       "stock": 10,
       "price": 21.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3065,7 +3624,9 @@
       "sku": "CSS-BLUE-XL",
       "stock": 10,
       "price": 21.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3076,7 +3637,9 @@
       "sku": "CSS-GREEN-S",
       "stock": 10,
       "price": 21.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3087,7 +3650,9 @@
       "sku": "CSS-GREEN-M",
       "stock": 10,
       "price": 21.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3098,7 +3663,9 @@
       "sku": "CSS-GREEN-L",
       "stock": 10,
       "price": 21.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3109,7 +3676,9 @@
       "sku": "CSS-GREEN-XL",
       "stock": 10,
       "price": 21.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3120,7 +3689,9 @@
       "sku": "CSS-BLACK-S",
       "stock": 10,
       "price": 21.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3131,7 +3702,9 @@
       "sku": "CSS-BLACK-M",
       "stock": 10,
       "price": 21.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3142,7 +3715,9 @@
       "sku": "CSS-BLACK-L",
       "stock": 10,
       "price": 21.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3153,7 +3728,9 @@
       "sku": "CSS-BLACK-XL",
       "stock": 10,
       "price": 21.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3164,7 +3741,9 @@
       "sku": "CSS-WHITE-S",
       "stock": 10,
       "price": 21.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3175,7 +3754,9 @@
       "sku": "CSS-WHITE-M",
       "stock": 10,
       "price": 21.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3186,7 +3767,9 @@
       "sku": "CSS-WHITE-L",
       "stock": 10,
       "price": 21.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3197,7 +3780,9 @@
       "sku": "CSS-WHITE-XL",
       "stock": 10,
       "price": 21.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3208,7 +3793,9 @@
       "sku": "DENIM-S",
       "stock": 10,
       "price": 34.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3219,7 +3806,9 @@
       "sku": "DENIM-M",
       "stock": 10,
       "price": 34.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3230,7 +3819,9 @@
       "sku": "DENIM-L",
       "stock": 10,
       "price": 34.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3241,7 +3832,9 @@
       "sku": "DENIM-XL",
       "stock": 10,
       "price": 34.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3252,7 +3845,9 @@
       "sku": "CARGOLONG-BLACK-S",
       "stock": 10,
       "price": 36.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3263,7 +3858,9 @@
       "sku": "CARGOLONG-BLACK-M",
       "stock": 10,
       "price": 36.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3274,7 +3871,9 @@
       "sku": "CARGOLONG-BLACK-L",
       "stock": 10,
       "price": 36.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3285,7 +3884,9 @@
       "sku": "CARGOLONG-BLACK-XL",
       "stock": 10,
       "price": 36.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3296,7 +3897,9 @@
       "sku": "CARGOLONG-GREEN-S",
       "stock": 10,
       "price": 36.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3307,7 +3910,9 @@
       "sku": "CARGOLONG-GREEN-M",
       "stock": 10,
       "price": 36.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3318,7 +3923,9 @@
       "sku": "CARGOLONG-GREEN-L",
       "stock": 10,
       "price": 36.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3329,7 +3936,9 @@
       "sku": "CARGOLONG-GREEN-XL",
       "stock": 10,
       "price": 36.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3340,7 +3949,9 @@
       "sku": "CARGOLONG-GRAY-S",
       "stock": 10,
       "price": 36.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3351,7 +3962,9 @@
       "sku": "CARGOLONG-GRAY-M",
       "stock": 10,
       "price": 36.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3362,7 +3975,9 @@
       "sku": "CARGOLONG-GRAY-L",
       "stock": 10,
       "price": 36.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3373,7 +3988,9 @@
       "sku": "CARGOLONG-GRAY-XL",
       "stock": 10,
       "price": 36.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3384,7 +4001,9 @@
       "sku": "CARGOHALF-BLACK-S",
       "stock": 10,
       "price": 28.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3395,7 +4014,9 @@
       "sku": "CARGOHALF-BLACK-M",
       "stock": 10,
       "price": 28.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3406,7 +4027,9 @@
       "sku": "CARGOHALF-BLACK-L",
       "stock": 10,
       "price": 28.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3417,7 +4040,9 @@
       "sku": "CARGOHALF-BLACK-XL",
       "stock": 10,
       "price": 28.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3428,7 +4053,9 @@
       "sku": "CARGOHALF-GREEN-S",
       "stock": 10,
       "price": 28.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3439,7 +4066,9 @@
       "sku": "CARGOHALF-GREEN-M",
       "stock": 10,
       "price": 28.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3450,7 +4079,9 @@
       "sku": "CARGOHALF-GREEN-L",
       "stock": 10,
       "price": 28.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3461,7 +4092,9 @@
       "sku": "CARGOHALF-GREEN-XL",
       "stock": 10,
       "price": 28.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3472,7 +4105,9 @@
       "sku": "CARGOHALF-GRAY-S",
       "stock": 10,
       "price": 28.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3483,7 +4118,9 @@
       "sku": "CARGOHALF-GRAY-M",
       "stock": 10,
       "price": 28.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3494,7 +4131,9 @@
       "sku": "CARGOHALF-GRAY-L",
       "stock": 10,
       "price": 28.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3505,7 +4144,9 @@
       "sku": "CARGOHALF-GRAY-XL",
       "stock": 10,
       "price": 28.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3516,7 +4157,9 @@
       "sku": "WINTER-NAVY-S",
       "stock": 10,
       "price": 49.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3527,7 +4170,9 @@
       "sku": "WINTER-NAVY-M",
       "stock": 10,
       "price": 49.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3538,7 +4183,9 @@
       "sku": "WINTER-NAVY-L",
       "stock": 10,
       "price": 49.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3549,7 +4196,9 @@
       "sku": "WINTER-NAVY-XL",
       "stock": 10,
       "price": 49.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3560,7 +4209,9 @@
       "sku": "WINTER-BLACK-S",
       "stock": 10,
       "price": 49.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3571,7 +4222,9 @@
       "sku": "WINTER-BLACK-M",
       "stock": 10,
       "price": 49.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3582,7 +4235,9 @@
       "sku": "WINTER-BLACK-L",
       "stock": 10,
       "price": 49.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3593,7 +4248,9 @@
       "sku": "WINTER-BLACK-XL",
       "stock": 10,
       "price": 49.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3604,7 +4261,9 @@
       "sku": "WINTER-OLIVE-S",
       "stock": 10,
       "price": 49.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3615,7 +4274,9 @@
       "sku": "WINTER-OLIVE-M",
       "stock": 10,
       "price": 49.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3626,7 +4287,9 @@
       "sku": "WINTER-OLIVE-L",
       "stock": 10,
       "price": 49.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3637,7 +4300,9 @@
       "sku": "WINTER-OLIVE-XL",
       "stock": 10,
       "price": 49.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3648,7 +4313,9 @@
       "sku": "SUMMER-NAVY-S",
       "stock": 10,
       "price": 34.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3659,7 +4326,9 @@
       "sku": "SUMMER-NAVY-M",
       "stock": 10,
       "price": 34.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3670,7 +4339,9 @@
       "sku": "SUMMER-NAVY-L",
       "stock": 10,
       "price": 34.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3681,7 +4352,9 @@
       "sku": "SUMMER-NAVY-XL",
       "stock": 10,
       "price": 34.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3692,7 +4365,9 @@
       "sku": "SUMMER-BLACK-S",
       "stock": 10,
       "price": 34.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3703,7 +4378,9 @@
       "sku": "SUMMER-BLACK-M",
       "stock": 10,
       "price": 34.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3714,7 +4391,9 @@
       "sku": "SUMMER-BLACK-L",
       "stock": 10,
       "price": 34.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3725,7 +4404,9 @@
       "sku": "SUMMER-BLACK-XL",
       "stock": 10,
       "price": 34.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3736,7 +4417,9 @@
       "sku": "SUMMER-OLIVE-S",
       "stock": 10,
       "price": 34.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3747,7 +4430,9 @@
       "sku": "SUMMER-OLIVE-M",
       "stock": 10,
       "price": 34.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3758,7 +4443,9 @@
       "sku": "SUMMER-OLIVE-L",
       "stock": 10,
       "price": 34.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3769,7 +4456,9 @@
       "sku": "SUMMER-OLIVE-XL",
       "stock": 10,
       "price": 34.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3780,7 +4469,9 @@
       "sku": "VNECK-BLACK-S",
       "stock": 10,
       "price": 32.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3791,7 +4482,9 @@
       "sku": "VNECK-BLACK-M",
       "stock": 10,
       "price": 32.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3802,7 +4495,9 @@
       "sku": "VNECK-BLACK-L",
       "stock": 10,
       "price": 32.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3813,7 +4508,9 @@
       "sku": "VNECK-BLACK-XL",
       "stock": 10,
       "price": 32.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3824,7 +4521,9 @@
       "sku": "VNECK-BLUE-S",
       "stock": 10,
       "price": 32.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3835,7 +4534,9 @@
       "sku": "VNECK-BLUE-M",
       "stock": 10,
       "price": 32.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3846,7 +4547,9 @@
       "sku": "VNECK-BLUE-L",
       "stock": 10,
       "price": 32.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3857,7 +4560,9 @@
       "sku": "VNECK-BLUE-XL",
       "stock": 10,
       "price": 32.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3868,7 +4573,9 @@
       "sku": "VNECK-GRAY-S",
       "stock": 10,
       "price": 32.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3879,7 +4586,9 @@
       "sku": "VNECK-GRAY-M",
       "stock": 10,
       "price": 32.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3890,7 +4599,9 @@
       "sku": "VNECK-GRAY-L",
       "stock": 10,
       "price": 32.99,
-      "imageUrls": ["https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"]
+      "imageUrls": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ]
     }
   },
   {
@@ -3901,7 +4612,9 @@
       "sku": "VNECK-GRAY-XL",
       "stock": 10,
       "price": 32.99,
-      "imageUrls": ["https://example.com/mens-vneck-sweater-gray-xl.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-vneck-sweater-gray-xl.jpg"
+      ]
     }
   },
   {
@@ -3912,7 +4625,9 @@
       "sku": "HOODIE-BLACK-S",
       "stock": 10,
       "price": 39.99,
-      "imageUrls": ["https://example.com/mens-hoodie-fleece-black-s.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-hoodie-fleece-black-s.jpg"
+      ]
     }
   },
   {
@@ -3923,7 +4638,9 @@
       "sku": "HOODIE-BLACK-M",
       "stock": 10,
       "price": 39.99,
-      "imageUrls": ["https://example.com/mens-hoodie-fleece-black-m.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-hoodie-fleece-black-m.jpg"
+      ]
     }
   },
   {
@@ -3934,7 +4651,9 @@
       "sku": "HOODIE-BLACK-L",
       "stock": 10,
       "price": 39.99,
-      "imageUrls": ["https://example.com/mens-hoodie-fleece-black-l.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-hoodie-fleece-black-l.jpg"
+      ]
     }
   },
   {
@@ -3945,7 +4664,9 @@
       "sku": "HOODIE-BLACK-XL",
       "stock": 10,
       "price": 39.99,
-      "imageUrls": ["https://example.com/mens-hoodie-fleece-black-xl.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-hoodie-fleece-black-xl.jpg"
+      ]
     }
   },
   {
@@ -3956,7 +4677,9 @@
       "sku": "HOODIE-GRAY-S",
       "stock": 10,
       "price": 39.99,
-      "imageUrls": ["https://example.com/mens-hoodie-fleece-gray-s.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-hoodie-fleece-gray-s.jpg"
+      ]
     }
   },
   {
@@ -3967,7 +4690,9 @@
       "sku": "HOODIE-GRAY-M",
       "stock": 10,
       "price": 39.99,
-      "imageUrls": ["https://example.com/mens-hoodie-fleece-gray-m.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-hoodie-fleece-gray-m.jpg"
+      ]
     }
   },
   {
@@ -3978,7 +4703,9 @@
       "sku": "HOODIE-GRAY-L",
       "stock": 10,
       "price": 39.99,
-      "imageUrls": ["https://example.com/mens-hoodie-fleece-gray-l.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-hoodie-fleece-gray-l.jpg"
+      ]
     }
   },
   {
@@ -3989,7 +4716,9 @@
       "sku": "HOODIE-GRAY-XL",
       "stock": 10,
       "price": 39.99,
-      "imageUrls": ["https://example.com/mens-hoodie-fleece-gray-xl.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-hoodie-fleece-gray-xl.jpg"
+      ]
     }
   },
   {
@@ -4000,7 +4729,9 @@
       "sku": "HOODIE-NAVY-S",
       "stock": 10,
       "price": 39.99,
-      "imageUrls": ["https://example.com/mens-hoodie-fleece-navy-s.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-hoodie-fleece-navy-s.jpg"
+      ]
     }
   },
   {
@@ -4011,7 +4742,9 @@
       "sku": "HOODIE-NAVY-M",
       "stock": 10,
       "price": 39.99,
-      "imageUrls": ["https://example.com/mens-hoodie-fleece-navy-m.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-hoodie-fleece-navy-m.jpg"
+      ]
     }
   },
   {
@@ -4022,7 +4755,9 @@
       "sku": "HOODIE-NAVY-L",
       "stock": 10,
       "price": 39.99,
-      "imageUrls": ["https://example.com/mens-hoodie-fleece-navy-l.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-hoodie-fleece-navy-l.jpg"
+      ]
     }
   },
   {
@@ -4033,7 +4768,9 @@
       "sku": "HOODIE-NAVY-XL",
       "stock": 10,
       "price": 39.99,
-      "imageUrls": ["https://example.com/mens-hoodie-fleece-navy-xl.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-hoodie-fleece-navy-xl.jpg"
+      ]
     }
   },
   {
@@ -4044,7 +4781,9 @@
       "sku": "TSHIRT-BLACK-S",
       "stock": 10,
       "price": 19.99,
-      "imageUrls": ["https://example.com/mens-tshirt-black-s.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-tshirt-black-s.jpg"
+      ]
     }
   },
   {
@@ -4055,7 +4794,9 @@
       "sku": "TSHIRT-BLACK-M",
       "stock": 10,
       "price": 19.99,
-      "imageUrls": ["https://example.com/mens-tshirt-black-m.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-tshirt-black-m.jpg"
+      ]
     }
   },
   {
@@ -4066,7 +4807,9 @@
       "sku": "TSHIRT-BLACK-L",
       "stock": 10,
       "price": 19.99,
-      "imageUrls": ["https://example.com/mens-tshirt-black-l.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-tshirt-black-l.jpg"
+      ]
     }
   },
   {
@@ -4077,7 +4820,9 @@
       "sku": "TSHIRT-BLACK-XL",
       "stock": 10,
       "price": 19.99,
-      "imageUrls": ["https://example.com/mens-tshirt-black-xl.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-tshirt-black-xl.jpg"
+      ]
     }
   },
   {
@@ -4088,7 +4833,9 @@
       "sku": "TSHIRT-WHITE-S",
       "stock": 10,
       "price": 19.99,
-      "imageUrls": ["https://example.com/mens-tshirt-white-s.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-tshirt-white-s.jpg"
+      ]
     }
   },
   {
@@ -4099,7 +4846,9 @@
       "sku": "TSHIRT-WHITE-M",
       "stock": 10,
       "price": 19.99,
-      "imageUrls": ["https://example.com/mens-tshirt-white-m.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-tshirt-white-m.jpg"
+      ]
     }
   },
   {
@@ -4110,7 +4859,9 @@
       "sku": "TSHIRT-WHITE-L",
       "stock": 10,
       "price": 19.99,
-      "imageUrls": ["https://example.com/mens-tshirt-white-l.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-tshirt-white-l.jpg"
+      ]
     }
   },
   {
@@ -4121,7 +4872,9 @@
       "sku": "TSHIRT-WHITE-XL",
       "stock": 10,
       "price": 19.99,
-      "imageUrls": ["https://example.com/mens-tshirt-white-xl.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-tshirt-white-xl.jpg"
+      ]
     }
   },
   {
@@ -4132,7 +4885,9 @@
       "sku": "TSHIRT-NAVY-S",
       "stock": 10,
       "price": 19.99,
-      "imageUrls": ["https://example.com/mens-tshirt-navy-s.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-tshirt-navy-s.jpg"
+      ]
     }
   },
   {
@@ -4143,7 +4898,9 @@
       "sku": "TSHIRT-NAVY-M",
       "stock": 10,
       "price": 19.99,
-      "imageUrls": ["https://example.com/mens-tshirt-navy-m.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-tshirt-navy-m.jpg"
+      ]
     }
   },
   {
@@ -4154,7 +4911,9 @@
       "sku": "TSHIRT-NAVY-L",
       "stock": 10,
       "price": 19.99,
-      "imageUrls": ["https://example.com/mens-tshirt-navy-l.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-tshirt-navy-l.jpg"
+      ]
     }
   },
   {
@@ -4165,10 +4924,11 @@
       "sku": "TSHIRT-NAVY-XL",
       "stock": 10,
       "price": 19.99,
-      "imageUrls": ["https://example.com/mens-tshirt-navy-xl.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-tshirt-navy-xl.jpg"
+      ]
     }
   },
-
   {
     "model": "base.ProductItemModel",
     "pk": "bc07c028-e6e0-4e77-bbf3-ef66df67f36c",
@@ -4177,7 +4937,9 @@
       "sku": "POLO-BLACK-S",
       "stock": 10,
       "price": 24.99,
-      "imageUrls": ["https://example.com/mens-polo-shirt-black-s.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-polo-shirt-black-s.jpg"
+      ]
     }
   },
   {
@@ -4188,7 +4950,9 @@
       "sku": "POLO-BLACK-M",
       "stock": 10,
       "price": 24.99,
-      "imageUrls": ["https://example.com/mens-polo-shirt-black-m.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-polo-shirt-black-m.jpg"
+      ]
     }
   },
   {
@@ -4199,7 +4963,9 @@
       "sku": "POLO-BLACK-L",
       "stock": 10,
       "price": 24.99,
-      "imageUrls": ["https://example.com/mens-polo-shirt-black-l.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-polo-shirt-black-l.jpg"
+      ]
     }
   },
   {
@@ -4210,7 +4976,9 @@
       "sku": "POLO-BLACK-XL",
       "stock": 10,
       "price": 24.99,
-      "imageUrls": ["https://example.com/mens-polo-shirt-black-xl.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-polo-shirt-black-xl.jpg"
+      ]
     }
   },
   {
@@ -4221,7 +4989,9 @@
       "sku": "POLO-WHITE-S",
       "stock": 10,
       "price": 24.99,
-      "imageUrls": ["https://example.com/mens-polo-shirt-white-s.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-polo-shirt-white-s.jpg"
+      ]
     }
   },
   {
@@ -4232,7 +5002,9 @@
       "sku": "POLO-WHITE-M",
       "stock": 10,
       "price": 24.99,
-      "imageUrls": ["https://example.com/mens-polo-shirt-white-m.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-polo-shirt-white-m.jpg"
+      ]
     }
   },
   {
@@ -4243,7 +5015,9 @@
       "sku": "POLO-WHITE-L",
       "stock": 10,
       "price": 24.99,
-      "imageUrls": ["https://example.com/mens-polo-shirt-white-l.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-polo-shirt-white-l.jpg"
+      ]
     }
   },
   {
@@ -4254,7 +5028,9 @@
       "sku": "POLO-WHITE-XL",
       "stock": 10,
       "price": 24.99,
-      "imageUrls": ["https://example.com/mens-polo-shirt-white-xl.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-polo-shirt-white-xl.jpg"
+      ]
     }
   },
   {
@@ -4265,7 +5041,9 @@
       "sku": "POLO-NAVY-S",
       "stock": 10,
       "price": 24.99,
-      "imageUrls": ["https://example.com/mens-polo-shirt-navy-s.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-polo-shirt-navy-s.jpg"
+      ]
     }
   },
   {
@@ -4276,7 +5054,9 @@
       "sku": "POLO-NAVY-M",
       "stock": 10,
       "price": 24.99,
-      "imageUrls": ["https://example.com/mens-polo-shirt-navy-m.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-polo-shirt-navy-m.jpg"
+      ]
     }
   },
   {
@@ -4287,7 +5067,9 @@
       "sku": "POLO-NAVY-L",
       "stock": 10,
       "price": 24.99,
-      "imageUrls": ["https://example.com/mens-polo-shirt-navy-l.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-polo-shirt-navy-l.jpg"
+      ]
     }
   },
   {
@@ -4298,7 +5080,9 @@
       "sku": "POLO-NAVY-XL",
       "stock": 10,
       "price": 24.99,
-      "imageUrls": ["https://example.com/mens-polo-shirt-navy-xl.jpg"]
+      "imageUrls": [
+        "https://example.com/mens-polo-shirt-navy-xl.jpg"
+      ]
     }
   },
   {
@@ -4309,7 +5093,9 @@
       "sku": "BOY-DRESS-BLUE-XS",
       "stock": 10,
       "price": 17.99,
-      "imageUrls": ["https://example.com/boys-dress-shirt-blue-xs.jpg"]
+      "imageUrls": [
+        "https://example.com/boys-dress-shirt-blue-xs.jpg"
+      ]
     }
   },
   {
@@ -4320,7 +5106,9 @@
       "sku": "BOY-DRESS-BLUE-S",
       "stock": 10,
       "price": 17.99,
-      "imageUrls": ["https://example.com/boys-dress-shirt-blue-s.jpg"]
+      "imageUrls": [
+        "https://example.com/boys-dress-shirt-blue-s.jpg"
+      ]
     }
   },
   {
@@ -4331,7 +5119,9 @@
       "sku": "BOY-DRESS-BLUE-M",
       "stock": 10,
       "price": 17.99,
-      "imageUrls": ["https://example.com/boys-dress-shirt-blue-m.jpg"]
+      "imageUrls": [
+        "https://example.com/boys-dress-shirt-blue-m.jpg"
+      ]
     }
   },
   {
@@ -4342,7 +5132,9 @@
       "sku": "BOY-DRESS-BLUE-L",
       "stock": 10,
       "price": 17.99,
-      "imageUrls": ["https://example.com/boys-dress-shirt-blue-l.jpg"]
+      "imageUrls": [
+        "https://example.com/boys-dress-shirt-blue-l.jpg"
+      ]
     }
   },
   {
@@ -4353,7 +5145,9 @@
       "sku": "BOY-DRESS-WHITE-XS",
       "stock": 10,
       "price": 17.99,
-      "imageUrls": ["https://example.com/boys-dress-shirt-white-xs.jpg"]
+      "imageUrls": [
+        "https://example.com/boys-dress-shirt-white-xs.jpg"
+      ]
     }
   },
   {
@@ -4364,7 +5158,9 @@
       "sku": "BOY-DRESS-WHITE-S",
       "stock": 10,
       "price": 17.99,
-      "imageUrls": ["https://example.com/boys-dress-shirt-white-s.jpg"]
+      "imageUrls": [
+        "https://example.com/boys-dress-shirt-white-s.jpg"
+      ]
     }
   },
   {
@@ -4375,7 +5171,9 @@
       "sku": "BOY-DRESS-WHITE-M",
       "stock": 10,
       "price": 17.99,
-      "imageUrls": ["https://example.com/boys-dress-shirt-white-m.jpg"]
+      "imageUrls": [
+        "https://example.com/boys-dress-shirt-white-m.jpg"
+      ]
     }
   },
   {
@@ -4386,7 +5184,9 @@
       "sku": "BOY-DRESS-WHITE-L",
       "stock": 10,
       "price": 17.99,
-      "imageUrls": ["https://example.com/boys-dress-shirt-white-l.jpg"]
+      "imageUrls": [
+        "https://example.com/boys-dress-shirt-white-l.jpg"
+      ]
     }
   },
   {
@@ -4397,7 +5197,9 @@
       "sku": "BOY-DRESS-GREEN-XS",
       "stock": 10,
       "price": 17.99,
-      "imageUrls": ["https://example.com/boys-dress-shirt-green-xs.jpg"]
+      "imageUrls": [
+        "https://example.com/boys-dress-shirt-green-xs.jpg"
+      ]
     }
   },
   {
@@ -4408,7 +5210,9 @@
       "sku": "BOY-DRESS-GREEN-S",
       "stock": 10,
       "price": 17.99,
-      "imageUrls": ["https://example.com/boys-dress-shirt-green-s.jpg"]
+      "imageUrls": [
+        "https://example.com/boys-dress-shirt-green-s.jpg"
+      ]
     }
   },
   {
@@ -4419,7 +5223,9 @@
       "sku": "BOY-DRESS-GREEN-M",
       "stock": 10,
       "price": 17.99,
-      "imageUrls": ["https://example.com/boys-dress-shirt-green-m.jpg"]
+      "imageUrls": [
+        "https://example.com/boys-dress-shirt-green-m.jpg"
+      ]
     }
   },
   {
@@ -4430,10 +5236,11 @@
       "sku": "BOY-DRESS-GREEN-L",
       "stock": 10,
       "price": 17.99,
-      "imageUrls": ["https://example.com/boys-dress-shirt-green-l.jpg"]
+      "imageUrls": [
+        "https://example.com/boys-dress-shirt-green-l.jpg"
+      ]
     }
   },
-
   {
     "model": "base.ProductItemModel",
     "pk": "0c187ae1-7bd9-4e76-984e-50e202f3a0b1",
@@ -4442,7 +5249,9 @@
       "sku": "BOY-CASUAL-BLUE-XS",
       "stock": 10,
       "price": 16.99,
-      "imageUrls": ["https://example.com/boys-casual-shirt-blue-xs.jpg"]
+      "imageUrls": [
+        "https://example.com/boys-casual-shirt-blue-xs.jpg"
+      ]
     }
   },
   {
@@ -4453,7 +5262,9 @@
       "sku": "BOY-CASUAL-BLUE-S",
       "stock": 10,
       "price": 16.99,
-      "imageUrls": ["https://example.com/boys-casual-shirt-blue-s.jpg"]
+      "imageUrls": [
+        "https://example.com/boys-casual-shirt-blue-s.jpg"
+      ]
     }
   },
   {
@@ -4464,7 +5275,9 @@
       "sku": "BOY-CASUAL-BLUE-M",
       "stock": 10,
       "price": 16.99,
-      "imageUrls": ["https://example.com/boys-casual-shirt-blue-m.jpg"]
+      "imageUrls": [
+        "https://example.com/boys-casual-shirt-blue-m.jpg"
+      ]
     }
   },
   {
@@ -4475,7 +5288,9 @@
       "sku": "BOY-CASUAL-BLUE-L",
       "stock": 10,
       "price": 16.99,
-      "imageUrls": ["https://example.com/boys-casual-shirt-blue-l.jpg"]
+      "imageUrls": [
+        "https://example.com/boys-casual-shirt-blue-l.jpg"
+      ]
     }
   },
   {
@@ -4494,7 +5309,6 @@
       "variant": "b916e4ad-1da7-473d-95dd-72c710db4d9b"
     }
   },
-
   {
     "model": "base.ProductConfigModel",
     "pk": 3,
@@ -4511,7 +5325,6 @@
       "variant": "2f56a021-65fb-4cfa-96b9-049993546260"
     }
   },
-
   {
     "model": "base.ProductConfigModel",
     "pk": 5,
@@ -4528,7 +5341,6 @@
       "variant": "33fedc64-f33b-4bb6-b176-f2186839c793"
     }
   },
-
   {
     "model": "base.ProductConfigModel",
     "pk": 7,
@@ -4561,7 +5373,6 @@
       "variant": "b916e4ad-1da7-473d-95dd-72c710db4d9b"
     }
   },
-
   {
     "model": "base.ProductConfigModel",
     "pk": 11,
@@ -4578,7 +5389,6 @@
       "variant": "2f56a021-65fb-4cfa-96b9-049993546260"
     }
   },
-
   {
     "model": "base.ProductConfigModel",
     "pk": 13,
@@ -4595,7 +5405,6 @@
       "variant": "33fedc64-f33b-4bb6-b176-f2186839c793"
     }
   },
-
   {
     "model": "base.ProductConfigModel",
     "pk": 15,
@@ -4674,6 +5483,30 @@
     "fields": {
       "productItem": "084dcb99-006f-403f-9f8a-3e3ffb9438a3",
       "variant": "ae6ce3d7-c3a3-4876-9e0f-b419d8eff2d6"
+    }
+  },
+  {
+    "model": "base.LocationModel",
+    "pk": "US",
+    "fields": {
+      "country_code": "US",
+      "country_name": "United States"
+    }
+  },
+  {
+    "model": "base.LocationModel",
+    "pk": "UK",
+    "fields": {
+      "country_code": "UK",
+      "country_name": "United Kingdom"
+    }
+  },
+  {
+    "model": "base.LocationModel",
+    "pk": "CA",
+    "fields": {
+      "country_code": "CA",
+      "country_name": "Canada"
     }
   }
 ]
