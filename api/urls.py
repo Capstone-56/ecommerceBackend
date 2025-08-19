@@ -10,7 +10,8 @@ router.register(r"address", AddressViewSet, "address")
 router.register(r"cart", ShoppingCartViewSet, "cart")
 router.register(r"productItem", ProductItemViewSet, "productItem")
 router.register(r"stripe", StripeViewSet, "stripe")
-router.register(r"orderstatus", OrderStatusViewSet, "orderstatus")
+router.register(r"orders", OrdersViewSet, "orders")
+router.register(r"location", LocationViewSet, "location")
 
 urlpatterns = [
     *router.urls,

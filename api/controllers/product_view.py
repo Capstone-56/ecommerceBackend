@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.db.models import Min, Max, Count, Q
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank, TrigramSimilarity
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 
@@ -27,7 +27,8 @@ class ProductViewSet(viewsets.ViewSet):
         - colour (string) e.g. ?colour=red
         - categories (comma‑separated strings) e.g. ?categories=cat1, cat2
         - search (string) e.g. ?search=pants
-
+        - Location (string) e.g. ?location=au
+        
         If categories is provided, returns products linked to *all* of those categories.
         """
         querySet = ProductModel.objects.all()
@@ -114,6 +115,11 @@ class ProductViewSet(viewsets.ViewSet):
                     Q(name__icontains=searchQuery) | Q(description__icontains=searchQuery)
                 )
 
+        # Filter by user's country if provided
+        location = request.query_params.get("location")
+        if location:
+            querySet = querySet.filter(locations__country_code__iexact=location)
+
         paginator = PagedList()
         pagedQuerySet = paginator.paginate_queryset(querySet, request)
 
@@ -164,7 +170,12 @@ class ProductViewSet(viewsets.ViewSet):
         Retrieve a set of three featured products.
         GET /api/product/featured
         """
-        featured_products = ProductModel.objects.filter(featured=True)[:3]
+        featured_products = ProductModel.objects.filter(featured=True)
+        # Apply location filtering if provided, consistent with list()
+        location = request.query_params.get("location")
+        if location:
+            featured_products = featured_products.filter(locations__country_code__iexact=location)
+        featured_products = featured_products[:3]
         serializer = ProductModelSerializer(featured_products, many=True)
 
         return Response(serializer.data)
@@ -187,6 +198,43 @@ class ProductViewSet(viewsets.ViewSet):
         related_products = ProductModel.objects.filter(
             category__in=child_categories
         ).exclude(id=product.id)
+        
+        # Apply location filtering if provided, consistent with list()
+        location = request.query_params.get("location")
+        if location:
+            related_products = related_products.filter(locations__country_code__iexact=location)
 
         serializer = ProductModelSerializer(related_products, many=True)
         return Response(serializer.data)
+
+    def create(self, request):
+        """
+        Creates a new product with its associated product items and variant configurations.
+        POST /api/product
+        Body:
+        {
+            "name": "Awesome T-Shirt 3",
+            "description": "100% cotton",
+            "images": ["http://example.com/image1.jpg", "http://example.com/image2.jpg"],
+            "featured": true,
+            "category": "mens",
+            "product_items": [
+                {
+                    "sku": "TSHIRT-001",
+                    "stock": 10,
+                    "price": 19.99,
+                    "imageUrls": ["http://example.com/item1.jpg"],
+                    "variations": [
+                        {"variant": "ebeb487d-67d5-498e-948f-02896e24526c"},
+                        {"variant": "82c5da0e-6dd1-474b-8f7c-69410cca7a62"}
+                    ]
+                }
+            ]
+        } 
+        """
+        serializer = ProductModelSerializer(data=request.data)
+        if serializer.is_valid():
+            product = serializer.save()
+            return Response(ProductModelSerializer(product).data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
