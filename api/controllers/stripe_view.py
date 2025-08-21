@@ -32,15 +32,35 @@ def get_or_create_guest_id(request) -> Tuple[str, bool]:
     return str(uuid.uuid4()), True
 
 class StripeViewSet(viewsets.ViewSet):
-    """
-    Routes:
-      POST  /api/stripe/create-intent
-      PUT   /api/stripe/{intent_id}/shipping
-      POST  /api/stripe/webhook
-    """
-
     @action(detail=False, methods=["post"], url_path="create-intent")
     def create_intent(self, request):
+        """
+        Creates a Stripe PaymentIntent for processing payments.
+        
+        Route: POST /api/stripe/create-intent
+        
+        Purpose:
+        - Validates cart items and quantities from request
+        - Fetches current product prices from database
+        - Calculates total amount and creates line items summary
+        - Creates Stripe PaymentIntent with automatic payment methods
+        - Handles both authenticated users and guest checkouts
+        - Sets guest cookie for anonymous users
+        
+        Request Body:
+        {
+            "cart": [
+                {
+                    "product": {"id": "product_id"},
+                    "quantity": 2
+                }
+            ]
+        }
+        
+        Returns:
+        - Success: PaymentIntent client secret, intent ID, total, and items summary
+        - Error: Validation errors for empty cart, missing products, or Stripe errors
+        """
         body = request.data if hasattr(request, "data") else {}
         cart = body.get("cart") or []
         if not isinstance(cart, list) or not cart:
@@ -163,6 +183,39 @@ class StripeViewSet(viewsets.ViewSet):
 
     @action(detail=True, methods=["put"], url_path="shipping")
     def shipping(self, request, pk=None):
+        """
+        Updates shipping information for a PaymentIntent.
+        
+        Route: PUT /api/stripe/{intent_id}/shipping
+        
+        Purpose:
+        - Retrieves existing PaymentIntent from Stripe
+        - Verifies user/guest ownership of the payment intent
+        - Accepts shipping address and contact information
+        - Stores shipping data for order fulfillment
+        - Supports both authenticated users and guest checkouts
+        
+        URL Parameters:
+        - intent_id: Stripe PaymentIntent ID
+        
+        Request Body:
+        {
+            "name": "Customer Name",
+            "shipping": {
+                "line1": "1 Street St",
+                "line2": "",
+                "city": "Melbourne",
+                "state": "VIC",
+                "postal_code": "3000",
+                "country": "AU",
+                "phone": "+61123456789"
+            }
+        }
+        
+        Returns:
+        - Success: Confirmation message with intent ID
+        - Error: Forbidden access or Stripe errors
+        """
         intent_id = pk
 
         # Verify PaymentIntent exists and user has access
@@ -218,6 +271,27 @@ class StripeViewSet(viewsets.ViewSet):
         authentication_classes=[],  # not needed for Stripe
     )
     def webhook(self, request):
+        """
+        Handles Stripe webhook events for payment processing.
+        
+        Route: POST /api/stripe/webhook
+        
+        Purpose:
+        - Receives and verifies webhook events from Stripe
+        - Processes payment success/failure notifications
+        - Updates order status based on payment events
+        - Provides secure communication between Stripe and the application
+        
+        Authentication:
+        - Uses Stripe signature verification instead of Django auth
+        - CSRF exempt as Stripe doesn't send CSRF tokens
+
+        Returns:
+        - 200 OK: Event processed successfully
+        - 400 Bad Request: Invalid signature or malformed payload
+
+        Note: Has TODOs to implement order handling
+        """
         # raw body for signature verification
         payload = request.body
         sig_header = request.META.get("HTTP_STRIPE_SIGNATURE", "")

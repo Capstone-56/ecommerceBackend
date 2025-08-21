@@ -2,7 +2,6 @@ import logging, stripe
 from django.conf import settings
 from rest_framework.response import Response
 from rest_framework import viewsets
-from rest_framework.decorators import action
 
 logger = logging.getLogger(__name__)
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -19,13 +18,34 @@ _STATUS_MAP = {
 }
 
 class OrderStatusViewSet(viewsets.ViewSet):
-    """
-    Route:
-      GET /api/orderstatus/status?pi=...
-    """
-
-    @action(detail=False, methods=["get"], url_path="status")
-    def status(self, request):
+    def list(self, request):
+        """
+        GET /api/orderstatus/status?pi=...
+        - A PaymentIntent is Stripe's object that holds information about a payment
+        attempt, from creation to completion or failure.
+        - Eg (simplified):
+        - {
+        "id": "pi_xxxxxxxxxxxxxxxxxxxxxxxx",
+        "object": "payment_intent",
+        "amount": 4999,
+        "currency": "aud",
+        "status": "requires_payment_method",
+        "client_secret": "pi_xxxxxxxxxxxxxxxxxx_secret_ABCD1234",
+        "metadata": {
+            "order_id": "6735"
+        },
+        "shipping": {
+            "name": "John Doe",
+            "address": {
+            "line1": "1 Street Street",
+            "city": "Melbourne",
+            "state": "VIC",
+            "postal_code": "3000",
+            "country": "AU"
+            }
+        }
+        }
+        """
         pi = request.query_params.get("pi")
         if not pi:
             return Response({"error": "missing pi"}, status=400)
