@@ -20,7 +20,7 @@ _STATUS_MAP = {
 class OrderStatusViewSet(viewsets.ViewSet):
     def list(self, request):
         """
-        GET /api/orderstatus/status?pi=...
+        GET /api/orderstatus?pi=...
         - A PaymentIntent is Stripe's object that holds information about a payment
         attempt, from creation to completion or failure.
         - Eg (simplified):
