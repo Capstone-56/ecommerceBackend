@@ -13,6 +13,4 @@ router.register(r"stripe", StripeViewSet, "stripe")
 router.register(r"orderstatus", OrderStatusViewSet, "orderstatus")
 router.register(r"location", LocationViewSet, "location")
 
-urlpatterns = [
-    *router.urls,
-]
+urlpatterns = router.urls
