@@ -5,3 +5,4 @@ env/
 .vs/ecommerceBackend/
 .vs/slnx.sqlite
 .DS_Store
+.env

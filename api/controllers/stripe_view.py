@@ -1,0 +1,318 @@
+from decimal import Decimal, ROUND_HALF_UP
+from typing import Tuple
+import uuid
+import stripe
+
+from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from rest_framework.decorators import action
+from django.db.models import Min
+from base.models import ProductModel, ProductItemModel
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+GUEST_COOKIE = "guest_id"
+GUEST_COOKIE_MAX_AGE = 60 * 60 * 24 * 30  # 30 days
+
+# Hardcoded store currency for now
+STORE_DEFAULT_CURRENCY = getattr(settings, "STORE_DEFAULT_CURRENCY", "aud").lower()
+
+# converting dollars to cents for Stripe
+def _to_cents(value: Decimal) -> int:
+    return int((value * 100).quantize(Decimal("1"), rounding=ROUND_HALF_UP))
+
+def get_or_create_guest_id(request) -> Tuple[str, bool]:
+    gid = request.COOKIES.get(GUEST_COOKIE)
+    if gid:
+        return gid, False
+    return str(uuid.uuid4()), True
+
+class StripeViewSet(viewsets.ViewSet):
+    @action(detail=False, methods=["post"], url_path="create-intent")
+    def create_intent(self, request):
+        """
+        Creates a Stripe PaymentIntent for processing payments.
+        
+        Route: POST /api/stripe/create-intent
+        
+        Purpose:
+        - Validates cart items and quantities from request
+        - Fetches current product prices from database
+        - Calculates total amount and creates line items summary
+        - Creates Stripe PaymentIntent with automatic payment methods
+        - Handles both authenticated users and guest checkouts
+        - Sets guest cookie for anonymous users
+        
+        Request Body:
+        {
+            "cart": [
+                {
+                    "product": {"id": "product_id"},
+                    "quantity": 2
+                }
+            ]
+        }
+        
+        Returns:
+        - Success: PaymentIntent client secret, intent ID, total, and items summary
+        - Error: Validation errors for empty cart, missing products, or Stripe errors
+        """
+        body = request.data if hasattr(request, "data") else {}
+        cart = body.get("cart") or []
+        if not isinstance(cart, list) or not cart:
+            return Response(
+                {"error": "Cart is empty"}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Normalise input
+        product_ids: list[str] = []
+        lines_norm: list[dict] = []
+        for line in cart:
+            qty = int(line.get("quantity") or 0)
+            pid = (line.get("product") or {}).get("id")
+            if not pid or qty <= 0:
+                continue
+            pid = str(pid)
+            product_ids.append(pid)
+            lines_norm.append({"product_id": pid, "qty": qty})
+        if not lines_norm:
+            return Response(
+                {"error": "Cart is empty"}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # pricing from DB, not client
+        price_by_product: dict[str, Decimal] = {}
+        name_by_product: dict[str, str] = {}
+
+        price_rows = (
+            ProductItemModel.objects.filter(product_id__in=product_ids)
+            .values("product_id")
+            .annotate(unit_price=Min("price"))
+        )
+        for r in price_rows:
+            price_by_product[str(r["product_id"])] = Decimal(str(r["unit_price"]))
+
+        name_rows = ProductModel.objects.filter(id__in=product_ids).values("id", "name")
+        for r in name_rows:
+            name_by_product[str(r["id"])] = r["name"] or "Product"
+
+        # Sum + prepare summary
+        missing_products: list[str] = []
+        total = Decimal("0")
+        items_summary: list[dict] = []
+
+        for nl in lines_norm:
+            pid, qty = nl["product_id"], nl["qty"]
+            unit = price_by_product.get(pid, Decimal("0"))
+            if unit <= 0:
+                missing_products.append(pid)
+                continue
+            subtotal = unit * qty
+            total += subtotal
+            items_summary.append(
+                {
+                    "id": pid,
+                    "kind": "product",
+                    "name": name_by_product.get(pid, "Product"),
+                    "quantity": qty,
+                    "unit_price_cents": _to_cents(unit),
+                    "subtotal_cents": _to_cents(subtotal),
+                }
+            )
+
+        if missing_products:
+            return Response(
+                {
+                    "error": "Some products have no priced variants",
+                    "missingProductIds": missing_products,
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        amount_cents = _to_cents(total)
+        if amount_cents <= 0:
+            return Response(
+                {"error": "Cart is empty or invalid"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        user = getattr(request, "user", None)
+        is_authed = bool(user and getattr(user, "is_authenticated", False))
+
+        guest_id, is_new = (None, False)
+        if not is_authed:
+            guest_id, is_new = get_or_create_guest_id(request)
+
+        # Create PaymentIntent
+        try:
+            intent = stripe.PaymentIntent.create(
+                amount=amount_cents,
+                currency=STORE_DEFAULT_CURRENCY,
+                automatic_payment_methods={"enabled": True},
+                metadata={
+                    "user_id": str(user.id) if is_authed else "",
+                    "guest_id": guest_id if not is_authed else "",
+                },
+            )
+            payload = {
+                "clientSecret": intent.client_secret,
+                "intentId": intent.id,
+                "currency": STORE_DEFAULT_CURRENCY,
+                "total_cents": amount_cents,
+                "items": items_summary,
+            }
+            resp = Response(payload)
+
+            # Set cookie for guests
+            if (not is_authed) and guest_id:
+                resp.set_cookie(
+                    key=GUEST_COOKIE,
+                    value=guest_id,
+                    max_age=GUEST_COOKIE_MAX_AGE,
+                    httponly=True,
+                    samesite="Lax",
+                    secure=False,  # change to True on HTTPS
+                )
+            return resp
+        except stripe.error.StripeError as e:
+            return Response({"error": str(e)}, status=400)
+
+    @action(detail=True, methods=["put"], url_path="shipping")
+    def shipping(self, request, pk=None):
+        """
+        Updates shipping information for a PaymentIntent.
+        
+        Route: PUT /api/stripe/{intent_id}/shipping
+        
+        Purpose:
+        - Retrieves existing PaymentIntent from Stripe
+        - Verifies user/guest ownership of the payment intent
+        - Accepts shipping address and contact information
+        - Stores shipping data for order fulfillment
+        - Supports both authenticated users and guest checkouts
+        
+        URL Parameters:
+        - intent_id: Stripe PaymentIntent ID
+        
+        Request Body:
+        {
+            "name": "Customer Name",
+            "shipping": {
+                "line1": "1 Street St",
+                "line2": "",
+                "city": "Melbourne",
+                "state": "VIC",
+                "postal_code": "3000",
+                "country": "AU",
+                "phone": "+61123456789"
+            }
+        }
+        
+        Returns:
+        - Success: Confirmation message with intent ID
+        - Error: Forbidden access or Stripe errors
+        """
+        intent_id = pk
+
+        # Verify PaymentIntent exists and user has access
+        try:
+            pi = stripe.PaymentIntent.retrieve(intent_id)
+        except stripe.error.StripeError as e:
+            return Response({"error": str(e)}, status=400)
+
+        meta = pi.get("metadata") or {}
+        user = getattr(request, "user", None)
+        is_authed = bool(user and getattr(user, "is_authenticated", False))
+        is_owner = False
+
+        if is_authed and meta.get("user_id") == str(user.id):
+            is_owner = True
+        else:
+            gid = request.COOKIES.get(GUEST_COOKIE)
+            if gid and gid == meta.get("guest_id"):
+                is_owner = True
+
+        if not is_owner:
+            return Response({"error": "forbidden"}, status=403)
+
+        body = request.data or {}
+        shipping = body.get("shipping") or {}
+        name = body.get("name") or shipping.get("name") or ""
+
+        # Just receive the shipping data for now, add it to order details later
+        shipping_data = {
+            "payment_intent_id": intent_id,
+            "name": name,
+            "line1": shipping.get("line1", ""),
+            "line2": shipping.get("line2", ""),
+            "city": shipping.get("city", ""),
+            "state": shipping.get("state", ""),
+            "postal_code": shipping.get("postal_code", ""),
+            "country": shipping.get("country", ""),
+            "phone": shipping.get("phone", ""),
+            "user_id": user.id if is_authed else None,
+            "guest_id": meta.get("guest_id") if not is_authed else None,
+        }
+
+        return Response(
+            {"message": "Shipping data received successfully", "intent_id": intent_id},
+            status=status.HTTP_200_OK,
+        )
+
+    @method_decorator(csrf_exempt)  # stripe posts without CSRF token
+    @action(
+        detail=False,
+        methods=["post"],
+        url_path="webhook",
+        authentication_classes=[],  # not needed for Stripe
+    )
+    def webhook(self, request):
+        """
+        Handles Stripe webhook events for payment processing.
+        
+        Route: POST /api/stripe/webhook
+        
+        Purpose:
+        - Receives and verifies webhook events from Stripe
+        - Processes payment success/failure notifications
+        - Updates order status based on payment events
+        - Provides secure communication between Stripe and the application
+        
+        Authentication:
+        - Uses Stripe signature verification instead of Django auth
+        - CSRF exempt as Stripe doesn't send CSRF tokens
+
+        Returns:
+        - 200 OK: Event processed successfully
+        - 400 Bad Request: Invalid signature or malformed payload
+
+        Note: Has TODOs to implement order handling
+        """
+        # raw body for signature verification
+        payload = request.body
+        sig_header = request.META.get("HTTP_STRIPE_SIGNATURE", "")
+
+        try:
+            event = stripe.Webhook.construct_event(
+                payload=payload,
+                sig_header=sig_header,
+                secret=settings.STRIPE_WEBHOOK_SECRET,
+            )
+        except (ValueError, stripe.error.SignatureVerificationError):
+            return Response(status=400)
+
+        etype = event.get("type")
+        obj = event.get("data", {}).get("object", {})
+
+        if etype == "payment_intent.succeeded":
+            # TODO: mark order as paid + notify
+            pass
+        elif etype == "payment_intent.payment_failed":
+            # TODO: mark order failed + notify
+            pass
+
+        return Response(status=200)
