@@ -4,3 +4,4 @@ from .category_view import CategoryViewSet
 from .address_view import AddressViewSet
 from .shopping_cart_view import ShoppingCartViewSet
 from .product_item_view import ProductItemViewSet
+from .variation_type_view import VariationTypeViewSet
