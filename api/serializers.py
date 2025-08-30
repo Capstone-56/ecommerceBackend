@@ -245,3 +245,18 @@ class CartItemSerializer(serializers.ModelSerializer):
 
     def get_totalPrice(self, obj):
         return obj.quantity * obj.productItem.price
+    
+class VariationTypeSerializer(serializers.ModelSerializer):
+    variant_values = serializers.SerializerMethodField()
+
+    class Meta:
+        model = VariationTypeModel
+        fields = ["id", "name", "category", "variant_values"]
+
+    def get_variant_values(self, obj):
+        variations = VariantModel.objects.filter(variationType=obj)
+
+        return [
+            {"value": variant.value, "id": variant.id}
+            for variant in variations
+        ]
