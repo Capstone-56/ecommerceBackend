@@ -218,6 +218,7 @@ class ProductViewSet(viewsets.ViewSet):
             "images": ["http://example.com/image1.jpg", "http://example.com/image2.jpg"],
             "featured": true,
             "category": "mens",
+            "locations": ["US", "CA"],
             "product_items": [
                 {
                     "sku": "TSHIRT-001",
@@ -236,5 +237,87 @@ class ProductViewSet(viewsets.ViewSet):
         if serializer.is_valid():
             product = serializer.save()
             return Response(ProductModelSerializer(product).data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def update(self, request, pk=None):
+        """
+        Updates an existing product with its associated product items and variant configurations.
+        PUT /api/product/{id}
+        Body:
+        {
+            "name": "Updated T-Shirt Name",
+            "description": "Updated description",
+            "images": ["http://example.com/new-image.jpg"],
+            "featured": false,
+            "category": "womens",
+            "product_items": [
+                {
+                    "id": "existing-item-id",  // Include ID to update existing item
+                    "sku": "TSHIRT-001-UPDATED",
+                    "stock": 15,
+                    "price": 24.99,
+                    "imageUrls": ["http://example.com/updated-item.jpg"],
+                    "variations": [
+                        {"variant": "new-variant-id"}
+                    ]
+                },
+                {
+                    // If no ID is provided, a new item will be created.
+                    "sku": "TSHIRT-002",
+                    "stock": 5,
+                    "price": 29.99,
+                    "imageUrls": ["http://example.com/new-item.jpg"],
+                    "variations": [
+                        {"variant": "another-variant-id"}
+                    ]
+                }
+            ]
+        }
+        Note: Product items not included in the request will be deleted. 
+        (For example if a product has small, medium, and large, and the 
+        request only includes small and medium items, the large item will be deleted.)
+        """
+        product = get_object_or_404(ProductModel, id=pk)
+        serializer = ProductModelSerializer(product, data=request.data)
+        if serializer.is_valid():
+            updated_product = serializer.save()
+            return Response(ProductModelSerializer(updated_product).data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def partial_update(self, request, pk=None):
+        """
+        Partially updates an existing product with only the provided fields.
+        PATCH /api/product/{id}
+        Body (only include fields you want to update):
+        {
+            "name": "New Product Name"
+        }
+        OR
+        {
+            "product_items": [
+                {
+                    "id": "existing-item-id", // you need to specify the id, otherwise new item will be created.
+                    "stock": 25 
+                }
+            ]
+        }
+        OR
+        {
+            "featured": true,
+            "locations": ["US", "CA"]  // Update multiple fields
+        }
+        
+        Note: For product_items, only items with IDs will be updated. 
+        Items without IDs will be created as new items.
+        For product_items, if the Stock, price or imageUrls are not included in the request, an error will be thrown. (only applies to new products/products with no id defined)
+        Items not included in the request will remain unchanged (not deleted).
+        """
+        product = get_object_or_404(ProductModel, id=pk)
+        serializer = ProductModelSerializer(product, data=request.data, partial=True)
+        if serializer.is_valid():
+            updated_product = serializer.save()
+            return Response(ProductModelSerializer(updated_product).data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

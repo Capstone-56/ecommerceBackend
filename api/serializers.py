@@ -54,8 +54,9 @@ class ProductConfigSerializer(serializers.ModelSerializer):
         fields = ['variant']
 
 class ProductItemModelSerializer(serializers.ModelSerializer):
+    id = serializers.UUIDField(required=False)
     imageUrls = serializers.ListField(child=serializers.CharField(max_length=1000), required=False)
-    variations = ProductConfigSerializer(many=True, write_only=True)
+    variations = ProductConfigSerializer(many=True, required=False)
     product = serializers.SerializerMethodField()
 
     def get_product(self, obj):
@@ -69,6 +70,11 @@ class ProductModelSerializer(serializers.ModelSerializer):
     price = serializers.SerializerMethodField()
     variations = serializers.SerializerMethodField()
     category = serializers.SlugRelatedField(slug_field='internalName', queryset=CategoryModel.objects.all())
+    locations = serializers.SlugRelatedField(
+        many=True,
+        slug_field='country_code',
+        queryset=LocationModel.objects.all()
+    )
     product_items = ProductItemModelSerializer(many=True, write_only=True)
 
     class Meta:
@@ -82,6 +88,7 @@ class ProductModelSerializer(serializers.ModelSerializer):
             "avgRating",
             "price",
             "category",
+            "locations",
             "product_items",
             "variations"
         ]
@@ -116,7 +123,12 @@ class ProductModelSerializer(serializers.ModelSerializer):
         and also productConfig table for the variations provided when creating a product e.g. "Blue", "M".
         """
         product_list_data = validated_data.pop("product_items")
+        locations_data = validated_data.pop("locations", None)
         product = ProductModel.objects.create(**validated_data)
+
+        if locations_data is not None:
+            product.locations.set(locations_data)
+
         for internal_product_info in product_list_data:
             variations_data = internal_product_info.pop("variations")
             product_item = ProductItemModel.objects.create(product=product, **internal_product_info)
@@ -124,6 +136,68 @@ class ProductModelSerializer(serializers.ModelSerializer):
                 ProductConfigModel.objects.create(productItem=product_item, **variant)
         return product
 
+    def update(self, instance, validated_data):
+        """
+        Updates a product with its associated product items and variant configurations.
+        Handles creating new items, updating existing ones, and removing items not included.
+        """
+        product_items_data = validated_data.pop("product_items", None)
+        locations_data = validated_data.pop('locations', None)
+
+        # Update product-level fields
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+
+        if locations_data is not None:
+            instance.locations.set(locations_data)
+        
+        # Handle product items updates
+        if product_items_data is not None:
+            # Get existing product items
+            existing_items = {str(item.id): item for item in instance.items.all()}
+            updated_item_ids = set()
+            
+            for item_data in product_items_data:
+                variations_data = item_data.pop("variations", [])
+                item_id = item_data.get("id")
+                
+                # Convert item_id to string for consistent lookup, handle None case
+                item_id_str = str(item_id) if item_id is not None else None
+                
+                if item_id_str and item_id_str in existing_items:
+                    # Update existing item
+                    item = existing_items[item_id_str]
+                    for attr, value in item_data.items():
+                        if attr != "id":
+                            setattr(item, attr, value)
+                    item.save()
+                    updated_item_ids.add(item_id_str)
+                else:
+                    # Create new item only if no valid ID provided
+                    # Remove 'id' from item_data to prevent conflicts
+                    item_data.pop('id', None)
+                    item = ProductItemModel.objects.create(product=instance, **item_data)
+                    updated_item_ids.add(str(item.id))
+                
+                # Handle variations for this item
+                if variations_data:
+                    # Remove existing configurations for this item
+                    ProductConfigModel.objects.filter(productItem=item).delete()
+                    # Create new configurations
+                    for variant_data in variations_data:
+                        ProductConfigModel.objects.create(productItem=item, **variant_data)
+            
+            # Remove items that weren't included in the update
+            if not self.partial:
+                items_to_remove = set(existing_items.keys()) - updated_item_ids
+                if items_to_remove:
+                    ProductItemModel.objects.filter(
+                        id__in=[existing_items[item_id].id for item_id in items_to_remove]
+                    ).delete()
+        
+        return instance
+    
 class CategoryModelSerializer(serializers.ModelSerializer):
     breadcrumb = serializers.SerializerMethodField()
     children = serializers.SerializerMethodField()

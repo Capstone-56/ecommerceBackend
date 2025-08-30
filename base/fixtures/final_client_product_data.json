@@ -799,11 +799,17 @@
       "name": "Dress Shirt - Long Sleeve",
       "description": "Classic men's long sleeve dress shirt.",
       "images": [
-        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+        "https://assets.kmart.com.au/transform/64db32d4-5171-4cf6-b4db-2639e57e84de/72827116-1?io=transform:fill,width:640,height:800"
       ],
       "featured": true,
       "avgRating": 4.3,
-      "category": "mens-shirts"
+      "category": "mens-shirts",
+      "locations": [
+        "US",
+        "UK",
+        "CA",
+        "AU"
+      ]
     }
   },
   {
@@ -813,11 +819,17 @@
       "name": "Casual Shirt - Long Sleeve",
       "description": "Comfortable men's casual long sleeve shirt.",
       "images": [
-        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+        "https://assets.kmart.com.au/transform/64db32d4-5171-4cf6-b4db-2639e57e84de/72827116-1?io=transform:fill,width:640,height:800"
       ],
       "featured": false,
       "avgRating": 4.1,
-      "category": "mens-shirts"
+      "category": "mens-shirts",
+      "locations": [
+        "US",
+        "UK",
+        "CA",
+        "AU"
+      ]
     }
   },
   {
@@ -827,11 +839,17 @@
       "name": "Casual Shirt - Short Sleeve",
       "description": "Lightweight men's casual short sleeve shirt.",
       "images": [
-        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+        "https://assets.kmart.com.au/transform/f8d67af8-0dec-4511-8547-84e5623a4d6a/73421511-1?io=transform:fill,width:640,height:800"
       ],
       "featured": false,
       "avgRating": 4.0,
-      "category": "mens-shirts"
+      "category": "mens-shirts",
+      "locations": [
+        "US",
+        "UK",
+        "CA",
+        "AU"
+      ]
     }
   },
   {
@@ -932,7 +950,8 @@
       "category": "mens-jackets",
       "locations": [
         "US",
-        "CA"
+        "CA",
+        "AU"
       ]
     }
   },
@@ -951,7 +970,8 @@
       "locations": [
         "US",
         "UK",
-        "CA"
+        "CA",
+        "AU"
       ]
     }
   },
@@ -962,14 +982,15 @@
       "name": "Mens T-Shirt",
       "description": "Casual men's t-shirt available in multiple colors.",
       "images": [
-        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+        "https://assets.kmart.com.au/transform/39a41630-0557-4d6d-8cf3-ffbdce50e0c9/68972035-1?io=transform:fill,width:640,height:800"
       ],
       "featured": false,
       "avgRating": 4.0,
       "category": "mens-shirts",
       "locations": [
         "UK",
-        "CA"
+        "CA",
+        "AU"
       ]
     }
   },
@@ -980,14 +1001,15 @@
       "name": "Mens Polo Shirt",
       "description": "Classic men's polo shirt for casual and semi-formal wear.",
       "images": [
-        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+        "https://assets.kmart.com.au/transform/4c6fea59-9b7d-44f3-a44d-73d9f8369d40/67929702-1?io=transform:fill,width:640,height:800"
       ],
       "featured": false,
       "avgRating": 4.2,
       "category": "mens-shirts",
       "locations": [
         "US",
-        "UK"
+        "UK",
+        "AU"
       ]
     }
   },
@@ -3222,7 +3244,7 @@
       "stock": 10,
       "price": 29.99,
       "imageUrls": [
-        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+        "https://assets.kmart.com.au/transform/681fab97-a6f8-4ab6-8d2e-5d7d502cadfc/73138204-1?io=transform:fill,width:640,height:800"
       ]
     }
   },
@@ -3235,7 +3257,7 @@
       "stock": 10,
       "price": 29.99,
       "imageUrls": [
-        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+        "https://assets.kmart.com.au/transform/681fab97-a6f8-4ab6-8d2e-5d7d502cadfc/73138204-1?io=transform:fill,width:640,height:800"
       ]
     }
   },
@@ -3248,7 +3270,7 @@
       "stock": 10,
       "price": 29.99,
       "imageUrls": [
-        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+        "https://assets.kmart.com.au/transform/681fab97-a6f8-4ab6-8d2e-5d7d502cadfc/73138204-1?io=transform:fill,width:640,height:800"
       ]
     }
   },
@@ -3261,7 +3283,7 @@
       "stock": 10,
       "price": 29.99,
       "imageUrls": [
-        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+        "https://assets.kmart.com.au/transform/681fab97-a6f8-4ab6-8d2e-5d7d502cadfc/73138204-1?io=transform:fill,width:640,height:800"
       ]
     }
   },
@@ -3378,7 +3400,7 @@
       "stock": 10,
       "price": 24.99,
       "imageUrls": [
-        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+        "https://assets.kmart.com.au/transform/d0034db2-1592-40f4-bbed-a56962da9fbd/73138082-1?io=transform:fill,width:640,height:800"
       ]
     }
   },
@@ -3391,7 +3413,7 @@
       "stock": 10,
       "price": 24.99,
       "imageUrls": [
-        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+        "https://assets.kmart.com.au/transform/d0034db2-1592-40f4-bbed-a56962da9fbd/73138082-1?io=transform:fill,width:640,height:800"
       ]
     }
   },
@@ -3404,7 +3426,7 @@
       "stock": 10,
       "price": 24.99,
       "imageUrls": [
-        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+        "https://assets.kmart.com.au/transform/d0034db2-1592-40f4-bbed-a56962da9fbd/73138082-1?io=transform:fill,width:640,height:800"
       ]
     }
   },
@@ -5507,6 +5529,14 @@
     "fields": {
       "country_code": "CA",
       "country_name": "Canada"
+    }
+  },
+  {
+    "model": "base.LocationModel",
+    "pk": "AU",
+    "fields": {
+      "country_code": "AU",
+      "country_name": "Australia"
     }
   }
 ]
