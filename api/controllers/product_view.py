@@ -218,6 +218,7 @@ class ProductViewSet(viewsets.ViewSet):
             "images": ["http://example.com/image1.jpg", "http://example.com/image2.jpg"],
             "featured": true,
             "category": "mens",
+            "locations": ["US", "CA"],
             "product_items": [
                 {
                     "sku": "TSHIRT-001",
@@ -310,7 +311,7 @@ class ProductViewSet(viewsets.ViewSet):
         
         Note: For product_items, only items with IDs will be updated. 
         Items without IDs will be created as new items.
-        For product_items, if the Stock, price or imageUrls are not included in the request, an error will be thrown.
+        For product_items, if the Stock, price or imageUrls are not included in the request, an error will be thrown. (only applies to new products/products with no id defined)
         Items not included in the request will remain unchanged (not deleted).
         """
         product = get_object_or_404(ProductModel, id=pk)

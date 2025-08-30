@@ -123,7 +123,12 @@ class ProductModelSerializer(serializers.ModelSerializer):
         and also productConfig table for the variations provided when creating a product e.g. "Blue", "M".
         """
         product_list_data = validated_data.pop("product_items")
+        locations_data = validated_data.pop("locations", None)
         product = ProductModel.objects.create(**validated_data)
+
+        if locations_data is not None:
+            product.locations.set(locations_data)
+
         for internal_product_info in product_list_data:
             variations_data = internal_product_info.pop("variations")
             product_item = ProductItemModel.objects.create(product=product, **internal_product_info)
