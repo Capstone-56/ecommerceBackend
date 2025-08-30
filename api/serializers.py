@@ -54,6 +54,7 @@ class ProductConfigSerializer(serializers.ModelSerializer):
         fields = ['variant']
 
 class ProductItemModelSerializer(serializers.ModelSerializer):
+    id = serializers.UUIDField(required=False)
     imageUrls = serializers.ListField(child=serializers.CharField(max_length=1000), required=False)
     variations = ProductConfigSerializer(many=True, required=False)
     product = serializers.SerializerMethodField()
@@ -156,16 +157,21 @@ class ProductModelSerializer(serializers.ModelSerializer):
                 variations_data = item_data.pop("variations", [])
                 item_id = item_data.get("id")
                 
-                if item_id and str(item_id) in existing_items:
+                # Convert item_id to string for consistent lookup, handle None case
+                item_id_str = str(item_id) if item_id is not None else None
+                
+                if item_id_str and item_id_str in existing_items:
                     # Update existing item
-                    item = existing_items[str(item_id)]
+                    item = existing_items[item_id_str]
                     for attr, value in item_data.items():
                         if attr != "id":
                             setattr(item, attr, value)
                     item.save()
-                    updated_item_ids.add(str(item_id))
+                    updated_item_ids.add(item_id_str)
                 else:
-                    # Create new item
+                    # Create new item only if no valid ID provided
+                    # Remove 'id' from item_data to prevent conflicts
+                    item_data.pop('id', None)
                     item = ProductItemModel.objects.create(product=instance, **item_data)
                     updated_item_ids.add(str(item.id))
                 
