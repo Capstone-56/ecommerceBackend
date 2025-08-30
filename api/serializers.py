@@ -262,7 +262,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
         read_only_fields = ["price", "productItem"]  # Price and productItem are handled by backend
 
 
-class GuestUserModelSerializer(serializers.ModelSerializer):
+class GuestUserSerializer(serializers.ModelSerializer):
     """
     Serializer for GuestUserModel
     """
@@ -277,7 +277,7 @@ class OrderSerializer(serializers.ModelSerializer):
     General order serializer that works for both authenticated and guest orders
     """
     user = UserModelSerializer(read_only=True)
-    guestUser = GuestUserModelSerializer(read_only=True)
+    guestUser = GuestUserSerializer(read_only=True)
     
     class Meta:
         model = OrderModel
@@ -293,7 +293,7 @@ class ListOrderSerializer(serializers.ModelSerializer):
     Simplified order serializer for list views - works for both user types
     """
     user = UserModelSerializer(read_only=True)
-    guestUser = GuestUserModelSerializer(read_only=True)
+    guestUser = GuestUserSerializer(read_only=True)
     
     class Meta:
         model = OrderModel
@@ -309,20 +309,14 @@ class CreateGuestOrderSerializer(serializers.ModelSerializer):
     Serializer for creating orders with anonymous guest users.
     Always creates a new guest user for each order to maintain anonymity.
     """
-    # Guest user fields - need to be defined here for flat API structure
-    # These don't exist on OrderModel but are needed for guest user creation
     email = serializers.EmailField(write_only=True)
     firstName = serializers.CharField(max_length=255, write_only=True)
     lastName = serializers.CharField(max_length=255, write_only=True)
     phone = serializers.CharField(max_length=20, required=False, allow_blank=True, write_only=True)
-    
-    # Address and shipping vendor fields
     addressId = serializers.UUIDField(write_only=True)
     shippingVendorId = serializers.IntegerField(write_only=True)
-    
-    # Order items
     items = OrderItemSerializer(many=True, write_only=True)
-    guestUser = GuestUserModelSerializer(read_only=True)
+    guestUser = GuestUserSerializer(read_only=True)
     
     class Meta:
         model = OrderModel
@@ -334,7 +328,6 @@ class CreateGuestOrderSerializer(serializers.ModelSerializer):
         read_only_fields = ["id", "createdAt", "totalPrice", "guestUser"]
 
     def create(self, validated_data):
-        # Extract guest, address, shipping vendor and items data
         guest_data = {
             "email": validated_data.pop("email"),
             "firstName": validated_data.pop("firstName"),
@@ -348,7 +341,6 @@ class CreateGuestOrderSerializer(serializers.ModelSerializer):
         # Always create a new guest user for true anonymity
         guest_user = GuestUserModel.objects.create(**guest_data)
         
-        # Fetch address and shipping vendor
         try:
             address = AddressModel.objects.get(id=address_id)
             shipping_vendor = ShippingVendorModel.objects.get(id=shipping_vendor_id)
@@ -412,7 +404,6 @@ class CreateAuthenticatedOrderSerializer(serializers.ModelSerializer):
         read_only_fields = ["id", "createdAt", "totalPrice"]
 
     def create(self, validated_data):
-        # Extract IDs, user and items data
         user_id = validated_data.pop("user_id")
         address_id = validated_data.pop("addressId")
         shipping_vendor_id = validated_data.pop("shippingVendorId")
