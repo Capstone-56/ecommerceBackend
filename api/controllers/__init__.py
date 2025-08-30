@@ -10,5 +10,3 @@ from .order_item_view import OrderItemViewSet
 from .stripe_view import StripeViewSet
 from .order_status_view import OrderStatusViewSet
 from .location_view import LocationViewSet
-from .shipping_vendor_view import ShippingVendorViewSet
-from .order_view import OrderViewSet
