@@ -3,11 +3,19 @@ from django.http import HttpResponseBadRequest
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from base.models import ShippingVendorModel
 from api.serializers import ShippingVendorSerializer
 
 class ShippingVendorViewSet(viewsets.ViewSet):
+    def get_permissions(self):
+        # TODO: Add permission to check if the user is an admin
+        if self.action == "create" or self.action == "update":
+            return [IsAuthenticated()]
+        
+        return [AllowAny()]
+    
     def list(self, request):
         """
         Retrieve all shipping vendors.

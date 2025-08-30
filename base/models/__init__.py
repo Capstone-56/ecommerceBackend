@@ -1,4 +1,5 @@
 from .user_model import UserModel
+from .guest_user_model import GuestUserModel
 from .product_model import ProductModel
 from .category_model import CategoryModel
 from .product_item_model import ProductItemModel
