@@ -284,3 +284,39 @@ class ProductViewSet(viewsets.ViewSet):
             return Response(ProductModelSerializer(updated_product).data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def partial_update(self, request, pk=None):
+        """
+        Partially updates an existing product with only the provided fields.
+        PATCH /api/product/{id}
+        Body (only include fields you want to update):
+        {
+            "name": "New Product Name"
+        }
+        OR
+        {
+            "product_items": [
+                {
+                    "id": "existing-item-id", // you need to specify the id, otherwise new item will be created.
+                    "stock": 25 
+                }
+            ]
+        }
+        OR
+        {
+            "featured": true,
+            "locations": ["US", "CA"]  // Update multiple fields
+        }
+        
+        Note: For product_items, only items with IDs will be updated. 
+        Items without IDs will be created as new items.
+        For product_items, if the Stock, price or imageUrls are not included in the request, an error will be thrown.
+        Items not included in the request will remain unchanged (not deleted).
+        """
+        product = get_object_or_404(ProductModel, id=pk)
+        serializer = ProductModelSerializer(product, data=request.data, partial=True)
+        if serializer.is_valid():
+            updated_product = serializer.save()
+            return Response(ProductModelSerializer(updated_product).data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -184,11 +184,12 @@ class ProductModelSerializer(serializers.ModelSerializer):
                         ProductConfigModel.objects.create(productItem=item, **variant_data)
             
             # Remove items that weren't included in the update
-            items_to_remove = set(existing_items.keys()) - updated_item_ids
-            if items_to_remove:
-                ProductItemModel.objects.filter(
-                    id__in=[existing_items[item_id].id for item_id in items_to_remove]
-                ).delete()
+            if not self.partial:
+                items_to_remove = set(existing_items.keys()) - updated_item_ids
+                if items_to_remove:
+                    ProductItemModel.objects.filter(
+                        id__in=[existing_items[item_id].id for item_id in items_to_remove]
+                    ).delete()
         
         return instance
     
