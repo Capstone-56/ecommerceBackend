@@ -1,4 +1,5 @@
 from .user_model import UserModel
+from .guest_user_model import GuestUserModel
 from .product_model import ProductModel
 from .category_model import CategoryModel
 from .product_item_model import ProductItemModel
@@ -9,3 +10,6 @@ from .address_model import AddressModel
 from .user_address_model import UserAddressModel
 from .shopping_cart_item_model import ShoppingCartItemModel
 from .location_model import LocationModel
+from .shipping_vendor_model import ShippingVendorModel
+from .order_model import OrderModel
+from .order_item_model import OrderItemModel
