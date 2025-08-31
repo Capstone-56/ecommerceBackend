@@ -29,10 +29,10 @@ class ShippingVendorViewSet(viewsets.ViewSet):
         vendors = ShippingVendorModel.objects.all()
         
         # Filter by active status if requested
-        isActiveParam = request.query_params.get("isActive")
-        if isActiveParam is not None:
-            isActive = isActiveParam.lower() == "true"
-            vendors = vendors.filter(isActive=isActive)
+        is_active_param = request.query_params.get("isActive")
+        if is_active_param is not None:
+            is_active = is_active_param.lower() == "true"
+            vendors = vendors.filter(isActive=is_active)
             
         serializer = ShippingVendorSerializer(vendors, many=True)
         return Response(serializer.data)

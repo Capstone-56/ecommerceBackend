@@ -1,9 +1,13 @@
+from datetime import datetime, timedelta
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseBadRequest
+from django.db.models import Sum
+from django.utils import timezone
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.decorators import action
 
 from base.abstractModels import PagedList
 from base.models import OrderModel
@@ -32,30 +36,30 @@ class OrderViewSet(viewsets.ViewSet):
         orders = OrderModel.objects.all()
         
         # Filter by usernames
-        userNamesParam = request.query_params.get("userNames")
-        if userNamesParam:
-            userNames = [username.strip() for username in userNamesParam.split(',') if username.strip()]
-            orders = orders.filter(user__username__in=userNames)
+        user_names_param = request.query_params.get("userNames")
+        if user_names_param:
+            user_names = [user_name.strip() for user_name in user_names_param.split(',') if user_name.strip()]
+            orders = orders.filter(user__username__in=user_names)
         
         # Filter by shipping addresses
-        shippingAddressesParam = request.query_params.get("shippingAddresses")
-        if shippingAddressesParam:
-            shippingAddresses = [aid.strip() for aid in shippingAddressesParam.split(',') if aid.strip()]
-            orders = orders.filter(address_id__in=shippingAddresses)
+        shipping_addresses_param = request.query_params.get("shippingAddresses")
+        if shipping_addresses_param:
+            shipping_addresses = [aid.strip() for aid in shipping_addresses_param.split(',') if aid.strip()]
+            orders = orders.filter(address_id__in=shipping_addresses)
         
         # Filter by shipping vendors
-        shippingVendorsParam = request.query_params.get("shippingVendors")
-        if shippingVendorsParam:
-            shippingVendors = [vid.strip() for vid in shippingVendorsParam.split(',') if vid.strip()]
-            orders = orders.filter(shippingVendor_id__in=shippingVendors)
+        shipping_vendors_param = request.query_params.get("shippingVendors")
+        if shipping_vendors_param:
+            shipping_vendors = [vid.strip() for vid in shipping_vendors_param.split(',') if vid.strip()]
+            orders = orders.filter(shippingVendor_id__in=shipping_vendors)
         
         # Filter by status
-        statusParam = request.query_params.get("status")
-        if statusParam:
+        status_param = request.query_params.get("status")
+        if status_param:
             # Validate status is in ORDER_STATUS enum
             valid_statuses = [status.value for status in ORDER_STATUS]
-            if statusParam in valid_statuses:
-                orders = orders.filter(status=statusParam)
+            if status_param in valid_statuses:
+                orders = orders.filter(status=status_param)
         
         # Order by creation date (most recent first)
         orders = orders.order_by("-createdAt")
@@ -141,3 +145,54 @@ class OrderViewSet(viewsets.ViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
         return HttpResponseBadRequest(serializer.errors)
+
+    @action(detail=False, methods=["get"], url_path="totalSales")
+    def total_sales(self, request):
+        """
+        Get total sales amount within a date range.
+        GET /api/order/totalSales
+        
+        Query parameters:
+        - startDate (ISO format YYYY-MM-DD): Start date for sales calculation
+        - endDate (ISO format YYYY-MM-DD): End date for sales calculation
+        - If no dates provided, defaults to last 7 days
+        
+        Returns:
+        {
+            "totalSales": 1234.56,
+            "orderCount": 15
+        }
+        """
+        start_date_param = request.query_params.get("startDate")
+        end_date_param = request.query_params.get("endDate")
+        
+        # Set default date range (last 7 days) if not provided
+        if not start_date_param or not end_date_param:
+            end_date = timezone.now().date()
+            start_date = end_date - timedelta(days=7)
+        else:
+            try:
+                start_date = datetime.strptime(start_date_param, '%Y-%m-%d').date()
+                end_date = datetime.strptime(end_date_param, '%Y-%m-%d').date()
+            except ValueError:
+                return HttpResponseBadRequest("Invalid date format. Use YYYY-MM-DD format.")
+        
+        # Validate date range
+        if start_date > end_date:
+            return HttpResponseBadRequest("Start date cannot be after end date.")
+        
+        # Filter orders by date range (include full end date by adding 1 day)
+        end_date_inclusive = end_date + timedelta(days=1)
+        orders = OrderModel.objects.filter(
+            createdAt__gte=start_date,
+            createdAt__lt=end_date_inclusive
+        )
+        
+        # Calculate total sales and order count
+        total_sales = orders.aggregate(total=Sum("totalPrice"))["total"] or 0
+        order_count = orders.count()
+        
+        return Response({
+            "totalSales": round(float(total_sales), 2),
+            "orderCount": order_count
+        })
