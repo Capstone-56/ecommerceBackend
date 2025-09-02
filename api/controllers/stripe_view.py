@@ -1,6 +1,7 @@
 from decimal import Decimal, ROUND_HALF_UP
 from typing import Tuple
 import uuid
+import json
 import stripe
 
 from django.conf import settings
@@ -11,7 +12,9 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from django.db.models import Min
-from base.models import ProductModel, ProductItemModel
+from base.models import ProductModel, ProductItemModel, OrderModel, OrderItemModel, UserModel, AddressModel, ShippingVendorModel, GuestUserModel
+from base.enums import ORDER_STATUS
+from api.serializers import CreateGuestOrderSerializer, CreateAuthenticatedOrderSerializer
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -147,16 +150,24 @@ class StripeViewSet(viewsets.ViewSet):
         if not is_authed:
             guest_id, is_new = get_or_create_guest_id(request)
 
+        # Store cart data in PaymentIntent metadata for order creation on payment success
+        cart_items_str = json.dumps([{"product_id": nl["product_id"], "qty": nl["qty"]} for nl in lines_norm])
+        
+        metadata = {
+            "user_id": str(user.id) if is_authed else "",
+            "guest_id": guest_id if not is_authed else "",
+            "cart_items": cart_items_str,
+            "total_price": str(float(total)),
+            "is_authenticated": str(is_authed),
+        }
+        
         # Create PaymentIntent
         try:
             intent = stripe.PaymentIntent.create(
                 amount=amount_cents,
                 currency=STORE_DEFAULT_CURRENCY,
                 automatic_payment_methods={"enabled": True},
-                metadata={
-                    "user_id": str(user.id) if is_authed else "",
-                    "guest_id": guest_id if not is_authed else "",
-                },
+                metadata=metadata,
             )
             payload = {
                 "clientSecret": intent.client_secret,
@@ -242,21 +253,49 @@ class StripeViewSet(viewsets.ViewSet):
         body = request.data or {}
         shipping = body.get("shipping") or {}
         name = body.get("name") or shipping.get("name") or ""
+        
+        # Extract additional order data from request
+        address_id = body.get("addressId") or shipping.get("addressId")
+        shipping_vendor_id = body.get("shippingVendorId") or shipping.get("shippingVendorId")
+        
+        # For guests, collect user details if provided
+        guest_email = body.get("email")
+        guest_first_name = body.get("firstName") 
+        guest_last_name = body.get("lastName")
+        guest_phone = body.get("phone") or shipping.get("phone", "")
 
-        # Just receive the shipping data for now, add it to order details later
-        shipping_data = {
-            "payment_intent_id": intent_id,
-            "name": name,
-            "line1": shipping.get("line1", ""),
-            "line2": shipping.get("line2", ""),
-            "city": shipping.get("city", ""),
-            "state": shipping.get("state", ""),
-            "postal_code": shipping.get("postal_code", ""),
-            "country": shipping.get("country", ""),
-            "phone": shipping.get("phone", ""),
-            "user_id": user.id if is_authed else None,
-            "guest_id": meta.get("guest_id") if not is_authed else None,
-        }
+        # Update PaymentIntent metadata with shipping and order details
+        updated_metadata = dict(pi.get("metadata", {}))
+        updated_metadata.update({
+            "shipping_name": name,
+            "shipping_line1": shipping.get("line1", ""),
+            "shipping_line2": shipping.get("line2", ""),
+            "shipping_city": shipping.get("city", ""),
+            "shipping_state": shipping.get("state", ""),
+            "shipping_postal_code": shipping.get("postal_code", ""),
+            "shipping_country": shipping.get("country", ""),
+            "shipping_phone": guest_phone,
+        })
+        
+        # Add order-specific data if provided
+        if address_id:
+            updated_metadata["address_id"] = str(address_id)
+        if shipping_vendor_id:
+            updated_metadata["shipping_vendor_id"] = str(shipping_vendor_id)
+            
+        # Add guest user details if provided
+        if not is_authed and guest_email:
+            updated_metadata.update({
+                "guest_email": guest_email,
+                "guest_first_name": guest_first_name or name.split()[0] if name else "",
+                "guest_last_name": guest_last_name or name.split()[-1] if name and len(name.split()) > 1 else "",
+            })
+        
+        # Update the PaymentIntent with new metadata
+        try:
+            stripe.PaymentIntent.modify(intent_id, metadata=updated_metadata)
+        except stripe.error.StripeError as e:
+            return Response({"error": f"Failed to update payment intent: {str(e)}"}, status=400)
 
         return Response(
             {"message": "Shipping data received successfully", "intent_id": intent_id},
@@ -309,10 +348,97 @@ class StripeViewSet(viewsets.ViewSet):
         obj = event.get("data", {}).get("object", {})
 
         if etype == "payment_intent.succeeded":
-            # TODO: mark order as paid + notify
-            pass
+            # Create order from successful payment
+            try:
+                order = self._create_order_from_payment_intent(obj)
+                if order:
+                    print(f"Order {order.id} created successfully for PaymentIntent {obj.get('id')}")
+                else:
+                    print(f"Failed to create order for PaymentIntent {obj.get('id')} - insufficient data")
+            except Exception as e:
+                print(f"Error creating order for PaymentIntent {obj.get('id')}: {e}")
         elif etype == "payment_intent.payment_failed":
-            # TODO: mark order failed + notify
-            pass
+            # Log payment failure - no order creation needed
+            print(f"Payment failed for PaymentIntent {obj.get('id')}")
 
         return Response(status=200)
+    
+    def _create_order_from_payment_intent(self, payment_intent):
+        """
+        Creates an order from a successful Stripe PaymentIntent.
+        
+        Args:
+            payment_intent: Stripe PaymentIntent object from webhook
+            
+        Returns:
+            OrderModel instance if successful, None otherwise
+        """
+        metadata = payment_intent.get("metadata", {})
+        
+        # Extract basic data
+        user_id = metadata.get("user_id")
+        is_authenticated = metadata.get("is_authenticated", "False") == "True"
+        
+        # Extract cart items
+        cart_items_str = metadata.get("cart_items")
+        if not cart_items_str:
+            return None
+            
+        try:
+            cart_items = json.loads(cart_items_str)
+        except json.JSONDecodeError:
+            return None
+        
+        # Extract required order fields
+        address_id = metadata.get("address_id")
+        shipping_vendor_id = metadata.get("shipping_vendor_id")
+        
+        if not address_id or not shipping_vendor_id:
+            print(f"Missing required order data: address_id={address_id}, shipping_vendor_id={shipping_vendor_id}")
+            return None
+        
+        try:
+            if is_authenticated and user_id:
+                # Create authenticated user order
+                order_data = {
+                    "user_id": user_id,
+                    "addressId": address_id,
+                    "shippingVendorId": int(shipping_vendor_id),
+                    "items": [{"productItemId": item["product_id"], "quantity": item["qty"]} for item in cart_items]
+                }
+                serializer = CreateAuthenticatedOrderSerializer(data=order_data)
+            else:
+                # Create guest user order
+                guest_email = metadata.get("guest_email")
+                guest_first_name = metadata.get("guest_first_name", "")
+                guest_last_name = metadata.get("guest_last_name", "")
+                guest_phone = metadata.get("shipping_phone", "")
+                
+                if not guest_email:
+                    print("Missing guest email for guest order creation")
+                    return None
+                
+                order_data = {
+                    "email": guest_email,
+                    "firstName": guest_first_name,
+                    "lastName": guest_last_name,
+                    "phone": guest_phone,
+                    "addressId": address_id,
+                    "shippingVendorId": int(shipping_vendor_id),
+                    "items": [{"productItemId": item["product_id"], "quantity": item["qty"]} for item in cart_items]
+                }
+                serializer = CreateGuestOrderSerializer(data=order_data)
+            
+            if serializer.is_valid():
+                order = serializer.save()
+                # Update order status to PROCESSING since payment succeeded
+                order.status = ORDER_STATUS.PROCESSING.value
+                order.save()
+                return order
+            else:
+                print(f"Order serializer validation failed: {serializer.errors}")
+                return None
+                
+        except Exception as e:
+            print(f"Exception creating order: {e}")
+            return None
