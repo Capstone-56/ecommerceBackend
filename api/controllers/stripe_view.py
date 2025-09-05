@@ -11,10 +11,9 @@ from django.utils.decorators import method_decorator
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from django.db.models import Min
-from base.models import ProductModel, ProductItemModel, OrderModel, OrderItemModel, UserModel, AddressModel, ShippingVendorModel, GuestUserModel
+from base.models import ProductItemModel
 from base.enums import ORDER_STATUS
-from api.serializers import CreateGuestOrderSerializer, CreateAuthenticatedOrderSerializer
+from api.serializers import CreateGuestOrderSerializer, CreateAuthenticatedOrderSerializer, AddressSerializer
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -71,67 +70,61 @@ class StripeViewSet(viewsets.ViewSet):
                 {"error": "Cart is empty"}, status=status.HTTP_400_BAD_REQUEST
             )
 
-        # Normalise input
-        product_ids: list[str] = []
+        # Normalise input, receiving ProductItem IDs
+        product_item_ids: list[str] = []
         lines_norm: list[dict] = []
         for line in cart:
             qty = int(line.get("quantity") or 0)
-            pid = (line.get("product") or {}).get("id")
-            if not pid or qty <= 0:
+            product_item_id = (line.get("product") or {}).get("id")
+            if not product_item_id or qty <= 0:
                 continue
-            pid = str(pid)
-            product_ids.append(pid)
-            lines_norm.append({"product_id": pid, "qty": qty})
+            product_item_id = str(product_item_id)
+            product_item_ids.append(product_item_id)
+            lines_norm.append({"product_item_id": product_item_id, "qty": qty})
         if not lines_norm:
             return Response(
                 {"error": "Cart is empty"}, status=status.HTTP_400_BAD_REQUEST
             )
 
-        # pricing from DB, not client
-        price_by_product: dict[str, Decimal] = {}
-        name_by_product: dict[str, str] = {}
+        # Get pricing and names from ProductItem IDs directly
+        price_by_product_item: dict[str, Decimal] = {}
+        name_by_product_item: dict[str, str] = {}
 
-        price_rows = (
-            ProductItemModel.objects.filter(product_id__in=product_ids)
-            .values("product_id")
-            .annotate(unit_price=Min("price"))
-        )
-        for r in price_rows:
-            price_by_product[str(r["product_id"])] = Decimal(str(r["unit_price"]))
-
-        name_rows = ProductModel.objects.filter(id__in=product_ids).values("id", "name")
-        for r in name_rows:
-            name_by_product[str(r["id"])] = r["name"] or "Product"
+        # Query ProductItems directly by their IDs
+        product_items = ProductItemModel.objects.filter(id__in=product_item_ids).select_related('product')
+        for item in product_items:
+            price_by_product_item[str(item.id)] = Decimal(str(item.price))
+            name_by_product_item[str(item.id)] = item.product.name or "Product"
 
         # Sum + prepare summary
-        missing_products: list[str] = []
+        missing_product_items: list[str] = []
         total = Decimal("0")
         items_summary: list[dict] = []
 
         for nl in lines_norm:
-            pid, qty = nl["product_id"], nl["qty"]
-            unit = price_by_product.get(pid, Decimal("0"))
+            product_item_id, qty = nl["product_item_id"], nl["qty"]
+            unit = price_by_product_item.get(product_item_id, Decimal("0"))
             if unit <= 0:
-                missing_products.append(pid)
+                missing_product_items.append(product_item_id)
                 continue
             subtotal = unit * qty
             total += subtotal
             items_summary.append(
                 {
-                    "id": pid,
+                    "id": product_item_id,
                     "kind": "product",
-                    "name": name_by_product.get(pid, "Product"),
+                    "name": name_by_product_item.get(product_item_id, "Product"),
                     "quantity": qty,
                     "unit_price_cents": _to_cents(unit),
                     "subtotal_cents": _to_cents(subtotal),
                 }
             )
 
-        if missing_products:
+        if missing_product_items:
             return Response(
                 {
-                    "error": "Some products have no priced variants",
-                    "missingProductIds": missing_products,
+                    "error": "Some product items not found",
+                    "missingProductItemIds": missing_product_items,
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )
@@ -151,7 +144,7 @@ class StripeViewSet(viewsets.ViewSet):
             guest_id, is_new = get_or_create_guest_id(request)
 
         # Store cart data in PaymentIntent metadata for order creation on payment success
-        cart_items_str = json.dumps([{"product_id": nl["product_id"], "qty": nl["qty"]} for nl in lines_norm])
+        cart_items_str = json.dumps([{"product_item_id": nl["product_item_id"], "qty": nl["qty"]} for nl in lines_norm])
         
         metadata = {
             "user_id": str(user.id) if is_authed else "",
@@ -346,7 +339,7 @@ class StripeViewSet(viewsets.ViewSet):
 
         etype = event.get("type")
         obj = event.get("data", {}).get("object", {})
-
+        
         if etype == "payment_intent.succeeded":
             # Create order from successful payment
             try:
@@ -357,21 +350,53 @@ class StripeViewSet(viewsets.ViewSet):
                     print(f"Failed to create order for PaymentIntent {obj.get('id')} - insufficient data")
             except Exception as e:
                 print(f"Error creating order for PaymentIntent {obj.get('id')}: {e}")
+                import traceback
+                traceback.print_exc()
         elif etype == "payment_intent.payment_failed":
             # Log payment failure - no order creation needed
             print(f"Payment failed for PaymentIntent {obj.get('id')}")
+        else:
+            print(f"Unhandled webhook event type: {etype}")
 
         return Response(status=200)
+    
+    def create_address_from_shipping_metadata(self, metadata):
+        """
+        Creates an address from shipping metadata stored in PaymentIntent.
+        """
+        try:
+            # Combine line1 and line2 for full address
+            line1 = metadata.get("shipping_line1", "")
+            line2 = metadata.get("shipping_line2", "")
+            
+            if line2:
+                full_address = f"{line2}, {line1}"  # Unit/Apt first, then street
+            else:
+                full_address = line1
+            
+            address_data = {
+                "addressLine": full_address,
+                "city": metadata.get("shipping_city", ""),
+                "postcode": metadata.get("shipping_postal_code", ""),
+                "state": metadata.get("shipping_state", ""),
+                "country": metadata.get("shipping_country", ""),
+            }
+            
+            serializer = AddressSerializer(data=address_data)
+            if serializer.is_valid():
+                address = serializer.save()
+                return str(address.id)
+            else:
+                print(f"Address creation failed: {serializer.errors}")
+                return None
+                
+        except Exception as e:
+            print(f"Error creating address from shipping metadata: {e}")
+            return None
     
     def _create_order_from_payment_intent(self, payment_intent):
         """
         Creates an order from a successful Stripe PaymentIntent.
-        
-        Args:
-            payment_intent: Stripe PaymentIntent object from webhook
-            
-        Returns:
-            OrderModel instance if successful, None otherwise
         """
         metadata = payment_intent.get("metadata", {})
         
@@ -381,8 +406,6 @@ class StripeViewSet(viewsets.ViewSet):
         
         # Extract cart items
         cart_items_str = metadata.get("cart_items")
-        if not cart_items_str:
-            return None
             
         try:
             cart_items = json.loads(cart_items_str)
@@ -393,8 +416,15 @@ class StripeViewSet(viewsets.ViewSet):
         address_id = metadata.get("address_id")
         shipping_vendor_id = metadata.get("shipping_vendor_id")
         
-        if not address_id or not shipping_vendor_id:
-            print(f"Missing required order data: address_id={address_id}, shipping_vendor_id={shipping_vendor_id}")
+        # Create address from shipping data if not provided
+        if not address_id:
+            address_id = self.create_address_from_shipping_metadata(metadata)
+            if not address_id:
+                print("Failed to create address from shipping metadata")
+                return None
+        
+        if not shipping_vendor_id:
+            print(f"Missing required shipping vendor ID: shipping_vendor_id={shipping_vendor_id}")
             return None
         
         try:
@@ -404,7 +434,7 @@ class StripeViewSet(viewsets.ViewSet):
                     "user_id": user_id,
                     "addressId": address_id,
                     "shippingVendorId": int(shipping_vendor_id),
-                    "items": [{"productItemId": item["product_id"], "quantity": item["qty"]} for item in cart_items]
+                    "items": [{"productItemId": item["product_item_id"], "quantity": item["qty"]} for item in cart_items]
                 }
                 serializer = CreateAuthenticatedOrderSerializer(data=order_data)
             else:
@@ -425,7 +455,7 @@ class StripeViewSet(viewsets.ViewSet):
                     "phone": guest_phone,
                     "addressId": address_id,
                     "shippingVendorId": int(shipping_vendor_id),
-                    "items": [{"productItemId": item["product_id"], "quantity": item["qty"]} for item in cart_items]
+                    "items": [{"productItemId": item["product_item_id"], "quantity": item["qty"]} for item in cart_items]
                 }
                 serializer = CreateGuestOrderSerializer(data=order_data)
             
@@ -434,6 +464,19 @@ class StripeViewSet(viewsets.ViewSet):
                 # Update order status to PROCESSING since payment succeeded
                 order.status = ORDER_STATUS.PROCESSING.value
                 order.save()
+                
+                # Store order ID back in PaymentIntent metadata for easier lookup
+                try:
+                    stripe.PaymentIntent.modify(
+                        payment_intent.get("id"),
+                        metadata={
+                            **payment_intent.get("metadata", {}),
+                            "order_id": str(order.id)
+                        }
+                    )
+                except Exception as e:
+                    print(f"Failed to update PaymentIntent with order ID: {e}")
+                
                 return order
             else:
                 print(f"Order serializer validation failed: {serializer.errors}")

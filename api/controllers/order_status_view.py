@@ -2,8 +2,9 @@ import logging, stripe
 from django.conf import settings
 from rest_framework.response import Response
 from rest_framework import viewsets
-from base.models import OrderModel, UserModel, GuestUserModel
+from base.models import OrderModel
 from base.enums import ORDER_STATUS
+from api.serializers import OrderSerializer, AddressSerializer, ShippingVendorSerializer
 
 logger = logging.getLogger(__name__)
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -91,29 +92,50 @@ class OrderStatusViewSet(viewsets.ViewSet):
             from datetime import timedelta
             from decimal import Decimal
             
-            # Get PaymentIntent amount for matching
-            pi_amount_cents = intent.get("amount") or 0
-            pi_amount_dollars = Decimal(str(pi_amount_cents / 100))
+            # First check if order ID is stored in metadata
+            order_id = meta.get("order_id")
+            if order_id:
+                try:
+                    order = OrderModel.objects.get(id=order_id)
+                except (OrderModel.DoesNotExist, ValueError):
+                    pass  # Fall back to other methods
             
-            if is_authed and owner_user_id:
-                # Look for recent authenticated user orders with matching total
-                recent_orders = OrderModel.objects.filter(
-                    user_id=owner_user_id,
-                    createdAt__gte=timezone.now() - timedelta(hours=1),
-                    totalPrice=pi_amount_dollars
-                ).order_by('-createdAt')
+            if not order:
+                # Get PaymentIntent amount for matching
+                pi_amount_cents = intent.get("amount") or 0
+                pi_amount_dollars = Decimal(str(pi_amount_cents / 100))
                 
-                order = recent_orders.first()
-                
-            elif owner_guest_id:
-                # Look for recent guest orders with matching total
-                recent_orders = OrderModel.objects.filter(
-                    guestUser__guest_id=owner_guest_id,
-                    createdAt__gte=timezone.now() - timedelta(hours=1),
-                    totalPrice=pi_amount_dollars
-                ).order_by('-createdAt')
-                
-                order = recent_orders.first()
+                if is_authed and owner_user_id:
+                    # Look for recent authenticated user orders with matching total
+                    recent_orders = OrderModel.objects.filter(
+                        user_id=owner_user_id,
+                        createdAt__gte=timezone.now() - timedelta(hours=1),
+                        totalPrice=pi_amount_dollars
+                    ).order_by('-createdAt')
+                    
+                    order = recent_orders.first()
+                    
+                elif owner_guest_id:
+                    # Look for recent guest orders with matching total and guest email
+                    guest_email = meta.get("guest_email")
+                    if guest_email:
+                        recent_orders = OrderModel.objects.filter(
+                            guestUser__email=guest_email,
+                            createdAt__gte=timezone.now() - timedelta(hours=1),
+                            totalPrice=pi_amount_dollars,
+                            guestUser__isnull=False
+                        ).order_by('-createdAt')
+                        
+                        order = recent_orders.first()
+                    else:
+                        # Fallback: match by total amount and recent timestamp for guest orders
+                        recent_orders = OrderModel.objects.filter(
+                            guestUser__isnull=False,
+                            createdAt__gte=timezone.now() - timedelta(minutes=30),
+                            totalPrice=pi_amount_dollars
+                        ).order_by('-createdAt')
+                        
+                        order = recent_orders.first()
                 
         except Exception as e:
             logger.warning(f"Error querying order for PI {pi}: {e}")
@@ -121,23 +143,40 @@ class OrderStatusViewSet(viewsets.ViewSet):
         # If order exists in database, use that status
         if order:
             order_status = _ORDER_STATUS_MAP.get(order.status, "pending")
-            amount = int(order.total_price * 100)  # Convert to cents
+            amount = int(order.totalPrice * 100)  # Convert to cents
             currency = "aud"  # TODO: get from order or settings
+            
+            # Serialize the complete order with all related data
+            order_serializer = OrderSerializer(order)
+            address_serializer = AddressSerializer(order.address)
+            shipping_serializer = ShippingVendorSerializer(order.shippingVendor)
             
             data = {
                 "status": order_status,
                 "amount": amount,
                 "currency": currency,
                 "orderId": order.id,
+                "order": order_serializer.data,
+                "address": address_serializer.data,
+                "shippingVendor": shipping_serializer.data,
             }
             return Response(data)
 
-        # Fallback to Stripe status if order doesn't exist yet
+        # Check Stripe payment status
         stripe_status = _STRIPE_STATUS_MAP.get(intent.get("status"), "pending")
         amount = intent.get("amount_received") or intent.get("amount") or 0
         currency = (intent.get("currency") or "aud").lower()
         failure = intent.get("last_payment_error") or {}
         reason = failure.get("message") or failure.get("code")
+
+        # Only return "paid" if payment succeeded + we have order_id in metadata
+        # This ensures webhook has processed and created the order
+        if stripe_status == "paid":
+            order_id_in_metadata = (intent.get("metadata") or {}).get("order_id")
+            if not order_id_in_metadata:
+                # Payment succeeded but webhook hasn't created order yet
+                stripe_status = "pending"
+                print(f"Payment succeeded for PI {pi} but no order_id in metadata. Webhook may not have processed yet.")
 
         data = {
             "status": stripe_status,
