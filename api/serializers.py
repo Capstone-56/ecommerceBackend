@@ -294,12 +294,13 @@ class ListOrderSerializer(serializers.ModelSerializer):
     """
     user = UserModelSerializer(read_only=True)
     guestUser = GuestUserSerializer(read_only=True)
+    items = OrderItemSerializer(many=True, read_only=True)
     
     class Meta:
         model = OrderModel
         fields = [
             "id", "createdAt", "user", "guestUser", "address", "shippingVendor", 
-            "totalPrice", "status"
+            "totalPrice", "status", "items"
         ]
         read_only_fields = ["user", "guestUser"]
 
