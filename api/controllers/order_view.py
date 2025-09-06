@@ -3,6 +3,8 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponseBadRequest
 from django.db.models import Sum
 from django.utils import timezone
+from django.db.models import Count
+from django.db.models.functions import TruncDate
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -196,3 +198,52 @@ class OrderViewSet(viewsets.ViewSet):
             "totalSales": round(float(total_sales), 2),
             "orderCount": order_count
         })
+    
+    @action(detail=False, methods=["get"], url_path="weekly/sales")
+    def weekly_sales(self, request):
+        """
+        Get total sales per day for the past week.
+        GET /api/order/weekly/sales
+        
+        NOTE: This would return the sales for the past week and if there
+              were no sales it then returns total_sales: 0.
+        Returns:
+        [   
+            {
+                date: 2025-09-03,
+                total_sales: 3 
+            },
+            {
+                date: 2025-09-04,
+                total_sales: 7 
+            }
+        ]
+        """
+
+        end_date = timezone.now().date()
+        start_date = end_date - timedelta(days=6)
+        
+        # Filter orders by date range (include full end date by adding 1 day)
+        end_date_inclusive = end_date + timedelta(days=1)
+        orders_per_day = (
+                OrderModel.objects
+                .filter(createdAt__gte=start_date, createdAt__lt=end_date_inclusive)
+                .annotate(date=TruncDate("createdAt"))
+                .values("date")
+                .annotate(total_sales=Count("id"))
+                .order_by("date")
+            )
+                
+        # Convert queryset to dict keyed by date.
+        sales_dict = {row["date"]: row["total_sales"] for row in orders_per_day}
+
+        # Build full 7-day list.
+        results = []
+        for i in range((end_date - start_date).days + 1):
+            date = start_date + timedelta(days=i)
+            results.append({
+                "date": date,
+                "total_sales": sales_dict.get(date, 0)
+            })
+        
+        return Response(results)
