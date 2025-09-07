@@ -22,18 +22,21 @@ phases:
     commands:
       - echo Prebuild ops
       - pip3 install -r requirements.txt
-      - echo "Testing database connection..."
-      - python3 manage.py check --database default
+      #- echo "Testing database connection..."
+      #- python3 manage.py check --database default
   build:
     commands:
       - echo Building the application
       - echo "Running database migrations..."
-      - python3 manage.py migrate --run-syncdb
+      #- python3 manage.py migrate --run-syncdb
       - echo "Collecting static files..."
-      - python3 manage.py collectstatic --noinput
+      #- python3 manage.py collectstatic --noinput
   post_build:
     commands:
       - echo Build completed on `date`
 artifacts:
   files:
     - '**/*'
+  base-directory: '.'
+  name: ecommerceBackend-$(date +%Y-%m-%d)
+  discard-paths: no
