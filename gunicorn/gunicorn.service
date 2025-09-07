@@ -4,14 +4,17 @@ Requires=gunicorn.socket
 After=network.target
 
 [Service]
-Type=notify
+Type=exec
 User=ubuntu
 Group=www-data
 WorkingDirectory=/home/ubuntu/ecommerceBackend
-Environment=PATH=/home/ubuntu/env/bin
+Environment="PATH=/home/ubuntu/env/bin:/usr/local/bin:/usr/bin:/bin"
+Environment="VIRTUAL_ENV=/home/ubuntu/env"
+ExecStartPre=/bin/bash -c 'source /home/ubuntu/env/bin/activate'
 ExecStart=/home/ubuntu/env/bin/gunicorn --access-logfile - --workers 3 --bind unix:/run/gunicorn.sock ecommerceBackend.wsgi:application
 ExecReload=/bin/kill -s HUP $MAINPID
 Restart=on-failure
+RestartSec=5
 
 [Install]
 WantedBy=multi-user.target
