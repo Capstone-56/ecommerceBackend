@@ -2,12 +2,16 @@
 Description=gunicorn daemon
 Requires=gunicorn.socket
 After=network.target
+
 [Service]
+Type=notify
 User=ubuntu
 Group=www-data
 WorkingDirectory=/home/ubuntu/ecommerceBackend
-ExecStart=/home/ubuntu/env/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/ubuntu/ecommerceBackend/ecommerceBackend/ecommerceBackend.sock ecommerceBackend.wsgi:application
+Environment=PATH=/home/ubuntu/env/bin
+ExecStart=/home/ubuntu/env/bin/gunicorn --access-logfile - --workers 3 --bind unix:/run/gunicorn.sock ecommerceBackend.wsgi:application
+ExecReload=/bin/kill -s HUP $MAINPID
+Restart=on-failure
 
-       
 [Install]
 WantedBy=multi-user.target
