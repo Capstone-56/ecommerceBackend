@@ -470,3 +470,9 @@ class VariationTypeSerializer(serializers.ModelSerializer):
             {"value": variant.value, "id": variant.id}
             for variant in variations
         ]
+
+class LocationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = LocationModel
+        fields = ['country_code', "country_name"]

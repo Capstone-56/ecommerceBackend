@@ -5,11 +5,22 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from django.conf import settings
 
+from api.serializers import LocationSerializer
+from base.models.location_model import LocationModel
+
 
 class LocationViewSet(viewsets.ViewSet):
     """
     A ViewSet for location-related operations, including coordinate to country conversion.
     """
+    def list(self, request):
+        """
+        Returns the list of locations to sell products in.
+        GET /api/location
+        """
+        locations = LocationModel.objects.all()
+        serializer = LocationSerializer(locations, many=True)
+        return Response(serializer.data)
 
     @action(detail=False, methods=['post'], url_path='coordinates-to-country')
     def coordinates_to_country(self, request):
