@@ -1,0 +1,39 @@
+version: 0.1
+
+environment_variables:
+  plaintext:
+    DJANGO_SETTINGS_MODULE: ecommerceBackend.settings
+    SECRET_KEY: nosecret
+    # PostgreSQL RDS Configuration
+    DB_ENGINE: django.db.backends.postgresql
+    DB_NAME: ecommerce_db
+    DB_USER: ecommerce_admin
+    DB_HOST: bdmx-sydney.cqj4ccvqg7z6.ap-southeast-2a.amazonaws.com
+    DB_PORT: 5432
+    #DATABASE_STREAMDATA_URL: sqlite:///db2.sqlite3
+    #STREAM_INCOMING_PRIVATE_KEY: changeme
+    #STREAM_INCOMING_PUBLIC_KEY: changeme
+    #GOOGLE_API_KEY: changeme
+    OPBEAT_ENABLED: False
+    # Note: DB_PASSWORD is set in CodeBuild console as a sensitive environment variable
+
+phases:
+  pre_build:
+    commands:
+      - echo Prebuild ops
+      - pip3 install -r requirements.txt
+      - echo "Testing database connection..."
+      - python3 manage.py check --database default
+  build:
+    commands:
+      - echo Building the application
+      - echo "Running database migrations..."
+      - python3 manage.py migrate --run-syncdb
+      - echo "Collecting static files..."
+      - python3 manage.py collectstatic --noinput
+  post_build:
+    commands:
+      - echo Build completed on `date`
+artifacts:
+  files:
+    - '**/*'
