@@ -11,7 +11,7 @@ from django.utils.decorators import method_decorator
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from base.models import ProductItemModel
+from base.models import ProductItemModel, ShoppingCartItemModel, UserModel
 from base.enums import ORDER_STATUS
 from api.serializers import CreateGuestOrderSerializer, CreateAuthenticatedOrderSerializer, AddressSerializer
 
@@ -305,15 +305,18 @@ class StripeViewSet(viewsets.ViewSet):
     def webhook(self, request):
         """
         Handles Stripe webhook events for payment processing.
-        
         Route: POST /api/stripe/webhook
         
         Purpose:
         - Receives and verifies webhook events from Stripe
-        - Processes payment success/failure notifications
-        - Updates order status based on payment events
-        - Provides secure communication between Stripe and the application
-        
+        - Processes payment_intent.succeeded events to create orders automatically
+        - Creates orders from PaymentIntent metadata for both authenticated and guest users
+        - Updates order status to PROCESSING and stores order ID in PaymentIntent metadata
+
+        Webhook Events Handled:
+        - payment_intent.succeeded: Creates order and clears user cart
+        - payment_intent.payment_failed: Logs payment failure
+
         Authentication:
         - Uses Stripe signature verification instead of Django auth
         - CSRF exempt as Stripe doesn't send CSRF tokens
@@ -322,7 +325,7 @@ class StripeViewSet(viewsets.ViewSet):
         - 200 OK: Event processed successfully
         - 400 Bad Request: Invalid signature or malformed payload
 
-        Note: Has TODOs to implement order handling
+        Note: Requires STRIPE_WEBHOOK_SECRET to be configured in settings
         """
         # raw body for signature verification
         payload = request.body
@@ -464,6 +467,14 @@ class StripeViewSet(viewsets.ViewSet):
                 # Update order status to PROCESSING since payment succeeded
                 order.status = ORDER_STATUS.PROCESSING.value
                 order.save()
+                
+                # Clear authenticated user's cart after successful order creation
+                if is_authenticated and user_id:
+                    try:
+                        user = UserModel.objects.get(id=user_id)
+                        ShoppingCartItemModel.objects.filter(user=user).delete()
+                    except Exception:
+                        pass
                 
                 # Store order ID back in PaymentIntent metadata for easier lookup
                 try:
