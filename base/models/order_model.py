@@ -43,8 +43,6 @@ class OrderModel(models.Model):
         choices=[(status.value, status.name.title()) for status in ORDER_STATUS],
         default=ORDER_STATUS.PENDING.value
     )
-    
-    # Link to Stripe PaymentIntent for reliable order lookup
     paymentIntentId = models.CharField(max_length=255, null=True, blank=True, db_index=True, unique=True)
     
     def clean(self):

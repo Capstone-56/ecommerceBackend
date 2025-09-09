@@ -45,7 +45,8 @@ class StripeViewSet(viewsets.ViewSet):
         
         Purpose:
         - Validates cart items and quantities from request
-        - Fetches current product prices from database
+        - Fetches current product prices and stock levels from database
+        - Validates stock availability for all requested quantities
         - Calculates total amount and creates line items summary
         - Creates Stripe PaymentIntent with automatic payment methods
         - Handles both authenticated users and guest checkouts
@@ -63,7 +64,7 @@ class StripeViewSet(viewsets.ViewSet):
         
         Returns:
         - Success: PaymentIntent client secret, intent ID, total, and items summary
-        - Error: Validation errors for empty cart, missing products, or Stripe errors
+        - Error: Validation errors for empty cart, missing products, insufficient stock, or Stripe errors
         """
         body = request.data if hasattr(request, "data") else {}
         cart = body.get("cart") or []
@@ -361,11 +362,12 @@ class StripeViewSet(viewsets.ViewSet):
         Purpose:
         - Receives and verifies webhook events from Stripe
         - Processes payment_intent.succeeded events to create orders automatically
+        - Validates stock availability and updates inventory levels
         - Creates orders from PaymentIntent metadata for both authenticated and guest users
         - Updates order status to PROCESSING and stores order ID in PaymentIntent metadata
 
         Webhook Events Handled:
-        - payment_intent.succeeded: Creates order and clears user cart
+        - payment_intent.succeeded: Validates stock, creates order, updates inventory, and clears user cart
         - payment_intent.payment_failed: Logs payment failure
 
         Authentication:
@@ -422,6 +424,17 @@ class StripeViewSet(viewsets.ViewSet):
         This is useful when webhook processing failed or was delayed.
         
         Route: POST /api/stripe/{intent_id}/create-order
+        
+        Purpose:
+        - Validates stock availability for all order items
+        - Creates order from PaymentIntent metadata
+        - Updates inventory levels atomically  
+        - Verifies user access to the PaymentIntent
+        - Prevents duplicate order creation
+        
+        Returns:
+        - Success: Order created confirmation with order ID
+        - Error: Stock validation failures, access denied, or order creation errors
         """
         intent_id = pk
         

@@ -257,12 +257,12 @@ class OrderCreationService:
                     "error": f"Insufficient stock for items: {insufficient_stock_items}"
                 }
             
-            # Update stock levels atomically
+            # Update stock levels
             for cart_item in cart_items:
                 product_item_id = cart_item["product_item_id"]
                 requested_qty = cart_item["qty"]
                 
-                # Use F() expression for atomic updates to prevent race conditions
+                # Use F() expression for to prevent race conditions
                 ProductItemModel.objects.filter(id=product_item_id).update(
                     stock=F('stock') - requested_qty
                 )
