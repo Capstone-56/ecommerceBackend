@@ -22,7 +22,7 @@ _ORDER_STATUS_MAP = {
 # Fallback Stripe status mapping for when order doesn't exist yet
 _STRIPE_STATUS_MAP = {
     "succeeded": "paid",
-    "processing": "pending",
+    "processing": "processing", 
     "requires_action": "pending",
     "requires_capture": "pending",
     "requires_confirmation": "pending",
@@ -85,60 +85,15 @@ class OrderStatusViewSet(viewsets.ViewSet):
                 if not gid or gid != owner_guest_id:
                     return Response({"error": "forbidden"}, status=403)
 
-        # find order in database
+        # Find order in database using PaymentIntent ID lookup
         order = None
         try:
-            from django.utils import timezone
-            from datetime import timedelta
-            from decimal import Decimal
-            
-            # First check if order ID is stored in metadata
-            order_id = meta.get("order_id")
-            if order_id:
-                try:
-                    order = OrderModel.objects.get(id=order_id)
-                except (OrderModel.DoesNotExist, ValueError):
-                    pass  # Fall back to other methods
-            
-            if not order:
-                # Get PaymentIntent amount for matching
-                pi_amount_cents = intent.get("amount") or 0
-                pi_amount_dollars = Decimal(str(pi_amount_cents / 100))
-                
-                if is_authed and owner_user_id:
-                    # Look for recent authenticated user orders with matching total
-                    recent_orders = OrderModel.objects.filter(
-                        user_id=owner_user_id,
-                        createdAt__gte=timezone.now() - timedelta(hours=1),
-                        totalPrice=pi_amount_dollars
-                    ).order_by('-createdAt')
-                    
-                    order = recent_orders.first()
-                    
-                elif owner_guest_id:
-                    # Look for recent guest orders with matching total and guest email
-                    guest_email = meta.get("guest_email")
-                    if guest_email:
-                        recent_orders = OrderModel.objects.filter(
-                            guestUser__email=guest_email,
-                            createdAt__gte=timezone.now() - timedelta(hours=1),
-                            totalPrice=pi_amount_dollars,
-                            guestUser__isnull=False
-                        ).order_by('-createdAt')
-                        
-                        order = recent_orders.first()
-                    else:
-                        # Fallback: match by total amount and recent timestamp for guest orders
-                        recent_orders = OrderModel.objects.filter(
-                            guestUser__isnull=False,
-                            createdAt__gte=timezone.now() - timedelta(minutes=30),
-                            totalPrice=pi_amount_dollars
-                        ).order_by('-createdAt')
-                        
-                        order = recent_orders.first()
-                
+            # Use PaymentIntent ID
+            order = OrderModel.objects.filter(paymentIntentId=pi).first()
+            if order:
+                logger.debug(f"Found order {order.id} via PaymentIntent ID for PI {pi}")
         except Exception as e:
-            logger.warning(f"Error querying order for PI {pi}: {e}")
+            logger.error(f"Error querying order for PI {pi}: {e}", exc_info=True)
 
         # If order exists in database, use that status
         if order:
@@ -169,14 +124,14 @@ class OrderStatusViewSet(viewsets.ViewSet):
         failure = intent.get("last_payment_error") or {}
         reason = failure.get("message") or failure.get("code")
 
-        # Only return "paid" if payment succeeded + we have order_id in metadata
-        # This ensures webhook has processed and created the order
+        # payment succeeded but webhook hasn't processed yet:
         if stripe_status == "paid":
             order_id_in_metadata = (intent.get("metadata") or {}).get("order_id")
             if not order_id_in_metadata:
                 # Payment succeeded but webhook hasn't created order yet
-                stripe_status = "pending"
-                print(f"Payment succeeded for PI {pi} but no order_id in metadata. Webhook may not have processed yet.")
+                # Return "processing" to indicate payment success but order creation pending
+                stripe_status = "processing"
+                logger.info(f"Payment succeeded for PI {pi} but order not created yet. Webhook processing.")
 
         data = {
             "status": stripe_status,

@@ -44,6 +44,9 @@ class OrderModel(models.Model):
         default=ORDER_STATUS.PENDING.value
     )
     
+    # Link to Stripe PaymentIntent for reliable order lookup
+    paymentIntentId = models.CharField(max_length=255, null=True, blank=True, db_index=True, unique=True)
+    
     def clean(self):
         """Ensure exactly one of user or guestUser is provided"""
         if not self.user and not self.guestUser:
