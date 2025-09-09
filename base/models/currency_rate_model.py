@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
+from decimal import Decimal
 
 
 class CurrencyRateModel(models.Model):
@@ -22,40 +23,6 @@ class CurrencyRateModel(models.Model):
 
     def __str__(self):
         return f"AUD/{self.currency_code}: {self.rate}"
-
-    @classmethod
-    def get_rate_to_currency(cls, currency_code):
-        """
-        Get the current exchange rate from AUD to the specified currency.
-        Returns None if currency not found.
-        """
-        try:
-            rate_obj = cls.objects.get(currency_code=currency_code.upper())
-            return rate_obj.rate
-        except cls.DoesNotExist:
-            return None
-
-    @classmethod
-    def convert_from_aud(cls, amount, currency_code):
-        """
-        Convert an amount from AUD to the specified currency.
-        Returns None if currency not found.
-        """
-        rate = cls.get_rate_to_currency(currency_code)
-        if rate is not None:
-            return amount * rate
-        return None
-
-    @classmethod
-    def convert_to_aud(cls, amount, currency_code):
-        """
-        Convert an amount from the specified currency to AUD.
-        Returns None if currency not found.
-        """
-        rate = cls.get_rate_to_currency(currency_code)
-        if rate is not None and rate > 0:
-            return amount / rate
-        return None
 
     def save(self, *args, **kwargs):
         """Override save to ensure currency code is uppercase."""
