@@ -228,7 +228,8 @@ class StripeViewSet(viewsets.ViewSet):
                 )
             return resp
         except stripe.error.StripeError as e:
-            return Response({"error": str(e)}, status=400)
+            logger.error(f"Failed to create PaymentIntent: {e}", exc_info=True)
+            return Response({"error": "Payment processing unavailable"}, status=400)
 
     @action(detail=True, methods=["put"], url_path="shipping")
     def shipping(self, request, pk=None):
@@ -271,7 +272,8 @@ class StripeViewSet(viewsets.ViewSet):
         try:
             pi = stripe.PaymentIntent.retrieve(intent_id)
         except stripe.error.StripeError as e:
-            return Response({"error": str(e)}, status=400)
+            logger.error(f"Failed to retrieve PaymentIntent {intent_id}: {e}", exc_info=True)
+            return Response({"error": "Payment intent not found"}, status=400)
 
         meta = pi.get("metadata") or {}
         user = getattr(request, "user", None)
@@ -340,7 +342,8 @@ class StripeViewSet(viewsets.ViewSet):
         try:
             stripe.PaymentIntent.modify(intent_id, metadata=updated_metadata)
         except stripe.error.StripeError as e:
-            return Response({"error": f"Failed to update payment intent: {str(e)}"}, status=400)
+            logger.error(f"Failed to update PaymentIntent {intent_id} metadata: {e}", exc_info=True)
+            return Response({"error": "Failed to update payment intent"}, status=400)
 
         return Response(
             {"message": "Shipping data received successfully", "intent_id": intent_id},
@@ -441,7 +444,8 @@ class StripeViewSet(viewsets.ViewSet):
         try:
             payment_intent = stripe.PaymentIntent.retrieve(intent_id)
         except stripe.error.StripeError as e:
-            return Response({"error": str(e)}, status=400)
+            logger.error(f"Failed to retrieve PaymentIntent {intent_id} for manual order creation: {e}", exc_info=True)
+            return Response({"error": "Payment intent not found"}, status=400)
         
         # Verify the payment succeeded
         if payment_intent.get("status") != "succeeded":

@@ -66,7 +66,8 @@ class OrderStatusViewSet(viewsets.ViewSet):
         try:
             intent = stripe.PaymentIntent.retrieve(pi)
         except stripe.error.StripeError as e:
-            return Response({"error": str(e)}, status=400)
+            logger.error(f"Failed to retrieve PaymentIntent {pi} for status check: {e}", exc_info=True)
+            return Response({"error": "Payment intent not found"}, status=400)
 
         meta = intent.get("metadata") or {}
         user = getattr(request, "user", None)
