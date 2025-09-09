@@ -58,9 +58,21 @@ class ProductItemModelSerializer(serializers.ModelSerializer):
     imageUrls = serializers.ListField(child=serializers.CharField(max_length=1000), required=False)
     variations = ProductConfigSerializer(many=True, required=False)
     product = serializers.SerializerMethodField()
+    price = serializers.SerializerMethodField()
 
     def get_product(self, obj):
         return ProductModelSerializer(obj.product).data
+
+    def get_price(self, obj):
+        """Get price object with amount and currency"""
+        from base.services.currency_service import CurrencyService
+        currency = self.context.get('currency', 'AUD')
+        converted_price = CurrencyService.convert_from_aud(obj.price, currency)
+        
+        return {
+            "amount": int(converted_price),
+            "currency": currency
+        }
 
     class Meta:
         model = ProductItemModel
@@ -94,17 +106,33 @@ class ProductModelSerializer(serializers.ModelSerializer):
         ]
     
     # Retrieve the price of an object based on the sorting context. If the sort is set to priceDesc, then the max_price is appended.
+
     def get_price(self, obj):
+        from base.services.currency_service import CurrencyService
+        currency = self.context.get('currency', 'AUD')
         sort = self.context.get("sort")
-        if sort == "priceDesc":
-            return getattr(obj, "maxPrice", None)
-        elif sort =="priceAsc":
-            # Default to min_price if priceAsc or no sort.
-            return getattr(obj, "minPrice", None)
         
-        # For product details it needs to be returned like this. Otherwise,
-        # the price field won't be populated.
-        return obj.items.values_list("price", flat=True).first()
+        if sort == "priceDesc":
+            base_price = getattr(obj, "maxPrice", None)
+        elif sort == "priceAsc":
+            base_price = getattr(obj, "minPrice", None)
+        else:
+            base_price = obj.items.values_list("price", flat=True).first()
+        
+        if not base_price:
+            return None
+            
+        if currency != 'AUD':
+            converted_price = CurrencyService.convert_from_aud(base_price, currency)
+            amount = int(converted_price)
+        else:
+            amount = int(base_price)
+        
+        return {
+            "amount": amount,
+            "currency": currency
+        }
+    
 
     # Retrieve variations for the given product.
     def get_variations(self, obj):

@@ -27,12 +27,17 @@ class ProductViewSet(viewsets.ViewSet):
         - colour (string) e.g. ?colour=red
         - categories (comma‑separated strings) e.g. ?categories=cat1, cat2
         - search (string) e.g. ?search=pants
-        - Location (string) e.g. ?location=au
+        - location (string) e.g. ?location=au
+        - currency (string) e.g. ?currency=aud
         
         If categories is provided, returns products linked to *all* of those categories.
         """
         querySet = ProductModel.objects.all()
-
+        
+        # Get currency and location parameters
+        currency = request.query_params.get("currency", "AUD").upper()
+        location = request.query_params.get("location")
+        
         categoriesParam = request.query_params.get("categories")
         if categoriesParam:
             categoryIds = [c.strip() for c in categoriesParam.split(",") if c.strip()]
@@ -57,9 +62,22 @@ class ProductViewSet(viewsets.ViewSet):
             maxPrice=Max("items__price")
         )
 
-        # filter by min_price and max_price
+        # Handle price filtering with currency conversion
         priceMin = request.query_params.get("priceMin")
         priceMax = request.query_params.get("priceMax")
+        
+        if priceMin or priceMax:
+            # Convert filter prices to AUD for database comparison
+            from base.services.currency_service import CurrencyService
+            
+            if priceMin and currency != "AUD":
+                priceMin_aud = CurrencyService.convert_to_aud(priceMin, currency)
+                priceMin = float(priceMin_aud)
+            
+            if priceMax and currency != "AUD":
+                priceMax_aud = CurrencyService.convert_to_aud(priceMax, currency)
+                priceMax = float(priceMax_aud)
+        
         if priceMin:
             querySet = querySet.filter(items__price__gte=priceMin)
         if priceMax:
@@ -116,14 +134,22 @@ class ProductViewSet(viewsets.ViewSet):
                 )
 
         # Filter by user's country if provided
-        location = request.query_params.get("location")
         if location:
             querySet = querySet.filter(locations__country_code__iexact=location)
 
         paginator = PagedList()
         pagedQuerySet = paginator.paginate_queryset(querySet, request)
 
-        serializer = ProductModelSerializer(pagedQuerySet, many=True, context={"sort": sort})
+        # Pass currency context to serializer
+        serializer = ProductModelSerializer(
+            pagedQuerySet, 
+            many=True, 
+            context={
+                "sort": sort, 
+                "currency": currency, 
+                "location": location
+            }
+        )
         return paginator.get_paginated_response(serializer.data)
 
     @action(detail=True, methods=["get"], url_path="cat")
@@ -143,7 +169,17 @@ class ProductViewSet(viewsets.ViewSet):
         # Retrieve products in these categories
         products = ProductModel.objects.filter(category__in=categories)
 
-        serializer = ProductModelSerializer(products, many=True)
+        # Pass currency and location for consistent price conversion
+        currency = request.query_params.get("currency", "AUD").upper()
+        location = request.query_params.get("location")
+        serializer = ProductModelSerializer(
+            products, 
+            many=True, 
+            context={
+                "currency": currency,
+                "location": location,
+            }
+        )
 
         # Use the CategoryModelSerializer to get the breadcrumb
         category_serializer = CategoryModelSerializer(category)
@@ -157,11 +193,20 @@ class ProductViewSet(viewsets.ViewSet):
     def retrieve(self, request, pk=None):
         """
         Retrieve a specific ProductModel record based on an id.
-        GET /api/product/{id}
+        GET /api/product/{id}?currency=usd&location=us
         """
         product = get_object_or_404(ProductModel, id=pk)
-        serializer = ProductModelSerializer(product)
-
+        
+        currency = request.query_params.get("currency", "AUD").upper()
+        location = request.query_params.get("location")
+        
+        serializer = ProductModelSerializer(
+            product, 
+            context={
+                "currency": currency, 
+                "location": location
+            }
+        )
         return Response(serializer.data)
     
     @action(detail=False, methods=['get'], url_path='featured')
@@ -171,12 +216,20 @@ class ProductViewSet(viewsets.ViewSet):
         GET /api/product/featured
         """
         featured_products = ProductModel.objects.filter(featured=True)
-        # Apply location filtering if provided, consistent with list()
+        # Read currency and location to support conversion and filtering
+        currency = request.query_params.get("currency", "AUD").upper()
         location = request.query_params.get("location")
         if location:
             featured_products = featured_products.filter(locations__country_code__iexact=location)
         featured_products = featured_products[:3]
-        serializer = ProductModelSerializer(featured_products, many=True)
+        serializer = ProductModelSerializer(
+            featured_products, 
+            many=True,
+            context={
+                "currency": currency,
+                "location": location,
+            }
+        )
 
         return Response(serializer.data)
 
@@ -200,11 +253,19 @@ class ProductViewSet(viewsets.ViewSet):
         ).exclude(id=product.id)
         
         # Apply location filtering if provided, consistent with list()
+        currency = request.query_params.get("currency", "AUD").upper()
         location = request.query_params.get("location")
         if location:
             related_products = related_products.filter(locations__country_code__iexact=location)
 
-        serializer = ProductModelSerializer(related_products, many=True)
+        serializer = ProductModelSerializer(
+            related_products, 
+            many=True,
+            context={
+                "currency": currency,
+                "location": location,
+            }
+        )
         return Response(serializer.data)
 
     def create(self, request):

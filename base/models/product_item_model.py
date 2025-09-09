@@ -8,7 +8,7 @@ class ProductItemModel(models.Model):
     product = models.ForeignKey(ProductModel, on_delete=models.CASCADE, db_column="productId", related_name="items")
     sku = models.CharField(max_length=255)
     stock = models.IntegerField()
-    price = models.FloatField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     imageUrls = ArrayField(models.CharField(max_length=1000), blank=True)
 
     class Meta:
