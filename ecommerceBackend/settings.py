@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-2sv!-pb6m8^gach8^p0b4v)z1!(uri74&k59jotkyc5(07_-ab
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["3.25.193.75", "ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com", "localhost", "127.0.0.1"]
 
 
 # Application definition
@@ -64,11 +64,21 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5173',
+    "http://localhost:5173",
+    "http://3.25.193.75",
+    "http://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
+    "https://3.25.193.75",
+    "https://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
-CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:5173",
+    "http://3.25.193.75",
+    "http://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
+    "https://3.25.193.75", 
+    "https://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
+]
 CSRF_COOKIE_SECURE   = True
 CSRF_COOKIE_SAMESITE = "Lax"
 SESSION_COOKIE_SECURE   = True
