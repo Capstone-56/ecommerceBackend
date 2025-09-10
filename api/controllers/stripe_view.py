@@ -492,7 +492,8 @@ class StripeViewSet(viewsets.ViewSet):
                     status=400
                 )
         except Exception as e:
+            logger.error(f"Exception creating order for PaymentIntent {intent_id}: {e}", exc_info=True)
             return Response(
-                {"error": f"Error creating order: {str(e)}"}, 
+                {"error": "Failed to create order"}, 
                 status=500
             )
