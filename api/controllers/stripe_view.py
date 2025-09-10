@@ -13,7 +13,7 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from base.models import ProductItemModel
-from api.services.order_creation_service import OrderCreationService
+from api.services import OrderCreationService
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
