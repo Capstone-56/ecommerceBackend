@@ -1,3 +1,7 @@
+import json
+import os
+import boto3
+from django.utils.text import slugify
 from django.shortcuts import get_object_or_404
 from django.db.models import Min, Max, Count, Q
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank, TrigramSimilarity
@@ -8,6 +12,7 @@ from rest_framework.decorators import action
 from base.abstractModels import PagedList
 from base.models import ProductModel, VariantModel, CategoryModel
 from api.serializers import ProductModelSerializer, CategoryModelSerializer
+from ecommerceBackend import settings
 
 class ProductViewSet(viewsets.ViewSet):
     """
@@ -294,7 +299,50 @@ class ProductViewSet(viewsets.ViewSet):
             ]
         } 
         """
-        serializer = ProductModelSerializer(data=request.data)
+        # Need to copy the object as changes to the request object
+        # cause issues for the S3 upload. 
+        data = request.data.copy()
+
+        # Create S3 client with our credentials.
+        s3_client = boto3.client(
+            service_name='s3',
+            region_name=settings.AWS_REGION,
+            aws_access_key_id=settings.AWS_ACCESS_KEY,
+            aws_secret_access_key=settings.AWS_SECRET_KEY
+        )
+
+        # For each image we want to get the name of the file, upload the object
+        # and then return the CloudFront CDN URL to append to the uploaded image
+        # URLs. This is because we don't want items stored in the bucket to be publicly
+        # available. The Cloud front service will allow us to serve these images on
+        # our frontend without users or any part of the system needing to be authenticated.
+        uploaded_image_urls = []
+        for img in request.FILES.getlist("images"):
+            name, ext = os.path.splitext(img.name)
+            safe_name = slugify(name) + ext
+
+            s3_client.upload_fileobj(
+                Fileobj=img,
+                Bucket=settings.AWS_S3_BUCKET_NAME,
+                Key=f"products/{safe_name}",
+            )
+            uploaded_image_urls.append(f"https://{settings.AWS_CLOUD_FRONT_DOMAIN}/products/{safe_name}")
+
+        # Create a payload JSON object to have proper format for our serializers.
+        # The POST request now takes in a multipart/form-data to properly handle 
+        # file uploads. This was causing issues when serializing and can be alleviated
+        # by doing the following.
+        payload = {
+            "name": data.get("name"),
+            "description": data.get("description"),
+            "featured": data.get("featured"),
+            "category": data.get("category"),
+            "images": uploaded_image_urls,
+            "product_items": json.loads(data.get('product_items')),
+            "locations": [data.get("location")]
+        }
+
+        serializer = ProductModelSerializer(data=payload)
         if serializer.is_valid():
             product = serializer.save()
             return Response(ProductModelSerializer(product).data, status=status.HTTP_201_CREATED)

@@ -277,6 +277,217 @@ class CartItemSerializer(serializers.ModelSerializer):
 
     def get_totalPrice(self, obj):
         return obj.quantity * obj.productItem.price
+
+
+class ShippingVendorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShippingVendorModel
+        fields = ["id", "name", "logoUrl", "isActive"]
+
+    
+class OrderItemSerializer(serializers.ModelSerializer):
+    productItemId = serializers.UUIDField(write_only=True)
+    
+    class Meta:
+        model = OrderItemModel
+        fields = ["id", "productItemId", "productItem", "quantity", "price"]
+        read_only_fields = ["price", "productItem"]  # Price and productItem are handled by backend
+
+
+class GuestUserSerializer(serializers.ModelSerializer):
+    """
+    Serializer for GuestUserModel
+    """
+    class Meta:
+        model = GuestUserModel
+        fields = ["id", "email", "firstName", "lastName", "phone"]
+        read_only_fields = ["id"]
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    """
+    General order serializer that works for both authenticated and guest orders
+    """
+    user = UserModelSerializer(read_only=True)
+    guestUser = GuestUserSerializer(read_only=True)
+    
+    class Meta:
+        model = OrderModel
+        fields = [
+            "id", "createdAt", "user", "guestUser", "address", "shippingVendor", 
+            "totalPrice", "status", "items"
+        ]
+        read_only_fields = ["user", "guestUser"]
+
+
+class ListOrderSerializer(serializers.ModelSerializer):
+    """
+    Simplified order serializer for list views - works for both user types
+    """
+    user = UserModelSerializer(read_only=True)
+    guestUser = GuestUserSerializer(read_only=True)
+    items = OrderItemSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = OrderModel
+        fields = [
+            "id", "createdAt", "user", "guestUser", "address", "shippingVendor", 
+            "totalPrice", "status", "items"
+        ]
+        read_only_fields = ["user", "guestUser"]
+
+
+class CreateGuestOrderSerializer(serializers.ModelSerializer):
+    """
+    Serializer for creating orders with anonymous guest users.
+    Always creates a new guest user for each order to maintain anonymity.
+    """
+    email = serializers.EmailField(write_only=True)
+    firstName = serializers.CharField(max_length=255, write_only=True)
+    lastName = serializers.CharField(max_length=255, write_only=True)
+    phone = serializers.CharField(max_length=20, required=False, allow_blank=True, write_only=True)
+    addressId = serializers.UUIDField(write_only=True)
+    shippingVendorId = serializers.IntegerField(write_only=True)
+    items = OrderItemSerializer(many=True, write_only=True)
+    guestUser = GuestUserSerializer(read_only=True)
+    
+    class Meta:
+        model = OrderModel
+        fields = [
+            "id", "createdAt", "addressId", "shippingVendorId", "totalPrice", "status",
+            "email", "firstName", "lastName", "phone",
+            "items", "guestUser"
+        ]
+        read_only_fields = ["id", "createdAt", "totalPrice", "guestUser"]
+
+    def create(self, validated_data):
+        guest_data = {
+            "email": validated_data.pop("email"),
+            "firstName": validated_data.pop("firstName"),
+            "lastName": validated_data.pop("lastName"),
+            "phone": validated_data.pop("phone", ""),
+        }
+        address_id = validated_data.pop("addressId")
+        shipping_vendor_id = validated_data.pop("shippingVendorId")
+        items_data = validated_data.pop("items")
+        
+        # Always create a new guest user for true anonymity
+        guest_user = GuestUserModel.objects.create(**guest_data)
+        
+        try:
+            address = AddressModel.objects.get(id=address_id)
+            shipping_vendor = ShippingVendorModel.objects.get(id=shipping_vendor_id)
+        except AddressModel.DoesNotExist:
+            raise serializers.ValidationError(f"Address with id {address_id} does not exist")
+        except ShippingVendorModel.DoesNotExist:
+            raise serializers.ValidationError(f"ShippingVendor with id {shipping_vendor_id} does not exist")
+        
+        # Calculate total price
+        total_price = 0
+        order_items = []
+        
+        for item_data in items_data:
+            product_item_id = item_data["productItemId"]
+            quantity = item_data["quantity"]
+            
+            # Fetch the ProductItem from database
+            try:
+                product_item = ProductItemModel.objects.get(id=product_item_id)
+            except ProductItemModel.DoesNotExist:
+                raise serializers.ValidationError(f"ProductItem with id {product_item_id} does not exist")
+            
+            price = product_item.price  # Get price from ProductItemModel
+            
+            order_items.append({
+                "productItem": product_item,
+                "quantity": quantity,
+                "price": price
+            })
+            total_price += price * quantity
+        
+        # Create order with calculated total price
+        validated_data["totalPrice"] = total_price
+        validated_data["address"] = address
+        validated_data["shippingVendor"] = shipping_vendor
+        order = OrderModel.objects.create(guestUser=guest_user, **validated_data)
+        
+        # Create order items with calculated prices
+        for item_data in order_items:
+            OrderItemModel.objects.create(order=order, **item_data)
+        
+        return order
+
+
+class CreateAuthenticatedOrderSerializer(serializers.ModelSerializer):
+    """
+    Serializer for creating orders with authenticated users (existing functionality)
+    """
+    addressId = serializers.UUIDField(write_only=True)
+    shippingVendorId = serializers.IntegerField(write_only=True)
+    user_id = serializers.UUIDField(write_only=True)
+    items = OrderItemSerializer(many=True, write_only=True)
+    user = UserModelSerializer(read_only=True)
+
+    class Meta:
+        model = OrderModel
+        fields = [
+            "id", "createdAt", "user", "user_id", "addressId", "shippingVendorId", 
+            "totalPrice", "status", "items"
+        ]
+        read_only_fields = ["id", "createdAt", "totalPrice"]
+
+    def create(self, validated_data):
+        user_id = validated_data.pop("user_id")
+        address_id = validated_data.pop("addressId")
+        shipping_vendor_id = validated_data.pop("shippingVendorId")
+        items_data = validated_data.pop("items")
+        
+        try:
+            user = UserModel.objects.get(id=user_id)
+            address = AddressModel.objects.get(id=address_id)
+            shipping_vendor = ShippingVendorModel.objects.get(id=shipping_vendor_id)
+        except UserModel.DoesNotExist:
+            raise serializers.ValidationError(f"User with id {user_id} does not exist")
+        except AddressModel.DoesNotExist:
+            raise serializers.ValidationError(f"Address with id {address_id} does not exist")
+        except ShippingVendorModel.DoesNotExist:
+            raise serializers.ValidationError(f"ShippingVendor with id {shipping_vendor_id} does not exist")
+        
+        # Calculate total price
+        total_price = 0
+        order_items = []
+        
+        for item_data in items_data:
+            product_item_id = item_data["productItemId"]
+            quantity = item_data["quantity"]
+            
+            # Fetch the ProductItem from database
+            try:
+                product_item = ProductItemModel.objects.get(id=product_item_id)
+            except ProductItemModel.DoesNotExist:
+                raise serializers.ValidationError(f"ProductItem with id {product_item_id} does not exist")
+            
+            price = product_item.price  # Get price from ProductItemModel
+            
+            order_items.append({
+                "productItem": product_item,
+                "quantity": quantity,
+                "price": price
+            })
+            total_price += price * quantity
+        
+        # Create order with calculated total price
+        validated_data["totalPrice"] = total_price
+        validated_data["address"] = address
+        validated_data["shippingVendor"] = shipping_vendor
+        validated_data["user"] = user
+        order = OrderModel.objects.create(**validated_data)
+        
+        # Create order items with calculated prices
+        for item_data in order_items:
+            OrderItemModel.objects.create(order=order, **item_data)
+        
+        return order
     
 class VariationTypeSerializer(serializers.ModelSerializer):
     variant_values = serializers.SerializerMethodField()
@@ -292,3 +503,9 @@ class VariationTypeSerializer(serializers.ModelSerializer):
             {"value": variant.value, "id": variant.id}
             for variant in variations
         ]
+
+class LocationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = LocationModel
+        fields = ['country_code', "country_name"]
