@@ -1,7 +1,9 @@
 from decimal import Decimal, ROUND_HALF_UP
 from typing import Tuple
 import uuid
+import json
 import stripe
+import logging
 
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
@@ -10,13 +12,15 @@ from django.utils.decorators import method_decorator
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from django.db.models import Min
-from base.models import ProductModel, ProductItemModel
+from base.models import ProductItemModel
+from api.services import OrderCreationService
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 GUEST_COOKIE = "guest_id"
 GUEST_COOKIE_MAX_AGE = 60 * 60 * 24 * 30  # 30 days
+
+logger = logging.getLogger(__name__)
 
 # Hardcoded store currency for now
 STORE_DEFAULT_CURRENCY = getattr(settings, "STORE_DEFAULT_CURRENCY", "aud").lower()
@@ -41,7 +45,8 @@ class StripeViewSet(viewsets.ViewSet):
         
         Purpose:
         - Validates cart items and quantities from request
-        - Fetches current product prices from database
+        - Fetches current product prices and stock levels from database
+        - Validates stock availability for all requested quantities
         - Calculates total amount and creates line items summary
         - Creates Stripe PaymentIntent with automatic payment methods
         - Handles both authenticated users and guest checkouts
@@ -59,7 +64,7 @@ class StripeViewSet(viewsets.ViewSet):
         
         Returns:
         - Success: PaymentIntent client secret, intent ID, total, and items summary
-        - Error: Validation errors for empty cart, missing products, or Stripe errors
+        - Error: Validation errors for empty cart, missing products, insufficient stock, or Stripe errors
         """
         body = request.data if hasattr(request, "data") else {}
         cart = body.get("cart") or []
@@ -68,67 +73,85 @@ class StripeViewSet(viewsets.ViewSet):
                 {"error": "Cart is empty"}, status=status.HTTP_400_BAD_REQUEST
             )
 
-        # Normalise input
-        product_ids: list[str] = []
+        # Normalise input, receiving ProductItem IDs
+        product_item_ids: list[str] = []
         lines_norm: list[dict] = []
         for line in cart:
             qty = int(line.get("quantity") or 0)
-            pid = (line.get("product") or {}).get("id")
-            if not pid or qty <= 0:
+            product_item_id = (line.get("product") or {}).get("id")
+            if not product_item_id or qty <= 0:
                 continue
-            pid = str(pid)
-            product_ids.append(pid)
-            lines_norm.append({"product_id": pid, "qty": qty})
+            product_item_id = str(product_item_id)
+            product_item_ids.append(product_item_id)
+            lines_norm.append({"product_item_id": product_item_id, "qty": qty})
         if not lines_norm:
             return Response(
                 {"error": "Cart is empty"}, status=status.HTTP_400_BAD_REQUEST
             )
 
-        # pricing from DB, not client
-        price_by_product: dict[str, Decimal] = {}
-        name_by_product: dict[str, str] = {}
+        # Get pricing, names, and stock from ProductItem IDs directly
+        price_by_product_item: dict[str, Decimal] = {}
+        name_by_product_item: dict[str, str] = {}
+        stock_by_product_item: dict[str, int] = {}
 
-        price_rows = (
-            ProductItemModel.objects.filter(product_id__in=product_ids)
-            .values("product_id")
-            .annotate(unit_price=Min("price"))
-        )
-        for r in price_rows:
-            price_by_product[str(r["product_id"])] = Decimal(str(r["unit_price"]))
+        # Query ProductItems directly by their IDs
+        product_items = ProductItemModel.objects.filter(id__in=product_item_ids).select_related('product')
+        for item in product_items:
+            price_by_product_item[str(item.id)] = Decimal(str(item.price))
+            name_by_product_item[str(item.id)] = item.product.name or "Product"
+            stock_by_product_item[str(item.id)] = item.stock
 
-        name_rows = ProductModel.objects.filter(id__in=product_ids).values("id", "name")
-        for r in name_rows:
-            name_by_product[str(r["id"])] = r["name"] or "Product"
-
-        # Sum + prepare summary
-        missing_products: list[str] = []
+        # Sum + prepare summary with stock validation
+        missing_product_items: list[str] = []
+        insufficient_stock_items: list[dict] = []
         total = Decimal("0")
         items_summary: list[dict] = []
 
         for nl in lines_norm:
-            pid, qty = nl["product_id"], nl["qty"]
-            unit = price_by_product.get(pid, Decimal("0"))
+            product_item_id, qty = nl["product_item_id"], nl["qty"]
+            unit = price_by_product_item.get(product_item_id, Decimal("0"))
+            stock = stock_by_product_item.get(product_item_id, 0)
             if unit <= 0:
-                missing_products.append(pid)
+                missing_product_items.append(product_item_id)
                 continue
+            
+            # Check stock availability
+            if stock < qty:
+                insufficient_stock_items.append({
+                    "productItemId": product_item_id,
+                    "requested": qty,
+                    "available": stock,
+                    "name": name_by_product_item.get(product_item_id, "Product")
+                })
+                continue
+                
             subtotal = unit * qty
             total += subtotal
             items_summary.append(
                 {
-                    "id": pid,
+                    "id": product_item_id,
                     "kind": "product",
-                    "name": name_by_product.get(pid, "Product"),
+                    "name": name_by_product_item.get(product_item_id, "Product"),
                     "quantity": qty,
                     "unit_price_cents": _to_cents(unit),
                     "subtotal_cents": _to_cents(subtotal),
                 }
             )
 
-        if missing_products:
+        if missing_product_items:
             return Response(
                 {
-                    "error": "Some products have no priced variants",
-                    "missingProductIds": missing_products,
+                    "error": "Some product items not found",
+                    "missingProductItemIds": missing_product_items,
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        
+        if insufficient_stock_items:
+            return Response(
+                {
+                    "error": "Insufficient stock for some items",
+                    "insufficientStockItems": insufficient_stock_items,
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )
@@ -147,16 +170,42 @@ class StripeViewSet(viewsets.ViewSet):
         if not is_authed:
             guest_id, is_new = get_or_create_guest_id(request)
 
+        # Store cart data in PaymentIntent metadata for order creation on payment success
+        metadata = {
+            "user_id": str(user.id) if is_authed else "",
+            "guest_id": guest_id if not is_authed else "",
+            "total_price": str(total),
+            "is_authenticated": str(is_authed),
+        }
+        
+        # For authed users, we can retrieve cart from database, no need to store in metadata
+        # For guests, must store cart in metadata since they don't have persistent storage
+        if not is_authed:
+            cart_items_str = json.dumps([{"product_item_id": nl["product_item_id"], "qty": nl["qty"]} for nl in lines_norm])
+            
+            # Validate metadata size limits, stripe is 500 characters per key
+            if len(cart_items_str) > 500:
+                logger.warning(f"Guest cart metadata exceeds 500 characters ({len(cart_items_str)}). Using compressed format.")
+                # Use more compact format for large guest carts
+                cart_items_str = json.dumps([{"id": nl["product_item_id"], "q": nl["qty"]} for nl in lines_norm])
+                
+                # If still too large, reject the cart
+                if len(cart_items_str) > 500:
+                    logger.error(f"Guest cart too large for metadata ({len(cart_items_str)} chars)")
+                    return Response(
+                        {"error": "Cart is too large to process. Please reduce the number of items or create an account."},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+            
+            metadata["cart_items"] = cart_items_str
+        
         # Create PaymentIntent
         try:
             intent = stripe.PaymentIntent.create(
                 amount=amount_cents,
                 currency=STORE_DEFAULT_CURRENCY,
                 automatic_payment_methods={"enabled": True},
-                metadata={
-                    "user_id": str(user.id) if is_authed else "",
-                    "guest_id": guest_id if not is_authed else "",
-                },
+                metadata=metadata,
             )
             payload = {
                 "clientSecret": intent.client_secret,
@@ -175,11 +224,12 @@ class StripeViewSet(viewsets.ViewSet):
                     max_age=GUEST_COOKIE_MAX_AGE,
                     httponly=True,
                     samesite="Lax",
-                    secure=False,  # change to True on HTTPS
+                    secure=True,
                 )
             return resp
         except stripe.error.StripeError as e:
-            return Response({"error": str(e)}, status=400)
+            logger.error(f"Failed to create PaymentIntent: {e}", exc_info=True)
+            return Response({"error": "Payment processing unavailable"}, status=400)
 
     @action(detail=True, methods=["put"], url_path="shipping")
     def shipping(self, request, pk=None):
@@ -222,7 +272,8 @@ class StripeViewSet(viewsets.ViewSet):
         try:
             pi = stripe.PaymentIntent.retrieve(intent_id)
         except stripe.error.StripeError as e:
-            return Response({"error": str(e)}, status=400)
+            logger.error(f"Failed to retrieve PaymentIntent {intent_id}: {e}", exc_info=True)
+            return Response({"error": "Payment intent not found"}, status=400)
 
         meta = pi.get("metadata") or {}
         user = getattr(request, "user", None)
@@ -242,21 +293,57 @@ class StripeViewSet(viewsets.ViewSet):
         body = request.data or {}
         shipping = body.get("shipping") or {}
         name = body.get("name") or shipping.get("name") or ""
+        
+        # Extract additional order data from request
+        address_id = body.get("addressId") or shipping.get("addressId")
+        shipping_vendor_id = body.get("shippingVendorId") or shipping.get("shippingVendorId")
+        
+        # For guests, collect user details if provided
+        guest_email = body.get("email")
+        guest_first_name = body.get("firstName") 
+        guest_last_name = body.get("lastName")
+        guest_phone = body.get("phone") or shipping.get("phone", "")
 
-        # Just receive the shipping data for now, add it to order details later
-        shipping_data = {
-            "payment_intent_id": intent_id,
-            "name": name,
-            "line1": shipping.get("line1", ""),
-            "line2": shipping.get("line2", ""),
-            "city": shipping.get("city", ""),
-            "state": shipping.get("state", ""),
-            "postal_code": shipping.get("postal_code", ""),
-            "country": shipping.get("country", ""),
-            "phone": shipping.get("phone", ""),
-            "user_id": user.id if is_authed else None,
-            "guest_id": meta.get("guest_id") if not is_authed else None,
-        }
+        # Update PaymentIntent metadata with shipping and order details
+        updated_metadata = dict(pi.get("metadata", {}))
+        updated_metadata.update({
+            "shipping_name": name,
+            "shipping_line1": shipping.get("line1", ""),
+            "shipping_line2": shipping.get("line2", ""),
+            "shipping_city": shipping.get("city", ""),
+            "shipping_state": shipping.get("state", ""),
+            "shipping_postal_code": shipping.get("postal_code", ""),
+            "shipping_country": shipping.get("country", ""),
+            "shipping_phone": guest_phone,
+        })
+        
+        # Add order-specific data if provided
+        if address_id:
+            updated_metadata["address_id"] = str(address_id)
+        if shipping_vendor_id:
+            updated_metadata["shipping_vendor_id"] = str(shipping_vendor_id)
+            
+        # Add guest user details if provided
+        if not is_authed and guest_email:
+            # Safely parse name to avoid IndexError on empty strings
+            name_parts = name.strip().split() if name and name.strip() else []
+            
+            # Use provided names or fallback to parsed name parts
+            first_name = guest_first_name or (name_parts[0] if len(name_parts) > 0 else "")
+            last_name = guest_last_name or (name_parts[-1] if len(name_parts) > 1 else "")
+            
+            updated_metadata.update({
+                "guest_email": guest_email,
+                "guest_first_name": first_name,
+                "guest_last_name": last_name,
+            })
+        
+        # Update the PaymentIntent with new metadata
+        try:
+            stripe.PaymentIntent.modify(intent_id, metadata=updated_metadata)
+        except stripe.error.StripeError as e:
+            logger.error(f"Failed to update PaymentIntent {intent_id} metadata: {e}", exc_info=True)
+            return Response({"error": "Failed to update payment intent"}, status=400)
 
         return Response(
             {"message": "Shipping data received successfully", "intent_id": intent_id},
@@ -273,15 +360,19 @@ class StripeViewSet(viewsets.ViewSet):
     def webhook(self, request):
         """
         Handles Stripe webhook events for payment processing.
-        
         Route: POST /api/stripe/webhook
         
         Purpose:
         - Receives and verifies webhook events from Stripe
-        - Processes payment success/failure notifications
-        - Updates order status based on payment events
-        - Provides secure communication between Stripe and the application
-        
+        - Processes payment_intent.succeeded events to create orders automatically
+        - Validates stock availability and updates inventory levels
+        - Creates orders from PaymentIntent metadata for both authenticated and guest users
+        - Updates order status to PROCESSING and stores order ID in PaymentIntent metadata
+
+        Webhook Events Handled:
+        - payment_intent.succeeded: Validates stock, creates order, updates inventory, and clears user cart
+        - payment_intent.payment_failed: Logs payment failure
+
         Authentication:
         - Uses Stripe signature verification instead of Django auth
         - CSRF exempt as Stripe doesn't send CSRF tokens
@@ -290,7 +381,7 @@ class StripeViewSet(viewsets.ViewSet):
         - 200 OK: Event processed successfully
         - 400 Bad Request: Invalid signature or malformed payload
 
-        Note: Has TODOs to implement order handling
+        Note: Requires STRIPE_WEBHOOK_SECRET to be configured in settings
         """
         # raw body for signature verification
         payload = request.body
@@ -307,12 +398,102 @@ class StripeViewSet(viewsets.ViewSet):
 
         etype = event.get("type")
         obj = event.get("data", {}).get("object", {})
-
+        
         if etype == "payment_intent.succeeded":
-            # TODO: mark order as paid + notify
-            pass
+            # Create order from successful payment
+            payment_intent_id = obj.get('id')
+            try:
+                order = OrderCreationService.create_order_from_payment_intent(obj)
+                if order:
+                    logger.info(f"Webhook: Successfully created order {order.id} for PaymentIntent {payment_intent_id}")
+                else:
+                    logger.error(f"Webhook: Failed to create order for PaymentIntent {payment_intent_id} - check validation requirements")
+                    # Don't return error - webhook should still return 200 to Stripe to prevent retries
+            except Exception as e:
+                logger.error(f"Webhook: Exception creating order for PaymentIntent {payment_intent_id}: {e}", exc_info=True)
+                # Webhook still returns 200 - Stripe will retry if we return an error
         elif etype == "payment_intent.payment_failed":
-            # TODO: mark order failed + notify
-            pass
+            # Log payment failure - no order creation needed
+            logger.info(f"Webhook: Payment failed for PaymentIntent {obj.get('id')}")
+        else:
+            logger.debug(f"Webhook: Unhandled event type {etype} for PaymentIntent {obj.get('id', 'unknown')}")
 
         return Response(status=200)
+
+    @action(detail=True, methods=["post"], url_path="create-order")
+    def create_order(self, request, pk=None):
+        """
+        Manually trigger order creation for a PaymentIntent.
+        This is useful when webhook processing failed or was delayed.
+        
+        Route: POST /api/stripe/{intent_id}/create-order
+        
+        Purpose:
+        - Validates stock availability for all order items
+        - Creates order from PaymentIntent metadata
+        - Updates inventory levels atomically  
+        - Verifies user access to the PaymentIntent
+        - Prevents duplicate order creation
+        
+        Returns:
+        - Success: Order created confirmation with order ID
+        - Error: Stock validation failures, access denied, or order creation errors
+        """
+        intent_id = pk
+        
+        try:
+            payment_intent = stripe.PaymentIntent.retrieve(intent_id)
+        except stripe.error.StripeError as e:
+            logger.error(f"Failed to retrieve PaymentIntent {intent_id} for manual order creation: {e}", exc_info=True)
+            return Response({"error": "Payment intent not found"}, status=400)
+        
+        # Verify the payment succeeded
+        if payment_intent.get("status") != "succeeded":
+            return Response(
+                {"error": "PaymentIntent must be succeeded to create order"}, 
+                status=400
+            )
+        
+        # Check if order already exists
+        metadata = payment_intent.get("metadata", {})
+        existing_order_id = metadata.get("order_id")
+        if existing_order_id:
+            return Response(
+                {"message": "Order already exists", "order_id": existing_order_id}, 
+                status=200
+            )
+        
+        # Verify user has access to this PaymentIntent
+        user = getattr(request, "user", None)
+        is_authed = bool(user and getattr(user, "is_authenticated", False))
+        is_owner = False
+
+        if is_authed and metadata.get("user_id") == str(user.id):
+            is_owner = True
+        else:
+            gid = request.COOKIES.get(GUEST_COOKIE)
+            if gid and gid == metadata.get("guest_id"):
+                is_owner = True
+
+        if not is_owner:
+            return Response({"error": "forbidden"}, status=403)
+        
+        # Create the order
+        try:
+            order = OrderCreationService.create_order_from_payment_intent(payment_intent)
+            if order:
+                return Response({
+                    "message": "Order created successfully",
+                    "order_id": str(order.id)
+                }, status=201)
+            else:
+                return Response(
+                    {"error": "Failed to create order - check required fields"}, 
+                    status=400
+                )
+        except Exception as e:
+            logger.error(f"Exception creating order for PaymentIntent {intent_id}: {e}", exc_info=True)
+            return Response(
+                {"error": "Failed to create order"}, 
+                status=500
+            )

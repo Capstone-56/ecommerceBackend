@@ -255,6 +255,7 @@ class ShippingVendorSerializer(serializers.ModelSerializer):
     
 class OrderItemSerializer(serializers.ModelSerializer):
     productItemId = serializers.UUIDField(write_only=True)
+    productItem = ProductItemModelSerializer(read_only=True)
     
     class Meta:
         model = OrderItemModel
@@ -278,6 +279,7 @@ class OrderSerializer(serializers.ModelSerializer):
     """
     user = UserModelSerializer(read_only=True)
     guestUser = GuestUserSerializer(read_only=True)
+    items = OrderItemSerializer(many=True, read_only=True)
     
     class Meta:
         model = OrderModel
