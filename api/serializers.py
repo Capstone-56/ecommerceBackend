@@ -64,13 +64,17 @@ class ProductItemModelSerializer(serializers.ModelSerializer):
         return ProductModelSerializer(obj.product).data
 
     def get_price(self, obj):
-        """Get price object with amount and currency"""
         from base.services.currency_service import CurrencyService
         currency = self.context.get('currency', 'AUD')
-        converted_price = CurrencyService.convert_from_aud(obj.price, currency)
+        
+        if currency != 'AUD':
+            converted_price = CurrencyService.convert_from_aud(obj.price, currency)
+            amount = float(converted_price)  # Convert Decimal to float for JSON
+        else:
+            amount = float(obj.price)
         
         return {
-            "amount": int(converted_price),
+            "amount": amount,
             "currency": currency
         }
 
@@ -124,9 +128,9 @@ class ProductModelSerializer(serializers.ModelSerializer):
             
         if currency != 'AUD':
             converted_price = CurrencyService.convert_from_aud(base_price, currency)
-            amount = int(converted_price)
+            amount = float(converted_price)  # Convert Decimal to float for JSON
         else:
-            amount = int(base_price)
+            amount = float(base_price)
         
         return {
             "amount": amount,
