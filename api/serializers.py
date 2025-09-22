@@ -61,6 +61,24 @@ class ProductItemModelSerializer(serializers.ModelSerializer):
 
     def get_product(self, obj):
         return ProductModelSerializer(obj.product).data
+    
+    def create(self, validated_data):
+        variations_data = validated_data.pop("variations", [])
+        # Pull from request manually.
+        product_id = self.context["request"].data.get("product")
+        product_item = ProductItemModel.objects.create(
+            **validated_data,
+            # Assign manually.
+            product_id=product_id
+        )
+
+        for variation in variations_data:
+            ProductConfigModel.objects.create(
+                productItem=product_item,
+                variant=variation["variant"]
+            )
+
+        return product_item
 
     class Meta:
         model = ProductItemModel
@@ -143,6 +161,7 @@ class ProductModelSerializer(serializers.ModelSerializer):
         """
         product_items_data = validated_data.pop("product_items", None)
         locations_data = validated_data.pop('locations', None)
+        top_level_price = self.initial_data.get("price")
 
         # Update product-level fields
         for attr, value in validated_data.items():
@@ -195,6 +214,11 @@ class ProductModelSerializer(serializers.ModelSerializer):
                     ProductItemModel.objects.filter(
                         id__in=[existing_items[item_id].id for item_id in items_to_remove]
                     ).delete()
+
+        if top_level_price is not None:
+            for item in instance.items.all():
+                item.price = top_level_price
+                item.save()
         
         return instance
     
