@@ -11,8 +11,25 @@ from api.serializers import ProductItemModelSerializer
 
 class ProductItemViewSet(viewsets.ViewSet):
     def create(self, request):
+        """
+        Create a new entry of a product item. Note that the variations are a permutation
+        of the available variations present on the category. It can also be null if the particular
+        category the stock is being created for doesn't have any variations.
+        POST /api/productItem
+        body payload:
+        {
+            imageUrls: [],
+            price: 37.99,
+            product: "0287f2a9-cb2a-48a2-b2c4-74ae8466d37f",
+            sku: "real-sku"
+            stock: 48,
+            variations: [
+                {variant: "82c5da0e-6dd1-474b-8f7c-69410cca7a62"},
+                {variant: "407cf1bc-56f6-4e64-a164-ed26fa9fb6cd"}
+            ],
+        }
+        """
         serializer = ProductItemModelSerializer(data=request.data, context={"request": request})
-        print(request.data)
 
         if serializer.is_valid():
             serializer.save()
@@ -78,11 +95,10 @@ class ProductItemViewSet(viewsets.ViewSet):
     @action(detail=True, methods=["post"], url_path="delete")
     def delete_product_item(self, request, pk):
         """
-        Get all product items for a given productId.
+        Deletes a product item.
         GET /api/productItem/{productItemId}/delete
         """
         product_item_to_delete = get_object_or_404(ProductItemModel, id=pk)
         product_item_to_delete.delete()
 
         return Response(status=status.HTTP_200_OK)
-    

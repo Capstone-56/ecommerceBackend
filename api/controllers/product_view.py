@@ -374,7 +374,8 @@ class ProductViewSet(viewsets.ViewSet):
     @action(detail=True, methods=['post'], url_path='upload/image')
     def upload_image(self, request, pk):
         """
-        Retrieve related products based on their categories.
+        Specific upload endpoint for single image uploads. Primarily used for
+        updating the images in the admin dashboard.
         GET /api/product/{id}/upload/image
         """
         # Create S3 client with our credentials.

@@ -63,6 +63,9 @@ class ProductItemModelSerializer(serializers.ModelSerializer):
         return ProductModelSerializer(obj.product).data
     
     def create(self, validated_data):
+        """
+        Creates product items and product configs. 
+        """
         variations_data = validated_data.pop("variations", [])
         # Pull from request manually.
         product_id = self.context["request"].data.get("product")
@@ -215,6 +218,9 @@ class ProductModelSerializer(serializers.ModelSerializer):
                         id__in=[existing_items[item_id].id for item_id in items_to_remove]
                     ).delete()
 
+        # Because the price is a serialized field retrieved from product items,
+        # we can get the original requests price and change all product item
+        # instances to have the new updated price.
         if top_level_price is not None:
             for item in instance.items.all():
                 item.price = top_level_price
