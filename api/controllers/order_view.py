@@ -247,3 +247,10 @@ class OrderViewSet(viewsets.ViewSet):
             })
         
         return Response(results)
+
+    @action(detail=False, methods=["post"], url_path="update")
+    def update_order_status(self, request):
+        order = get_object_or_404(OrderModel, id=request.data["id"])
+        order.status = request.data["updatedStatus"]
+        order.save(update_fields=["status"])
+        return Response({"message": "Status updated successfully"})
