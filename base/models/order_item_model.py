@@ -15,7 +15,7 @@ class OrderItemModel(models.Model):
     quantity = models.IntegerField(default=1)
     price = models.FloatField()
     shipment = models.ForeignKey(
-        "shipment_model.ShipmentModel", 
+        "ShipmentModel", 
         on_delete=models.SET_NULL, 
         db_column="shipmentId",
         null=True,
