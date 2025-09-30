@@ -14,6 +14,14 @@ class OrderItemModel(models.Model):
     productItem = models.ForeignKey(ProductItemModel, on_delete=models.CASCADE, db_column="productItemId")
     quantity = models.IntegerField(default=1)
     price = models.FloatField()
+    shipment = models.ForeignKey(
+        "ShipmentModel", 
+        on_delete=models.SET_NULL, 
+        db_column="shipmentId",
+        null=True,
+        blank=True,
+        related_name="items"
+    )
 
     class Meta:
         db_table = "orderItem"

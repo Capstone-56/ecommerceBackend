@@ -13,3 +13,4 @@ from .location_model import LocationModel
 from .shipping_vendor_model import ShippingVendorModel
 from .order_model import OrderModel
 from .order_item_model import OrderItemModel
+from .shipment_model import ShipmentModel
