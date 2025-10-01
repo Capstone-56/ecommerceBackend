@@ -6,4 +6,5 @@ class ROLE(Enum):
     """
     CUSTOMER = "customer"
     SELLER = "seller"
+    MANAGER = "manager"
     ADMIN = "admin"

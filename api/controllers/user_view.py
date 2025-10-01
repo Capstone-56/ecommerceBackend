@@ -20,10 +20,24 @@ class UserViewSet(viewsets.ViewSet):
     # Authorization: Bearer <accessToken>
     # to call GET /api/user
     def get_permissions(self):
-        if self.action == "list" or "delete":
+        if self.action in ["list", "delete", "create"]:
             return [IsAuthenticated()]
 
         return [AllowAny()]
+
+    def create(self, request):
+        """
+        Create a new user. Authorised only for admins.
+        POST /api/user
+        """
+        if request.user.role != ROLE.ADMIN.value:
+            return Response({'error': 'Permission denied. Admin role required.'}, status=status.HTTP_403_FORBIDDEN)
+
+        serializer = UserModelSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def list(self, request):
         """
