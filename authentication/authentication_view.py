@@ -7,6 +7,7 @@ from rest_framework_simplejwt.exceptions import TokenError
 from api.serializers import UserModelSerializer
 from base import Constants
 from base import utils
+from base.enums import ROLE
 from base.models import *
 
 class AuthenticationViewSet(viewsets.ViewSet):
@@ -30,6 +31,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
             "role": string (correspond to the "role" enum)
         }
         """
+        request.data["role"] = ROLE.CUSTOMER
         serializer = UserModelSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()

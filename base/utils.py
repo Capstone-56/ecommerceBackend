@@ -15,5 +15,5 @@ def verify_hashed_refresh(user, raw_refresh_token):
     return check_password(raw_refresh_token, user.refreshToken)
 
 def clear_hashed_refresh(user):
-    user.refreshToken = ""
+    user.refreshToken = None
     user.save(update_fields=[Constants.REFRESH_TOKEN])
