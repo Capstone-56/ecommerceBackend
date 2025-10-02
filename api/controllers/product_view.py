@@ -369,3 +369,39 @@ class ProductViewSet(viewsets.ViewSet):
             return Response(ProductModelSerializer(updated_product).data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+
+    @action(detail=True, methods=['post'], url_path='upload/image')
+    def upload_image(self, request, pk):
+        """
+        Specific upload endpoint for single image uploads. Primarily used for
+        updating the images in the admin dashboard.
+        GET /api/product/{id}/upload/image
+        """
+        # Create S3 client with our credentials.
+        s3_client = boto3.client(
+            service_name='s3',
+            region_name=settings.AWS_REGION,
+            aws_access_key_id=settings.AWS_ACCESS_KEY,
+            aws_secret_access_key=settings.AWS_SECRET_KEY
+        )
+
+        # For each image we want to get the name of the file, upload the object
+        # and then return the CloudFront CDN URL to append to the uploaded image
+        # URLs. This is because we don't want items stored in the bucket to be publicly
+        # available. The Cloud front service will allow us to serve these images on
+        # our frontend without users or any part of the system needing to be authenticated.
+        uploaded_image_urls = []
+        for img in request.FILES.getlist("images"):
+            name, ext = os.path.splitext(img.name)
+            safe_name = slugify(name) + ext
+
+            s3_client.upload_fileobj(
+                Fileobj=img,
+                Bucket=settings.AWS_S3_BUCKET_NAME,
+                Key=f"products/{safe_name}",
+            )
+            uploaded_image_urls.append(f"https://{settings.AWS_CLOUD_FRONT_DOMAIN}/products/{safe_name}")
+        
+
+        return Response(data=uploaded_image_urls, status=status.HTTP_200_OK)

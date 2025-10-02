@@ -6,7 +6,6 @@ from django.core.exceptions import ValidationError
 from .user_model import UserModel
 from .guest_user_model import GuestUserModel
 from .address_model import AddressModel
-from .shipping_vendor_model import ShippingVendorModel
 
 from base.enums import ORDER_STATUS
 
@@ -36,7 +35,6 @@ class OrderModel(models.Model):
     )
 
     address = models.ForeignKey(AddressModel, on_delete=models.CASCADE, db_column="addressId")
-    shippingVendor = models.ForeignKey(ShippingVendorModel, on_delete=models.CASCADE, db_column="shippingVendorId")
     totalPrice = models.FloatField()
     status = models.CharField(
         max_length=20,

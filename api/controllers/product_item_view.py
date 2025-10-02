@@ -1,6 +1,7 @@
 from django.http import HttpResponseNotFound, HttpResponseBadRequest
 
-from rest_framework import viewsets
+from django.shortcuts import get_object_or_404
+from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 
@@ -9,6 +10,33 @@ from base.models import ProductConfigModel, ProductItemModel
 from api.serializers import ProductItemModelSerializer
 
 class ProductItemViewSet(viewsets.ViewSet):
+    def create(self, request):
+        """
+        Create a new entry of a product item. Note that the variations are a permutation
+        of the available variations present on the category. It can also be null if the particular
+        category the stock is being created for doesn't have any variations.
+        POST /api/productItem
+        body payload:
+        {
+            imageUrls: [],
+            price: 37.99,
+            product: "0287f2a9-cb2a-48a2-b2c4-74ae8466d37f",
+            sku: "real-sku"
+            stock: 48,
+            variations: [
+                {variant: "82c5da0e-6dd1-474b-8f7c-69410cca7a62"},
+                {variant: "407cf1bc-56f6-4e64-a164-ed26fa9fb6cd"}
+            ],
+        }
+        """
+        serializer = ProductItemModelSerializer(data=request.data, context={"request": request})
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        return HttpResponseBadRequest(serializer.errors)
+
     @action(detail=True, methods=["post"], url_path="configurations")
     def retrieveByConfigurations(self, request, pk):
         """
@@ -59,7 +87,18 @@ class ProductItemViewSet(viewsets.ViewSet):
         Get all product items for a given productId.
         GET /api/productItem/{productId}/byProduct
         """
-        product_items = ProductItemModel.objects.filter(product_id=pk)
+        product_items = ProductItemModel.objects.filter(product_id=pk).order_by("id")
 
         serializer = ProductItemModelSerializer(product_items, many=True)
         return Response(serializer.data)
+
+    @action(detail=True, methods=["post"], url_path="delete")
+    def delete_product_item(self, request, pk):
+        """
+        Deletes a product item.
+        GET /api/productItem/{productItemId}/delete
+        """
+        product_item_to_delete = get_object_or_404(ProductItemModel, id=pk)
+        product_item_to_delete.delete()
+
+        return Response(status=status.HTTP_200_OK)
