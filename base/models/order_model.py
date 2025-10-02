@@ -13,7 +13,7 @@ class OrderModel(models.Model):
     """
     Model that represents an order for both authenticated and guest users
     """
-    id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+    id = models.CharField(max_length=20, primary_key=True, editable=False)
     createdAt = models.DateTimeField(auto_now_add=True)
 
     # Either user OR guest_user must be provided, but not both
@@ -51,7 +51,16 @@ class OrderModel(models.Model):
             raise ValidationError("Cannot have both user and guestUser")
     
     def save(self, *args, **kwargs):
-        self.clean()
+        if not self.id:
+            last_obj = self.__class__.objects.order_by('createdAt').last()
+            if last_obj is None:
+                last_number = 0
+            else:
+                last_number_str = ''.join(filter(str.isdigit, last_obj.id or '0'))
+                last_number = int(last_number_str) if last_number_str else 0
+
+            # Format with at least 4 digits, will expand if number > 9999.
+            self.id = f'BDNX#{last_number + 1:04d}'
         super().save(*args, **kwargs)
     
 

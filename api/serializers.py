@@ -327,14 +327,19 @@ class ListOrderSerializer(serializers.ModelSerializer):
     user = UserModelSerializer(read_only=True)
     guestUser = GuestUserSerializer(read_only=True)
     items = OrderItemSerializer(many=True, read_only=True)
+    shippingVendor = ShippingVendorSerializer(read_only=True)
+    address = AddressSerializer(read_only=True)
     
     class Meta:
         model = OrderModel
         fields = [
             "id", "createdAt", "user", "guestUser", "address", "shippingVendor", 
-            "totalPrice", "status", "items"
+            "totalPrice", "status", "items", "paymentIntentId"
         ]
         read_only_fields = ["user", "guestUser"]
+
+    def get_shippingVendorName(self, obj):
+        return obj.shippingVendor.name if obj.shippingVendor else None
 
 
 class CreateGuestOrderSerializer(serializers.ModelSerializer):
