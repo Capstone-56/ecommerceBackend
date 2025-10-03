@@ -1,9 +1,9 @@
 from django.db import models
 
 class LocationModel(models.Model):
-    country_code = models.CharField(max_length=2, primary_key=True)  # e.g. "US", "GB"
+    country_code = models.CharField(max_length=2, primary_key=True)  # e.g. "AU", "US"
     country_name = models.CharField(max_length=100)
-    # Optionally add city, region, etc.
+    currency_code = models.CharField(max_length=3, null=True, blank=True)  # USD, AUD, GBP, EUR
 
     def __str__(self):
         return self.country_name
