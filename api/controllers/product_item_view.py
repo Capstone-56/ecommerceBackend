@@ -18,7 +18,6 @@ class ProductItemViewSet(viewsets.ViewSet):
         POST /api/productItem
         body payload:
         {
-            imageUrls: [],
             price: 37.99,
             product: "0287f2a9-cb2a-48a2-b2c4-74ae8466d37f",
             sku: "real-sku"

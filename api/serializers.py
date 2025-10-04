@@ -55,7 +55,6 @@ class ProductConfigSerializer(serializers.ModelSerializer):
 
 class ProductItemModelSerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(required=False)
-    imageUrls = serializers.ListField(child=serializers.CharField(max_length=1000), required=False)
     variations = ProductConfigSerializer(many=True, required=False)
     product = serializers.SerializerMethodField()
 
@@ -85,7 +84,7 @@ class ProductItemModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductItemModel
-        fields = ["id", "product", "sku", "stock", "price", "imageUrls", "variations"]
+        fields = ["id", "product", "sku", "stock", "price", "variations"]
     
 class ProductModelSerializer(serializers.ModelSerializer):
     price = serializers.SerializerMethodField()
