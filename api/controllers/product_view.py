@@ -56,19 +56,29 @@ class ProductViewSet(viewsets.ViewSet):
             else:
                 querySet = querySet.none()
         
-        # find the min and max price of all related productItems. These will be used to filter and sort the products.
+        # Get user's location for price filtering
+        location_param = request.query_params.get("location", "au").upper()
+        
+        # Find the min and max price from ProductLocation for the user's location
+        # Note: Since price is now in ProductLocation, we annotate differently
         querySet = querySet.annotate(
-            minPrice=Min("items__price"),
-            maxPrice=Max("items__price")
+            minPrice=Min("locations__price", filter=Q(locations__location__country_code=location_param)),
+            maxPrice=Max("locations__price", filter=Q(locations__location__country_code=location_param))
         )
 
-        # filter by min_price and max_price
+        # Filter by min_price and max_price from ProductLocation
         priceMin = request.query_params.get("priceMin")
         priceMax = request.query_params.get("priceMax")
         if priceMin:
-            querySet = querySet.filter(items__price__gte=priceMin)
+            querySet = querySet.filter(
+                locations__price__gte=priceMin,
+                locations__location__country_code=location_param
+            )
         if priceMax:
-            querySet = querySet.filter(items__price__lte=priceMax)
+            querySet = querySet.filter(
+                locations__price__lte=priceMax,
+                locations__location__country_code=location_param
+            )
         querySet = querySet.distinct()
         
         # sort by highest or lowest price
@@ -90,24 +100,31 @@ class ProductViewSet(viewsets.ViewSet):
             # Filter products linked to these variants via ProductConfig
             querySet = querySet.filter(items__productconfigmodel__variant__in=variant_ids).distinct()
 
-        # Search name and description using full-text search and fuzzy matching
+        # Search name and description from ProductLocation (supports translations)
         searchQuery = request.query_params.get("search")
         if searchQuery:
-            # Create search vector for full-text search
-            search_vector = SearchVector('name', weight='A') + SearchVector('description', weight='B')
+            # Search in ProductLocation names/descriptions for the user's location
+            # Create search vector for full-text search on ProductLocation
+            search_vector = SearchVector('locations__name', weight='A') + SearchVector('locations__description', weight='B')
             search_query = SearchQuery(searchQuery, config='english')
             
             # rank products based on weight of search terms
             full_text_results = querySet.annotate(
                 search=search_vector,
                 rank=SearchRank(search_vector, search_query)
-            ).filter(search=search_query).filter(rank__gte=0.1)
+            ).filter(
+                search=search_query,
+                locations__location__country_code=location_param
+            ).filter(rank__gte=0.1)
             
-            # fuzzy matching
+            # fuzzy matching on ProductLocation
             trigram_results = querySet.annotate(
-                similarity=TrigramSimilarity('name', searchQuery) + 
-                          TrigramSimilarity('description', searchQuery)
-            ).filter(similarity__gt=0.1)
+                similarity=TrigramSimilarity('locations__name', searchQuery) + 
+                          TrigramSimilarity('locations__description', searchQuery)
+            ).filter(
+                similarity__gt=0.1,
+                locations__location__country_code=location_param
+            )
             
             # Combine results, prioritizing full-text search
             if full_text_results.exists():
@@ -115,20 +132,27 @@ class ProductViewSet(viewsets.ViewSet):
             elif trigram_results.exists():
                 querySet = trigram_results.order_by('-similarity')
             else:
-                # Fallback to basic icontains search
+                # Fallback to basic icontains search on ProductLocation
                 querySet = querySet.filter(
-                    Q(name__icontains=searchQuery) | Q(description__icontains=searchQuery)
+                    Q(locations__name__icontains=searchQuery) | 
+                    Q(locations__description__icontains=searchQuery),
+                    locations__location__country_code=location_param
                 )
 
-        # Filter by user's country if provided
+        # Filter by user's country if provided (ensure products have location data)
         location = request.query_params.get("location")
         if location:
-            querySet = querySet.filter(locations__country_code__iexact=location)
+            querySet = querySet.filter(locations__location__country_code__iexact=location)
 
         paginator = PagedList()
         pagedQuerySet = paginator.paginate_queryset(querySet, request)
 
-        serializer = ProductModelSerializer(pagedQuerySet, many=True, context={"sort": sort})
+        # Pass country_code to serializer for location-specific pricing/translation
+        serializer = ProductModelSerializer(
+            pagedQuerySet, 
+            many=True, 
+            context={"sort": sort, "country_code": location_param, "request": request}
+        )
         return paginator.get_paginated_response(serializer.data)
 
     @action(detail=True, methods=["get"], url_path="cat")
@@ -173,15 +197,26 @@ class ProductViewSet(viewsets.ViewSet):
     def featured(self, request):
         """
         Retrieve a set of three featured products.
-        GET /api/product/featured
+        GET /api/product/featured?location=au
         """
         featured_products = ProductModel.objects.filter(featured=True)
-        # Apply location filtering if provided, consistent with list()
-        location = request.query_params.get("location")
+        
+        # Apply location filtering via ProductLocation
+        location = request.query_params.get("location", "au").upper()
         if location:
-            featured_products = featured_products.filter(locations__country_code__iexact=location)
+            # Filter products that have ProductLocation entries for this location
+            featured_products = featured_products.filter(
+                locations__location__country_code__iexact=location
+            ).distinct()
+            
         featured_products = featured_products[:3]
-        serializer = ProductModelSerializer(featured_products, many=True)
+        
+        # Pass location to serializer for proper pricing
+        serializer = ProductModelSerializer(
+            featured_products, 
+            many=True,
+            context={"country_code": location, "request": request}
+        )
 
         return Response(serializer.data)
 
@@ -204,12 +239,20 @@ class ProductViewSet(viewsets.ViewSet):
             category__in=child_categories
         ).exclude(id=product.id)
         
-        # Apply location filtering if provided, consistent with list()
-        location = request.query_params.get("location")
+        # Apply location filtering if provided via ProductLocation
+        location = request.query_params.get("location", "au").upper()
         if location:
-            related_products = related_products.filter(locations__country_code__iexact=location)
+            # Filter products that have ProductLocation entries for this location
+            related_products = related_products.filter(
+                locations__location__country_code__iexact=location
+            ).distinct()
 
-        serializer = ProductModelSerializer(related_products, many=True)
+        # Pass location to serializer for proper pricing
+        serializer = ProductModelSerializer(
+            related_products, 
+            many=True,
+            context={"country_code": location, "request": request}
+        )
         return Response(serializer.data)
 
     def create(self, request):
