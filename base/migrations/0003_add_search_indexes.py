@@ -1,4 +1,5 @@
 from django.db import migrations
+from django.contrib.postgres.operations import TrigramExtension
 
 class Migration(migrations.Migration):
 
@@ -7,6 +8,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        # Enable pg_trgm extension first
+        TrigramExtension(),
+        
+        # Then create indexes
         migrations.RunSQL(
             "CREATE INDEX IF NOT EXISTS product_search_idx ON product USING GIN (to_tsvector('english', name || ' ' || description));",
             reverse_sql="DROP INDEX IF EXISTS product_search_idx;"

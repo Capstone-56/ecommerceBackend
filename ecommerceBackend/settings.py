@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 from base import Constants
 from dotenv import load_dotenv
+import socket
 
 import os
 
@@ -27,11 +28,33 @@ load_dotenv(BASE_DIR / ".env")
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-2sv!-pb6m8^gach8^p0b4v)z1!(uri74&k59jotkyc5(07_-ab'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+def get_environment():
+    """Auto-detect environment"""
+    env = os.environ.get('ENVIRONMENT')
+    if env:
+        return env.lower()
 
-ALLOWED_HOSTS = []
+    hostname = socket.gethostname()
+    if 'ip-' in hostname or 'ec2' in hostname.lower():
+        return 'staging'
+    return 'local'
 
+
+ENVIRONMENT = get_environment()
+IS_LOCAL = ENVIRONMENT == 'local'
+IS_STAGING = ENVIRONMENT == 'staging'
+DEBUG = IS_LOCAL    # SECURITY WARNING: don't run with debug turned on in production!
+
+print(f"🚀 Environment: {ENVIRONMENT}")
+
+ALLOWED_HOSTS = [
+    "3.25.193.75",
+    "ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
+    "localhost",
+    "127.0.0.1",
+    "172.31.13.60",
+    "*"
+]
 
 # Application definition
 
@@ -64,11 +87,27 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5173',
+    "http://localhost:5173",
+    "https://test-staging.d2mnsn6al9q61p.amplifyapp.com",
+    "http://3.25.193.75",
+    "http://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
+    "https://3.25.193.75",
+    "https://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
+    "https://dev.d2mnsn6al9q61p.amplifyapp.com",
+    "https://bdnx.com",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
-CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:5173",
+    "https://test-staging.d2mnsn6al9q61p.amplifyapp.com",
+    "http://3.25.193.75",
+    "http://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
+    "https://3.25.193.75", 
+    "https://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
+    "https://dev.d2mnsn6al9q61p.amplifyapp.com",
+    "https://bdnx.com",
+]
 CSRF_COOKIE_SECURE   = True
 CSRF_COOKIE_SAMESITE = "Lax"
 SESSION_COOKIE_SECURE   = True
@@ -99,12 +138,12 @@ WSGI_APPLICATION = 'ecommerceBackend.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "ecommerce_db",
-        "USER": "ecommerce_admin",
-        "PASSWORD": "capstone56",
-        "HOST": "localhost",
-        "PORT": "5432",
+        "ENGINE": os.environ.get("DB_ENGINE", "django.db.backends.postgresql"),
+        "NAME": os.environ.get("DB_NAME", "ecommerce_db"),
+        "USER": os.environ.get("DB_USER", "ecommerce_admin"),
+        "PASSWORD": os.environ.get("DB_PASSWORD", "capstone56"),
+        "HOST": os.environ.get("DB_HOST", "localhost"),
+        "PORT": os.environ.get("DB_PORT", "5432"),
     }
 }
 
@@ -140,6 +179,7 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -161,6 +201,16 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.AllowAny",
     ],
+
+    # JSON first, then browsable API
+    "DEFAULT_RENDERER_CLASSES": (
+        ["rest_framework.renderers.JSONRenderer"]
+        if IS_STAGING
+        else ["rest_framework.renderers.JSONRenderer", "rest_framework.renderers.BrowsableAPIRenderer"]
+    ),
+
+    # Set JSON as default content type
+    "DEFAULT_CONTENT_NEGOTIATION_CLASS": "rest_framework.negotiation.DefaultContentNegotiation"
 }
 
 SIMPLE_JWT = {

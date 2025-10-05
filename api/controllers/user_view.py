@@ -54,12 +54,20 @@ class UserViewSet(viewsets.ViewSet):
         Retrieve a specific user by username.
         GET /api/user/{username}
         """
-        user = get_object_or_404(UserModel, username=pk)
-        if request.user != user and request.user.role != ROLE.ADMIN.value:
-            return Response({'error': 'Permission denied.'}, status=status.HTTP_403_FORBIDDEN)
-        
-        serializer = UserModelSerializer(user)
-        return Response(serializer.data)
+        try:
+            user = get_object_or_404(UserModel, username=pk)
+            if request.user != user and request.user.role != ROLE.ADMIN.value:
+                return Response({'error': 'Permission denied.'}, status=status.HTTP_403_FORBIDDEN)
+            
+            serializer = UserModelSerializer(user)
+            return Response(serializer.data)
+        except Exception as e:
+            logging.error(f"Error in retrieve user: {str(e)}", exc_info=True)
+            return Response({
+                'error': 'An error occurred',
+                'message': str(e),
+                'type': type(e).__name__
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
     def update(self, request, pk=None):
