@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 from base import Constants
 from dotenv import load_dotenv
+import socket
 
 import os
 
@@ -27,8 +28,24 @@ load_dotenv(BASE_DIR / ".env")
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-2sv!-pb6m8^gach8^p0b4v)z1!(uri74&k59jotkyc5(07_-ab'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+def get_environment():
+    """Auto-detect environment"""
+    env = os.environ.get('ENVIRONMENT')
+    if env:
+        return env.lower()
+
+    hostname = socket.gethostname()
+    if 'ip-' in hostname or 'ec2' in hostname.lower():
+        return 'staging'
+    return 'local'
+
+
+ENVIRONMENT = get_environment()
+IS_LOCAL = ENVIRONMENT == 'local'
+IS_STAGING = ENVIRONMENT == 'staging'
+DEBUG = IS_LOCAL    # SECURITY WARNING: don't run with debug turned on in production!
+
+print(f"🚀 Environment: {ENVIRONMENT}")
 
 ALLOWED_HOSTS = [
     "3.25.193.75",
