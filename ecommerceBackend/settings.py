@@ -88,6 +88,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "https://test-staging.d2mnsn6al9q61p.amplifyapp.com",
     "http://3.25.193.75",
     "http://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
     "https://3.25.193.75",
@@ -97,6 +98,7 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
+    "https://test-staging.d2mnsn6al9q61p.amplifyapp.com",
     "http://3.25.193.75",
     "http://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
     "https://3.25.193.75", 
