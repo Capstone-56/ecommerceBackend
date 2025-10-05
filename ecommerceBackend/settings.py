@@ -93,6 +93,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
     "https://3.25.193.75",
     "https://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
+    "https://dev.d2mnsn6al9q61p.amplifyapp.com/",
+    "https://bdnx.com",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -103,6 +105,8 @@ CSRF_TRUSTED_ORIGINS = [
     "http://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
     "https://3.25.193.75", 
     "https://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
+    "https://dev.d2mnsn6al9q61p.amplifyapp.com/",
+    "https://bdnx.com",
 ]
 CSRF_COOKIE_SECURE   = True
 CSRF_COOKIE_SAMESITE = "Lax"
