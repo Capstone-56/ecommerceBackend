@@ -47,15 +47,6 @@ DEBUG = IS_LOCAL    # SECURITY WARNING: don't run with debug turned on in produc
 
 print(f"🚀 Environment: {ENVIRONMENT}")
 
-ALLOWED_HOSTS = [
-    "3.25.193.75",
-    "ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
-    "localhost",
-    "127.0.0.1",
-    "172.31.13.60",
-    "*"
-]
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -86,29 +77,23 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+ALLOWED_HOSTS = [
+    "3.25.193.75",
+    "ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
+    "localhost",
+    "127.0.0.1",
+    "172.31.13.60"
+]
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "https://test-staging.d2mnsn6al9q61p.amplifyapp.com",
-    "http://3.25.193.75",
-    "http://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
-    "https://3.25.193.75",
-    "https://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
-    "https://dev.d2mnsn6al9q61p.amplifyapp.com",
-    "https://bdnx.com",
-    "https://www.bdnx.com",
+    "https://www.bdnx.com"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
-    "https://test-staging.d2mnsn6al9q61p.amplifyapp.com",
-    "http://3.25.193.75",
-    "http://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
-    "https://3.25.193.75", 
-    "https://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
-    "https://dev.d2mnsn6al9q61p.amplifyapp.com",
-    "https://bdnx.com",
-    "https://www.bdnx.com",
+    "https://www.bdnx.com"
 ]
 CSRF_COOKIE_SECURE   = True
 CSRF_COOKIE_SAMESITE = "Lax"
