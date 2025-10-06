@@ -3,7 +3,7 @@ from django.conf import settings
 from rest_framework.response import Response
 from rest_framework import viewsets
 from base.models import OrderModel
-from base.enums import ORDER_STATUS
+from base.enums import ORDER_STATUS, ROLE
 from api.serializers import OrderSerializer, AddressSerializer, ShippingVendorSerializer
 
 logger = logging.getLogger(__name__)
@@ -76,7 +76,10 @@ class OrderStatusViewSet(viewsets.ViewSet):
         owner_guest_id = (meta.get("guest_id") or "").strip()
 
         if is_authed:
-            if owner_user_id and owner_user_id != str(user.id):
+            # Allow admins to see any order
+            if user.role == ROLE.ADMIN.value:
+                pass
+            elif owner_user_id and owner_user_id != str(user.id):
                 return Response({"error": "forbidden"}, status=403)
         else:
             if owner_user_id:
