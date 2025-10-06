@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.DEBUG,  # Log messages with this level or high
 from base.enums.role import ROLE
 from base.models import UserModel
 
-from api.serializers import UserModelSerializer
+from api.serializers import UserModelSerializer, PublicUserSerializer
 
 class UserViewSet(viewsets.ViewSet):
 
@@ -51,10 +51,14 @@ class UserViewSet(viewsets.ViewSet):
 
     def retrieve(self, request, pk=None):
         """
-        Retrieve a specific user by username.
-        GET /api/user/{username}
+        Retrieve a specific user by username, or 'me' for the current user.
+        GET /api/user/{username} or /api/user/me
         """
         try:
+            if pk == "me":
+                user = request.user
+                serializer = PublicUserSerializer(user)
+                return Response(serializer.data)
             user = get_object_or_404(UserModel, username=pk)
             if request.user != user and request.user.role != ROLE.ADMIN.value:
                 return Response({'error': 'Permission denied.'}, status=status.HTTP_403_FORBIDDEN)

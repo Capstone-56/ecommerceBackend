@@ -514,3 +514,16 @@ class LocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = LocationModel
         fields = ['country_code', "country_name"]
+
+class PublicUserSerializer(serializers.ModelSerializer):
+    addresses = UserAddressSerializer(
+        many=True,
+        read_only=True,
+        source="user_addresses"
+    )
+
+    class Meta:
+        model = UserModel
+        fields = [
+            "id", "username", "email", "firstName", "lastName", "addresses", "phone"
+        ]
