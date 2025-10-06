@@ -105,7 +105,6 @@ class OrderStatusViewSet(viewsets.ViewSet):
             # Serialize the complete order with all related data
             order_serializer = OrderSerializer(order)
             address_serializer = AddressSerializer(order.address)
-            shipping_serializer = ShippingVendorSerializer(order.shippingVendor)
             
             data = {
                 "status": order_status,
@@ -114,7 +113,6 @@ class OrderStatusViewSet(viewsets.ViewSet):
                 "orderId": order.id,
                 "order": order_serializer.data,
                 "address": address_serializer.data,
-                "shippingVendor": shipping_serializer.data,
             }
             return Response(data)
 
