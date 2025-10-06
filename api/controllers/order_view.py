@@ -53,7 +53,7 @@ class OrderViewSet(viewsets.ViewSet):
         shipping_vendors_param = request.query_params.get("shippingVendors")
         if shipping_vendors_param:
             shipping_vendors = [vid.strip() for vid in shipping_vendors_param.split(',') if vid.strip()]
-            orders = orders.filter(shippingVendor_id__in=shipping_vendors)
+            orders = orders.filter(shipments__shippingVendor_id__in=shipping_vendors)
         
         # Filter by status
         status_param = request.query_params.get("status")

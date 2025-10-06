@@ -314,7 +314,7 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderModel
         fields = [
-            "id", "createdAt", "user", "guestUser", "address", "shippingVendor", 
+            "id", "createdAt", "user", "guestUser", "address", 
             "totalPrice", "status", "items"
         ]
         read_only_fields = ["user", "guestUser"]
@@ -327,19 +327,15 @@ class ListOrderSerializer(serializers.ModelSerializer):
     user = UserModelSerializer(read_only=True)
     guestUser = GuestUserSerializer(read_only=True)
     items = OrderItemSerializer(many=True, read_only=True)
-    shippingVendor = ShippingVendorSerializer(read_only=True)
     address = AddressSerializer(read_only=True)
     
     class Meta:
         model = OrderModel
         fields = [
-            "id", "createdAt", "user", "guestUser", "address", "shippingVendor", 
+            "id", "createdAt", "user", "guestUser", "address", 
             "totalPrice", "status", "items", "paymentIntentId"
         ]
         read_only_fields = ["user", "guestUser"]
-
-    def get_shippingVendorName(self, obj):
-        return obj.shippingVendor.name if obj.shippingVendor else None
 
 
 class CreateGuestOrderSerializer(serializers.ModelSerializer):
@@ -381,7 +377,8 @@ class CreateGuestOrderSerializer(serializers.ModelSerializer):
         
         try:
             address = AddressModel.objects.get(id=address_id)
-            shipping_vendor = ShippingVendorModel.objects.get(id=shipping_vendor_id)
+            # Validate shipping vendor exists but don't store on order
+            ShippingVendorModel.objects.get(id=shipping_vendor_id)
         except AddressModel.DoesNotExist:
             raise serializers.ValidationError(f"Address with id {address_id} does not exist")
         except ShippingVendorModel.DoesNotExist:
@@ -413,7 +410,6 @@ class CreateGuestOrderSerializer(serializers.ModelSerializer):
         # Create order with calculated total price
         validated_data["totalPrice"] = total_price
         validated_data["address"] = address
-        validated_data["shippingVendor"] = shipping_vendor
         order = OrderModel.objects.create(guestUser=guest_user, **validated_data)
         
         # Create order items with calculated prices
@@ -450,7 +446,8 @@ class CreateAuthenticatedOrderSerializer(serializers.ModelSerializer):
         try:
             user = UserModel.objects.get(id=user_id)
             address = AddressModel.objects.get(id=address_id)
-            shipping_vendor = ShippingVendorModel.objects.get(id=shipping_vendor_id)
+            # Validate shipping vendor exists but don't store on order
+            ShippingVendorModel.objects.get(id=shipping_vendor_id)
         except UserModel.DoesNotExist:
             raise serializers.ValidationError(f"User with id {user_id} does not exist")
         except AddressModel.DoesNotExist:
@@ -484,7 +481,6 @@ class CreateAuthenticatedOrderSerializer(serializers.ModelSerializer):
         # Create order with calculated total price
         validated_data["totalPrice"] = total_price
         validated_data["address"] = address
-        validated_data["shippingVendor"] = shipping_vendor
         validated_data["user"] = user
         order = OrderModel.objects.create(**validated_data)
         
