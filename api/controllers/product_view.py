@@ -36,7 +36,7 @@ class ProductViewSet(viewsets.ViewSet):
         
         If categories is provided, returns products linked to *all* of those categories.
         """
-        querySet = ProductModel.objects.all()
+        querySet = ProductModel.objects.filter(isActive=True)
 
         categoriesParam = request.query_params.get("categories")
         if categoriesParam:
@@ -405,3 +405,4 @@ class ProductViewSet(viewsets.ViewSet):
         
 
         return Response(data=uploaded_image_urls, status=status.HTTP_200_OK)
+ 

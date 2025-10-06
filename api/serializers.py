@@ -111,7 +111,8 @@ class ProductModelSerializer(serializers.ModelSerializer):
             "category",
             "locations",
             "product_items",
-            "variations"
+            "variations",
+            "isActive"
         ]
     
     # Retrieve the price of an object based on the sorting context. If the sort is set to priceDesc, then the max_price is appended.
