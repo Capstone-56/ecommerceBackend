@@ -603,6 +603,8 @@ class CreateAuthenticatedOrderSerializer(serializers.ModelSerializer):
         try:
             user = UserModel.objects.get(id=user_id)
             address = AddressModel.objects.get(id=address_id)
+            # Validate shipping vendor exists but don't store on order
+            ShippingVendorModel.objects.get(id=shipping_vendor_id)
         except UserModel.DoesNotExist:
             raise serializers.ValidationError(f"User with id {user_id} does not exist")
         except AddressModel.DoesNotExist:
