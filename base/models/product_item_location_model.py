@@ -38,6 +38,11 @@ class ProductItemLocationModel(models.Model):
         except ObjectDoesNotExist:
             return None
 
+    @property
+    def currency_code(self):
+        """Get the currency code from the associated location"""
+        return self.location.currency_code
+
 
     @property
     def effective_discount(self):

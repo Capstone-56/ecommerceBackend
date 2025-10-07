@@ -162,7 +162,9 @@ class ProductViewSet(viewsets.ViewSet):
         and generate a breadcrumb trail of parent categories.
         this should replace the current GET /api/product endpoint in the near future
         unless admins might need to list the full table of products
-        GET /api/product/{internalName}/cat
+        GET /api/product/{internalName}/cat?location=au
+        Optional query params:
+        - location (string) e.g. ?location=AU for location-specific pricing and currency
         """
         category = get_object_or_404(CategoryModel, internalName=pk)
 
@@ -171,8 +173,15 @@ class ProductViewSet(viewsets.ViewSet):
 
         # Retrieve products in these categories
         products = ProductModel.objects.filter(category__in=categories)
+        
+        # Get location from query parameters for location-specific pricing and currency
+        location_param = request.query_params.get("location", "au").upper()
 
-        serializer = ProductModelSerializer(products, many=True)
+        serializer = ProductModelSerializer(
+            products, 
+            many=True,
+            context={"country_code": location_param, "request": request}
+        )
 
         # Use the CategoryModelSerializer to get the breadcrumb
         category_serializer = CategoryModelSerializer(category)
@@ -186,10 +195,19 @@ class ProductViewSet(viewsets.ViewSet):
     def retrieve(self, request, pk=None):
         """
         Retrieve a specific ProductModel record based on an id.
-        GET /api/product/{id}
+        GET /api/product/{id}?location=au
+        Optional query params:
+        - location (string) e.g. ?location=AU for location-specific pricing and currency
         """
         product = get_object_or_404(ProductModel, id=pk)
-        serializer = ProductModelSerializer(product)
+        
+        # Get location from query parameters for location-specific pricing and currency
+        location_param = request.query_params.get("location", "au").upper()
+        
+        serializer = ProductModelSerializer(
+            product,
+            context={"country_code": location_param, "request": request}
+        )
 
         return Response(serializer.data)
     

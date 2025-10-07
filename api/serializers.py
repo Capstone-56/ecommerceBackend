@@ -57,20 +57,20 @@ class ProductItemModelSerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(required=False)
     variations = ProductConfigSerializer(many=True, required=False)
     product = serializers.SerializerMethodField()
-    price = serializers.SerializerMethodField()  # Now computed from ProductLocation
+    final_price = serializers.SerializerMethodField()  # Final price after discounts
+    currency = serializers.SerializerMethodField()  # Currency code based on location
 
     def get_product(self, obj):
-        return ProductModelSerializer(obj.product).data
+        return ProductModelSerializer(obj.product, context=self.context).data
     
-    def get_price(self, obj):
+    def get_final_price(self, obj):
         """
-        Get price from ProductLocation for backward compatibility.
-        Uses first available location or returns from context if provided.
+        Get price from ProductItemLocation (with discounts) or ProductLocation (base price).
         """
         country_code = self.context.get("country_code")
         
         if country_code:
-            # Get location-specific price
+            # First try to get item-specific price with discount
             try:
                 item_location = ProductItemLocationModel.objects.get(
                     productItem=obj,
@@ -78,11 +78,46 @@ class ProductItemModelSerializer(serializers.ModelSerializer):
                 )
                 return item_location.final_price
             except ProductItemLocationModel.DoesNotExist:
-                pass
+                # Fall back to base product price for this location
+                try:
+                    product_location = ProductLocationModel.objects.get(
+                        product=obj.product,
+                        location__country_code=country_code
+                    )
+                    return product_location.price
+                except ProductLocationModel.DoesNotExist:
+                    pass
         
-        # Fallback: Get base price from first ProductLocation
-        first_location = ProductLocationModel.objects.filter(product=obj.product).first()
-        return first_location.price if first_location else 0.0
+        # No location-specific price found
+        return None
+    
+    def get_currency(self, obj):
+        """
+        Get currency code from location.
+        """
+        country_code = self.context.get("country_code")
+        
+        if country_code:
+            # Try item-specific location first
+            try:
+                item_location = ProductItemLocationModel.objects.get(
+                    productItem=obj,
+                    location__country_code=country_code
+                )
+                return item_location.currency_code
+            except ProductItemLocationModel.DoesNotExist:
+                # Fall back to product location
+                try:
+                    product_location = ProductLocationModel.objects.get(
+                        product=obj.product,
+                        location__country_code=country_code
+                    )
+                    return product_location.currency_code
+                except ProductLocationModel.DoesNotExist:
+                    pass
+        
+        # No location-specific data found
+        return None
     
     def create(self, validated_data):
         """
@@ -107,10 +142,11 @@ class ProductItemModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductItemModel
-        fields = ["id", "product", "sku", "stock", "price", "variations"]
+        fields = ["id", "product", "sku", "stock", "final_price", "currency", "variations"]
     
 class ProductModelSerializer(serializers.ModelSerializer):
     price = serializers.SerializerMethodField()
+    currency = serializers.SerializerMethodField()  # Currency code based on location
     name = serializers.CharField(required=False, allow_blank=False)  # Accept for write
     description = serializers.CharField(required=False, allow_blank=True)  # Accept for write
     variations = serializers.SerializerMethodField()
@@ -128,6 +164,7 @@ class ProductModelSerializer(serializers.ModelSerializer):
             "featured",
             "avgRating",
             "price",
+            "currency",
             "category",
             "locations",
             "product_items",
@@ -187,9 +224,28 @@ class ProductModelSerializer(serializers.ModelSerializer):
             except ProductLocationModel.DoesNotExist:
                 pass
         
-        # Fallback: Get first available location's price
-        first_location = ProductLocationModel.objects.filter(product=obj).first()
-        return first_location.price if first_location else 0.0
+        # No location-specific price found
+        return None
+    
+    def get_currency(self, obj):
+        """
+        Get currency code from location.
+        Uses country_code from context.
+        """
+        country_code = self.context.get("country_code")
+        
+        if country_code:
+            try:
+                product_location = ProductLocationModel.objects.get(
+                    product=obj,
+                    location__country_code=country_code
+                )
+                return product_location.currency_code
+            except ProductLocationModel.DoesNotExist:
+                pass
+        
+        # No location-specific data found
+        return None
 
     # Retrieve variations for the given product.
     def get_variations(self, obj):

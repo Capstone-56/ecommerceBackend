@@ -15,6 +15,10 @@ class ProductLocationModel(models.Model):
     description = models.CharField(max_length=255)
     price = models.FloatField(validators=[MinValueValidator(0.0)])
 
+    @property
+    def currency_code(self):
+        """Get the currency code from the associated location"""
+        return self.location.currency_code
 
     def save(self, *args, **kwargs):
         self.full_clean()  # run validators
