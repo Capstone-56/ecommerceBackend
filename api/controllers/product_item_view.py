@@ -15,10 +15,11 @@ class ProductItemViewSet(viewsets.ViewSet):
         Create a new entry of a product item. Note that the variations are a permutation
         of the available variations present on the category. It can also be null if the particular
         category the stock is being created for doesn't have any variations.
-        POST /api/productItem
+        POST /api/productItem?location=AU
+        Optional query params:
+        - location (string) e.g. ?location=AU for location-specific pricing and currency
         body payload:
         {
-            imageUrls: [],
             price: 37.99,
             product: "0287f2a9-cb2a-48a2-b2c4-74ae8466d37f",
             sku: "real-sku"
@@ -29,7 +30,13 @@ class ProductItemViewSet(viewsets.ViewSet):
             ],
         }
         """
-        serializer = ProductItemModelSerializer(data=request.data, context={"request": request})
+        # Get location from query parameters for location-specific pricing
+        location_param = request.query_params.get("location", "US").upper()
+        
+        serializer = ProductItemModelSerializer(
+            data=request.data, 
+            context={"request": request, "country_code": location_param}
+        )
 
         if serializer.is_valid():
             serializer.save()
@@ -41,7 +48,9 @@ class ProductItemViewSet(viewsets.ViewSet):
     def retrieveByConfigurations(self, request, pk):
         """
         Retrieve a product item by productId and its configurations.
-        POST /api/productItem/{productId}/configurations
+        POST /api/productItem/{productId}/configurations?location=AU
+        Optional query params:
+        - location (string) e.g. ?location=AU for location-specific pricing and currency
         body payload:
         {
             "variantIds": list<string>
@@ -78,18 +87,33 @@ class ProductItemViewSet(viewsets.ViewSet):
         if matching_item is None:
             return HttpResponseNotFound()
 
-        serializer = ProductItemModelSerializer(matching_item)
+        # Get location from query parameters for location-specific pricing
+        location_param = request.query_params.get("location", "US").upper()
+
+        serializer = ProductItemModelSerializer(
+            matching_item,
+            context={"country_code": location_param, "request": request}
+        )
         return Response({"id": serializer.data["id"]})
     
     @action(detail=True, methods=["get"], url_path="byProduct")
     def getByProductId(self, request, pk):
         """
         Get all product items for a given productId.
-        GET /api/productItem/{productId}/byProduct
+        GET /api/productItem/{productId}/byProduct?location=AU
+        Optional query params:
+        - location (string) e.g. ?location=AU for location-specific pricing and currency
         """
         product_items = ProductItemModel.objects.filter(product_id=pk).order_by("id")
 
-        serializer = ProductItemModelSerializer(product_items, many=True)
+        # Get location from query parameters for location-specific pricing
+        location_param = request.query_params.get("location", "US").upper()
+
+        serializer = ProductItemModelSerializer(
+            product_items, 
+            many=True,
+            context={"country_code": location_param, "request": request}
+        )
         return Response(serializer.data)
 
     @action(detail=True, methods=["post"], url_path="delete")

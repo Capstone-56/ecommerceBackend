@@ -30,7 +30,6 @@ class OrderViewSet(viewsets.ViewSet):
         Optional query params:
         - userNames (comma‑separated strings): usernames e.g. ?userNames=john_doe,jane_smith
         - shippingAddresses (comma‑separated strings): address GUIDs e.g. ?shippingAddresses=uuid1,uuid2  
-        - shippingVendors (comma‑separated strings): shipping vendor IDs e.g. ?shippingVendors=1,2
         - status (ORDER_STATUS): Order status e.g. ?status=pending
         - page (int): Page number
         - pageSize (int): Number of items per page
@@ -48,12 +47,6 @@ class OrderViewSet(viewsets.ViewSet):
         if shipping_addresses_param:
             shipping_addresses = [aid.strip() for aid in shipping_addresses_param.split(',') if aid.strip()]
             orders = orders.filter(address_id__in=shipping_addresses)
-        
-        # Filter by shipping vendors
-        shipping_vendors_param = request.query_params.get("shippingVendors")
-        if shipping_vendors_param:
-            shipping_vendors = [vid.strip() for vid in shipping_vendors_param.split(',') if vid.strip()]
-            orders = orders.filter(shipments__shippingVendor_id__in=shipping_vendors)
         
         # Filter by status
         status_param = request.query_params.get("status")
@@ -94,7 +87,6 @@ class OrderViewSet(viewsets.ViewSet):
         POST /api/order
         {
             "addressId": uuid, 
-            "shippingVendorId": 1,
             "items": [
                 {
                     "productItemId": uuid,
@@ -113,7 +105,6 @@ class OrderViewSet(viewsets.ViewSet):
             "lastName": "Smith",
             "phone": "1234567890",
             "addressId": uuid,
-            "shippingVendorId": 1,
             "items": [
                 {
                     "productItemId": uuid,
