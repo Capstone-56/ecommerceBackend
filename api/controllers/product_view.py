@@ -406,3 +406,20 @@ class ProductViewSet(viewsets.ViewSet):
 
         return Response(data=uploaded_image_urls, status=status.HTTP_200_OK)
  
+    
+    def destroy(self, request, pk=None):
+        """
+        Soft delete a product by setting their isActive=False.
+        DELETE /api/product/{id}
+        """
+        product = get_object_or_404(ProductModel, id=pk)
+
+        if not product.isActive:
+            return Response(
+                { "detail": "Product is already inactive." },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        product.isActive = False
+        product.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
