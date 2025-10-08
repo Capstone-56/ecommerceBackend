@@ -359,14 +359,20 @@ class ProductModelSerializer(serializers.ModelSerializer):
             
             # Create new locations
             for location_code in (new_codes - existing_codes):
+                # In the case that it is a partial update with a new location and no other
+                # information. We need to get the first entry to retrieve the name,
+                # description and price to be set for the new location code.
+                existing_location = (
+                    ProductLocationModel.objects.filter(product=instance).first()
+                )
                 try:
                     location = LocationModel.objects.get(country_code=location_code)
                     ProductLocationModel.objects.create(
                         product=instance,
                         location=location,
-                        name=product_name or "Unnamed Product",
-                        description=product_description or "",
-                        price=float(product_price) if product_price else 0.0
+                        name=existing_location.name or "Unnamed Product",
+                        description=existing_location.description or "",
+                        price=float(existing_location.price) if existing_location.price else 0.0
                     )
                 except LocationModel.DoesNotExist:
                     pass

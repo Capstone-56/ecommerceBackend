@@ -339,7 +339,7 @@ class ProductViewSet(viewsets.ViewSet):
             "category": data.get("category"),
             "images": uploaded_image_urls,
             "product_items": json.loads(data.get('product_items')),
-            "locations": [data.get("location")]
+            "locations": data.getlist("locations")
         }
 
         serializer = ProductModelSerializer(data=payload)
