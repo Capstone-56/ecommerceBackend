@@ -45,7 +45,7 @@ IS_LOCAL = ENVIRONMENT == 'local'
 IS_STAGING = ENVIRONMENT == 'staging'
 DEBUG = IS_LOCAL    # SECURITY WARNING: don't run with debug turned on in production!
 
-print(f"Environment: {ENVIRONMENT}")
+print(f"🚀 Environment: {ENVIRONMENT}")
 
 ALLOWED_HOSTS = [
     "3.25.193.75",

@@ -77,33 +77,34 @@ class AuthenticationViewSet(viewsets.ViewSet):
         return setCookie(accessToken, refreshToken, user.role, user.id)
 
 
-    @action(detail=False, methods=["delete"], url_path="logout", permission_classes=[AllowAny])
+    @action(detail=False, methods=["delete"], url_path="logout", permission_classes=[IsAuthenticated])
     def logout(self, request):
         """
         DELETE /auth/logout
-        - Reads the refreshToken cookie (if present)
-        - Blacklists it (if valid)
-        - Clears the stored hash (if user is authenticated)
+        - Reads the refreshToken cookie
+        - Blacklists it
+        - Clears the stored hash
         - Deletes both JWT cookies
-        - Always returns 200 OK (idempotent operation)
         """
         raw_refresh = request.COOKIES.get(Constants.REFRESH_TOKEN)
-        
-        # Try to blacklist the refresh token if it exists and is valid
-        if raw_refresh:
-            try:
-                token = RefreshToken(raw_refresh)
-                token.blacklist()
-            except TokenError:
-                # Token is already expired/blacklisted/invalid - that's fine
-                pass
+        if not raw_refresh:
+            return Response(
+                {"detail": "Refresh token cookie not found"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
-        # Clear the stored hash if the user is authenticated
-        if request.user and request.user.is_authenticated:
-            utils.clear_hashed_refresh(request.user)
+        try:
+            token = RefreshToken(raw_refresh)
+            token.blacklist()
+        except TokenError as e:
+            # if it’s already expired/blacklisted etc
+            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Always clear cookies and return success
-        response = Response({"detail": "Logged out successfully"}, status=status.HTTP_200_OK)
+        utils.clear_hashed_refresh(request.user)
+
+        response = Response(status.HTTP_200_OK)
+
+        # delete cookie on the scope of the whole website
         response.delete_cookie(Constants.ACCESS_TOKEN, path="/")
         response.delete_cookie(Constants.REFRESH_TOKEN, path="/")
 
