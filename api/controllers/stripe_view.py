@@ -12,7 +12,8 @@ from django.utils.decorators import method_decorator
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from base.models import ProductItemModel
+from base.models import ProductItemModel, ProductLocationModel, ProductItemLocationModel
+
 from api.services import OrderCreationService
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -89,6 +90,14 @@ class StripeViewSet(viewsets.ViewSet):
                 {"error": "Cart is empty"}, status=status.HTTP_400_BAD_REQUEST
             )
 
+        # Get user's country from request (query param, header, or body)
+        country_code = (
+            request.query_params.get("country") or 
+            request.data.get("country") or 
+            request.headers.get("X-Country-Code") or
+            "AU"  # Default fallback
+        )
+
         # Get pricing, names, and stock from ProductItem IDs directly
         price_by_product_item: dict[str, Decimal] = {}
         name_by_product_item: dict[str, str] = {}
@@ -96,9 +105,44 @@ class StripeViewSet(viewsets.ViewSet):
 
         # Query ProductItems directly by their IDs
         product_items = ProductItemModel.objects.filter(id__in=product_item_ids).select_related('product')
+        
+        # Get prices from ProductItemLocation (with discounts) or ProductLocation
         for item in product_items:
-            price_by_product_item[str(item.id)] = Decimal(str(item.price))
-            name_by_product_item[str(item.id)] = item.product.name or "Product"
+            price = 0.0
+            name = "Product"
+            
+            # Try to get ProductItemLocation price (includes discounts)
+            try:
+                item_location = ProductItemLocationModel.objects.get(
+                    productItem=item,
+                    location__country_code=country_code
+                )
+                
+                price = float(item_location.final_price)  # Uses discount if active
+
+                # Get name from ProductLocation
+                product_location = ProductLocationModel.objects.get(
+                    product=item.product,
+                    location__country_code=country_code
+                )
+                name = product_location.name
+            except (ProductItemLocationModel.DoesNotExist, ProductLocationModel.DoesNotExist):
+                # Fallback: Get base price from ProductLocation
+                try:
+                    product_location = ProductLocationModel.objects.get(
+                        product=item.product,
+                        location__country_code=country_code
+                    )
+                    price = float(product_location.price)
+                    name = product_location.name
+                except ProductLocationModel.DoesNotExist:
+                    # Last resort: Use first available location
+                    first_location = ProductLocationModel.objects.filter(product=item.product).first()
+                    price = first_location.price if first_location else 0.0
+                    name = first_location.name if first_location else "Product"
+            
+            price_by_product_item[str(item.id)] = Decimal(str(price))
+            name_by_product_item[str(item.id)] = name
             stock_by_product_item[str(item.id)] = item.stock
 
         # Sum + prepare summary with stock validation

@@ -55,12 +55,69 @@ class ProductConfigSerializer(serializers.ModelSerializer):
 
 class ProductItemModelSerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(required=False)
-    imageUrls = serializers.ListField(child=serializers.CharField(max_length=1000), required=False)
     variations = ProductConfigSerializer(many=True, required=False)
     product = serializers.SerializerMethodField()
+    final_price = serializers.SerializerMethodField()  # Final price after discounts
+    currency = serializers.SerializerMethodField()  # Currency code based on location
 
     def get_product(self, obj):
-        return ProductModelSerializer(obj.product).data
+        return ProductModelSerializer(obj.product, context=self.context).data
+    
+    def get_final_price(self, obj):
+        """
+        Get price from ProductItemLocation (with discounts) or ProductLocation (base price).
+        """
+        country_code = self.context.get("country_code")
+        
+        if country_code:
+            # First try to get item-specific price with discount
+            try:
+                item_location = ProductItemLocationModel.objects.get(
+                    productItem=obj,
+                    location__country_code=country_code
+                )
+                return item_location.final_price
+            except ProductItemLocationModel.DoesNotExist:
+                # Fall back to base product price for this location
+                try:
+                    product_location = ProductLocationModel.objects.get(
+                        product=obj.product,
+                        location__country_code=country_code
+                    )
+                    return product_location.price
+                except ProductLocationModel.DoesNotExist:
+                    pass
+        
+        # No location-specific price found
+        return None
+    
+    def get_currency(self, obj):
+        """
+        Get currency code from location.
+        """
+        country_code = self.context.get("country_code")
+        
+        if country_code:
+            # Try item-specific location first
+            try:
+                item_location = ProductItemLocationModel.objects.get(
+                    productItem=obj,
+                    location__country_code=country_code
+                )
+                return item_location.currency_code
+            except ProductItemLocationModel.DoesNotExist:
+                # Fall back to product location
+                try:
+                    product_location = ProductLocationModel.objects.get(
+                        product=obj.product,
+                        location__country_code=country_code
+                    )
+                    return product_location.currency_code
+                except ProductLocationModel.DoesNotExist:
+                    pass
+        
+        # No location-specific data found
+        return None
     
     def create(self, validated_data):
         """
@@ -85,17 +142,16 @@ class ProductItemModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductItemModel
-        fields = ["id", "product", "sku", "stock", "price", "imageUrls", "variations"]
+        fields = ["id", "product", "sku", "stock", "final_price", "currency", "variations"]
     
 class ProductModelSerializer(serializers.ModelSerializer):
     price = serializers.SerializerMethodField()
+    currency = serializers.SerializerMethodField()  # Currency code based on location
+    name = serializers.CharField(required=False, allow_blank=False)  # Accept for write
+    description = serializers.CharField(required=False, allow_blank=True)  # Accept for write
     variations = serializers.SerializerMethodField()
     category = serializers.SlugRelatedField(slug_field='internalName', queryset=CategoryModel.objects.all())
-    locations = serializers.SlugRelatedField(
-        many=True,
-        slug_field='country_code',
-        queryset=LocationModel.objects.all()
-    )
+    locations = serializers.ListField(child=serializers.CharField(), write_only=True, required=False)  # Accept list of country codes
     product_items = ProductItemModelSerializer(many=True, write_only=True)
 
     class Meta:
@@ -108,6 +164,7 @@ class ProductModelSerializer(serializers.ModelSerializer):
             "featured",
             "avgRating",
             "price",
+            "currency",
             "category",
             "locations",
             "product_items",
@@ -115,18 +172,81 @@ class ProductModelSerializer(serializers.ModelSerializer):
             "isActive"
         ]
     
+    def to_representation(self, instance):
+        """Override to compute name/description/locations from ProductLocation for reads"""
+        ret = super().to_representation(instance)
+        country_code = self.context.get("country_code")
+        
+        # Get name from ProductLocation
+        if country_code:
+            try:
+                product_location = ProductLocationModel.objects.get(
+                    product=instance,
+                    location__country_code=country_code
+                )
+                ret['name'] = product_location.name
+                ret['description'] = product_location.description
+            except ProductLocationModel.DoesNotExist:
+                # Fallback to first location
+                first_location = ProductLocationModel.objects.filter(product=instance).first()
+                ret['name'] = first_location.name if first_location else "Unnamed Product"
+                ret['description'] = first_location.description if first_location else ""
+        else:
+            # No country specified, use first location
+            first_location = ProductLocationModel.objects.filter(product=instance).first()
+            ret['name'] = first_location.name if first_location else "Unnamed Product"
+            ret['description'] = first_location.description if first_location else ""
+        
+        # Get locations list
+        ret['locations'] = list(ProductLocationModel.objects.filter(product=instance).values_list("location__country_code", flat=True))
+        
+        return ret
+    
     # Retrieve the price of an object based on the sorting context. If the sort is set to priceDesc, then the max_price is appended.
     def get_price(self, obj):
+        """Get price from ProductLocation - supports sorting"""
         sort = self.context.get("sort")
+        country_code = self.context.get("country_code")
+        
         if sort == "priceDesc":
             return getattr(obj, "maxPrice", None)
         elif sort =="priceAsc":
             # Default to min_price if priceAsc or no sort.
             return getattr(obj, "minPrice", None)
         
-        # For product details it needs to be returned like this. Otherwise,
-        # the price field won't be populated.
-        return obj.items.values_list("price", flat=True).first()
+        # Otherwise get price for specific location
+        if country_code:
+            try:
+                product_location = ProductLocationModel.objects.get(
+                    product=obj,
+                    location__country_code=country_code
+                )
+                return product_location.price
+            except ProductLocationModel.DoesNotExist:
+                pass
+        
+        # No location-specific price found
+        return None
+    
+    def get_currency(self, obj):
+        """
+        Get currency code from location.
+        Uses country_code from context.
+        """
+        country_code = self.context.get("country_code")
+        
+        if country_code:
+            try:
+                product_location = ProductLocationModel.objects.get(
+                    product=obj,
+                    location__country_code=country_code
+                )
+                return product_location.currency_code
+            except ProductLocationModel.DoesNotExist:
+                pass
+        
+        # No location-specific data found
+        return None
 
     # Retrieve variations for the given product.
     def get_variations(self, obj):
@@ -143,37 +263,124 @@ class ProductModelSerializer(serializers.ModelSerializer):
         """
         Creates an entry into the product table, productItem table from the internal list of product information,
         and also productConfig table for the variations provided when creating a product e.g. "Blue", "M".
+        
+        Also creates ProductLocation entries for name/description/price per location.
         """
+        from base.models import LocationModel, ProductLocationModel
+        
+        # Extract data that won't go directly into ProductModel
         product_list_data = validated_data.pop("product_items")
-        locations_data = validated_data.pop("locations", None)
+        locations_data = validated_data.pop("locations", [])
+        
+        # Extract name/description from validated_data (they don't belong in ProductModel anymore)
+        product_name = validated_data.pop("name", "Unnamed Product")
+        product_description = validated_data.pop("description", "")
+        
+        # Get price from initial_data BEFORE validation strips it out
+        base_price = 0.0
+        if self.initial_data.get("product_items"):
+            first_item = self.initial_data["product_items"][0]
+            base_price = float(first_item.get("price", 0.0))
+        
+        # Create the product (without name/description/locations)
         product = ProductModel.objects.create(**validated_data)
 
-        if locations_data is not None:
-            product.locations.set(locations_data)
+        # Create ProductLocation entries for each location with name/description/price
+        for location_code in locations_data:
+            try:
+                location = LocationModel.objects.get(country_code=location_code.upper())
+                
+                ProductLocationModel.objects.create(
+                    product=product,
+                    location=location,
+                    name=product_name,
+                    description=product_description,
+                    price=base_price
+                )
+            except LocationModel.DoesNotExist:
+                # Skip if location doesn't exist
+                pass
 
+        # Create product items (without price - it's now in ProductLocation)
         for internal_product_info in product_list_data:
-            variations_data = internal_product_info.pop("variations")
+            variations_data = internal_product_info.pop("variations", [])
+            # Remove price from product item data since it doesn't have that field anymore
+            internal_product_info.pop("price", None)
+            # Remove imageUrls too if present (that field was also removed)
+            internal_product_info.pop("imageUrls", None)
+            
             product_item = ProductItemModel.objects.create(product=product, **internal_product_info)
+            
             for variant in variations_data:
                 ProductConfigModel.objects.create(productItem=product_item, **variant)
+                
         return product
 
     def update(self, instance, validated_data):
         """
         Updates a product with its associated product items and variant configurations.
         Handles creating new items, updating existing ones, and removing items not included.
+        Also updates ProductLocation entries for name/description/price.
         """
+        from base.models import LocationModel, ProductLocationModel
+        
         product_items_data = validated_data.pop("product_items", None)
         locations_data = validated_data.pop('locations', None)
-        top_level_price = self.initial_data.get("price")
+        
+        # Extract name/description/price from validated_data (they don't belong in ProductModel)
+        product_name = validated_data.pop("name", None)
+        product_description = validated_data.pop("description", None)
+        product_price = self.initial_data.get("price")  # Price might not be in validated_data
 
         # Update product-level fields
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
-
+        
         if locations_data is not None:
-            instance.locations.set(locations_data)
+            # Get existing ProductLocation entries
+            existing_locations = ProductLocationModel.objects.filter(product=instance)
+            existing_codes = set(pl.location.country_code for pl in existing_locations)
+            new_codes = set(loc.upper() for loc in locations_data)
+            
+            # Update existing locations
+            for product_location in existing_locations:
+                if product_location.location.country_code in new_codes:
+                    # Update if values provided
+                    if product_name:
+                        product_location.name = product_name
+                    if product_description:
+                        product_location.description = product_description
+                    if product_price:
+                        product_location.price = float(product_price)
+                    product_location.save()
+                else:
+                    # Remove locations not in the new list
+                    product_location.delete()
+            
+            # Create new locations
+            for location_code in (new_codes - existing_codes):
+                try:
+                    location = LocationModel.objects.get(country_code=location_code)
+                    ProductLocationModel.objects.create(
+                        product=instance,
+                        location=location,
+                        name=product_name or "Unnamed Product",
+                        description=product_description or "",
+                        price=float(product_price) if product_price else 0.0
+                    )
+                except LocationModel.DoesNotExist:
+                    pass
+        elif product_name or product_description or product_price:
+            # Update all existing ProductLocation entries
+            for product_location in ProductLocationModel.objects.filter(product=instance):
+                if product_name:
+                    product_location.name = product_name
+                if product_description:
+                    product_location.description = product_description
+                if product_price:
+                    product_location.price = float(product_price)
+                product_location.save()
         
         # Handle product items updates
         if product_items_data is not None:
@@ -183,6 +390,9 @@ class ProductModelSerializer(serializers.ModelSerializer):
             
             for item_data in product_items_data:
                 variations_data = item_data.pop("variations", [])
+                # Remove fields that don't belong in ProductItemModel anymore
+                item_data.pop("price", None)
+                item_data.pop("imageUrls", None)
                 item_id = item_data.get("id")
                 
                 # Convert item_id to string for consistent lookup, handle None case
@@ -218,14 +428,6 @@ class ProductModelSerializer(serializers.ModelSerializer):
                     ProductItemModel.objects.filter(
                         id__in=[existing_items[item_id].id for item_id in items_to_remove]
                     ).delete()
-
-        # Because the price is a serialized field retrieved from product items,
-        # we can get the original requests price and change all product item
-        # instances to have the new updated price.
-        if top_level_price is not None:
-            for item in instance.items.all():
-                item.price = top_level_price
-                item.save()
         
         return instance
     
@@ -275,7 +477,24 @@ class CartItemSerializer(serializers.ModelSerializer):
         fields = ["id", "productItem", "quantity", "totalPrice"]
 
     def get_totalPrice(self, obj):
-        return obj.quantity * obj.productItem.price
+        """Calculate total price using ProductLocation pricing"""
+        country_code = self.context.get("country_code")
+        
+        # Try to get location-specific price with discount
+        if country_code:
+            try:
+                item_location = ProductItemLocationModel.objects.get(
+                    productItem=obj.productItem,
+                    location__country_code=country_code
+                )
+                return obj.quantity * item_location.final_price
+            except ProductItemLocationModel.DoesNotExist:
+                pass
+        
+        # Fallback to ProductLocation base price
+        first_location = ProductLocationModel.objects.filter(product=obj.productItem.product).first()
+        unit_price = first_location.price if first_location else 0.0
+        return obj.quantity * unit_price
 
 
 class ShippingVendorSerializer(serializers.ModelSerializer):
@@ -315,7 +534,7 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderModel
         fields = [
-            "id", "createdAt", "user", "guestUser", "address", "shippingVendor", 
+            "id", "createdAt", "user", "guestUser", "address",
             "totalPrice", "status", "items"
         ]
         read_only_fields = ["user", "guestUser"]
@@ -328,19 +547,15 @@ class ListOrderSerializer(serializers.ModelSerializer):
     user = UserModelSerializer(read_only=True)
     guestUser = GuestUserSerializer(read_only=True)
     items = OrderItemSerializer(many=True, read_only=True)
-    shippingVendor = ShippingVendorSerializer(read_only=True)
     address = AddressSerializer(read_only=True)
     
     class Meta:
         model = OrderModel
         fields = [
-            "id", "createdAt", "user", "guestUser", "address", "shippingVendor", 
+            "id", "createdAt", "user", "guestUser", "address",
             "totalPrice", "status", "items", "paymentIntentId"
         ]
         read_only_fields = ["user", "guestUser"]
-
-    def get_shippingVendorName(self, obj):
-        return obj.shippingVendor.name if obj.shippingVendor else None
 
 
 class CreateGuestOrderSerializer(serializers.ModelSerializer):
@@ -353,14 +568,13 @@ class CreateGuestOrderSerializer(serializers.ModelSerializer):
     lastName = serializers.CharField(max_length=255, write_only=True)
     phone = serializers.CharField(max_length=20, required=False, allow_blank=True, write_only=True)
     addressId = serializers.UUIDField(write_only=True)
-    shippingVendorId = serializers.IntegerField(write_only=True)
     items = OrderItemSerializer(many=True, write_only=True)
     guestUser = GuestUserSerializer(read_only=True)
     
     class Meta:
         model = OrderModel
         fields = [
-            "id", "createdAt", "addressId", "shippingVendorId", "totalPrice", "status",
+            "id", "createdAt", "addressId", "totalPrice", "status",
             "email", "firstName", "lastName", "phone",
             "items", "guestUser"
         ]
@@ -374,7 +588,6 @@ class CreateGuestOrderSerializer(serializers.ModelSerializer):
             "phone": validated_data.pop("phone", ""),
         }
         address_id = validated_data.pop("addressId")
-        shipping_vendor_id = validated_data.pop("shippingVendorId")
         items_data = validated_data.pop("items")
         
         # Always create a new guest user for true anonymity
@@ -382,11 +595,8 @@ class CreateGuestOrderSerializer(serializers.ModelSerializer):
         
         try:
             address = AddressModel.objects.get(id=address_id)
-            shipping_vendor = ShippingVendorModel.objects.get(id=shipping_vendor_id)
         except AddressModel.DoesNotExist:
             raise serializers.ValidationError(f"Address with id {address_id} does not exist")
-        except ShippingVendorModel.DoesNotExist:
-            raise serializers.ValidationError(f"ShippingVendor with id {shipping_vendor_id} does not exist")
         
         # Calculate total price
         total_price = 0
@@ -402,7 +612,9 @@ class CreateGuestOrderSerializer(serializers.ModelSerializer):
             except ProductItemModel.DoesNotExist:
                 raise serializers.ValidationError(f"ProductItem with id {product_item_id} does not exist")
             
-            price = product_item.price  # Get price from ProductItemModel
+            # Get price from ProductLocation (use first location as fallback)
+            first_location = ProductLocationModel.objects.filter(product=product_item.product).first()
+            price = first_location.price if first_location else 0.0
             
             order_items.append({
                 "productItem": product_item,
@@ -414,7 +626,6 @@ class CreateGuestOrderSerializer(serializers.ModelSerializer):
         # Create order with calculated total price
         validated_data["totalPrice"] = total_price
         validated_data["address"] = address
-        validated_data["shippingVendor"] = shipping_vendor
         order = OrderModel.objects.create(guestUser=guest_user, **validated_data)
         
         # Create order items with calculated prices
@@ -429,7 +640,6 @@ class CreateAuthenticatedOrderSerializer(serializers.ModelSerializer):
     Serializer for creating orders with authenticated users (existing functionality)
     """
     addressId = serializers.UUIDField(write_only=True)
-    shippingVendorId = serializers.IntegerField(write_only=True)
     user_id = serializers.UUIDField(write_only=True)
     items = OrderItemSerializer(many=True, write_only=True)
     user = UserModelSerializer(read_only=True)
@@ -437,7 +647,7 @@ class CreateAuthenticatedOrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderModel
         fields = [
-            "id", "createdAt", "user", "user_id", "addressId", "shippingVendorId", 
+            "id", "createdAt", "user", "user_id", "addressId",
             "totalPrice", "status", "items"
         ]
         read_only_fields = ["id", "createdAt", "totalPrice"]
@@ -445,19 +655,17 @@ class CreateAuthenticatedOrderSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user_id = validated_data.pop("user_id")
         address_id = validated_data.pop("addressId")
-        shipping_vendor_id = validated_data.pop("shippingVendorId")
         items_data = validated_data.pop("items")
         
         try:
             user = UserModel.objects.get(id=user_id)
             address = AddressModel.objects.get(id=address_id)
-            shipping_vendor = ShippingVendorModel.objects.get(id=shipping_vendor_id)
+            # Validate shipping vendor exists but don't store on order
+            ShippingVendorModel.objects.get(id=shipping_vendor_id)
         except UserModel.DoesNotExist:
             raise serializers.ValidationError(f"User with id {user_id} does not exist")
         except AddressModel.DoesNotExist:
             raise serializers.ValidationError(f"Address with id {address_id} does not exist")
-        except ShippingVendorModel.DoesNotExist:
-            raise serializers.ValidationError(f"ShippingVendor with id {shipping_vendor_id} does not exist")
         
         # Calculate total price
         total_price = 0
@@ -473,7 +681,9 @@ class CreateAuthenticatedOrderSerializer(serializers.ModelSerializer):
             except ProductItemModel.DoesNotExist:
                 raise serializers.ValidationError(f"ProductItem with id {product_item_id} does not exist")
             
-            price = product_item.price  # Get price from ProductItemModel
+            # Get price from ProductLocation (use first location as fallback)
+            first_location = ProductLocationModel.objects.filter(product=product_item.product).first()
+            price = first_location.price if first_location else 0.0
             
             order_items.append({
                 "productItem": product_item,
@@ -485,7 +695,6 @@ class CreateAuthenticatedOrderSerializer(serializers.ModelSerializer):
         # Create order with calculated total price
         validated_data["totalPrice"] = total_price
         validated_data["address"] = address
-        validated_data["shippingVendor"] = shipping_vendor
         validated_data["user"] = user
         order = OrderModel.objects.create(**validated_data)
         
