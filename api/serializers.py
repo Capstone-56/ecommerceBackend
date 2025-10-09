@@ -59,6 +59,7 @@ class ProductItemModelSerializer(serializers.ModelSerializer):
     product = serializers.SerializerMethodField()
     final_price = serializers.SerializerMethodField()  # Final price after discounts
     currency = serializers.SerializerMethodField()  # Currency code based on location
+    location = serializers.CharField(required=False)
 
     def get_product(self, obj):
         return ProductModelSerializer(obj.product, context=self.context).data
@@ -90,6 +91,18 @@ class ProductItemModelSerializer(serializers.ModelSerializer):
         
         # No location-specific price found
         return None
+    
+    def to_representation(self, instance):
+        """
+        Override to include the location when reading.
+        """
+        representation = super().to_representation(instance)
+        try:
+            item_location = ProductItemLocationModel.objects.get(productItem=instance)
+            representation['location'] = item_location.location.country_code
+        except ProductItemLocationModel.DoesNotExist:
+            representation['location'] = None
+        return representation         
     
     def get_currency(self, obj):
         """
@@ -124,6 +137,8 @@ class ProductItemModelSerializer(serializers.ModelSerializer):
         Creates product items and product configs. 
         """
         variations_data = validated_data.pop("variations", [])
+        location_data = validated_data.pop("location", None)
+
         # Pull from request manually.
         product_id = self.context["request"].data.get("product")
         product_item = ProductItemModel.objects.create(
@@ -131,6 +146,11 @@ class ProductItemModelSerializer(serializers.ModelSerializer):
             # Assign manually.
             product_id=product_id
         )
+
+        # Get the location.
+        item_location = LocationModel.objects.get(country_code=location_data)
+        # Create a item location.
+        ProductItemLocationModel.objects.create(location=item_location, productItem=product_item, discount=0)
 
         for variation in variations_data:
             ProductConfigModel.objects.create(
@@ -142,7 +162,7 @@ class ProductItemModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductItemModel
-        fields = ["id", "product", "sku", "stock", "final_price", "currency", "variations"]
+        fields = ["id", "product", "sku", "stock", "final_price", "currency", "variations", "location"]
     
 class ProductModelSerializer(serializers.ModelSerializer):
     price = serializers.SerializerMethodField()
@@ -307,8 +327,13 @@ class ProductModelSerializer(serializers.ModelSerializer):
             internal_product_info.pop("price", None)
             # Remove imageUrls too if present (that field was also removed)
             internal_product_info.pop("imageUrls", None)
-            
+
+            item_location_code = internal_product_info.pop("location", None)
+
             product_item = ProductItemModel.objects.create(product=product, **internal_product_info)
+            item_location = LocationModel.objects.get(country_code=item_location_code)
+
+            ProductItemLocationModel.objects.create(location=item_location, productItem=product_item, discount=0)
             
             for variant in variations_data:
                 ProductConfigModel.objects.create(productItem=product_item, **variant)
