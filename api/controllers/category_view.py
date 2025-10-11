@@ -75,7 +75,7 @@ class CategoryViewSet(viewsets.ViewSet):
         
         Body:
         {
-            "name": "Updated Name",
+            "name": "Updated Name",  (display name - does NOT change internalName)
             "description": "Updated description",
             "parentCategory": "new_parent_internal_name" (optional)
         }
@@ -91,11 +91,8 @@ class CategoryViewSet(viewsets.ViewSet):
                 )
                 if serializer.is_valid():
                     updated_category = serializer.save()
-                    
-                    fresh_category = CategoryModel.objects.get(internalName=updated_category.internalName)
-                    
                     return Response(
-                        CategoryModelSerializer(fresh_category, context={"request": request}).data
+                        CategoryModelSerializer(updated_category, context={"request": request}).data
                     )
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except ValidationError as e:
