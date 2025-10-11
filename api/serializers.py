@@ -495,6 +495,13 @@ class CategoryModelSerializer(serializers.ModelSerializer):
         return CategoryModelSerializer(children, many=True, context=self.context).data
 
 
+class FlatCategorySerializer(serializers.ModelSerializer):
+    """Flat serializer for admin - returns all fields without nesting"""
+    class Meta:
+        model = CategoryModel
+        fields = ["internalName", "name", "description", "parentCategory"]
+
+
 class CartItemSerializer(serializers.ModelSerializer):
     productItem = ProductItemModelSerializer(read_only=True)
     quantity = serializers.IntegerField(min_value=1)
