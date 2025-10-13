@@ -234,6 +234,12 @@ PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",  # fallback
 ]
 
+# 24 hours for token expiry
+PASSWORD_RESET_TIMEOUT = 86400
+
+FRONTEND_URL_LOCAL = "http://localhost:5173"
+FRONTEND_URL_PROD = "https://bdnx.com"
+
 # Stripe keys
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET")
