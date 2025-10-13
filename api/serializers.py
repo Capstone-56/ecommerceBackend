@@ -57,14 +57,14 @@ class ProductItemModelSerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(required=False)
     variations = ProductConfigSerializer(many=True, required=False)
     product = serializers.SerializerMethodField()
-    final_price = serializers.SerializerMethodField()  # Final price after discounts
+    price = serializers.SerializerMethodField()  # Final price after discounts
     currency = serializers.SerializerMethodField()  # Currency code based on location
     location = serializers.CharField(required=False)
 
     def get_product(self, obj):
         return ProductModelSerializer(obj.product, context=self.context).data
     
-    def get_final_price(self, obj):
+    def get_price(self, obj):
         """
         Get price from ProductItemLocation (with discounts) or ProductLocation (base price).
         """
@@ -162,7 +162,7 @@ class ProductItemModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductItemModel
-        fields = ["id", "product", "sku", "stock", "final_price", "currency", "variations", "location"]
+        fields = ["id", "product", "sku", "stock", "price", "currency", "variations", "location"]
     
 class ProductModelSerializer(serializers.ModelSerializer):
     price = serializers.SerializerMethodField()
@@ -510,21 +510,28 @@ class CartItemSerializer(serializers.ModelSerializer):
         """Calculate total price using ProductLocation pricing"""
         country_code = self.context.get("country_code")
         
+        if not country_code:
+            raise serializers.ValidationError("Location is required for pricing calculation")
+        
         # Try to get location-specific price with discount
-        if country_code:
+        try:
+            item_location = ProductItemLocationModel.objects.get(
+                productItem=obj.productItem,
+                location__country_code=country_code
+            )
+            return obj.quantity * item_location.final_price
+        except ProductItemLocationModel.DoesNotExist:
+            # Fallback to ProductLocation base price
             try:
-                item_location = ProductItemLocationModel.objects.get(
-                    productItem=obj.productItem,
+                product_location = ProductLocationModel.objects.get(
+                    product=obj.productItem.product,
                     location__country_code=country_code
                 )
-                return obj.quantity * item_location.final_price
-            except ProductItemLocationModel.DoesNotExist:
-                pass
-        
-        # Fallback to ProductLocation base price
-        first_location = ProductLocationModel.objects.filter(product=obj.productItem.product).first()
-        unit_price = first_location.price if first_location else 0.0
-        return obj.quantity * unit_price
+                return obj.quantity * product_location.price
+            except ProductLocationModel.DoesNotExist:
+                raise serializers.ValidationError(
+                    f"Product not available in location: {country_code}"
+                )
 
 
 class ShippingVendorSerializer(serializers.ModelSerializer):
@@ -620,6 +627,11 @@ class CreateGuestOrderSerializer(serializers.ModelSerializer):
         address_id = validated_data.pop("addressId")
         items_data = validated_data.pop("items")
         
+        # Get country_code from context
+        country_code = self.context.get("country_code")
+        if not country_code:
+            raise serializers.ValidationError("Location is required for order creation")
+        
         # Always create a new guest user for true anonymity
         guest_user = GuestUserModel.objects.create(**guest_data)
         
@@ -642,9 +654,25 @@ class CreateGuestOrderSerializer(serializers.ModelSerializer):
             except ProductItemModel.DoesNotExist:
                 raise serializers.ValidationError(f"ProductItem with id {product_item_id} does not exist")
             
-            # Get price from ProductLocation (use first location as fallback)
-            first_location = ProductLocationModel.objects.filter(product=product_item.product).first()
-            price = first_location.price if first_location else 0.0
+            # Get location-specific price with discount or base price
+            try:
+                item_location = ProductItemLocationModel.objects.get(
+                    productItem=product_item,
+                    location__country_code=country_code
+                )
+                price = item_location.final_price
+            except ProductItemLocationModel.DoesNotExist:
+                # Fallback to ProductLocation base price for the same location
+                try:
+                    product_location = ProductLocationModel.objects.get(
+                        product=product_item.product,
+                        location__country_code=country_code
+                    )
+                    price = product_location.price
+                except ProductLocationModel.DoesNotExist:
+                    raise serializers.ValidationError(
+                        f"Product item {product_item_id} not available in location: {country_code}"
+                    )
             
             order_items.append({
                 "productItem": product_item,
@@ -687,11 +715,14 @@ class CreateAuthenticatedOrderSerializer(serializers.ModelSerializer):
         address_id = validated_data.pop("addressId")
         items_data = validated_data.pop("items")
         
+        # Get country_code from context
+        country_code = self.context.get("country_code")
+        if not country_code:
+            raise serializers.ValidationError("Location is required for order creation")
+        
         try:
             user = UserModel.objects.get(id=user_id)
             address = AddressModel.objects.get(id=address_id)
-            # Validate shipping vendor exists but don't store on order
-            ShippingVendorModel.objects.get(id=shipping_vendor_id)
         except UserModel.DoesNotExist:
             raise serializers.ValidationError(f"User with id {user_id} does not exist")
         except AddressModel.DoesNotExist:
@@ -711,9 +742,25 @@ class CreateAuthenticatedOrderSerializer(serializers.ModelSerializer):
             except ProductItemModel.DoesNotExist:
                 raise serializers.ValidationError(f"ProductItem with id {product_item_id} does not exist")
             
-            # Get price from ProductLocation (use first location as fallback)
-            first_location = ProductLocationModel.objects.filter(product=product_item.product).first()
-            price = first_location.price if first_location else 0.0
+            # Get location-specific price with discount or base price
+            try:
+                item_location = ProductItemLocationModel.objects.get(
+                    productItem=product_item,
+                    location__country_code=country_code
+                )
+                price = item_location.final_price
+            except ProductItemLocationModel.DoesNotExist:
+                # Fallback to ProductLocation base price for the same location
+                try:
+                    product_location = ProductLocationModel.objects.get(
+                        product=product_item.product,
+                        location__country_code=country_code
+                    )
+                    price = product_location.price
+                except ProductLocationModel.DoesNotExist:
+                    raise serializers.ValidationError(
+                        f"Product item {product_item_id} not available in location: {country_code}"
+                    )
             
             order_items.append({
                 "productItem": product_item,
