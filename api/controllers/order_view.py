@@ -84,7 +84,7 @@ class OrderViewSet(viewsets.ViewSet):
         - Guest users: No valid JWT token OR guest-specific fields present
         
         For authenticated users (JWT cookie present):
-        POST /api/order
+        POST /api/order?location=AU
         {
             "addressId": uuid, 
             "items": [
@@ -98,7 +98,7 @@ class OrderViewSet(viewsets.ViewSet):
         
         For guest users (no JWT cookie OR guest fields present),
         Every guest order creates a new anonymous guest user:
-        POST /api/order
+        POST /api/order?location=AU
         {
             "email": "guest@example.com",
             "firstName": "Jane",
@@ -113,7 +113,17 @@ class OrderViewSet(viewsets.ViewSet):
             ]
         }
         Note: 'totalPrice' and item 'price' are auto-calculated by backend
+        
+        Required query params:
+        - location (string) e.g. ?location=AU for location-specific pricing
         """
+        # Get location from query parameters
+        location_param = request.query_params.get("location")
+        if not location_param:
+            return HttpResponseBadRequest("Location parameter is required")
+        
+        location_param = location_param.upper()
+        
         # Check if user is authenticated (has valid JWT in httpOnly cookie)
         is_authenticated = request.user and request.user.is_authenticated
         
@@ -124,14 +134,20 @@ class OrderViewSet(viewsets.ViewSet):
         is_guest_order = has_user_info_fields and not is_authenticated
         
         if is_guest_order:
-            # Use guest order serializer
-            serializer = CreateGuestOrderSerializer(data=request.data)
+            # Use guest order serializer with location context
+            serializer = CreateGuestOrderSerializer(
+                data=request.data,
+                context={"country_code": location_param}
+            )
         else:
             # Use authenticated user order serializer - auto-assign current user if not provided
             order_data = request.data.copy()
             if "user_id" not in order_data:
                 order_data["user_id"] = request.user.id
-            serializer = CreateAuthenticatedOrderSerializer(data=order_data)
+            serializer = CreateAuthenticatedOrderSerializer(
+                data=order_data,
+                context={"country_code": location_param}
+            )
         
         if serializer.is_valid():
             serializer.save()
