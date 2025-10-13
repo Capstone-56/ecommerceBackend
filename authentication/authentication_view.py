@@ -40,7 +40,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
             accessToken = refreshToken.access_token
             utils.store_hashed_refresh(user, str(refreshToken))
 
-            return setCookie(accessToken, refreshToken, user.role, user.id)
+            return setCookie(accessToken, refreshToken, user.role, user.id, user.username)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -74,7 +74,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
         accessToken = refreshToken.access_token
         utils.store_hashed_refresh(user, str(refreshToken))
 
-        return setCookie(accessToken, refreshToken, user.role, user.id)
+        return setCookie(accessToken, refreshToken, user.role, user.id, user.username)
 
 
     @action(detail=False, methods=["delete"], url_path="logout", permission_classes=[AllowAny])
@@ -110,10 +110,11 @@ class AuthenticationViewSet(viewsets.ViewSet):
         return response
 
 
-def setCookie(accessToken, refreshToken, role, id) -> Response:
+def setCookie(accessToken, refreshToken, role, userId, username) -> Response:
     response = Response({
         "role": role,
-        "id": id
+        "id": userId,
+        "username": username
     }, status=200)
 
     response.set_cookie(
