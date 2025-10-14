@@ -73,11 +73,6 @@ class OrderCreationService:
         
         # Extract required order fields
         address_id = metadata.get("address_id")
-        shipping_vendor_id = metadata.get("shipping_vendor_id")
-        
-        if not shipping_vendor_id:
-            logger.error(f"Missing required shipping vendor ID for PaymentIntent {payment_intent.get('id')}")
-            return None
         
         try:
             payment_intent_id = payment_intent.get("id")
@@ -95,19 +90,26 @@ class OrderCreationService:
                     if not address_id:
                         raise ValueError("Failed to create address from shipping metadata")
                 
+                # Get location from user's shipping country
+                location = metadata.get("shipping_country").upper()
+
                 # Prepare order data based on user type
                 if is_authenticated and user_id:
                     order_data = OrderCreationService._prepare_authenticated_order_data(
-                        user_id, address_id, shipping_vendor_id, cart_items
+                        user_id, address_id, cart_items
                     )
-                    serializer = CreateAuthenticatedOrderSerializer(data=order_data)
+                    serializer = CreateAuthenticatedOrderSerializer(
+                        data=order_data,
+                        context={"country_code": location})
                 else:
                     order_data = OrderCreationService._prepare_guest_order_data(
-                        metadata, address_id, shipping_vendor_id, cart_items
+                        metadata, address_id, cart_items
                     )
                     if not order_data:
                         raise ValueError("Failed to prepare guest order data")
-                    serializer = CreateGuestOrderSerializer(data=order_data)
+                    serializer = CreateGuestOrderSerializer(
+                        data=order_data,
+                        context={"country_code": location})
                 
                 if not serializer.is_valid():
                     raise ValueError(f"Order serializer validation failed: {serializer.errors}")
@@ -144,16 +146,15 @@ class OrderCreationService:
             return None
     
     @staticmethod
-    def _prepare_authenticated_order_data(user_id, address_id, shipping_vendor_id, cart_items):
+    def _prepare_authenticated_order_data(user_id, address_id, cart_items):
         return {
             "user_id": user_id,
             "addressId": address_id,
-            "shippingVendorId": int(shipping_vendor_id),
             "items": [{"productItemId": item["product_item_id"], "quantity": item["qty"]} for item in cart_items]
         }
     
     @staticmethod
-    def _prepare_guest_order_data(metadata, address_id, shipping_vendor_id, cart_items):
+    def _prepare_guest_order_data(metadata, address_id, cart_items):
         guest_email = metadata.get("guest_email")
         guest_first_name = metadata.get("guest_first_name", "")
         guest_last_name = metadata.get("guest_last_name", "")
@@ -169,7 +170,6 @@ class OrderCreationService:
             "lastName": guest_last_name,
             "phone": guest_phone,
             "addressId": address_id,
-            "shippingVendorId": int(shipping_vendor_id),
             "items": [{"productItemId": item["product_item_id"], "quantity": item["qty"]} for item in cart_items]
         }
     
