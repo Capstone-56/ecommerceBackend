@@ -303,7 +303,12 @@ class ProductModelSerializer(serializers.ModelSerializer):
     def validate(self, data):
         """
         Validate that either locations or location_pricing is provided.
+        Only required for create operations, not for partial updates.
         """
+        # Skip validation for partial updates (PATCH requests)
+        if self.partial:
+            return data
+            
         if not data.get('locations') and not data.get('location_pricing'):
             raise serializers.ValidationError({
                 'non_field_errors': ['Either locations or location_pricing must be provided.']
