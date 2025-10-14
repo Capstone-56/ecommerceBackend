@@ -285,12 +285,15 @@ class ProductViewSet(viewsets.ViewSet):
             "featured": true,
             "category": "mens",
             "locations": ["US", "CA"],
+            "location_pricing": [
+                {"country_code": "US", "price": 29.99},
+                {"country_code": "CA", "price": 39.99}
+            ],
             "product_items": [
                 {
+                    "location": "US",
                     "sku": "TSHIRT-001",
                     "stock": 10,
-                    "price": 19.99,
-                    "imageUrls": ["http://example.com/item1.jpg"],
                     "variations": [
                         {"variant": "ebeb487d-67d5-498e-948f-02896e24526c"},
                         {"variant": "82c5da0e-6dd1-474b-8f7c-69410cca7a62"}
@@ -341,6 +344,11 @@ class ProductViewSet(viewsets.ViewSet):
             "product_items": json.loads(data.get('product_items')),
             "locations": data.getlist("locations")
         }
+        
+        # Add location_pricing if present
+        location_pricing = data.get('location_pricing')
+        if location_pricing:
+            payload['location_pricing'] = json.loads(location_pricing)
 
         serializer = ProductModelSerializer(data=payload)
         if serializer.is_valid():
@@ -360,23 +368,25 @@ class ProductViewSet(viewsets.ViewSet):
             "images": ["http://example.com/new-image.jpg"],
             "featured": false,
             "category": "womens",
+            "location_pricing": [
+                {"country_code": "US", "price": 34.99},
+                {"country_code": "CA", "price": 44.99}
+            ],
             "product_items": [
                 {
                     "id": "existing-item-id",  // Include ID to update existing item
+                    "location": "US",
                     "sku": "TSHIRT-001-UPDATED",
                     "stock": 15,
-                    "price": 24.99,
-                    "imageUrls": ["http://example.com/updated-item.jpg"],
                     "variations": [
                         {"variant": "new-variant-id"}
                     ]
                 },
                 {
                     // If no ID is provided, a new item will be created.
+                    "location": "US",
                     "sku": "TSHIRT-002",
                     "stock": 5,
-                    "price": 29.99,
-                    "imageUrls": ["http://example.com/new-item.jpg"],
                     "variations": [
                         {"variant": "another-variant-id"}
                     ]
