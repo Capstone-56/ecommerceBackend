@@ -284,10 +284,9 @@ class ProductViewSet(viewsets.ViewSet):
             "images": ["http://example.com/image1.jpg", "http://example.com/image2.jpg"],
             "featured": true,
             "category": "mens",
-            "locations": ["US", "CA"],
             "location_pricing": [
-                {"country_code": "US", "price": 29.99},
-                {"country_code": "CA", "price": 39.99}
+                {"country_code": "US", "price": 29.99, "currency": "USD"},
+                {"country_code": "CA", "price": 39.99, "currency": "CAD"}
             ],
             "product_items": [
                 {
@@ -335,20 +334,21 @@ class ProductViewSet(viewsets.ViewSet):
         # The POST request now takes in a multipart/form-data to properly handle 
         # file uploads. This was causing issues when serializing and can be alleviated
         # by doing the following.
+        # Get location_pricing before building payload
+        location_pricing = data.get('location_pricing')
+        
         payload = {
             "name": data.get("name"),
             "description": data.get("description"),
             "featured": data.get("featured"),
             "category": data.get("category"),
-            "images": uploaded_image_urls,
-            "product_items": json.loads(data.get('product_items')),
-            "locations": data.getlist("locations")
+            "images": uploaded_image_urls if uploaded_image_urls else data.get("images"),
+            "product_items": json.loads(data.get('product_items')) if isinstance(data.get('product_items'), str) else data.get('product_items'),
         }
         
         # Add location_pricing if present
-        location_pricing = data.get('location_pricing')
         if location_pricing:
-            payload['location_pricing'] = json.loads(location_pricing)
+            payload['location_pricing'] = json.loads(location_pricing) if isinstance(location_pricing, str) else location_pricing
 
         serializer = ProductModelSerializer(data=payload)
         if serializer.is_valid():
@@ -369,8 +369,8 @@ class ProductViewSet(viewsets.ViewSet):
             "featured": false,
             "category": "womens",
             "location_pricing": [
-                {"country_code": "US", "price": 34.99},
-                {"country_code": "CA", "price": 44.99}
+                {"country_code": "US", "price": 34.99, "currency": "USD"},
+                {"country_code": "CA", "price": 44.99, "currency": "CAD"}
             ],
             "product_items": [
                 {
@@ -425,7 +425,10 @@ class ProductViewSet(viewsets.ViewSet):
         OR
         {
             "featured": true,
-            "locations": ["US", "CA"]  // Update multiple fields
+            "location_pricing": [
+                {"country_code": "US", "price": 29.99, "currency": "USD"},
+                {"country_code": "CA", "price": 39.99, "currency": "CAD"}
+            ]
         }
         
         Note: For product_items, only items with IDs will be updated. 

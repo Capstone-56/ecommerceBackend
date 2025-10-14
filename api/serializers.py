@@ -171,17 +171,11 @@ class ProductModelSerializer(serializers.ModelSerializer):
     description = serializers.CharField(required=False, allow_blank=True)  # Accept for write
     variations = serializers.SerializerMethodField()
     category = serializers.SlugRelatedField(slug_field='internalName', queryset=CategoryModel.objects.all())
-    locations = serializers.ListField(
-        child=serializers.CharField(), 
-        write_only=True, 
-        required=False,
-        help_text="List of country codes (e.g. [\"US\", \"CA\"]). Not required if location_pricing is provided."
-    )
     location_pricing = serializers.ListField(
         child=serializers.DictField(child=serializers.CharField()),
         write_only=True, 
-        required=False,
-        help_text="List of objects with country_code and price (e.g. [{\"country_code\": \"US\", \"price\": 29.99}]). Not required if locations is provided."
+        required=True,
+        help_text="List of objects with country_code, price, and currency (e.g. [{\"country_code\": \"US\", \"price\": 29.99, \"currency\": \"USD\"}])"
     )
     
     product_items = ProductItemModelSerializer(many=True, write_only=True)
@@ -198,7 +192,6 @@ class ProductModelSerializer(serializers.ModelSerializer):
             "price",
             "currency",
             "category",
-            "locations",
             "location_pricing",
             "product_items",
             "variations"
@@ -239,7 +232,6 @@ class ProductModelSerializer(serializers.ModelSerializer):
             })
         
         ret['location_pricing'] = locations_data
-        ret['locations'] = [loc['country_code'] for loc in locations_data]
         
         return ret
     
@@ -302,16 +294,15 @@ class ProductModelSerializer(serializers.ModelSerializer):
     
     def validate(self, data):
         """
-        Validate that either locations or location_pricing is provided.
-        Only required for create operations, not for partial updates.
+        Validate that location_pricing is provided for create operations.
         """
         # Skip validation for partial updates (PATCH requests)
         if self.partial:
             return data
             
-        if not data.get('locations') and not data.get('location_pricing'):
+        if not data.get('location_pricing'):
             raise serializers.ValidationError({
-                'non_field_errors': ['Either locations or location_pricing must be provided.']
+                'location_pricing': ['This field is required.']
             })
         return data
 
@@ -321,64 +312,39 @@ class ProductModelSerializer(serializers.ModelSerializer):
         and also productConfig table for the variations provided when creating a product e.g. "Blue", "M".
         
         Also creates ProductLocation entries for name/description/price per location.
-        Supports location_pricing for different prices per location.
         """
         from base.models import LocationModel, ProductLocationModel
         
         # Extract data that won't go directly into ProductModel
         product_list_data = validated_data.pop("product_items")
-        locations_data = validated_data.pop("locations", [])
-        location_pricing_data = validated_data.pop("location_pricing", [])
+        location_pricing_data = validated_data.pop("location_pricing")
         
         # Extract name/description from validated_data (they don't belong in ProductModel anymore)
         product_name = validated_data.pop("name", "Unnamed Product")
         product_description = validated_data.pop("description", "")
         
-        # Get price from initial_data BEFORE validation strips it out
-        base_price = 0.0
-        if self.initial_data.get("product_items"):
-            first_item = self.initial_data["product_items"][0]
-            base_price = float(first_item.get("price", 0.0))
-        
-        # Create the product (without name/description/locations)
+        # Create the product (without name/description)
         product = ProductModel.objects.create(**validated_data)
 
         # Create ProductLocation entries for name/description/price per location
-        if location_pricing_data:
-            for pricing_item in location_pricing_data:
-                location_code = pricing_item.get("country_code", "").upper()
-                if not location_code:
-                    continue
-                    
-                try:
-                    price = float(pricing_item.get("price", base_price))
-                    location = LocationModel.objects.get(country_code=location_code)
-                    ProductLocationModel.objects.create(
-                        product=product,
-                        location=location,
-                        name=product_name,
-                        description=product_description,
-                        price=price
-                    )
-                except (LocationModel.DoesNotExist, (ValueError, TypeError)):
-                    # Skip invalid locations or prices
-                    continue
-        else:
-            # use locations list
-            for location_code in locations_data:
-                try:
-                    location = LocationModel.objects.get(country_code=location_code.upper())
+        for pricing_item in location_pricing_data:
+            location_code = pricing_item.get("country_code", "").upper()
+            if not location_code:
+                continue
                 
-                    ProductLocationModel.objects.create(
-                        product=product,
-                        location=location,
-                        name=product_name,
-                        description=product_description,
-                        price=base_price
-                    )
-                except LocationModel.DoesNotExist:
-                # Skip if location doesn't exist
-                    pass
+            try:
+                price = float(pricing_item.get("price"))
+                location = LocationModel.objects.get(country_code=location_code)
+                ProductLocationModel.objects.create(
+                    product=product,
+                    location=location,
+                    name=product_name,
+                    description=product_description,
+                    price=price
+                )
+            except (LocationModel.DoesNotExist, (ValueError, TypeError, KeyError)):
+                # Skip invalid locations or prices
+                continue
 
         # Create product items (without price - it's now in ProductLocation)
         for internal_product_info in product_list_data:
@@ -405,18 +371,15 @@ class ProductModelSerializer(serializers.ModelSerializer):
         Updates a product with its associated product items and variant configurations.
         Handles creating new items, updating existing ones, and removing items not included.
         Also updates ProductLocation entries for name/description/price.
-        Supports location_pricing for updating different prices per location.
         """
         from base.models import LocationModel, ProductLocationModel
         
         product_items_data = validated_data.pop("product_items", None)
-        locations_data = validated_data.pop('locations', None)
         location_pricing_data = validated_data.pop('location_pricing', None)
         
-        # Extract name/description/price from validated_data (they don't belong in ProductModel)
+        # Extract name/description from validated_data (they don't belong in ProductModel)
         product_name = validated_data.pop("name", None)
         product_description = validated_data.pop("description", None)
-        product_price = self.initial_data.get("price")  # Price might not be in validated_data
 
         # Update product-level fields
         for attr, value in validated_data.items():
@@ -452,65 +415,26 @@ class ProductModelSerializer(serializers.ModelSerializer):
                 try:
                     location = LocationModel.objects.get(country_code=code)
                     pricing_data = pricing_map[code]
+                    
+                    # Get defaults from existing location if name/description not provided
+                    existing_pl = ProductLocationModel.objects.filter(product=instance).first()
+                    
                     ProductLocationModel.objects.create(
                         product=instance,
                         location=location,
-                        name=product_name or "Unnamed Product",
-                        description=product_description or "",
+                        name=product_name or (existing_pl.name if existing_pl else "Unnamed Product"),
+                        description=product_description or (existing_pl.description if existing_pl else ""),
                         price=float(pricing_data.get('price', 0.0))
                     )
                 except LocationModel.DoesNotExist:
                     pass
-                    
-        elif locations_data is not None:
-            # Get existing ProductLocation entries
-            existing_locations = ProductLocationModel.objects.filter(product=instance)
-            existing_codes = set(pl.location.country_code for pl in existing_locations)
-            new_codes = set(loc.upper() for loc in locations_data)
-            
-            # Update existing locations
-            for product_location in existing_locations:
-                if product_location.location.country_code in new_codes:
-                    # Update if values provided
-                    if product_name:
-                        product_location.name = product_name
-                    if product_description:
-                        product_location.description = product_description
-                    if product_price:
-                        product_location.price = float(product_price)
-                    product_location.save()
-                else:
-                    # Remove locations not in the new list
-                    product_location.delete()
-            
-            # Create new locations
-            for location_code in (new_codes - existing_codes):
-                # In the case that it is a partial update with a new location and no other
-                # information. We need to get the first entry to retrieve the name,
-                # description and price to be set for the new location code.
-                existing_location = (
-                    ProductLocationModel.objects.filter(product=instance).first()
-                )
-                try:
-                    location = LocationModel.objects.get(country_code=location_code)
-                    ProductLocationModel.objects.create(
-                        product=instance,
-                        location=location,
-                        name=existing_location.name or "Unnamed Product",
-                        description=existing_location.description or "",
-                        price=float(existing_location.price) if existing_location.price else 0.0
-                    )
-                except LocationModel.DoesNotExist:
-                    pass
-        elif product_name or product_description or product_price:
-            # Update all existing ProductLocation entries
+        elif product_name or product_description:
+            # Update all existing ProductLocation entries (name/description only)
             for product_location in ProductLocationModel.objects.filter(product=instance):
                 if product_name:
                     product_location.name = product_name
                 if product_description:
                     product_location.description = product_description
-                if product_price:
-                    product_location.price = float(product_price)
                 product_location.save()
         
         # Handle product items updates
