@@ -285,8 +285,8 @@ class ProductViewSet(viewsets.ViewSet):
             "featured": true,
             "category": "mens",
             "location_pricing": [
-                {"country_code": "US", "price": 29.99, "currency": "USD"},
-                {"country_code": "CA", "price": 39.99, "currency": "CAD"}
+                {"country_code": "US", "price": 29.99},
+                {"country_code": "CA", "price": 39.99}
             ],
             "product_items": [
                 {
@@ -369,8 +369,8 @@ class ProductViewSet(viewsets.ViewSet):
             "featured": false,
             "category": "womens",
             "location_pricing": [
-                {"country_code": "US", "price": 34.99, "currency": "USD"},
-                {"country_code": "CA", "price": 44.99, "currency": "CAD"}
+                {"country_code": "US", "price": 34.99},
+                {"country_code": "CA", "price": 44.99}
             ],
             "product_items": [
                 {
@@ -426,8 +426,8 @@ class ProductViewSet(viewsets.ViewSet):
         {
             "featured": true,
             "location_pricing": [
-                {"country_code": "US", "price": 29.99, "currency": "USD"},
-                {"country_code": "CA", "price": 39.99, "currency": "CAD"}
+                {"country_code": "US", "price": 29.99},
+                {"country_code": "CA", "price": 39.99}
             ]
         }
         
