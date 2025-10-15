@@ -825,4 +825,10 @@ class LocationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = LocationModel
-        fields = ['country_code', "country_name"]
+        fields = ["country_code", "country_name", "currency_code"]
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Make country_code read-only for updates (when instance exists)
+        if self.instance is not None:
+            self.fields["country_code"].read_only = True 
