@@ -48,10 +48,8 @@ class ProductItemViewSet(viewsets.ViewSet):
     def retrieveByConfigurations(self, request, pk):
         """
         Retrieve a product item by productId and its configurations.
-        POST /api/productItem/{productId}/configurations?location=AU
-        Optional query params:
-        - location (string) e.g. ?location=AU for location-specific pricing and currency
-        body payload:
+        POST /api/productItem/{productId}/configurations
+        Body payload:
         {
             "variantIds": list<string>
         }
@@ -87,14 +85,7 @@ class ProductItemViewSet(viewsets.ViewSet):
         if matching_item is None:
             return HttpResponseNotFound()
 
-        # Get location from query parameters for location-specific pricing
-        location_param = request.query_params.get("location", "US").upper()
-
-        serializer = ProductItemModelSerializer(
-            matching_item,
-            context={"country_code": location_param, "request": request}
-        )
-        return Response({"id": serializer.data["id"]})
+        return Response({"id": str(matching_item.id)})
     
     @action(detail=True, methods=["get"], url_path="byProduct")
     def getByProductId(self, request, pk):
