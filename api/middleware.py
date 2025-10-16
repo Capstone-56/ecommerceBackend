@@ -49,7 +49,15 @@ class RefreshCookieMiddleware:
         is_public_endpoint = any(request.path.startswith(endpoint) for endpoint in public_endpoints)
         
         if is_api_request and not is_public_endpoint:
-            # If user is not authenticated for a protected endpoint,
-            # signal client to clear any auth state they might have
+            # Check if user has auth cookies but is not authenticated
+            has_access_token = bool(request.COOKIES.get(Constants.ACCESS_TOKEN))
+            has_refresh_token = bool(request.COOKIES.get(Constants.REFRESH_TOKEN))
+            was_authenticated = has_access_token or has_refresh_token
+            
             if not request.user.is_authenticated:
+                # Always clear auth state if not authenticated
                 response["X-Clear-Auth-State"] = "true"
+                
+                # Only clear cart if user was previously authenticated
+                if was_authenticated:
+                    response["X-Clear-Auth-Cart"] = "true"
