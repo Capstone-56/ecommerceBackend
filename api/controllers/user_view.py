@@ -20,7 +20,7 @@ class UserViewSet(viewsets.ViewSet):
     # Authorization: Bearer <accessToken>
     # to call GET /api/user
     def get_permissions(self):
-        if self.action in ["list", "delete", "create"]:
+        if self.action in ["list", "delete", "create", "retrieve", "update"]:
             return [IsAuthenticated()]
 
         return [AllowAny()]
