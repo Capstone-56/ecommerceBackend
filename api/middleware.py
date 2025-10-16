@@ -29,4 +29,27 @@ class RefreshCookieMiddleware:
                 max_age=int(Constants.ACCESS_TOKEN_LIFETIME.total_seconds()),
             )
         
+        # Check if authentication failed and signal client to clear auth state
+        self.check_auth_state_sync(request, response)
+        
         return response
+    
+    def check_auth_state_sync(self, request, response):
+        """
+        Signal client to clear authentication state if server detects invalid session.
+        This helps keep client-side localStorage in sync with server-side authentication state.
+        """
+        # Check if this is an API request that requires authentication
+        is_api_request = request.path.startswith("/api/")
+        
+        # Only check authentication state for protected endpoints
+        # Skip for public endpoints like login, signup, etc.
+        # TODO: separate public and authenticated endpoints
+        public_endpoints = ["/auth/", "/api/location/coordinates-to-country"]
+        is_public_endpoint = any(request.path.startswith(endpoint) for endpoint in public_endpoints)
+        
+        if is_api_request and not is_public_endpoint:
+            # If user is not authenticated for a protected endpoint,
+            # signal client to clear any auth state they might have
+            if not request.user.is_authenticated:
+                response["X-Clear-Auth-State"] = "true"

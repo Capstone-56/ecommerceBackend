@@ -99,6 +99,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 CORS_ALLOW_CREDENTIALS = True
+CORS_EXPOSE_HEADERS = ["X-Clear-Auth-State"]
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
     "https://test-staging.d2mnsn6al9q61p.amplifyapp.com",
