@@ -18,7 +18,7 @@ from base.models import *
 from ecommerceBackend import settings
 
 from django.http import HttpResponseBadRequest
-from django.utils.http import urlsafe_base64_encode
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
