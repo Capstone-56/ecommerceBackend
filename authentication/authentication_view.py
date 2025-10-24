@@ -1,7 +1,5 @@
 import boto3
 
-from django.http import HttpResponseBadRequest
-
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -19,8 +17,8 @@ from base.models import *
 
 from ecommerceBackend import settings
 
+from django.http import HttpResponseBadRequest
 from django.utils.http import urlsafe_base64_encode
-from django.utils.http import urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
@@ -58,7 +56,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
         request.data["role"] = ROLE.CUSTOMER
         request.data["mfa_enabled"] = True
         request.data["isActive"] = False
-        
+
         serializer = UserModelSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
