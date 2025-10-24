@@ -813,20 +813,80 @@ class CreateAuthenticatedOrderSerializer(serializers.ModelSerializer):
         
         return order
     
-class VariationTypeSerializer(serializers.ModelSerializer):
-    variant_values = serializers.SerializerMethodField()
+class VariantSerializer(serializers.ModelSerializer):
+    id = serializers.UUIDField(required=False)
+    
+    class Meta:
+        model = VariantModel
+        fields = ["id", "value"]
 
+class VariationTypeSerializer(serializers.ModelSerializer):
+    variations = VariantSerializer(many=True, required=False, source='variantmodel_set')
+    categories = serializers.SlugRelatedField(
+        slug_field='internalName',
+        queryset=CategoryModel.objects.all(),
+        many=True,
+        required=False
+    )
+    
     class Meta:
         model = VariationTypeModel
-        fields = ["id", "name", "category", "variant_values"]
-
-    def get_variant_values(self, obj):
-        variations = VariantModel.objects.filter(variationType=obj)
-
-        return [
-            {"value": variant.value, "id": variant.id}
-            for variant in variations
-        ]
+        fields = ["id", "name", "categories", "variations"]
+    
+    def create(self, validated_data):
+        variations_data = validated_data.pop('variantmodel_set', [])
+        categories_data = validated_data.pop('categories', [])
+        
+        variation_type = VariationTypeModel.objects.create(**validated_data)
+        variation_type.categories.set(categories_data)
+        
+        for variant_data in variations_data:
+            VariantModel.objects.create(variationType=variation_type, **variant_data)
+        
+        return variation_type
+    
+    def update(self, instance, validated_data):
+        variations_data = validated_data.pop('variantmodel_set', None)
+        categories_data = validated_data.pop('categories', None)
+        
+        # Update basic fields
+        instance.name = validated_data.get('name', instance.name)
+        instance.save()
+        
+        # Update categories
+        if categories_data is not None:
+            instance.categories.set(categories_data)
+        
+        # Update variations
+        if variations_data is not None:
+            existing_variants = {str(v.id): v for v in instance.variantmodel_set.all()}
+            updated_variant_ids = set()
+            
+            for variant_data in variations_data:
+                variant_id = variant_data.get('id')
+                if variant_id and str(variant_id) in existing_variants:
+                    # Update existing
+                    variant = existing_variants[str(variant_id)]
+                    variant.value = variant_data.get('value', variant.value)
+                    variant.save()
+                    updated_variant_ids.add(str(variant_id))
+                else:
+                    # Create new
+                    variant_data.pop('id', None)
+                    new_variant = VariantModel.objects.create(
+                        variationType=instance,
+                        **variant_data
+                    )
+                    updated_variant_ids.add(str(new_variant.id))
+            
+            # Delete variants not in update
+            variants_to_delete = set(existing_variants.keys()) - updated_variant_ids
+            if variants_to_delete:
+                VariantModel.objects.filter(
+                    id__in=[existing_variants[vid].id for vid in variants_to_delete]
+                ).delete()
+        
+        return instance
 
 class LocationSerializer(serializers.ModelSerializer):
 

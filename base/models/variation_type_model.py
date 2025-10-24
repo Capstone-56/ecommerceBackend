@@ -5,7 +5,11 @@ from .category_model import CategoryModel
 class VariationTypeModel(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
-    category = models.ForeignKey(CategoryModel, on_delete=models.CASCADE, db_column="categoryID", null=True, blank=True)
+    categories = models.ManyToManyField(
+        CategoryModel, 
+        related_name="variation_types",
+        blank=True
+    )
 
     class Meta:
         db_table = "variationType"
