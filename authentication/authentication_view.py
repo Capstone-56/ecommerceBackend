@@ -38,7 +38,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
     """
     mfa_service = TOTPMFAService()
 
-    @action(detail=False, methods=["post"], permission_classes=[AllowAny], url_path="signup")
+    @action(detail=False, methods=["post"], url_path="signup", permission_classes=[AllowAny])
     def signup(self, request):
         """
         Register a new user with email verification.
@@ -85,7 +85,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    @action(detail=False, methods=["post"], permission_classes=[AllowAny], url_path="verify-signup")
+    @action(detail=False, methods=["post"], url_path="verify-signup", permission_classes=[AllowAny])
     def verify_signup(self, request):
         """
         Verify email during signup process.
