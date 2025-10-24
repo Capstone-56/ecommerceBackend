@@ -24,7 +24,7 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True, db_column="isActive")
     #is_staff = models.BooleanField(default=False) (this is DRF convention, see https://forum.djangoproject.com/t/understanding-of-user-is-staff-field/35838)
 
-    mfa_enabled = models.BooleanField(default=False, db_column="mfaEnabled")
+    mfa_enabled = models.BooleanField(default=True, db_column="mfaEnabled")
     mfa_secret = models.CharField(max_length=32, blank=True, null=True, db_column="mfaSecret")
 
     objects = UserManager()

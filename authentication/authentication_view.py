@@ -40,10 +40,10 @@ class AuthenticationViewSet(viewsets.ViewSet):
     """
     mfa_service = TOTPMFAService()
 
-    @action(detail=False, methods=["post"], permission_classes=[AllowAny], url_path="signup", authentication_classes=[])
+    @action(detail=False, methods=["post"], permission_classes=[AllowAny], url_path="signup")
     def signup(self, request):
         """
-        Register a new user.
+        Register a new user with email verification.
         POST /auth/signup
         Body:
         {
@@ -53,22 +53,81 @@ class AuthenticationViewSet(viewsets.ViewSet):
             "lastName": string,
             "phone": string,
             "password": string,
-            "role": string (correspond to the "role" enum)
         }
         """
         request.data["role"] = ROLE.CUSTOMER
+        request.data["mfa_enabled"] = True
+        request.data["isActive"] = False
+        
         serializer = UserModelSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
+            
+            success = self.mfa_service.send_signup_verification_email(user)
+            if success:
+                # Set HTTP-only cookie for signup state
+                response = Response(
+                    "Account created. Please check your email for verification code.", 
+                    status=status.HTTP_201_CREATED
+                )
 
+                response.set_cookie(
+                    Constants.CookieName.MFA_USER_ID,
+                    str(user.id),
+                    httponly=True,
+                    secure=True,
+                    samesite="Lax",
+                    max_age=int(Constants.MFA_STATE_LIFETIME.total_seconds())
+                )
+
+                return response
+            else:
+                user.delete()
+                return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=False, methods=["post"], permission_classes=[AllowAny], url_path="verify-signup")
+    def verify_signup(self, request):
+        """
+        Verify email during signup process.
+        POST /auth/verify-signup
+        Body:
+        {
+            "code": "123456"
+        }
+        """
+        user_id = request.COOKIES.get(Constants.CookieName.MFA_USER_ID)
+        if not user_id:
+            return HttpResponseBadRequest("Invalid signup session")
+        
+        try:
+            user = UserModel.objects.get(id=user_id)
+        except UserModel.DoesNotExist:
+            return HttpResponseBadRequest("Invalid user ID")
+        
+        code = request.data.get("code")
+        if not code:
+            return HttpResponseBadRequest("Verification code is required")
+
+        if self.mfa_service.verify_mfa_code(user, code):
+            # Issue JWT tokens after successful verification
+            user.is_active = True
+            user.save()
+            
             refreshToken = RefreshToken.for_user(user)
             accessToken = refreshToken.access_token
             utils.store_hashed_refresh(user, str(refreshToken))
 
-            return setCookie(accessToken, refreshToken, user)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+            # Clear MFA cookie and complete authentication
+            response = setCookie(accessToken, refreshToken, user)
+            response.delete_cookie(Constants.CookieName.MFA_USER_ID, path="/")
+            
+            return response
+        else:
+            # If verification fails, delete the unverified user
+            user.delete()
+            return HttpResponseBadRequest("Invalid or expired verification code")
 
     @action(detail=False, methods=["post"], url_path="login", permission_classes=[AllowAny])
     def login(self, request):

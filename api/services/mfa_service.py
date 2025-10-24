@@ -3,7 +3,7 @@ import boto3
 
 from django.conf import settings
 
-from authentication.email_templates import mfa_email
+from authentication.email_templates import mfa_email, signup_verification_email
 
 from ecommerceBackend import settings
 
@@ -39,6 +39,30 @@ class TOTPMFAService:
         return totp.verify(code, valid_window=0)  # Only allow current window
     
 
+    def send_signup_verification_email(self, user):
+        """Send signup verification email"""
+        try:
+            code = self.get_current_code(user)
+            
+            self.ses_client.send_email(
+                Source=signup_verification_email.sender_email,
+                Destination={"ToAddresses": [user.email]},
+                Message={
+                    "Subject": {"Data": signup_verification_email.subject, "Charset": "UTF-8"},
+                    "Body": {
+                        "Html": {
+                            "Data": signup_verification_email.body_html.format(code=code), 
+                            "Charset": "UTF-8"
+                        },
+                    }
+                }
+            )
+
+            return True
+        except Exception as e:
+            return False
+
+
     def send_mfa_code_email(self, user):
         """Send MFA code via email"""
         try:
@@ -61,7 +85,7 @@ class TOTPMFAService:
             return True
         except Exception as e:
             return False
-    
+
 
     def send_mfa_code_sms(self, user):
         """Send MFA code via SMS (using AWS SNS)"""

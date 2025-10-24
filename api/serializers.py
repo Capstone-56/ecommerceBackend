@@ -28,8 +28,7 @@ class UserAddressSerializer(serializers.ModelSerializer):
 
 class UserModelSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
-    isActive = serializers.BooleanField(source="is_active", read_only=True)
-    isStaff = serializers.BooleanField(source="is_staff", read_only=True)
+    isActive = serializers.BooleanField(source="is_active")
     isSuperuser = serializers.BooleanField(source="is_superuser", read_only=True)
     addresses = UserAddressSerializer(
         many=True,
@@ -41,7 +40,7 @@ class UserModelSerializer(serializers.ModelSerializer):
         model = UserModel
         fields = [
             "id", "username", "email", "firstName", "lastName", "addresses",
-            "phone", "password", "role", "isActive", "isStaff", "isSuperuser"
+            "phone", "password", "role", "isActive", "isSuperuser"
         ]
 
     def create(self, validated_data):

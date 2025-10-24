@@ -45,3 +45,29 @@ mfa_email = MFAEmail(
         </html>
     """
 )
+
+@dataclass
+class SignupVerificationEmail:
+    sender_email: str
+    subject: str
+    body_html: str
+
+signup_verification_email = SignupVerificationEmail(
+    sender_email="BDNX@bdnx.com",
+    subject="Signup Verification",
+    body_html="""
+        <html>
+        <body>
+        <h2>Signup Verification</h2>
+        <p>Signup Verification
+          We've received a signup request for your BDNX account.
+          Please enter the following verification code to complete your signup:
+          <strong>{code}</strong>
+          This code will expire in 5 minutes.
+          If you didn't request this code, please ignore this email.
+          For security reasons, do not share this code with anyone.
+        </p>
+        </body>
+        </html>
+    """
+)
