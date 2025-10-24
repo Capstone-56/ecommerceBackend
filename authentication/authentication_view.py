@@ -97,15 +97,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
         if user.mfa_enabled:
             response = Response({"mfaRequired": True}, status=status.HTTP_200_OK)
             
-            # Set HTTP-only cookies for MFA state
-            response.set_cookie(
-                Constants.CookieName.MFA_REQUIRED,
-                "true",
-                httponly=True,
-                secure=True,
-                samesite="Lax",
-                max_age=int(Constants.MFA_STATE_LIFETIME.total_seconds())
-            )
+            # Set HTTP-only cookie for MFA state
             response.set_cookie(
                 Constants.CookieName.MFA_USER_ID,
                 str(user.id),
@@ -131,10 +123,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
         User selects MFA method and receives code
         GET /auth/mfa-method?method=email or sms
         """
-        # Verify MFA state from HTTP-only cookies
-        if request.COOKIES.get(Constants.CookieName.MFA_REQUIRED) != "true":
-            return HttpResponseBadRequest("MFA not required for this session")
-        
+        # Verify MFA state from HTTP-only cookie
         user_id = request.COOKIES.get(Constants.CookieName.MFA_USER_ID)
         if not user_id:
             return HttpResponseBadRequest("Invalid MFA session")
@@ -148,6 +137,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
         if not method or method not in ["email", "sms"]:
             return HttpResponseBadRequest("Invalid method.")
             
+        success = False
         if method == "email":
             success = self.mfa_service.send_mfa_code_email(user)
         elif method == "sms":
@@ -156,23 +146,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
             success = self.mfa_service.send_mfa_code_sms(user)
         
         if success:
-            # Set MFA method in HTTP-only cookie
-            response = Response(
-                {
-                    "message": f"MFA code sent via {method}"
-                }, 
-                status=status.HTTP_200_OK
-            )
-            response.set_cookie(
-                Constants.CookieName.MFA_METHOD,
-                method,
-                httponly=True,
-                secure=True,
-                samesite="Lax",
-                max_age=int(Constants.MFA_STATE_LIFETIME.total_seconds())
-            )
-            
-            return response
+            return Response(f"MFA code sent via {method}", status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -187,10 +161,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
           "code": "123456"
         }
         """
-        # Verify MFA state from HTTP-only cookies
-        if request.COOKIES.get(Constants.CookieName.MFA_REQUIRED) != "true":
-            return HttpResponseBadRequest("MFA not required for this session")
-        
+        # Verify MFA state from HTTP-only cookie
         user_id = request.COOKIES.get(Constants.CookieName.MFA_USER_ID)
         if not user_id:
             return HttpResponseBadRequest("Invalid MFA session")
@@ -212,12 +183,9 @@ class AuthenticationViewSet(viewsets.ViewSet):
         accessToken = refreshToken.access_token
         utils.store_hashed_refresh(user, str(refreshToken))
 
-        # Clear MFA cookies and complete authentication
+        # Clear MFA cookie and complete authentication
         response = setCookie(accessToken, refreshToken, user)
-        
-        response.delete_cookie(Constants.CookieName.MFA_REQUIRED, path="/")
         response.delete_cookie(Constants.CookieName.MFA_USER_ID, path="/")
-        response.delete_cookie(Constants.CookieName.MFA_METHOD, path="/")
         
         return response
 
@@ -251,11 +219,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
         response = Response({"detail": "Logged out successfully"}, status=status.HTTP_200_OK)
         response.delete_cookie(Constants.CookieName.ACCESS_TOKEN, path="/")
         response.delete_cookie(Constants.CookieName.REFRESH_TOKEN, path="/")
-        
-        # Clear MFA state cookies
-        response.delete_cookie(Constants.CookieName.MFA_REQUIRED, path="/")
         response.delete_cookie(Constants.CookieName.MFA_USER_ID, path="/")
-        response.delete_cookie(Constants.CookieName.MFA_METHOD, path="/")
 
         return response
     

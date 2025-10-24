@@ -9,6 +9,4 @@ class Constants:
     class CookieName:
         ACCESS_TOKEN = "accessToken"
         REFRESH_TOKEN = "refreshToken"
-        MFA_REQUIRED = "mfaRequired"
         MFA_USER_ID = "mfaUserId"
-        MFA_METHOD = "mfaMethod"

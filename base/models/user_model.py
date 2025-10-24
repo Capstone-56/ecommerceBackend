@@ -21,11 +21,11 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
         default=ROLE.CUSTOMER.value,
     )
     refreshToken = models.CharField(max_length=255, unique=True, blank=True, null=True)
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True, db_column="isActive")
+    #is_staff = models.BooleanField(default=False) (this is DRF convention, see https://forum.djangoproject.com/t/understanding-of-user-is-staff-field/35838)
 
-    mfa_enabled = models.BooleanField(default=False)
-    mfa_secret = models.CharField(max_length=32, blank=True, null=True)
+    mfa_enabled = models.BooleanField(default=False, db_column="mfaEnabled")
+    mfa_secret = models.CharField(max_length=32, blank=True, null=True, db_column="mfaSecret")
 
     objects = UserManager()
 
@@ -34,9 +34,6 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
 
     def set_password(self, raw_password):
         self.password = make_password(raw_password)
-
-    def __str__(self):
-        return f"{self.username}"
 
     class Meta:
         db_table = "user"  # Overwrites the default table name
