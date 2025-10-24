@@ -146,7 +146,14 @@ class AuthenticationViewSet(viewsets.ViewSet):
             success = self.mfa_service.send_mfa_code_sms(user)
         
         if success:
-            return Response(f"MFA code sent via {method}", status=status.HTTP_200_OK)
+            if method == "email":
+                return Response(f"MFA code sent via email to {user.email}", status=status.HTTP_200_OK)
+            elif method == "sms":
+                # Truncate phone to last 3 digits for privacy
+                phone_last_3 = user.phone[-3:] if user.phone else "***"
+                return Response(f"MFA code sent via SMS to ***{phone_last_3}", status=status.HTTP_200_OK)
+            else:
+                return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
