@@ -1,5 +1,6 @@
 import re
 from django.db import models
+from django.core.exceptions import ValidationError
 from mptt.models import MPTTModel, TreeForeignKey
 
 class CategoryModel(MPTTModel):
@@ -22,18 +23,26 @@ class CategoryModel(MPTTModel):
     )
 
     def save(self, *args, **kwargs):
-        # Remove all whitespace and lowercase:
-        # "My Category Name" → "mycategoryname"
-        stripped = re.sub(r"\s+", "", self.name)
-        self.internalName = stripped.lower()
+        # Only generate internalName for new instances
+        if not self.pk:  # New instance
+            # Replace whitespace with hyphens and lowercase:
+            # "Men Shirts" → "men-shirts"
+            stripped = re.sub(r"\s+", "-", self.name)
+            generated_internal_name = stripped.lower()
+            
+            # Check if the internalName already exists
+            if CategoryModel.objects.filter(internalName=generated_internal_name).exists():
+                raise ValidationError(
+                    f"A category with the name '{self.name}' already exists (internal name: '{generated_internal_name}')."
+                )
+            
+            self.internalName = generated_internal_name
+        
+        # For updates, internalName remains unchanged, just update other fields
         super().save(*args, **kwargs)
-
-    def __str__(self):
-        return self.name
 
     class Meta:
         db_table = "category"
     
     class MPTTMeta:
         parent_attr = "parentCategory"
-        order_insertion_by = ["internalName"]

@@ -15,10 +15,6 @@ from base.models import UserModel
 from api.serializers import UserModelSerializer
 
 class UserViewSet(viewsets.ViewSet):
-
-    # for testing purposes, you need to be authenticated by attaching to request Headder:
-    # Authorization: Bearer <accessToken>
-    # to call GET /api/user
     def get_permissions(self):
         if self.action in ["list", "delete", "create", "retrieve", "update"]:
             return [IsAuthenticated()]
