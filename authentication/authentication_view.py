@@ -1,27 +1,36 @@
 import boto3
+
+from django.http import HttpResponseBadRequest
+
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
+
 from api.serializers import UserModelSerializer
+from api.services.mfa_service import TOTPMFAService
+
 from base import Constants
 from base import utils
 from base.enums import ROLE
 from base.models import *
+
 from ecommerceBackend import settings
+
 from django.utils.http import urlsafe_base64_encode
 from django.utils.http import urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+
 from .email_templates import password_reset_email
 
 # Token generator for resetting passwords.
 token_generator = PasswordResetTokenGenerator()
 # AWS email service.
-ses_client = boto3.client('ses', 
-                          region_name='ap-southeast-2',
+ses_client = boto3.client("ses", 
+                          region_name="ap-southeast-2",
                           aws_access_key_id=settings.AWS_ACCESS_KEY,
                           aws_secret_access_key=settings.AWS_SECRET_KEY)
 
@@ -29,6 +38,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
     """
     Handles user authentication operations like sign-up, login, token refresh, 2FA, etc.
     """
+    mfa_service = TOTPMFAService()
 
     @action(detail=False, methods=["post"], permission_classes=[AllowAny], url_path="signup", authentication_classes=[])
     def signup(self, request):
@@ -84,12 +94,132 @@ class AuthenticationViewSet(viewsets.ViewSet):
         if not user.is_active:
             return Response({"detail": "Account disabled"}, status=status.HTTP_403_FORBIDDEN)
 
-        # Issue JWTs
+        if user.mfa_enabled:
+            response = Response({"mfaRequired": True}, status=status.HTTP_200_OK)
+            
+            # Set HTTP-only cookies for MFA state
+            response.set_cookie(
+                Constants.CookieName.MFA_REQUIRED,
+                "true",
+                httponly=True,
+                secure=True,
+                samesite="Lax",
+                max_age=int(Constants.MFA_STATE_LIFETIME.total_seconds())
+            )
+            response.set_cookie(
+                Constants.CookieName.MFA_USER_ID,
+                str(user.id),
+                httponly=True,
+                secure=True,
+                samesite="Lax",
+                max_age=int(Constants.MFA_STATE_LIFETIME.total_seconds())
+            )
+            
+            return response
+
+        # Issue JWTs for non-MFA users
         refreshToken = RefreshToken.for_user(user)
         accessToken = refreshToken.access_token
         utils.store_hashed_refresh(user, str(refreshToken))
 
         return setCookie(accessToken, refreshToken, user)
+
+
+    @action(detail=False, methods=["get"], url_path="mfa-method", permission_classes=[AllowAny])
+    def select_mfa_method(self, request):
+        """
+        User selects MFA method and receives code
+        GET /auth/mfa-method?method=email or sms
+        """
+        # Verify MFA state from HTTP-only cookies
+        if request.COOKIES.get(Constants.CookieName.MFA_REQUIRED) != "true":
+            return HttpResponseBadRequest("MFA not required for this session")
+        
+        user_id = request.COOKIES.get(Constants.CookieName.MFA_USER_ID)
+        if not user_id:
+            return HttpResponseBadRequest("Invalid MFA session")
+        
+        try:
+            user = UserModel.objects.get(id=user_id, mfa_enabled=True)
+        except UserModel.DoesNotExist:
+            return HttpResponseBadRequest("Invalid user or MFA not enabled")
+        
+        method = request.query_params.get("method")
+        if not method or method not in ["email", "sms"]:
+            return HttpResponseBadRequest("Invalid method.")
+            
+        if method == "email":
+            success = self.mfa_service.send_mfa_code_email(user)
+        elif method == "sms":
+            if not user.phone:
+                return HttpResponseBadRequest("Phone number not available for SMS")
+            success = self.mfa_service.send_mfa_code_sms(user)
+        
+        if success:
+            # Set MFA method in HTTP-only cookie
+            response = Response(
+                {
+                    "message": f"MFA code sent via {method}"
+                }, 
+                status=status.HTTP_200_OK
+            )
+            response.set_cookie(
+                Constants.CookieName.MFA_METHOD,
+                method,
+                httponly=True,
+                secure=True,
+                samesite="Lax",
+                max_age=int(Constants.MFA_STATE_LIFETIME.total_seconds())
+            )
+            
+            return response
+        else:
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+    @action(detail=False, methods=["post"], url_path="login-mfa", permission_classes=[AllowAny])
+    def login_mfa(self, request):
+        """
+        Complete login with MFA verification
+        POST /auth/login-mfa
+        Request body JSON:
+        {
+          "code": "123456"
+        }
+        """
+        # Verify MFA state from HTTP-only cookies
+        if request.COOKIES.get(Constants.CookieName.MFA_REQUIRED) != "true":
+            return HttpResponseBadRequest("MFA not required for this session")
+        
+        user_id = request.COOKIES.get(Constants.CookieName.MFA_USER_ID)
+        if not user_id:
+            return HttpResponseBadRequest("Invalid MFA session")
+        
+        try:
+            user = UserModel.objects.get(id=user_id, mfa_enabled=True)
+        except UserModel.DoesNotExist:
+            return HttpResponseBadRequest("Invalid user or MFA not enabled")
+        
+        code = request.data.get("code")
+        if not code:
+            return HttpResponseBadRequest("MFA code is required")
+
+        if not self.mfa_service.verify_mfa_code(user, code):
+            return HttpResponseBadRequest("Invalid or expired MFA code")
+
+        # Issue JWTs after successful MFA verification
+        refreshToken = RefreshToken.for_user(user)
+        accessToken = refreshToken.access_token
+        utils.store_hashed_refresh(user, str(refreshToken))
+
+        # Clear MFA cookies and complete authentication
+        response = setCookie(accessToken, refreshToken, user)
+        
+        response.delete_cookie(Constants.CookieName.MFA_REQUIRED, path="/")
+        response.delete_cookie(Constants.CookieName.MFA_USER_ID, path="/")
+        response.delete_cookie(Constants.CookieName.MFA_METHOD, path="/")
+        
+        return response
 
 
     @action(detail=False, methods=["delete"], url_path="logout", permission_classes=[AllowAny])
@@ -102,7 +232,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
         - Deletes both JWT cookies
         - Always returns 200 OK (idempotent operation)
         """
-        raw_refresh = request.COOKIES.get(Constants.REFRESH_TOKEN)
+        raw_refresh = request.COOKIES.get(Constants.CookieName.REFRESH_TOKEN)
         
         # Try to blacklist the refresh token if it exists and is valid
         if raw_refresh:
@@ -119,8 +249,13 @@ class AuthenticationViewSet(viewsets.ViewSet):
 
         # Always clear cookies and return success
         response = Response({"detail": "Logged out successfully"}, status=status.HTTP_200_OK)
-        response.delete_cookie(Constants.ACCESS_TOKEN, path="/")
-        response.delete_cookie(Constants.REFRESH_TOKEN, path="/")
+        response.delete_cookie(Constants.CookieName.ACCESS_TOKEN, path="/")
+        response.delete_cookie(Constants.CookieName.REFRESH_TOKEN, path="/")
+        
+        # Clear MFA state cookies
+        response.delete_cookie(Constants.CookieName.MFA_REQUIRED, path="/")
+        response.delete_cookie(Constants.CookieName.MFA_USER_ID, path="/")
+        response.delete_cookie(Constants.CookieName.MFA_METHOD, path="/")
 
         return response
     
@@ -213,7 +348,7 @@ def setCookie(accessToken, refreshToken, user) -> Response:
     }, status=200)
 
     response.set_cookie(
-        Constants.ACCESS_TOKEN,
+        Constants.CookieName.ACCESS_TOKEN,
         str(accessToken),
         httponly=True,
         secure=True,
@@ -222,7 +357,7 @@ def setCookie(accessToken, refreshToken, user) -> Response:
     )
 
     response.set_cookie(
-        Constants.REFRESH_TOKEN,
+        Constants.CookieName.REFRESH_TOKEN,
         str(refreshToken),
         httponly=True,
         secure=True,

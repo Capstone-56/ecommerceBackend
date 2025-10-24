@@ -21,7 +21,7 @@ class RefreshCookieMiddleware:
         
         if new_access:
             response.set_cookie(
-                Constants.ACCESS_TOKEN,
+                Constants.CookieName.ACCESS_TOKEN,
                 new_access,
                 httponly=True,
                 secure=True,
@@ -50,8 +50,8 @@ class RefreshCookieMiddleware:
         
         if is_api_request and not is_public_endpoint:
             # Check if user has auth cookies but is not authenticated
-            has_access_token = bool(request.COOKIES.get(Constants.ACCESS_TOKEN))
-            has_refresh_token = bool(request.COOKIES.get(Constants.REFRESH_TOKEN))
+            has_access_token = bool(request.COOKIES.get(Constants.CookieName.ACCESS_TOKEN))
+            has_refresh_token = bool(request.COOKIES.get(Constants.CookieName.REFRESH_TOKEN))
             was_authenticated = has_access_token or has_refresh_token
             
             if not request.user.is_authenticated:
