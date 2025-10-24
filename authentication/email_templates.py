@@ -23,3 +23,25 @@ password_reset_email = PasswordResetEmail(
         </html>
     """
 )
+
+@dataclass
+class MFAEmail:
+    sender_email: str
+    subject: str
+    body_html: str
+
+mfa_email = MFAEmail(
+    sender_email="BDNX@bdnx.com",
+    subject="Your BDNX Security Code",
+    body_html="""
+        <html>
+        <body>
+            <h2>Security Code</h2>
+            <p>Your security code is: <strong>{code}</strong></p>
+            <p>This code will expire in 5 minutes.</p>
+            <p>If you didn't request this code, please ignore this email.</p>
+            <p>For security reasons, do not share this code with anyone.</p>
+        </body>
+        </html>
+    """
+)
