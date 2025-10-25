@@ -1,13 +1,15 @@
 import os
 import requests
+
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseBadRequest
+
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from django.conf import settings
 
 from api.serializers import LocationSerializer
 from base.models.location_model import LocationModel
-
 
 class LocationViewSet(viewsets.ViewSet):
     """
@@ -21,6 +23,55 @@ class LocationViewSet(viewsets.ViewSet):
         locations = LocationModel.objects.all()
         serializer = LocationSerializer(locations, many=True)
         return Response(serializer.data)
+
+    def create(self, request):
+        """
+        Create a new location.
+        POST /api/location
+        
+        Body:
+        {
+            "country_code": "US",
+            "country_name": "United States",
+            "currency_code": "USD"
+        }
+        """
+        serializer = LocationSerializer(data=request.data)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        return HttpResponseBadRequest(serializer.errors)
+
+    def retrieve(self, request, pk=None):
+        """
+        Retrieve a specific location by country code.
+        GET /api/location/{country_code}
+        """
+        location = get_object_or_404(LocationModel, country_code=pk.upper())
+        serializer = LocationSerializer(location)
+        return Response(serializer.data)
+
+    def update(self, request, pk=None):
+        """
+        Update a location (PUT).
+        PUT /api/location/{country_code}
+        
+        Body:
+        {
+            "country_name": "United States",
+            "currency_code": "USD"
+        }
+        """
+        location = get_object_or_404(LocationModel, country_code=pk.upper())
+        serializer = LocationSerializer(location, data=request.data)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        
+        return HttpResponseBadRequest(serializer.errors)
 
     @action(detail=False, methods=['post'], url_path='coordinates-to-country')
     def coordinates_to_country(self, request):
