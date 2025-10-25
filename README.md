@@ -1,17 +1,86 @@
-Step 1:
+# eCommerce Server
+This repo is responsible for developing the server for the eCommerce Website
+
+## Local Database Setup
+### Install Postgres server and PgAdmin4
+#### For Windows
+Download PostgreSQL (v17.4): https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
+
+Download PgAdmin4 (v9.2): https://www.pgadmin.org/download/pgadmin-4-windows/
+
+#### For Mac
+Download Postgres.app: https://postgresapp.com/downloads.html
+
+`Postgres.app with PostgreSQL 17 (Universal)`
+
+### Creating local DB schema
+Go to Tools -> Query Tool
+```sql
+CREATE DATABASE ecommerce_db;
+```
+
+Second query
+```sql
+CREATE USER ecommerce_admin WITH LOGIN SUPERUSER CREATEDB CREATEROLE INHERIT NOREPLICATION BYPASSRLS PASSWORD 'capstone56';
+GRANT ALL PRIVILEGES ON DATABASE ecommerce_db TO ecommerce_admin;
+```
+
+Make sure you install these two extensions in your DB for product searching functionality.
+
+This is required for fuzzy matching to work
+```sql
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+```
+
+This removes accents from words (café → cafe)
+```sql
+CREATE EXTENSION IF NOT EXISTS unaccent;
+```
+
+## Local Server Setup
+__Step 1:__
+
 python -m venv .venv
 
-Step2:
+__Step2:__
 
-Windows: .venv\Scripts\activate
+- Windows: .venv\Scripts\activate
 
-MacOS: source .venv/bin/activate
+- MacOS: source .venv/bin/activate
+
+### If using IDE (PyCharm Community, Visual Studio, Intellij, etc.)
+
+    Step 3:
+    
+    In your IDE, there should be a run config called runserver, choose that one and run in debug mode.
+
+### If using code editor (e.g, VS Code) without the ability to run the config file
+
+    Step 3:
+    
+    pip install -r requirements.txt
+    
+    Step 4:
+    
+    python manage.py makemigrations
+    
+    Step 5:
+    
+    python manage.py migrate
+    
+    Step 6:
+    
+    python manage.py runserver
+
+## Verify server's working with DB
+Go to PgAdmin, checks if this exists under the correct database![image](https://github.com/user-attachments/assets/9acc25f4-f9e5-419f-8a66-4bad7cb920e4)
+
+Right-click on the table -> View/Edit data -> All Rows
+
+Add one or more entry to the table![image](https://github.com/user-attachments/assets/62938376-56f9-402a-b195-70c4bf36cb3f)
+
+Save data changes -> enter into the browser http://localhost:8000/api/user to see if the API returned the correct data from your local DB
 
 
-Step 3:
 
-pip install -r requirements.txt
 
-Step 4:
-
-In an IDE of your choice (PyCharm Community, Visual Studio, Intellij, etc.), there should be a run config called runserver, choose that one and run. Otherwise let me know and run command `python manage.py runserver` in the mean time

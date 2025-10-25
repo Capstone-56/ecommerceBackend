@@ -1,6 +1,8 @@
-*/__pycache__/
+**/__pycache__/
 env/
 .venv/
 .idea/
 .vs/ecommerceBackend/
 .vs/slnx.sqlite
+.DS_Store
+.env

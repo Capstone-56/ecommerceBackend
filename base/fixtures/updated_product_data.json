@@ -1,0 +1,6411 @@
+[
+  {
+    "model": "base.CategoryModel",
+    "pk": "men",
+    "fields": {
+      "name": "Men",
+      "description": "Men's clothing and accessories",
+      "parentCategory": null,
+      "lft": 1,
+      "rght": 32,
+      "tree_id": 1,
+      "level": 0
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "women",
+    "fields": {
+      "name": "Women",
+      "description": "Women's clothing and accessories",
+      "parentCategory": null,
+      "lft": 1,
+      "rght": 36,
+      "tree_id": 2,
+      "level": 0
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "kids-baby",
+    "fields": {
+      "name": "Kids & Baby",
+      "description": "Clothing and accessories for kids and babies",
+      "parentCategory": null,
+      "lft": 1,
+      "rght": 38,
+      "tree_id": 3,
+      "level": 0
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "home",
+    "fields": {
+      "name": "Home",
+      "description": "Home textile and decor",
+      "parentCategory": null,
+      "lft": 1,
+      "rght": 4,
+      "tree_id": 4,
+      "level": 0
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "tech",
+    "fields": {
+      "name": "Tech",
+      "description": "Electronics and gadgets",
+      "parentCategory": null,
+      "lft": 1,
+      "rght": 4,
+      "tree_id": 5,
+      "level": 0
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "health-beauty",
+    "fields": {
+      "name": "Health & Beauty",
+      "description": "Health and beauty products",
+      "parentCategory": null,
+      "lft": 1,
+      "rght": 18,
+      "tree_id": 6,
+      "level": 0
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "mens-shirts",
+    "fields": {
+      "name": "Shirts",
+      "description": "Men's shirts",
+      "parentCategory": "men",
+      "lft": 2,
+      "rght": 3,
+      "tree_id": 1,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "mens-pants",
+    "fields": {
+      "name": "Pants",
+      "description": "Men's pants",
+      "parentCategory": "men",
+      "lft": 4,
+      "rght": 5,
+      "tree_id": 1,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "mens-jumpers",
+    "fields": {
+      "name": "Jumpers",
+      "description": "Men's jumpers",
+      "parentCategory": "men",
+      "lft": 6,
+      "rght": 7,
+      "tree_id": 1,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "mens-jackets",
+    "fields": {
+      "name": "Jackets",
+      "description": "Men's jackets",
+      "parentCategory": "men",
+      "lft": 8,
+      "rght": 9,
+      "tree_id": 1,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "mens-shoes",
+    "fields": {
+      "name": "Shoes",
+      "description": "Men's shoes",
+      "parentCategory": "men",
+      "lft": 10,
+      "rght": 19,
+      "tree_id": 1,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "mens-running-shoes",
+    "fields": {
+      "name": "Running Shoes",
+      "description": "Men's running shoes",
+      "parentCategory": "mens-shoes",
+      "lft": 11,
+      "rght": 12,
+      "tree_id": 1,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "mens-leather-shoes",
+    "fields": {
+      "name": "Leather Shoes",
+      "description": "Men's leather shoes",
+      "parentCategory": "mens-shoes",
+      "lft": 13,
+      "rght": 14,
+      "tree_id": 1,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "mens-hiking-shoes",
+    "fields": {
+      "name": "Hiking Shoes",
+      "description": "Men's hiking shoes",
+      "parentCategory": "mens-shoes",
+      "lft": 15,
+      "rght": 16,
+      "tree_id": 1,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "mens-accessories",
+    "fields": {
+      "name": "Accessories",
+      "description": "Men's accessories",
+      "parentCategory": "men",
+      "lft": 20,
+      "rght": 23,
+      "tree_id": 1,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "mens-caps",
+    "fields": {
+      "name": "Caps",
+      "description": "Men's caps",
+      "parentCategory": "mens-accessories",
+      "lft": 21,
+      "rght": 22,
+      "tree_id": 1,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "mens-uniforms",
+    "fields": {
+      "name": "Uniforms",
+      "description": "Men's uniforms",
+      "parentCategory": "men",
+      "lft": 24,
+      "rght": 31,
+      "tree_id": 1,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "mens-school-uniform",
+    "fields": {
+      "name": "School Uniforms",
+      "description": "Men's school uniforms",
+      "parentCategory": "mens-uniforms",
+      "lft": 25,
+      "rght": 26,
+      "tree_id": 1,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "mens-medical-uniform",
+    "fields": {
+      "name": "Medical Uniforms",
+      "description": "Men's medical uniforms",
+      "parentCategory": "mens-uniforms",
+      "lft": 27,
+      "rght": 28,
+      "tree_id": 1,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-tops",
+    "fields": {
+      "name": "Tops",
+      "description": "Women's tops",
+      "parentCategory": "women",
+      "lft": 2,
+      "rght": 3,
+      "tree_id": 2,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-traditional",
+    "fields": {
+      "name": "Traditional",
+      "description": "Women's traditional clothing",
+      "parentCategory": "women",
+      "lft": 4,
+      "rght": 5,
+      "tree_id": 2,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-pants",
+    "fields": {
+      "name": "Pants",
+      "description": "Women's pants",
+      "parentCategory": "women",
+      "lft": 6,
+      "rght": 7,
+      "tree_id": 2,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-jumpers",
+    "fields": {
+      "name": "Jumpers",
+      "description": "Women's jumpers",
+      "parentCategory": "women",
+      "lft": 8,
+      "rght": 9,
+      "tree_id": 2,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-jackets",
+    "fields": {
+      "name": "Jackets",
+      "description": "Women's jackets",
+      "parentCategory": "women",
+      "lft": 10,
+      "rght": 11,
+      "tree_id": 2,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-shoes",
+    "fields": {
+      "name": "Shoes",
+      "description": "Women's shoes",
+      "parentCategory": "women",
+      "lft": 12,
+      "rght": 19,
+      "tree_id": 2,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-running-shoes",
+    "fields": {
+      "name": "Running Shoes",
+      "description": "Women's running shoes",
+      "parentCategory": "womens-shoes",
+      "lft": 13,
+      "rght": 14,
+      "tree_id": 2,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-dress-shoes",
+    "fields": {
+      "name": "Dress Shoes",
+      "description": "Women's dress shoes",
+      "parentCategory": "womens-shoes",
+      "lft": 15,
+      "rght": 16,
+      "tree_id": 2,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-hiking-shoes",
+    "fields": {
+      "name": "Hiking Shoes",
+      "description": "Women's hiking shoes",
+      "parentCategory": "womens-shoes",
+      "lft": 17,
+      "rght": 18,
+      "tree_id": 2,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-sweaters",
+    "fields": {
+      "name": "Sweaters",
+      "description": "Women's sweaters",
+      "parentCategory": "women",
+      "lft": 20,
+      "rght": 21,
+      "tree_id": 2,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-accessories",
+    "fields": {
+      "name": "Accessories",
+      "description": "Women's accessories",
+      "parentCategory": "women",
+      "lft": 22,
+      "rght": 27,
+      "tree_id": 2,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-caps",
+    "fields": {
+      "name": "Caps",
+      "description": "Women's caps",
+      "parentCategory": "womens-accessories",
+      "lft": 23,
+      "rght": 24,
+      "tree_id": 2,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-uniforms",
+    "fields": {
+      "name": "Uniforms",
+      "description": "Women's uniforms",
+      "parentCategory": "women",
+      "lft": 28,
+      "rght": 35,
+      "tree_id": 2,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-school-uniform",
+    "fields": {
+      "name": "School Uniforms",
+      "description": "Women's school uniforms",
+      "parentCategory": "womens-uniforms",
+      "lft": 29,
+      "rght": 30,
+      "tree_id": 2,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "womens-medical-uniform",
+    "fields": {
+      "name": "Medical Uniforms",
+      "description": "Women's medical uniforms",
+      "parentCategory": "womens-uniforms",
+      "lft": 31,
+      "rght": 32,
+      "tree_id": 2,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "girls",
+    "fields": {
+      "name": "Girls",
+      "description": "Girls clothing",
+      "parentCategory": "kids-baby",
+      "lft": 2,
+      "rght": 9,
+      "tree_id": 3,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "girls-jumpers-jackets",
+    "fields": {
+      "name": "Jumpers and Jackets",
+      "description": "Girls jumpers and jackets",
+      "parentCategory": "girls",
+      "lft": 3,
+      "rght": 4,
+      "tree_id": 3,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "girls-tops",
+    "fields": {
+      "name": "Tops",
+      "description": "Girls tops",
+      "parentCategory": "girls",
+      "lft": 5,
+      "rght": 6,
+      "tree_id": 3,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "girls-pants",
+    "fields": {
+      "name": "Pants",
+      "description": "Girls pants",
+      "parentCategory": "girls",
+      "lft": 7,
+      "rght": 8,
+      "tree_id": 3,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "boys",
+    "fields": {
+      "name": "Boys",
+      "description": "Boys clothing",
+      "parentCategory": "kids-baby",
+      "lft": 10,
+      "rght": 17,
+      "tree_id": 3,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "boys-jumpers-jackets",
+    "fields": {
+      "name": "Jumpers and Jackets",
+      "description": "Boys jumpers and jackets",
+      "parentCategory": "boys",
+      "lft": 11,
+      "rght": 12,
+      "tree_id": 3,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "boys-pants",
+    "fields": {
+      "name": "Pants",
+      "description": "Boys pants",
+      "parentCategory": "boys",
+      "lft": 13,
+      "rght": 14,
+      "tree_id": 3,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "boys-tops",
+    "fields": {
+      "name": "Tops",
+      "description": "Boys tops",
+      "parentCategory": "boys",
+      "lft": 15,
+      "rght": 16,
+      "tree_id": 3,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "babies",
+    "fields": {
+      "name": "Babies",
+      "description": "Babies clothing",
+      "parentCategory": "kids-baby",
+      "lft": 18,
+      "rght": 25,
+      "tree_id": 3,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "kids-uniforms",
+    "fields": {
+      "name": "Uniforms",
+      "description": "Kids uniforms",
+      "parentCategory": "kids-baby",
+      "lft": 26,
+      "rght": 27,
+      "tree_id": 3,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "kids-accessories",
+    "fields": {
+      "name": "Accessories",
+      "description": "Kids accessories",
+      "parentCategory": "kids-baby",
+      "lft": 28,
+      "rght": 29,
+      "tree_id": 3,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "kids-shoes",
+    "fields": {
+      "name": "Shoes",
+      "description": "Kids shoes",
+      "parentCategory": "kids-baby",
+      "lft": 30,
+      "rght": 37,
+      "tree_id": 3,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "boys-shoes",
+    "fields": {
+      "name": "Boys Shoes",
+      "description": "Shoes for boys",
+      "parentCategory": "kids-shoes",
+      "lft": 31,
+      "rght": 32,
+      "tree_id": 3,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "girls-shoes",
+    "fields": {
+      "name": "Girls Shoes",
+      "description": "Shoes for girls",
+      "parentCategory": "kids-shoes",
+      "lft": 33,
+      "rght": 34,
+      "tree_id": 3,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "baby-shoes",
+    "fields": {
+      "name": "Baby Shoes",
+      "description": "Shoes for babies",
+      "parentCategory": "kids-shoes",
+      "lft": 35,
+      "rght": 36,
+      "tree_id": 3,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "home-textile",
+    "fields": {
+      "name": "Home Textile",
+      "description": "Home textile products",
+      "parentCategory": "home",
+      "lft": 2,
+      "rght": 3,
+      "tree_id": 4,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "essentials-electronics",
+    "fields": {
+      "name": "Essentials & Electronics",
+      "description": "Electronics and gadgets",
+      "parentCategory": "tech",
+      "lft": 2,
+      "rght": 3,
+      "tree_id": 5,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "otc-supplement",
+    "fields": {
+      "name": "OTC & Supplements",
+      "description": "Over-the-counter medicines and supplements",
+      "parentCategory": "health-beauty",
+      "lft": 2,
+      "rght": 3,
+      "tree_id": 6,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "cosmetics",
+    "fields": {
+      "name": "Cosmetics",
+      "description": "Makeup and beauty products",
+      "parentCategory": "health-beauty",
+      "lft": 4,
+      "rght": 17,
+      "tree_id": 6,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "cosmetics-lipsticks",
+    "fields": {
+      "name": "Lipsticks",
+      "description": "Matte and Gloss Lipsticks in various shades",
+      "parentCategory": "cosmetics",
+      "lft": 5,
+      "rght": 6,
+      "tree_id": 6,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "cosmetics-eye-makeup",
+    "fields": {
+      "name": "Eye Makeup",
+      "description": "Eye makeup products",
+      "parentCategory": "cosmetics",
+      "lft": 7,
+      "rght": 8,
+      "tree_id": 6,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "cosmetics-face-makeup",
+    "fields": {
+      "name": "Face Makeup",
+      "description": "Face makeup products",
+      "parentCategory": "cosmetics",
+      "lft": 9,
+      "rght": 10,
+      "tree_id": 6,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "cosmetics-skincare",
+    "fields": {
+      "name": "Skincare",
+      "description": "Skincare products",
+      "parentCategory": "cosmetics",
+      "lft": 11,
+      "rght": 12,
+      "tree_id": 6,
+      "level": 2
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "accessories",
+    "fields": {
+      "name": "Accessories",
+      "description": "Fashion accessories",
+      "parentCategory": null,
+      "lft": 1,
+      "rght": 8,
+      "tree_id": 7,
+      "level": 0
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "accessories-fashion-jewelry",
+    "fields": {
+      "name": "Fashion Jewelry",
+      "description": "Earrings, Rings, Necklaces, Bracelets, Hoops",
+      "parentCategory": "accessories",
+      "lft": 2,
+      "rght": 3,
+      "tree_id": 7,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "accessories-womens-purses",
+    "fields": {
+      "name": "womens Purses",
+      "description": "Women purses and wallet sets in leather and PU leather",
+      "parentCategory": "accessories",
+      "lft": 4,
+      "rght": 5,
+      "tree_id": 7,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.CategoryModel",
+    "pk": "accessories-watches",
+    "fields": {
+      "name": "Watches",
+      "description": "Wrist watches for fashion and function",
+      "parentCategory": "accessories",
+      "lft": 6,
+      "rght": 7,
+      "tree_id": 7,
+      "level": 1
+    }
+  },
+  {
+    "model": "base.LocationModel",
+    "pk": "AU",
+    "fields": {
+      "country_name": "Australia"
+    }
+  },
+  {
+    "model": "base.LocationModel",
+    "pk": "US",
+    "fields": {
+      "country_name": "United States"
+    }
+  },
+  {
+    "model": "base.LocationModel",
+    "pk": "UK",
+    "fields": {
+      "country_name": "United Kingdom"
+    }
+  },
+  {
+    "model": "base.LocationModel",
+    "pk": "CA",
+    "fields": {
+      "country_name": "Canada"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "fcce454f-164b-43f4-a4e6-e107ff430dc2",
+    "fields": {
+      "images": [
+        "https://assets.kmart.com.au/transform/64db32d4-5171-4cf6-b4db-2639e57e84de/72827116-1?io=transform:fill,width:640,height:800"
+      ],
+      "featured": true,
+      "avgRating": 4.3,
+      "category": "mens-shirts"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "a2d3b6f7-3f28-4e11-b75c-5e09e8b2a9c8",
+    "fields": {
+      "images": [
+        "https://assets.kmart.com.au/transform/64db32d4-5171-4cf6-b4db-2639e57e84de/72827116-1?io=transform:fill,width:640,height:800"
+      ],
+      "featured": false,
+      "avgRating": 4.1,
+      "category": "mens-shirts"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "b6f17a1c-8b34-4df0-87b3-f364ab97dc6a",
+    "fields": {
+      "images": [
+        "https://assets.kmart.com.au/transform/f8d67af8-0dec-4511-8547-84e5623a4d6a/73421511-1?io=transform:fill,width:640,height:800"
+      ],
+      "featured": false,
+      "avgRating": 4.0,
+      "category": "mens-shirts"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "c3e981d2-2577-42de-b4f9-0f9c2dd9e35d",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.4,
+      "category": "mens-pants"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "d9b83f67-1999-4a15-b8e4-783a826bb07a",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.2,
+      "category": "mens-pants"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "f12c0d8b-e711-4bb8-baf3-4e2c45c9b09b",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 3.9,
+      "category": "mens-pants"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "e7a7c3a2-09bc-4095-9fc3-7ae1bdcae48f",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.7,
+      "category": "mens-jackets"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "bc9d41b4-4c21-4f59-a93f-0839a7a7d67d",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.0,
+      "category": "mens-jackets"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "a4468f0a-22ec-4ea6-851d-4576d9e204ee",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.1,
+      "category": "mens-jackets"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "bb937e6e-6f1d-4db9-9d2a-32fae7cc934f",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.3,
+      "category": "mens-jackets"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "df123eac-0f7e-4c9d-a735-fb4c1438f8bc",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.5,
+      "category": "mens-jackets"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "cc8e63bd-332d-4f8e-93b1-33232d5360f0",
+    "fields": {
+      "images": [
+        "https://assets.kmart.com.au/transform/39a41630-0557-4d6d-8cf3-ffbdce50e0c9/68972035-1?io=transform:fill,width:640,height:800"
+      ],
+      "featured": false,
+      "avgRating": 4.0,
+      "category": "mens-shirts"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "e5a9d9f3-489d-4607-88ab-c7a2a7e9d2bb",
+    "fields": {
+      "images": [
+        "https://assets.kmart.com.au/transform/4c6fea59-9b7d-44f3-a44d-73d9f8369d40/67929702-1?io=transform:fill,width:640,height:800"
+      ],
+      "featured": false,
+      "avgRating": 4.2,
+      "category": "mens-shirts"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "af7c7f85-0fdb-4c81-a76c-0bc3f32e4a5a",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.2,
+      "category": "boys-tops"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "64d2f933-3576-41b5-a40f-fc2e975812ee",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.0,
+      "category": "boys-tops"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "d3d13426-7c03-4e42-9f88-2f8be8c9e786",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.1,
+      "category": "boys-tops"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "a6518d2e-46cd-4f0d-89a8-9e1f4399b1d0",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.0,
+      "category": "boys-pants"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "f214caa2-b24c-4d20-8bdb-6e8a9e60eae3",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 3.9,
+      "category": "boys-pants"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "3a0d492d-5a8a-4b04-b3e0-2ff5e8c6e24f",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 3.8,
+      "category": "boys-pants"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "b8e0a3ec-00ff-4f0e-9847-831da383d832",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.5,
+      "category": "boys-jumpers-jackets"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "0287f2a9-cb2a-48a2-b2c4-74ae8466d37f",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.1,
+      "category": "boys-jumpers-jackets"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "45c7a85d-7eaf-4e9a-9a5f-9e949e62a631",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.0,
+      "category": "boys-jumpers-jackets"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "302cb988-1740-4c06-a49c-29d6f1d1d8f2",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.1,
+      "category": "boys-jumpers-jackets"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "9d07f347-4f47-4eb8-a40b-5087cc2bdfd2",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.3,
+      "category": "boys-jumpers-jackets"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "ccf69b5e-3113-408a-91a0-6985df90a9a9",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.0,
+      "category": "boys-tops"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "a1eae6d3-9797-49e9-912b-01577d3524a7",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.1,
+      "category": "boys-tops"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "b3a9f2c4-59e8-4d72-b2d9-f36e42f8a67a",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.1,
+      "category": "womens-tops"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "c19e245d-773a-4a49-8d7e-20c3c9d2c17e",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.4,
+      "category": "womens-traditional"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "84f6c0b3-120d-4e72-bd17-d8256e6a7e6f",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.3,
+      "category": "womens-traditional"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "a5b2d5f8-5767-4dfe-87ea-8b67a253c1ab",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.0,
+      "category": "womens-pants"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "0a58b73d-d33b-4424-b917-f3e35c740312",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 3.8,
+      "category": "womens-pants"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "09d9db71-6774-4c4d-8c37-134bb2b769c0",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.2,
+      "category": "womens-jackets"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "c4f0e3de-0655-4d25-b575-1b3b6a4f3c53",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.6,
+      "category": "womens-jackets"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "9f8e84cb-6e36-4e9c-9d0b-7686a2c411f3",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.1,
+      "category": "womens-jackets"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "25136f3d-243b-4574-9303-7ad810c15d65",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.3,
+      "category": "womens-sweaters"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "7a71ebbc-f4bb-42c5-82d3-cb56e5f95c23",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.2,
+      "category": "womens-sweaters"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "9e1e3b0f-1c1d-43fa-9307-c61e3d9b8c90",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.5,
+      "category": "womens-jackets"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "357ac10a-b6a8-4f8a-b412-2c2e50d86ed9",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.0,
+      "category": "womens-tops"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "4e09357b-735f-4a3e-a8a7-7b64ac314c6c",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.1,
+      "category": "womens-tops"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "5d8b12f4-5a2a-411a-9f20-34ac87b1d75e",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.2,
+      "category": "girls-tops"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "721e12f0-b2f7-4d8c-a311-7d9c1ee271aa",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.5,
+      "category": "girls"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "a9f01123-e1b8-4c3d-b6c3-d4323ec023ad",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.1,
+      "category": "girls"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "f7b8c6e1-762b-4e03-9d67-2cddb5762e5e",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.3,
+      "category": "girls"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "142c97cc-234a-4c6a-93ca-82f37e414d38",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.0,
+      "category": "girls-pants"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "f14745f7-c1f7-4a17-8ed3-23e72b8e74a3",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.1,
+      "category": "girls-pants"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "43e0295a-270b-4f88-8765-17e2542cbe1f",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 3.9,
+      "category": "girls-pants"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "33e0e3f0-9434-4451-b0cb-5a6a156cc9bb",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.6,
+      "category": "girls-jumpers-jackets"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "d850c87e-b561-4a2c-8a09-857fe4f44b68",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.0,
+      "category": "girls-jumpers-jackets"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "9b3b8f12-4f53-4b3e-9181-4b4a36f31211",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.2,
+      "category": "girls-jumpers-jackets"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "a7487c07-68a9-4e82-b812-5410ddc2ae9f",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.3,
+      "category": "girls-jumpers-jackets"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "58b7f7bc-1bba-49a1-a19f-8340b886d0e8",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.4,
+      "category": "girls-jumpers-jackets"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "f8c827c7-3f30-4f2d-9d82-43f23a72a7d1",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.0,
+      "category": "girls-tops"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "1d9efb08-45ab-43a7-b04a-b0e6d94298c7",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.1,
+      "category": "girls-tops"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "f3a1459a-3c01-4ee0-bd26-5d80316ca3e8",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.5,
+      "category": "babies"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "e8bd0bf3-9260-4fa3-8a9c-28d97d1e8e23",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.3,
+      "category": "babies"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "7a6f1a9d-c6f7-46a8-9b0a-f7e2361e7694",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.6,
+      "category": "babies"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "c95c8f09-ffb0-42e7-a63e-3b49c64e8c55",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.4,
+      "category": "babies"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "0ffdbd8d-978a-4f8a-a8c1-2a1d68fa9db0",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.3,
+      "category": "babies"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "9a565f45-c920-44d6-9284-91d9bc3a18a7",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.2,
+      "category": "babies"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "2a7d04f2-6f52-4b90-bb06-836c9206b91f",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.5,
+      "category": "babies"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "90ddf4f3-1206-4e45-b45c-433c05aef5ad",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.7,
+      "category": "babies"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "2b4120d7-824f-40d3-8e03-d68a6823c6fc",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.1,
+      "category": "babies"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "c4db0df4-7215-44a2-a74d-7ad5ed2f120f",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.3,
+      "category": "babies"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "6a4c8a5e-9f5a-4f1e-9338-55f6b1a1d6e0",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.2,
+      "category": "babies"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "54a1e2b8-1d93-45b3-b3af-c6e6edb0d47e",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.4,
+      "category": "babies"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "8e7d3cb6-9fa0-4d60-aeef-6c9b2c6df3a1",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.3,
+      "category": "babies"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "109f4bc1-2b5a-4561-9832-3f13423d0dcd",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.4,
+      "category": "babies"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "a1c598a8-8bb2-4b3f-8e35-d58a58fcdb4e",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.5,
+      "category": "babies"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "31b3aeb4-6cb7-4fa3-9b3b-48c1d4d7d926",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.3,
+      "category": "babies"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "d51a8f1b-f097-44d0-b35e-546d7a7e2e7c",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.2,
+      "category": "mens-caps"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "7a2f9e89-bb30-42f9-8d2e-846c403b11b2",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.1,
+      "category": "mens-caps"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "1845f32e-0ae4-4ec8-b7bc-6ff52292b62a",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.3,
+      "category": "mens-caps"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "62e97de3-6477-4f21-9e3c-6f0f7ec9531b",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.0,
+      "category": "mens-caps"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "e96e5e2f-d4f4-44b4-b1a3-758b512a9b7c",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.4,
+      "category": "mens-caps"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "a9b3cdd1-731f-4b8b-9b21-c3d78f4d0eaf",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.2,
+      "category": "kids-uniforms"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "e92bc734-9e03-4a71-9d1f-4ed73f4a392d",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.3,
+      "category": "kids-uniforms"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "4a7f6a51-dc2b-46ae-8a37-91de26a2b8bc",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.1,
+      "category": "kids-uniforms"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "ca0d5b1e-9b6a-4f1b-b360-03f9cde32df5",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.2,
+      "category": "kids-uniforms"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "e7d3020c-98b3-4ef9-bbd3-9b28f6e5ca7e",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.6,
+      "category": "mens-medical-uniform"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "b03c5fcd-1f0f-49e9-9880-1c8bfc3a0bfb",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.4,
+      "category": "mens-medical-uniform"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "40f8a9cc-1c1f-4d3a-83e0-dc53e12a4f7b",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.5,
+      "category": "mens-medical-uniform"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "f23e459b-5e64-4c0f-b94d-cf6aee1f54d7",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.7,
+      "category": "mens-medical-uniform"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "a2f06b0a-9f39-4a91-98a6-2c8e5e9f5bc7",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.5,
+      "category": "home-textile"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "d94cb785-5d2f-41b6-8baf-c7b56c0bf8a2",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.7,
+      "category": "home-textile"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "f95c012f-3a31-4d9b-bdca-ff3a6a9b830e",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.6,
+      "category": "home-textile"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "e4d4e4d7-3d02-4e32-8b5d-8f879ad3a5b8",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.8,
+      "category": "home-textile"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "a91f5ed0-57e9-4ec9-9e15-712adbf0c69a",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.4,
+      "category": "cosmetics-lipsticks"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "f81307ea-4e23-43e8-bd2e-59e94c9f1f2c",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.2,
+      "category": "cosmetics-eye-makeup"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "4b5c88b7-3c6e-4a2c-978e-11d631ed685f",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.5,
+      "category": "cosmetics-face-makeup"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "2edaf927-8e54-432d-8e2b-ecf45f97a82a",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.3,
+      "category": "cosmetics-face-makeup"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "9a5a2a2a-fd8a-44d3-bc82-98d5d51c54a6",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.6,
+      "category": "cosmetics-skincare"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "bdb7b317-4e13-4edb-9de6-1d1e1a3e7c90",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.4,
+      "category": "cosmetics-face-makeup"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "3de4253f-0f2a-4d48-b3e0-3f95c6e7e678",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.3,
+      "category": "cosmetics-face-makeup"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "8f3451a0-05b6-44e7-bc22-9f9e2ecb3e48",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.1,
+      "category": "cosmetics-skincare"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "c6c9a7b5-2d42-414f-9c2f-1d94d04b9a7d",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.5,
+      "category": "cosmetics-skincare"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "7b0f96a6-7839-45d1-bd99-8742d8febb1a",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.6,
+      "category": "accessories-fashion-jewelry"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "5f1c8e4d-4e7a-4f72-84db-23732a6c9653",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.4,
+      "category": "accessories-fashion-jewelry"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "d15c8ee0-9e54-4b0e-80d8-66e019c9d9f2",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.7,
+      "category": "accessories-fashion-jewelry"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "e5f0a7ca-89b8-4a23-8f35-10b3b1b2f4d3",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.5,
+      "category": "accessories-fashion-jewelry"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "f8b1ec50-d591-4a6c-877d-2748cce9a72b",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.6,
+      "category": "accessories-fashion-jewelry"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "94c92f57-6a7d-4d4a-82ea-c883f2b2fbd1",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.5,
+      "category": "accessories-womens-purses"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "cb3645a8-cd3b-4417-8d89-f3e78bc9a32a",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.3,
+      "category": "accessories-womens-purses"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "bb7ee4f1-144d-4e4e-8c35-5c78b88e029f",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.6,
+      "category": "accessories-womens-purses"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "07e7e208-8d42-4c4c-bf1a-2d6900a688a5",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.2,
+      "category": "accessories-womens-purses"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "21a5f893-1e14-4ca9-913a-7c45f49b8b19",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.5,
+      "category": "mens-shoes"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "362db99c-81c7-4b8d-a6e6-8ff6745f7c33",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.6,
+      "category": "mens-running-shoes"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "5e0df22d-7855-423b-b9e5-385a1570c91d",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.7,
+      "category": "mens-leather-shoes"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "cc9a5e9a-f9c1-4060-91b9-d3d679c19f3a",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.4,
+      "category": "womens-shoes"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "eac7f5d1-5a32-4f07-b7e4-8c58264b7f25",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.8,
+      "category": "baby-shoes"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "2e51fbd8-96b8-4be9-b661-5f9d1fa13c6a",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.7,
+      "category": "baby-shoes"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "8e89a8e9-18be-4eb9-8a7c-cfdc92194ed9",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.6,
+      "category": "baby-shoes"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "6b29ed40-6d5d-4e4b-8a89-aba2aa17791e",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.7,
+      "category": "baby-shoes"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "b41a0db9-c616-44aa-8e8d-e098aa6aeb3b",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.8,
+      "category": "baby-shoes"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "29e4173d-cdd0-4684-8361-d0e42bf6f11f",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": false,
+      "avgRating": 4.7,
+      "category": "baby-shoes"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "4d71b68f-316a-47b9-9f38-7f7a6e8d7e0c",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.5,
+      "category": "accessories-watches"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "c2ed183a-5e2a-4371-82c7-302c59bc594a",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.6,
+      "category": "accessories-watches"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "6ebd98ef-fccc-4eb2-b36d-5a8e2e6b4f68",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.7,
+      "category": "accessories-watches"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "f2900c30-6a9f-4b8f-a678-90d3b352f59f",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.4,
+      "category": "accessories-watches"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "b4e2f47a-3de9-4fc2-b6f6-8de3ed95703d",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.5,
+      "category": "accessories-watches"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "f54772e1-dfcf-4f5c-bc6c-c1e5c8cb0b6a",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.6,
+      "category": "accessories-watches"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "9930d4ee-bf3d-4d63-8cda-0d6aee8a30b0",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.7,
+      "category": "accessories-watches"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "af8b5d1f-9e15-4ee8-a10f-920c631bb512",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.5,
+      "category": "accessories-watches"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "a8f3b428-0a91-45f0-b88c-2e48467a5e3d",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.6,
+      "category": "accessories-watches"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "6e2d7c90-040e-4d2f-9fa6-ec4b4b232e21",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.4,
+      "category": "accessories-watches"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "1b85c17e-0e3b-4d58-9a17-81e5e3215d84",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.2,
+      "category": "otc-supplement"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "f4d8f3a2-2a98-4a23-8a4f-349d5831a651",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.3,
+      "category": "otc-supplement"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "c37aebd7-877b-49ed-8c9e-9456f71f06c9",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.5,
+      "category": "otc-supplement"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "a3f5421e-b2e7-47b6-9f98-7b13f054a4c8",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.6,
+      "category": "otc-supplement"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "e9c1d9a3-2d7e-41b2-bec4-462c76d7ef9b",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.6,
+      "category": "otc-supplement"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "5fbb7c96-6e23-41b0-a6c0-4bbf87d15fcb",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.4,
+      "category": "otc-supplement"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "b35c6b8f-e3f6-4c5a-bd12-3a560efb2db3",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.7,
+      "category": "otc-supplement"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "d6a420f0-4d67-4a6f-836d-c9fdd431e8a7",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.8,
+      "category": "otc-supplement"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "7e49c84d-81f5-4b90-b2a0-9e8ca3a80d06",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.5,
+      "category": "otc-supplement"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "fec9a170-5a31-42db-81d9-8a9d5e7b2f90",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.6,
+      "category": "otc-supplement"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "00ab8d3f-5e1b-4c1e-9f48-ef591f46f788",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.7,
+      "category": "otc-supplement"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "a5f92d3a-2c89-4f8f-b527-97c5a645e8c2",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.4,
+      "category": "essentials-electronics"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "b7e1f3ac-9f8a-4b57-8b1b-37a4e7f7c1de",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.3,
+      "category": "essentials-electronics"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "c3f42f23-1a2d-4b0d-85f7-ffb83731c50d",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.5,
+      "category": "essentials-electronics"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "d2b8aead-59e1-4b3a-9ac9-9f7a46c8720c",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.1,
+      "category": "essentials-electronics"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "e487c5b9-1cd5-4a53-82c6-b0c8d4c71e53",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.2,
+      "category": "essentials-electronics"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "f4f5c5a1-cb6b-4d3d-a53c-87d5f17b25d9",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.6,
+      "category": "essentials-electronics"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "70a9325d-cd7f-4b5e-9cb1-7a6ec4aef24a",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.5,
+      "category": "essentials-electronics"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "879bc3b1-7e3a-40c7-bfad-97b4357864ef",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.4,
+      "category": "essentials-electronics"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "91cbd3a8-8f6b-49c0-b827-d3c7a64f8e77",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.5,
+      "category": "essentials-electronics"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "a5a7f9eb-4c3a-4ee4-8379-c9de5b4a3a97",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.6,
+      "category": "essentials-electronics"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "b8f9d827-2f15-40c0-9b88-9f7297d1eac4",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.7,
+      "category": "essentials-electronics"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "c06a5f9b-1d34-4bbd-87b1-2b5e29d90f3d",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.3,
+      "category": "essentials-electronics"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "d4c7f05e-9b71-4a9b-bab2-6f1f9ebc462a",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.4,
+      "category": "essentials-electronics"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "e33f7ad0-9df4-4a6e-a0b2-0a31d06d802e",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.5,
+      "category": "essentials-electronics"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "f1d7c1a3-5b4c-49b2-8f81-f9c5e4c3e28d",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.4,
+      "category": "essentials-electronics"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "0f47e51c-3742-4636-9b0f-c3f1ed9456b0",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.2,
+      "category": "essentials-electronics"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "1a92b01d-5a0f-42a8-8f6a-b9d0bda5b4c1",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.3,
+      "category": "essentials-electronics"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "2bcf5d32-09ad-4a1e-bb6c-f8d5f8d1c7e0",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.6,
+      "category": "essentials-electronics"
+    }
+  },
+  {
+    "model": "base.ProductModel",
+    "pk": "3e4f0c8f-4737-4a93-98c9-7cacf28d5a13",
+    "fields": {
+      "images": [
+        "https://v0-ecommerce-website-creation-bice.vercel.app/placeholder.svg?height=300&width=300"
+      ],
+      "featured": true,
+      "avgRating": 4.5,
+      "category": "essentials-electronics"
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "c9d8d5c6-7e85-4dcb-b15a-6f22ff27b2e0",
+    "fields": {
+      "product": "fcce454f-164b-43f4-a4e6-e107ff430dc2",
+      "sku": "DRE-RED-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "4b101f84-3297-4de3-bcc2-2f7d3cd46271",
+    "fields": {
+      "product": "fcce454f-164b-43f4-a4e6-e107ff430dc2",
+      "sku": "DRE-RED-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "8e06f0e0-82a4-404a-92c5-f0b0f3f3a513",
+    "fields": {
+      "product": "fcce454f-164b-43f4-a4e6-e107ff430dc2",
+      "sku": "DRE-RED-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "165ed0f7-6d94-4f68-b3e0-f28f747eb46e",
+    "fields": {
+      "product": "fcce454f-164b-43f4-a4e6-e107ff430dc2",
+      "sku": "DRE-RED-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "48a3f3ff-9d91-4667-ae91-9aa0ec8e62b4",
+    "fields": {
+      "product": "fcce454f-164b-43f4-a4e6-e107ff430dc2",
+      "sku": "DRE-BLUE-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "bdc9a1e0-9b20-45bb-a4e1-6b45d9f4fbd6",
+    "fields": {
+      "product": "fcce454f-164b-43f4-a4e6-e107ff430dc2",
+      "sku": "DRE-BLUE-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "2cf7db07-5b99-4990-8c98-e057b7a24b3c",
+    "fields": {
+      "product": "fcce454f-164b-43f4-a4e6-e107ff430dc2",
+      "sku": "DRE-BLUE-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "f9146e4b-6b1a-4b5b-99d4-01b688dcb9aa",
+    "fields": {
+      "product": "fcce454f-164b-43f4-a4e6-e107ff430dc2",
+      "sku": "DRE-BLUE-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "43a497e8-96be-48db-bcbc-07ad7cd0572d",
+    "fields": {
+      "product": "fcce454f-164b-43f4-a4e6-e107ff430dc2",
+      "sku": "DRE-GREEN-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "55dbd353-6972-49b1-9218-625e4ff8e7e2",
+    "fields": {
+      "product": "fcce454f-164b-43f4-a4e6-e107ff430dc2",
+      "sku": "DRE-GREEN-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "b6d8ef0c-3302-4f37-9d40-7ad3784039ff",
+    "fields": {
+      "product": "fcce454f-164b-43f4-a4e6-e107ff430dc2",
+      "sku": "DRE-GREEN-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "084dcb99-006f-403f-9f8a-3e3ffb9438a3",
+    "fields": {
+      "product": "fcce454f-164b-43f4-a4e6-e107ff430dc2",
+      "sku": "DRE-GREEN-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "64c0df2c-504b-422b-9b08-383cd650f504",
+    "fields": {
+      "product": "fcce454f-164b-43f4-a4e6-e107ff430dc2",
+      "sku": "DRE-BLACK-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "19e1ff20-3c5e-4861-b4fa-52a028cfd4eb",
+    "fields": {
+      "product": "fcce454f-164b-43f4-a4e6-e107ff430dc2",
+      "sku": "DRE-BLACK-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "d377c7c2-3472-49a5-b536-e97e292cbecf",
+    "fields": {
+      "product": "fcce454f-164b-43f4-a4e6-e107ff430dc2",
+      "sku": "DRE-BLACK-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "eebbbf36-0556-4264-98b5-6f5fa6453289",
+    "fields": {
+      "product": "fcce454f-164b-43f4-a4e6-e107ff430dc2",
+      "sku": "DRE-BLACK-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "b86c948e-6b3c-4036-9c44-77f4313c4822",
+    "fields": {
+      "product": "fcce454f-164b-43f4-a4e6-e107ff430dc2",
+      "sku": "DRE-WHITE-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "87eb7a67-7bd4-41d4-8bd9-c26711a86f5d",
+    "fields": {
+      "product": "fcce454f-164b-43f4-a4e6-e107ff430dc2",
+      "sku": "DRE-WHITE-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "34b5e0b0-dfe9-4df6-b479-75f05b7f26bc",
+    "fields": {
+      "product": "fcce454f-164b-43f4-a4e6-e107ff430dc2",
+      "sku": "DRE-WHITE-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "74d6c19f-1141-4c6e-87ae-4f1585cb5ab7",
+    "fields": {
+      "product": "fcce454f-164b-43f4-a4e6-e107ff430dc2",
+      "sku": "DRE-WHITE-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "e7d65e58-cf4d-408c-a04e-59f75c0a4af8",
+    "fields": {
+      "product": "a2d3b6f7-3f28-4e11-b75c-5e09e8b2a9c8",
+      "sku": "CAS-BLUE-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "8a3f98a4-1f84-4f27-8a03-8c9c383f81bb",
+    "fields": {
+      "product": "a2d3b6f7-3f28-4e11-b75c-5e09e8b2a9c8",
+      "sku": "CAS-BLUE-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "92c6fc92-46f0-40cc-8759-6f88b2a09d10",
+    "fields": {
+      "product": "a2d3b6f7-3f28-4e11-b75c-5e09e8b2a9c8",
+      "sku": "CAS-BLUE-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "476adcad-9d9a-4769-82bb-9b7b18e406db",
+    "fields": {
+      "product": "a2d3b6f7-3f28-4e11-b75c-5e09e8b2a9c8",
+      "sku": "CAS-BLUE-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "f94693e3-6b63-493f-9b29-4bb21aa5e6b1",
+    "fields": {
+      "product": "a2d3b6f7-3f28-4e11-b75c-5e09e8b2a9c8",
+      "sku": "CAS-BLACK-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "d36f236b-9a53-4ad6-afe3-f09cb6a64749",
+    "fields": {
+      "product": "a2d3b6f7-3f28-4e11-b75c-5e09e8b2a9c8",
+      "sku": "CAS-BLACK-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "6b56c81e-2f15-4af6-91ef-7c646be929a6",
+    "fields": {
+      "product": "a2d3b6f7-3f28-4e11-b75c-5e09e8b2a9c8",
+      "sku": "CAS-BLACK-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "4df7a0e5-1606-4df9-8180-27e92878793c",
+    "fields": {
+      "product": "a2d3b6f7-3f28-4e11-b75c-5e09e8b2a9c8",
+      "sku": "CAS-BLACK-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "bc9241be-bc7e-4e2c-9494-5ef94a0ebf61",
+    "fields": {
+      "product": "a2d3b6f7-3f28-4e11-b75c-5e09e8b2a9c8",
+      "sku": "CAS-WHITE-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "10b1f7fa-18b3-4d6b-9a89-60ecb878e90b",
+    "fields": {
+      "product": "a2d3b6f7-3f28-4e11-b75c-5e09e8b2a9c8",
+      "sku": "CAS-WHITE-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "94b64f91-4cf6-4475-8505-efb9c6b8eeb1",
+    "fields": {
+      "product": "a2d3b6f7-3f28-4e11-b75c-5e09e8b2a9c8",
+      "sku": "CAS-WHITE-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "11c9c789-5d3a-408a-b688-153e9e62b4fb",
+    "fields": {
+      "product": "a2d3b6f7-3f28-4e11-b75c-5e09e8b2a9c8",
+      "sku": "CAS-WHITE-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "5c51f487-2a6e-4d8d-bb07-f55a59e26bce",
+    "fields": {
+      "product": "b6f17a1c-8b34-4df0-87b3-f364ab97dc6a",
+      "sku": "CSS-RED-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "dfd1b77d-d2f7-4eb9-8d4e-f7c465d68154",
+    "fields": {
+      "product": "b6f17a1c-8b34-4df0-87b3-f364ab97dc6a",
+      "sku": "CSS-RED-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "1638d5ce-85e5-4d38-9629-92e41883c10a",
+    "fields": {
+      "product": "b6f17a1c-8b34-4df0-87b3-f364ab97dc6a",
+      "sku": "CSS-RED-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "158ce8c6-2a99-4988-ae77-b089b6efc835",
+    "fields": {
+      "product": "b6f17a1c-8b34-4df0-87b3-f364ab97dc6a",
+      "sku": "CSS-RED-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "41218dc3-d50d-4760-b5d5-45fa6e985ef3",
+    "fields": {
+      "product": "b6f17a1c-8b34-4df0-87b3-f364ab97dc6a",
+      "sku": "CSS-BLUE-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "3fd4519f-1533-4c2b-b52b-b30c18e14c45",
+    "fields": {
+      "product": "b6f17a1c-8b34-4df0-87b3-f364ab97dc6a",
+      "sku": "CSS-BLUE-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "6a4889f5-e318-4d7e-88df-e8fae1be3b2f",
+    "fields": {
+      "product": "b6f17a1c-8b34-4df0-87b3-f364ab97dc6a",
+      "sku": "CSS-BLUE-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "10383b6d-c0a1-40fc-93d3-d805da7a45b5",
+    "fields": {
+      "product": "b6f17a1c-8b34-4df0-87b3-f364ab97dc6a",
+      "sku": "CSS-BLUE-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "d8ce66e3-5043-4d1e-9356-b0e85e0cb9d0",
+    "fields": {
+      "product": "b6f17a1c-8b34-4df0-87b3-f364ab97dc6a",
+      "sku": "CSS-GREEN-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "321a75f2-462e-426d-84fc-f7ebf37ccaff",
+    "fields": {
+      "product": "b6f17a1c-8b34-4df0-87b3-f364ab97dc6a",
+      "sku": "CSS-GREEN-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "399b08c5-6e1b-4027-93ef-d57b3e20cb15",
+    "fields": {
+      "product": "b6f17a1c-8b34-4df0-87b3-f364ab97dc6a",
+      "sku": "CSS-GREEN-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "0d74a35f-bd9e-42ad-a69d-0c66e2f28a34",
+    "fields": {
+      "product": "b6f17a1c-8b34-4df0-87b3-f364ab97dc6a",
+      "sku": "CSS-GREEN-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "fc3a2655-3b3c-4b25-bcd7-cfc70522893c",
+    "fields": {
+      "product": "b6f17a1c-8b34-4df0-87b3-f364ab97dc6a",
+      "sku": "CSS-BLACK-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "c607a267-74c9-4064-b8f4-78990f530c66",
+    "fields": {
+      "product": "b6f17a1c-8b34-4df0-87b3-f364ab97dc6a",
+      "sku": "CSS-BLACK-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "5a507eec-c46a-47e0-984b-f25670b8f2a0",
+    "fields": {
+      "product": "b6f17a1c-8b34-4df0-87b3-f364ab97dc6a",
+      "sku": "CSS-BLACK-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "812e2fcb-d312-4194-b2f8-abc6c5a6c8ef",
+    "fields": {
+      "product": "b6f17a1c-8b34-4df0-87b3-f364ab97dc6a",
+      "sku": "CSS-BLACK-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "c5176a4e-1e8c-42b9-a9d8-0051384a0a34",
+    "fields": {
+      "product": "b6f17a1c-8b34-4df0-87b3-f364ab97dc6a",
+      "sku": "CSS-WHITE-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "d8f93861-c85e-470b-bf2c-f6ec09a8a54a",
+    "fields": {
+      "product": "b6f17a1c-8b34-4df0-87b3-f364ab97dc6a",
+      "sku": "CSS-WHITE-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "1a65c1dc-83e1-4040-8c6f-105c85f99240",
+    "fields": {
+      "product": "b6f17a1c-8b34-4df0-87b3-f364ab97dc6a",
+      "sku": "CSS-WHITE-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "8d5e442a-901c-4e3e-b7fd-9e43a3cd75ae",
+    "fields": {
+      "product": "b6f17a1c-8b34-4df0-87b3-f364ab97dc6a",
+      "sku": "CSS-WHITE-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "2f1e81ed-05b6-4cb2-a0ff-330ae3556cb3",
+    "fields": {
+      "product": "c3e981d2-2577-42de-b4f9-0f9c2dd9e35d",
+      "sku": "DENIM-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "c9a4579d-26b6-4b0d-88b8-5c4d57ab117e",
+    "fields": {
+      "product": "c3e981d2-2577-42de-b4f9-0f9c2dd9e35d",
+      "sku": "DENIM-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "26d21848-c7e2-49db-afe7-63f9a2696472",
+    "fields": {
+      "product": "c3e981d2-2577-42de-b4f9-0f9c2dd9e35d",
+      "sku": "DENIM-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "80400a3c-b3fa-4b3f-9e7f-2658e4cfcad8",
+    "fields": {
+      "product": "c3e981d2-2577-42de-b4f9-0f9c2dd9e35d",
+      "sku": "DENIM-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "edb105c1-ea5c-49d5-8de2-eaa0bb1b4f3d",
+    "fields": {
+      "product": "d9b83f67-1999-4a15-b8e4-783a826bb07a",
+      "sku": "CARGOLONG-BLACK-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "36104b82-b25c-4237-8812-29365ff1bdc7",
+    "fields": {
+      "product": "d9b83f67-1999-4a15-b8e4-783a826bb07a",
+      "sku": "CARGOLONG-BLACK-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "8479bb97-7077-4d14-bcf8-7b4351a9e474",
+    "fields": {
+      "product": "d9b83f67-1999-4a15-b8e4-783a826bb07a",
+      "sku": "CARGOLONG-BLACK-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "08e3a35e-c5e3-4e5a-97b0-c418c5957e66",
+    "fields": {
+      "product": "d9b83f67-1999-4a15-b8e4-783a826bb07a",
+      "sku": "CARGOLONG-BLACK-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "ac7e72cc-f296-4898-8d77-b875617fe01a",
+    "fields": {
+      "product": "d9b83f67-1999-4a15-b8e4-783a826bb07a",
+      "sku": "CARGOLONG-GREEN-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "ef0d8cc4-eac1-4d61-843e-0a4f3b329ff5",
+    "fields": {
+      "product": "d9b83f67-1999-4a15-b8e4-783a826bb07a",
+      "sku": "CARGOLONG-GREEN-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "228ac58e-4d57-4039-bb17-d1d308bfb25e",
+    "fields": {
+      "product": "d9b83f67-1999-4a15-b8e4-783a826bb07a",
+      "sku": "CARGOLONG-GREEN-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "3f34659c-4db3-42e3-a586-2f739d88f5f9",
+    "fields": {
+      "product": "d9b83f67-1999-4a15-b8e4-783a826bb07a",
+      "sku": "CARGOLONG-GREEN-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "4a217d02-bf1d-4896-b09a-997116008084",
+    "fields": {
+      "product": "d9b83f67-1999-4a15-b8e4-783a826bb07a",
+      "sku": "CARGOLONG-GRAY-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "da761408-c9db-41ef-8791-0e2c9b53f59e",
+    "fields": {
+      "product": "d9b83f67-1999-4a15-b8e4-783a826bb07a",
+      "sku": "CARGOLONG-GRAY-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "d8b18b9e-e4c3-4966-88cf-fec86b3f1455",
+    "fields": {
+      "product": "d9b83f67-1999-4a15-b8e4-783a826bb07a",
+      "sku": "CARGOLONG-GRAY-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "c79b6015-6e7c-4d1e-8b4b-19d9c16050f6",
+    "fields": {
+      "product": "d9b83f67-1999-4a15-b8e4-783a826bb07a",
+      "sku": "CARGOLONG-GRAY-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "b1b5fa08-5e92-40d5-aec9-9cf012e27e59",
+    "fields": {
+      "product": "f12c0d8b-e711-4bb8-baf3-4e2c45c9b09b",
+      "sku": "CARGOHALF-BLACK-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "30a2ff2f-e8f0-49f3-bb7c-f553159fb8b1",
+    "fields": {
+      "product": "f12c0d8b-e711-4bb8-baf3-4e2c45c9b09b",
+      "sku": "CARGOHALF-BLACK-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "0171667f-2652-4a27-a6f7-007e4c0e0d68",
+    "fields": {
+      "product": "f12c0d8b-e711-4bb8-baf3-4e2c45c9b09b",
+      "sku": "CARGOHALF-BLACK-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "02e7e119-3b58-4e0e-ae86-645f5b50c3fc",
+    "fields": {
+      "product": "f12c0d8b-e711-4bb8-baf3-4e2c45c9b09b",
+      "sku": "CARGOHALF-BLACK-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "f3bfa990-d287-4f3f-81a3-3563c6419d7e",
+    "fields": {
+      "product": "f12c0d8b-e711-4bb8-baf3-4e2c45c9b09b",
+      "sku": "CARGOHALF-GREEN-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "b61e166b-fcf8-4c2f-93aa-2ff6d4351e19",
+    "fields": {
+      "product": "f12c0d8b-e711-4bb8-baf3-4e2c45c9b09b",
+      "sku": "CARGOHALF-GREEN-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "6c5c9e60-c155-4f69-8f68-2d826f0e0b9b",
+    "fields": {
+      "product": "f12c0d8b-e711-4bb8-baf3-4e2c45c9b09b",
+      "sku": "CARGOHALF-GREEN-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "f0322f67-9bcb-4f9b-8e25-f1fcf3f46cf4",
+    "fields": {
+      "product": "f12c0d8b-e711-4bb8-baf3-4e2c45c9b09b",
+      "sku": "CARGOHALF-GREEN-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "fc163a07-5f5b-4143-a7cb-4c1a1a1c822b",
+    "fields": {
+      "product": "f12c0d8b-e711-4bb8-baf3-4e2c45c9b09b",
+      "sku": "CARGOHALF-GRAY-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "a7ef3774-6e3c-496f-a184-7dbfc5dcecc5",
+    "fields": {
+      "product": "f12c0d8b-e711-4bb8-baf3-4e2c45c9b09b",
+      "sku": "CARGOHALF-GRAY-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "e7cd728f-4c7e-4f3f-b6f1-f72073981ff3",
+    "fields": {
+      "product": "f12c0d8b-e711-4bb8-baf3-4e2c45c9b09b",
+      "sku": "CARGOHALF-GRAY-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "7b11cf1c-839e-413a-b8a1-388fc89d338c",
+    "fields": {
+      "product": "f12c0d8b-e711-4bb8-baf3-4e2c45c9b09b",
+      "sku": "CARGOHALF-GRAY-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "091279e4-676b-47e7-a0f8-28278cf2b34e",
+    "fields": {
+      "product": "b8e0a3ec-00ff-4f0e-9847-831da383d832",
+      "sku": "WINTER-NAVY-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "2a6e18bb-346e-4648-a5ef-fc5e5388e30f",
+    "fields": {
+      "product": "b8e0a3ec-00ff-4f0e-9847-831da383d832",
+      "sku": "WINTER-NAVY-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "c67e00cd-8bb8-4a5e-b3ff-bda761fc0196",
+    "fields": {
+      "product": "b8e0a3ec-00ff-4f0e-9847-831da383d832",
+      "sku": "WINTER-NAVY-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "c7f3770b-f46f-40d6-a70e-46cbdf09167d",
+    "fields": {
+      "product": "b8e0a3ec-00ff-4f0e-9847-831da383d832",
+      "sku": "WINTER-NAVY-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "ca6c1be2-3f1b-4211-aab1-4b70c3384a01",
+    "fields": {
+      "product": "b8e0a3ec-00ff-4f0e-9847-831da383d832",
+      "sku": "WINTER-BLACK-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "2bc45797-0324-4601-937a-fcc1d1cbac2f",
+    "fields": {
+      "product": "b8e0a3ec-00ff-4f0e-9847-831da383d832",
+      "sku": "WINTER-BLACK-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "8cf0ff46-ff41-4341-9a0d-2bdb68ac6d4f",
+    "fields": {
+      "product": "b8e0a3ec-00ff-4f0e-9847-831da383d832",
+      "sku": "WINTER-BLACK-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "bcf28f79-9d34-49f4-92f2-bb3f3a2cd798",
+    "fields": {
+      "product": "b8e0a3ec-00ff-4f0e-9847-831da383d832",
+      "sku": "WINTER-BLACK-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "57a49f5a-1167-46de-8026-7f3d6e0c0a0f",
+    "fields": {
+      "product": "b8e0a3ec-00ff-4f0e-9847-831da383d832",
+      "sku": "WINTER-OLIVE-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "2c4ad501-936c-4e3a-841e-57e775b47c56",
+    "fields": {
+      "product": "b8e0a3ec-00ff-4f0e-9847-831da383d832",
+      "sku": "WINTER-OLIVE-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "e3db1b11-32cf-44e1-b74d-13965e15955b",
+    "fields": {
+      "product": "b8e0a3ec-00ff-4f0e-9847-831da383d832",
+      "sku": "WINTER-OLIVE-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "d2c480f6-e2e0-43c1-835b-bc2e8d5074c2",
+    "fields": {
+      "product": "b8e0a3ec-00ff-4f0e-9847-831da383d832",
+      "sku": "WINTER-OLIVE-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "7ccf7800-e6cf-4b8d-b958-c03760a3de4a",
+    "fields": {
+      "product": "0287f2a9-cb2a-48a2-b2c4-74ae8466d37f",
+      "sku": "SUMMER-NAVY-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "754cb11d-9cd1-4d99-a7b2-424ac5eebea7",
+    "fields": {
+      "product": "0287f2a9-cb2a-48a2-b2c4-74ae8466d37f",
+      "sku": "SUMMER-NAVY-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "26a88f4a-d008-420c-99ee-2998fcd1a79f",
+    "fields": {
+      "product": "0287f2a9-cb2a-48a2-b2c4-74ae8466d37f",
+      "sku": "SUMMER-NAVY-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "2fe2abde-dcc5-49d4-9155-7ebfdd6bb97c",
+    "fields": {
+      "product": "0287f2a9-cb2a-48a2-b2c4-74ae8466d37f",
+      "sku": "SUMMER-NAVY-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "d94852e4-1e8f-4302-a8bc-90b8ffbb5d77",
+    "fields": {
+      "product": "0287f2a9-cb2a-48a2-b2c4-74ae8466d37f",
+      "sku": "SUMMER-BLACK-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "a9cd6c40-5db9-4a15-91b3-7cf781cbf538",
+    "fields": {
+      "product": "0287f2a9-cb2a-48a2-b2c4-74ae8466d37f",
+      "sku": "SUMMER-BLACK-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "c96f84e3-4ea7-46fd-9276-586297b1c674",
+    "fields": {
+      "product": "0287f2a9-cb2a-48a2-b2c4-74ae8466d37f",
+      "sku": "SUMMER-BLACK-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "4dd0e6e0-34a4-4648-901f-c0c6a97853a6",
+    "fields": {
+      "product": "0287f2a9-cb2a-48a2-b2c4-74ae8466d37f",
+      "sku": "SUMMER-BLACK-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "da869512-bcf1-4d7c-913e-25c4c7499f9f",
+    "fields": {
+      "product": "0287f2a9-cb2a-48a2-b2c4-74ae8466d37f",
+      "sku": "SUMMER-OLIVE-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "0f7c464a-598e-4522-888e-51e4f8a5d9c3",
+    "fields": {
+      "product": "0287f2a9-cb2a-48a2-b2c4-74ae8466d37f",
+      "sku": "SUMMER-OLIVE-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "f5f88b8d-2a28-4349-bcbf-c863930dc8fa",
+    "fields": {
+      "product": "0287f2a9-cb2a-48a2-b2c4-74ae8466d37f",
+      "sku": "SUMMER-OLIVE-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "f748370a-c377-4e2c-b0e7-caf2581ac2a7",
+    "fields": {
+      "product": "0287f2a9-cb2a-48a2-b2c4-74ae8466d37f",
+      "sku": "SUMMER-OLIVE-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "f748370a-c377-4e2c-b0e7-caf2581ac2a8",
+    "fields": {
+      "product": "a4468f0a-22ec-4ea6-851d-4576d9e204ee",
+      "sku": "VNECK-BLACK-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "f748371a-c377-4e2c-b0e7-caf2581ac2a7",
+    "fields": {
+      "product": "a4468f0a-22ec-4ea6-851d-4576d9e204ee",
+      "sku": "VNECK-BLACK-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "f768370a-c377-4e2c-b0e7-caf2581ac2a7",
+    "fields": {
+      "product": "a4468f0a-22ec-4ea6-851d-4576d9e204ee",
+      "sku": "VNECK-BLACK-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "f748380a-c377-4e2c-b0e7-caf2581ac2a7",
+    "fields": {
+      "product": "a4468f0a-22ec-4ea6-851d-4576d9e204ee",
+      "sku": "VNECK-BLACK-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "e748370a-c377-4e2c-b0e7-caf2581ac2a7",
+    "fields": {
+      "product": "a4468f0a-22ec-4ea6-851d-4576d9e204ee",
+      "sku": "VNECK-BLUE-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "f748370a-c377-4e2c-b0e7-caf3581ac2a7",
+    "fields": {
+      "product": "a4468f0a-22ec-4ea6-851d-4576d9e204ee",
+      "sku": "VNECK-BLUE-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "f748370a-c377-4e2c-b0e7-caf2681ac2a7",
+    "fields": {
+      "product": "a4468f0a-22ec-4ea6-851d-4576d9e204ee",
+      "sku": "VNECK-BLUE-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "f748370a-c377-4e2c-b0e7-caf2591ac2a7",
+    "fields": {
+      "product": "a4468f0a-22ec-4ea6-851d-4576d9e204ee",
+      "sku": "VNECK-BLUE-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "f748370a-c387-4e2c-b0e7-caf2591ac2a7",
+    "fields": {
+      "product": "a4468f0a-22ec-4ea6-851d-4576d9e204ee",
+      "sku": "VNECK-GRAY-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "f748370a-c377-4e2c-b1e7-caf2581ac2a7",
+    "fields": {
+      "product": "a4468f0a-22ec-4ea6-851d-4576d9e204ee",
+      "sku": "VNECK-GRAY-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "f748370a-d377-4e2c-b0e7-caf2581ac2a7",
+    "fields": {
+      "product": "a4468f0a-22ec-4ea6-851d-4576d9e204ee",
+      "sku": "VNECK-GRAY-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "f748370a-c377-5e2c-b0e7-caf2581ac2a7",
+    "fields": {
+      "product": "a4468f0a-22ec-4ea6-851d-4576d9e204ee",
+      "sku": "VNECK-GRAY-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "fcbdb65f-e1cd-47e1-86ea-c85b1e93795e",
+    "fields": {
+      "product": "df123eac-0f7e-4c9d-a735-fb4c1438f8bc",
+      "sku": "HOODIE-BLACK-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "da540460-4bc6-4344-9a14-6be7f5d6e494",
+    "fields": {
+      "product": "df123eac-0f7e-4c9d-a735-fb4c1438f8bc",
+      "sku": "HOODIE-BLACK-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "c1d36950-9a8c-4be2-92c0-51c3a7c5d060",
+    "fields": {
+      "product": "df123eac-0f7e-4c9d-a735-fb4c1438f8bc",
+      "sku": "HOODIE-BLACK-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "1f1a8b1f-1817-4566-9f1f-bb7162a7ad44",
+    "fields": {
+      "product": "df123eac-0f7e-4c9d-a735-fb4c1438f8bc",
+      "sku": "HOODIE-BLACK-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "a94fd8c1-f85a-4950-80a0-fce03b4be0d6",
+    "fields": {
+      "product": "df123eac-0f7e-4c9d-a735-fb4c1438f8bc",
+      "sku": "HOODIE-GRAY-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "37700f20-4e55-4cf6-a83a-037e102f2aa3",
+    "fields": {
+      "product": "df123eac-0f7e-4c9d-a735-fb4c1438f8bc",
+      "sku": "HOODIE-GRAY-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "364b38d3-1391-4ab1-93ec-5e62df682bff",
+    "fields": {
+      "product": "df123eac-0f7e-4c9d-a735-fb4c1438f8bc",
+      "sku": "HOODIE-GRAY-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "83b24f65-7e67-45e5-a3db-61e97bb8f746",
+    "fields": {
+      "product": "df123eac-0f7e-4c9d-a735-fb4c1438f8bc",
+      "sku": "HOODIE-GRAY-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "646ba7cb-5a3d-4203-b7c4-364e3e7be5b6",
+    "fields": {
+      "product": "df123eac-0f7e-4c9d-a735-fb4c1438f8bc",
+      "sku": "HOODIE-NAVY-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "408fc4ea-3a06-4d40-a6c3-4d1b1bff68fd",
+    "fields": {
+      "product": "df123eac-0f7e-4c9d-a735-fb4c1438f8bc",
+      "sku": "HOODIE-NAVY-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "35eb2a12-c2ea-43ee-9997-902b97dc97f9",
+    "fields": {
+      "product": "df123eac-0f7e-4c9d-a735-fb4c1438f8bc",
+      "sku": "HOODIE-NAVY-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "7efea5a9-dbb3-49f4-a3f1-1670b78584c3",
+    "fields": {
+      "product": "df123eac-0f7e-4c9d-a735-fb4c1438f8bc",
+      "sku": "HOODIE-NAVY-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "701014f5-4c8d-460c-958b-b8c3cf9f119e",
+    "fields": {
+      "product": "cc8e63bd-332d-4f8e-93b1-33232d5360f0",
+      "sku": "TSHIRT-BLACK-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "faed0cfc-4a5b-42a6-8b68-fdd1c78e1461",
+    "fields": {
+      "product": "cc8e63bd-332d-4f8e-93b1-33232d5360f0",
+      "sku": "TSHIRT-BLACK-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "aa5d2c42-87c4-4123-899f-0d0bd5e3dd42",
+    "fields": {
+      "product": "cc8e63bd-332d-4f8e-93b1-33232d5360f0",
+      "sku": "TSHIRT-BLACK-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "a703659c-e084-44ae-8a55-c8f93955a4ff",
+    "fields": {
+      "product": "cc8e63bd-332d-4f8e-93b1-33232d5360f0",
+      "sku": "TSHIRT-BLACK-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "94fc31bb-3042-4b27-8317-663ff246e40b",
+    "fields": {
+      "product": "cc8e63bd-332d-4f8e-93b1-33232d5360f0",
+      "sku": "TSHIRT-WHITE-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "5c20b6be-1885-4f1e-a994-cabf9d5e6d7b",
+    "fields": {
+      "product": "cc8e63bd-332d-4f8e-93b1-33232d5360f0",
+      "sku": "TSHIRT-WHITE-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "86a26335-38b0-43e2-a4d1-7095fdd23e95",
+    "fields": {
+      "product": "cc8e63bd-332d-4f8e-93b1-33232d5360f0",
+      "sku": "TSHIRT-WHITE-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "2c1ab775-376c-4f41-991e-3ff5c4bc31d4",
+    "fields": {
+      "product": "cc8e63bd-332d-4f8e-93b1-33232d5360f0",
+      "sku": "TSHIRT-WHITE-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "e6761dd4-86df-4c99-944b-e2546dc2f0b2",
+    "fields": {
+      "product": "cc8e63bd-332d-4f8e-93b1-33232d5360f0",
+      "sku": "TSHIRT-NAVY-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "1e3e4ee6-15fa-4d35-b7e6-486460dd9e3d",
+    "fields": {
+      "product": "cc8e63bd-332d-4f8e-93b1-33232d5360f0",
+      "sku": "TSHIRT-NAVY-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "01c6889e-e1b1-463b-b3c5-28b67801d4f9",
+    "fields": {
+      "product": "cc8e63bd-332d-4f8e-93b1-33232d5360f0",
+      "sku": "TSHIRT-NAVY-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "db788145-2f6b-42eb-9e2c-b2d5fc0fc5b2",
+    "fields": {
+      "product": "cc8e63bd-332d-4f8e-93b1-33232d5360f0",
+      "sku": "TSHIRT-NAVY-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "bc07c028-e6e0-4e77-bbf3-ef66df67f36c",
+    "fields": {
+      "product": "e5a9d9f3-489d-4607-88ab-c7a2a7e9d2bb",
+      "sku": "POLO-BLACK-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "48f92f99-4bd6-4e3a-a3d2-8b7b5b40f934",
+    "fields": {
+      "product": "e5a9d9f3-489d-4607-88ab-c7a2a7e9d2bb",
+      "sku": "POLO-BLACK-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "b31fda59-7648-4e99-8bb0-80c2f99be587",
+    "fields": {
+      "product": "e5a9d9f3-489d-4607-88ab-c7a2a7e9d2bb",
+      "sku": "POLO-BLACK-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "aa9ce40b-6fae-4124-9a1e-9377be2c6bcb",
+    "fields": {
+      "product": "e5a9d9f3-489d-4607-88ab-c7a2a7e9d2bb",
+      "sku": "POLO-BLACK-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "11f14d36-e388-44e7-8001-d60344dd2951",
+    "fields": {
+      "product": "e5a9d9f3-489d-4607-88ab-c7a2a7e9d2bb",
+      "sku": "POLO-WHITE-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "f89e67f4-6e6d-4179-bf1e-d8d16256ed30",
+    "fields": {
+      "product": "e5a9d9f3-489d-4607-88ab-c7a2a7e9d2bb",
+      "sku": "POLO-WHITE-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "8e9c238f-5994-4cf5-9281-1f0273063f62",
+    "fields": {
+      "product": "e5a9d9f3-489d-4607-88ab-c7a2a7e9d2bb",
+      "sku": "POLO-WHITE-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "0f8445c3-9e37-4492-ae60-989ec0e9f920",
+    "fields": {
+      "product": "e5a9d9f3-489d-4607-88ab-c7a2a7e9d2bb",
+      "sku": "POLO-WHITE-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "1856cb3c-87a9-4e84-96ff-7b80487e301b",
+    "fields": {
+      "product": "e5a9d9f3-489d-4607-88ab-c7a2a7e9d2bb",
+      "sku": "POLO-NAVY-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "89e340a5-39aa-4cbe-9b88-3fe144aaf0fb",
+    "fields": {
+      "product": "e5a9d9f3-489d-4607-88ab-c7a2a7e9d2bb",
+      "sku": "POLO-NAVY-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "f6aa3b46-6a10-46d9-9a94-3bc0e869d1da",
+    "fields": {
+      "product": "e5a9d9f3-489d-4607-88ab-c7a2a7e9d2bb",
+      "sku": "POLO-NAVY-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "b029ec40-65b0-4d6c-b1c5-e57cf5fc140e",
+    "fields": {
+      "product": "e5a9d9f3-489d-4607-88ab-c7a2a7e9d2bb",
+      "sku": "POLO-NAVY-XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "c6b23387-4982-4f34-b5b8-0b7db2f5bc10",
+    "fields": {
+      "product": "af7c7f85-0fdb-4c81-a76c-0bc3f32e4a5a",
+      "sku": "BOY-DRESS-BLUE-XS",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "8fc16f0e-df80-4084-8132-58c012558f12",
+    "fields": {
+      "product": "af7c7f85-0fdb-4c81-a76c-0bc3f32e4a5a",
+      "sku": "BOY-DRESS-BLUE-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "ba222fd5-d337-4864-a944-21dfbb7e8ad0",
+    "fields": {
+      "product": "af7c7f85-0fdb-4c81-a76c-0bc3f32e4a5a",
+      "sku": "BOY-DRESS-BLUE-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "84c5cb64-65aa-4a5a-877f-7b5256f6635b",
+    "fields": {
+      "product": "af7c7f85-0fdb-4c81-a76c-0bc3f32e4a5a",
+      "sku": "BOY-DRESS-BLUE-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "f381ca87-cf39-44e2-9294-83a0f6017402",
+    "fields": {
+      "product": "af7c7f85-0fdb-4c81-a76c-0bc3f32e4a5a",
+      "sku": "BOY-DRESS-WHITE-XS",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "cfc18968-f2e5-4cf8-91fd-b5a5cb217a12",
+    "fields": {
+      "product": "af7c7f85-0fdb-4c81-a76c-0bc3f32e4a5a",
+      "sku": "BOY-DRESS-WHITE-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "f789f72b-23b6-4895-977b-eccbeea8c416",
+    "fields": {
+      "product": "af7c7f85-0fdb-4c81-a76c-0bc3f32e4a5a",
+      "sku": "BOY-DRESS-WHITE-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "e599fc16-6a8a-4971-baa7-5016ea888372",
+    "fields": {
+      "product": "af7c7f85-0fdb-4c81-a76c-0bc3f32e4a5a",
+      "sku": "BOY-DRESS-WHITE-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "d90cb35f-8597-4c7b-8a3e-445a1d56a118",
+    "fields": {
+      "product": "af7c7f85-0fdb-4c81-a76c-0bc3f32e4a5a",
+      "sku": "BOY-DRESS-GREEN-XS",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "f21db876-dc9b-4078-9089-649cd103f6df",
+    "fields": {
+      "product": "af7c7f85-0fdb-4c81-a76c-0bc3f32e4a5a",
+      "sku": "BOY-DRESS-GREEN-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "f2a7f705-dcab-4f89-9a46-03fa1957eb38",
+    "fields": {
+      "product": "af7c7f85-0fdb-4c81-a76c-0bc3f32e4a5a",
+      "sku": "BOY-DRESS-GREEN-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "c3adf46a-62c5-48de-9db9-5d2b1cd41af5",
+    "fields": {
+      "product": "af7c7f85-0fdb-4c81-a76c-0bc3f32e4a5a",
+      "sku": "BOY-DRESS-GREEN-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "0c187ae1-7bd9-4e76-984e-50e202f3a0b1",
+    "fields": {
+      "product": "64d2f933-3576-41b5-a40f-fc2e975812ee",
+      "sku": "BOY-CASUAL-BLUE-XS",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "5374a1f1-3e75-4fa6-b346-f314e87ee3eb",
+    "fields": {
+      "product": "64d2f933-3576-41b5-a40f-fc2e975812ee",
+      "sku": "BOY-CASUAL-BLUE-S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "77df97ed-0b67-4e3a-9796-2408410c116c",
+    "fields": {
+      "product": "64d2f933-3576-41b5-a40f-fc2e975812ee",
+      "sku": "BOY-CASUAL-BLUE-M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.ProductItemModel",
+    "pk": "803e5e3a-1d0f-4b41-9f65-3f40cd5a32d3",
+    "fields": {
+      "product": "64d2f933-3576-41b5-a40f-fc2e975812ee",
+      "sku": "BOY-CASUAL-BLUE-L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "base.VariationTypeModel",
+    "pk": "880bef57-3b0a-42d9-b40b-7c52dd114ee7",
+    "fields": {
+      "name": "Color",
+      "category": null
+    }
+  },
+  {
+    "model": "base.VariationTypeModel",
+    "pk": "900f6aad-7ffc-40a7-b52b-1ff5341c9d93",
+    "fields": {
+      "name": "Size",
+      "category": null
+    }
+  },
+  {
+    "model": "base.VariantModel",
+    "pk": "82c5da0e-6dd1-474b-8f7c-69410cca7a62",
+    "fields": {
+      "value": "Red",
+      "variationType": "880bef57-3b0a-42d9-b40b-7c52dd114ee7"
+    }
+  },
+  {
+    "model": "base.VariantModel",
+    "pk": "ebeb487d-67d5-498e-948f-02896e24526c",
+    "fields": {
+      "value": "Blue",
+      "variationType": "880bef57-3b0a-42d9-b40b-7c52dd114ee7"
+    }
+  },
+  {
+    "model": "base.VariantModel",
+    "pk": "b57d434f-28d3-466e-93e9-5cc294ee4b7b",
+    "fields": {
+      "value": "Green",
+      "variationType": "880bef57-3b0a-42d9-b40b-7c52dd114ee7"
+    }
+  },
+  {
+    "model": "base.VariantModel",
+    "pk": "926e4ca1-d850-413e-9507-967626725d0d",
+    "fields": {
+      "value": "Black",
+      "variationType": "880bef57-3b0a-42d9-b40b-7c52dd114ee7"
+    }
+  },
+  {
+    "model": "base.VariantModel",
+    "pk": "28f19049-9962-44e8-bc02-aa730c840de3",
+    "fields": {
+      "value": "White",
+      "variationType": "880bef57-3b0a-42d9-b40b-7c52dd114ee7"
+    }
+  },
+  {
+    "model": "base.VariantModel",
+    "pk": "d148bf3e-03ae-447a-97a1-c2f82e5e83a1",
+    "fields": {
+      "value": "Yellow",
+      "variationType": "880bef57-3b0a-42d9-b40b-7c52dd114ee7"
+    }
+  },
+  {
+    "model": "base.VariantModel",
+    "pk": "43854d1f-f2dd-4691-9e40-906b4ec563de",
+    "fields": {
+      "value": "Purple",
+      "variationType": "880bef57-3b0a-42d9-b40b-7c52dd114ee7"
+    }
+  },
+  {
+    "model": "base.VariantModel",
+    "pk": "4a25dba1-ff43-4076-90c1-74ecd4a1f6a3",
+    "fields": {
+      "value": "Orange",
+      "variationType": "880bef57-3b0a-42d9-b40b-7c52dd114ee7"
+    }
+  },
+  {
+    "model": "base.VariantModel",
+    "pk": "cc365b68-8f74-4c55-a069-7eee789be3b8",
+    "fields": {
+      "value": "Pink",
+      "variationType": "880bef57-3b0a-42d9-b40b-7c52dd114ee7"
+    }
+  },
+  {
+    "model": "base.VariantModel",
+    "pk": "c9357de6-106c-4dd9-a906-a7f2735bc022",
+    "fields": {
+      "value": "Gray",
+      "variationType": "880bef57-3b0a-42d9-b40b-7c52dd114ee7"
+    }
+  },
+  {
+    "model": "base.VariantModel",
+    "pk": "407cf1bc-56f6-4e64-a164-ed26fa9fb6cd",
+    "fields": {
+      "value": "XS",
+      "variationType": "900f6aad-7ffc-40a7-b52b-1ff5341c9d93"
+    }
+  },
+  {
+    "model": "base.VariantModel",
+    "pk": "b916e4ad-1da7-473d-95dd-72c710db4d9b",
+    "fields": {
+      "value": "S",
+      "variationType": "900f6aad-7ffc-40a7-b52b-1ff5341c9d93"
+    }
+  },
+  {
+    "model": "base.VariantModel",
+    "pk": "2f56a021-65fb-4cfa-96b9-049993546260",
+    "fields": {
+      "value": "M",
+      "variationType": "900f6aad-7ffc-40a7-b52b-1ff5341c9d93"
+    }
+  },
+  {
+    "model": "base.VariantModel",
+    "pk": "33fedc64-f33b-4bb6-b176-f2186839c793",
+    "fields": {
+      "value": "L",
+      "variationType": "900f6aad-7ffc-40a7-b52b-1ff5341c9d93"
+    }
+  },
+  {
+    "model": "base.VariantModel",
+    "pk": "ae6ce3d7-c3a3-4876-9e0f-b419d8eff2d6",
+    "fields": {
+      "value": "XL",
+      "variationType": "900f6aad-7ffc-40a7-b52b-1ff5341c9d93"
+    }
+  },
+  {
+    "model": "base.VariantModel",
+    "pk": "3c135b6d-fa14-47c3-8f0b-895c6e7efece",
+    "fields": {
+      "value": "XXL",
+      "variationType": "900f6aad-7ffc-40a7-b52b-1ff5341c9d93"
+    }
+  },
+  {
+    "model": "base.ProductConfigModel",
+    "pk": 1,
+    "fields": {
+      "productItem": "c9d8d5c6-7e85-4dcb-b15a-6f22ff27b2e0",
+      "variant": "82c5da0e-6dd1-474b-8f7c-69410cca7a62"
+    }
+  },
+  {
+    "model": "base.ProductConfigModel",
+    "pk": 2,
+    "fields": {
+      "productItem": "c9d8d5c6-7e85-4dcb-b15a-6f22ff27b2e0",
+      "variant": "b916e4ad-1da7-473d-95dd-72c710db4d9b"
+    }
+  },
+  {
+    "model": "base.ProductConfigModel",
+    "pk": 3,
+    "fields": {
+      "productItem": "4b101f84-3297-4de3-bcc2-2f7d3cd46271",
+      "variant": "82c5da0e-6dd1-474b-8f7c-69410cca7a62"
+    }
+  },
+  {
+    "model": "base.ProductConfigModel",
+    "pk": 4,
+    "fields": {
+      "productItem": "4b101f84-3297-4de3-bcc2-2f7d3cd46271",
+      "variant": "2f56a021-65fb-4cfa-96b9-049993546260"
+    }
+  },
+  {
+    "model": "base.ProductConfigModel",
+    "pk": 5,
+    "fields": {
+      "productItem": "8e06f0e0-82a4-404a-92c5-f0b0f3f3a513",
+      "variant": "82c5da0e-6dd1-474b-8f7c-69410cca7a62"
+    }
+  },
+  {
+    "model": "base.ProductConfigModel",
+    "pk": 6,
+    "fields": {
+      "productItem": "8e06f0e0-82a4-404a-92c5-f0b0f3f3a513",
+      "variant": "33fedc64-f33b-4bb6-b176-f2186839c793"
+    }
+  },
+  {
+    "model": "base.ProductConfigModel",
+    "pk": 7,
+    "fields": {
+      "productItem": "165ed0f7-6d94-4f68-b3e0-f28f747eb46e",
+      "variant": "82c5da0e-6dd1-474b-8f7c-69410cca7a62"
+    }
+  },
+  {
+    "model": "base.ProductConfigModel",
+    "pk": 8,
+    "fields": {
+      "productItem": "165ed0f7-6d94-4f68-b3e0-f28f747eb46e",
+      "variant": "ae6ce3d7-c3a3-4876-9e0f-b419d8eff2d6"
+    }
+  },
+  {
+    "model": "base.ProductConfigModel",
+    "pk": 9,
+    "fields": {
+      "productItem": "48a3f3ff-9d91-4667-ae91-9aa0ec8e62b4",
+      "variant": "ebeb487d-67d5-498e-948f-02896e24526c"
+    }
+  },
+  {
+    "model": "base.ProductConfigModel",
+    "pk": 10,
+    "fields": {
+      "productItem": "48a3f3ff-9d91-4667-ae91-9aa0ec8e62b4",
+      "variant": "b916e4ad-1da7-473d-95dd-72c710db4d9b"
+    }
+  },
+  {
+    "model": "base.ProductConfigModel",
+    "pk": 11,
+    "fields": {
+      "productItem": "bdc9a1e0-9b20-45bb-a4e1-6b45d9f4fbd6",
+      "variant": "ebeb487d-67d5-498e-948f-02896e24526c"
+    }
+  },
+  {
+    "model": "base.ProductConfigModel",
+    "pk": 12,
+    "fields": {
+      "productItem": "bdc9a1e0-9b20-45bb-a4e1-6b45d9f4fbd6",
+      "variant": "2f56a021-65fb-4cfa-96b9-049993546260"
+    }
+  },
+  {
+    "model": "base.ProductConfigModel",
+    "pk": 13,
+    "fields": {
+      "productItem": "2cf7db07-5b99-4990-8c98-e057b7a24b3c",
+      "variant": "ebeb487d-67d5-498e-948f-02896e24526c"
+    }
+  },
+  {
+    "model": "base.ProductConfigModel",
+    "pk": 14,
+    "fields": {
+      "productItem": "2cf7db07-5b99-4990-8c98-e057b7a24b3c",
+      "variant": "33fedc64-f33b-4bb6-b176-f2186839c793"
+    }
+  },
+  {
+    "model": "base.ProductConfigModel",
+    "pk": 15,
+    "fields": {
+      "productItem": "f9146e4b-6b1a-4b5b-99d4-01b688dcb9aa",
+      "variant": "ebeb487d-67d5-498e-948f-02896e24526c"
+    }
+  },
+  {
+    "model": "base.ProductConfigModel",
+    "pk": 16,
+    "fields": {
+      "productItem": "f9146e4b-6b1a-4b5b-99d4-01b688dcb9aa",
+      "variant": "ae6ce3d7-c3a3-4876-9e0f-b419d8eff2d6"
+    }
+  },
+  {
+    "model": "base.ProductConfigModel",
+    "pk": 17,
+    "fields": {
+      "productItem": "43a497e8-96be-48db-bcbc-07ad7cd0572d",
+      "variant": "b57d434f-28d3-466e-93e9-5cc294ee4b7b"
+    }
+  },
+  {
+    "model": "base.ProductConfigModel",
+    "pk": 18,
+    "fields": {
+      "productItem": "43a497e8-96be-48db-bcbc-07ad7cd0572d",
+      "variant": "b916e4ad-1da7-473d-95dd-72c710db4d9b"
+    }
+  },
+  {
+    "model": "base.ProductConfigModel",
+    "pk": 19,
+    "fields": {
+      "productItem": "55dbd353-6972-49b1-9218-625e4ff8e7e2",
+      "variant": "b57d434f-28d3-466e-93e9-5cc294ee4b7b"
+    }
+  },
+  {
+    "model": "base.ProductConfigModel",
+    "pk": 20,
+    "fields": {
+      "productItem": "55dbd353-6972-49b1-9218-625e4ff8e7e2",
+      "variant": "2f56a021-65fb-4cfa-96b9-049993546260"
+    }
+  },
+  {
+    "model": "base.ProductConfigModel",
+    "pk": 21,
+    "fields": {
+      "productItem": "b6d8ef0c-3302-4f37-9d40-7ad3784039ff",
+      "variant": "b57d434f-28d3-466e-93e9-5cc294ee4b7b"
+    }
+  },
+  {
+    "model": "base.ProductConfigModel",
+    "pk": 22,
+    "fields": {
+      "productItem": "b6d8ef0c-3302-4f37-9d40-7ad3784039ff",
+      "variant": "33fedc64-f33b-4bb6-b176-f2186839c793"
+    }
+  },
+  {
+    "model": "base.ProductConfigModel",
+    "pk": 23,
+    "fields": {
+      "productItem": "084dcb99-006f-403f-9f8a-3e3ffb9438a3",
+      "variant": "b57d434f-28d3-466e-93e9-5cc294ee4b7b"
+    }
+  },
+  {
+    "model": "base.ProductConfigModel",
+    "pk": 24,
+    "fields": {
+      "productItem": "084dcb99-006f-403f-9f8a-3e3ffb9438a3",
+      "variant": "ae6ce3d7-c3a3-4876-9e0f-b419d8eff2d6"
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "2908adda-fe9a-4fb8-87c4-f268133d3b28",
+    "fields": {
+      "product": "fcce454f-164b-43f4-a4e6-e107ff430dc2",
+      "location": "US",
+      "name": "Dress Shirt - Long Sleeve",
+      "description": "Classic men's long sleeve dress shirt.",
+      "price": 29.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "f6602d95-0e9b-4aec-a4f9-d447fdc2466d",
+    "fields": {
+      "product": "fcce454f-164b-43f4-a4e6-e107ff430dc2",
+      "location": "UK",
+      "name": "Dress Shirt - Long Sleeve",
+      "description": "Classic men's long sleeve dress shirt.",
+      "price": 29.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "6fabc8c2-7744-41cc-baaf-4fac46f80d80",
+    "fields": {
+      "product": "fcce454f-164b-43f4-a4e6-e107ff430dc2",
+      "location": "CA",
+      "name": "Dress Shirt - Long Sleeve",
+      "description": "Classic men's long sleeve dress shirt.",
+      "price": 29.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "bac7cc63-8012-40ac-ba48-c63898a36acc",
+    "fields": {
+      "product": "fcce454f-164b-43f4-a4e6-e107ff430dc2",
+      "location": "AU",
+      "name": "Dress Shirt - Long Sleeve",
+      "description": "Classic men's long sleeve dress shirt.",
+      "price": 29.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "6cdc0dfd-8bc3-456b-9fe9-4fc6d171d12a",
+    "fields": {
+      "product": "a2d3b6f7-3f28-4e11-b75c-5e09e8b2a9c8",
+      "location": "US",
+      "name": "Casual Shirt - Long Sleeve",
+      "description": "Comfortable men's casual long sleeve shirt.",
+      "price": 24.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "9e447853-3c61-4cbb-92d2-23b3034ec1de",
+    "fields": {
+      "product": "a2d3b6f7-3f28-4e11-b75c-5e09e8b2a9c8",
+      "location": "UK",
+      "name": "Casual Shirt - Long Sleeve",
+      "description": "Comfortable men's casual long sleeve shirt.",
+      "price": 24.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "dbac7ab0-e132-4c38-8ab5-793d869aa7d1",
+    "fields": {
+      "product": "a2d3b6f7-3f28-4e11-b75c-5e09e8b2a9c8",
+      "location": "CA",
+      "name": "Casual Shirt - Long Sleeve",
+      "description": "Comfortable men's casual long sleeve shirt.",
+      "price": 24.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "f73a51ce-5468-422c-9cd8-5b53af128e7a",
+    "fields": {
+      "product": "a2d3b6f7-3f28-4e11-b75c-5e09e8b2a9c8",
+      "location": "AU",
+      "name": "Casual Shirt - Long Sleeve",
+      "description": "Comfortable men's casual long sleeve shirt.",
+      "price": 24.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "072ce2a5-a995-4f31-9d62-22ad0efcae7a",
+    "fields": {
+      "product": "b6f17a1c-8b34-4df0-87b3-f364ab97dc6a",
+      "location": "US",
+      "name": "Casual Shirt - Short Sleeve",
+      "description": "Lightweight men's casual short sleeve shirt.",
+      "price": 21.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "ad781f25-19fc-432c-a12a-0e987565aa9d",
+    "fields": {
+      "product": "b6f17a1c-8b34-4df0-87b3-f364ab97dc6a",
+      "location": "UK",
+      "name": "Casual Shirt - Short Sleeve",
+      "description": "Lightweight men's casual short sleeve shirt.",
+      "price": 21.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "7aeaacd7-13dd-479d-a848-937e81aaa44d",
+    "fields": {
+      "product": "b6f17a1c-8b34-4df0-87b3-f364ab97dc6a",
+      "location": "CA",
+      "name": "Casual Shirt - Short Sleeve",
+      "description": "Lightweight men's casual short sleeve shirt.",
+      "price": 21.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "b6f6b1e4-02af-4da9-8a27-04d4dd66655b",
+    "fields": {
+      "product": "b6f17a1c-8b34-4df0-87b3-f364ab97dc6a",
+      "location": "AU",
+      "name": "Casual Shirt - Short Sleeve",
+      "description": "Lightweight men's casual short sleeve shirt.",
+      "price": 21.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "48f79041-3368-4946-a43b-19365b142ca8",
+    "fields": {
+      "product": "c3e981d2-2577-42de-b4f9-0f9c2dd9e35d",
+      "location": "AU",
+      "name": "Denim Pant",
+      "description": "Classic denim pant for men.",
+      "price": 34.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "35ad6c63-7f0a-4f27-a6c9-5ac3cb6e4b5f",
+    "fields": {
+      "product": "d9b83f67-1999-4a15-b8e4-783a826bb07a",
+      "location": "AU",
+      "name": "Cargo Long Pant",
+      "description": "Durable cargo long pants for men.",
+      "price": 36.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "984e5060-de44-4c91-82cd-ac5a9ff05909",
+    "fields": {
+      "product": "f12c0d8b-e711-4bb8-baf3-4e2c45c9b09b",
+      "location": "AU",
+      "name": "Cargo Half Pant",
+      "description": "Casual cargo half pants for men.",
+      "price": 28.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "fcae29e5-ee4c-4434-9c90-bbf75f5d1f0c",
+    "fields": {
+      "product": "e7a7c3a2-09bc-4095-9fc3-7ae1bdcae48f",
+      "location": "AU",
+      "name": "Mens Winter Jacket",
+      "description": "Warm and stylish men's winter jacket.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "6cd89db4-b8c8-46ed-8176-9df9a96e2d87",
+    "fields": {
+      "product": "bc9d41b4-4c21-4f59-a93f-0839a7a7d67d",
+      "location": "AU",
+      "name": "Mens Summer Jacket",
+      "description": "Lightweight men's summer jacket.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "c1bc1abd-5aad-4f4b-b1a3-a0b89980e57d",
+    "fields": {
+      "product": "a4468f0a-22ec-4ea6-851d-4576d9e204ee",
+      "location": "AU",
+      "name": "Mens V-Neck Sweater",
+      "description": "Cozy men's V-neck sweater.",
+      "price": 32.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "4322058b-21d2-4395-8db3-b607a18b6542",
+    "fields": {
+      "product": "bb937e6e-6f1d-4db9-9d2a-32fae7cc934f",
+      "location": "US",
+      "name": "Mens Crew Neck Sweater",
+      "description": "Classic men's crew neck sweater.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "2d794f74-0423-4353-9bdc-c46129c65aaf",
+    "fields": {
+      "product": "bb937e6e-6f1d-4db9-9d2a-32fae7cc934f",
+      "location": "CA",
+      "name": "Mens Crew Neck Sweater",
+      "description": "Classic men's crew neck sweater.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "5017cd48-b283-4fab-bc3c-34d6ff4db739",
+    "fields": {
+      "product": "bb937e6e-6f1d-4db9-9d2a-32fae7cc934f",
+      "location": "AU",
+      "name": "Mens Crew Neck Sweater",
+      "description": "Classic men's crew neck sweater.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "54b517a8-5fbc-4e9a-9374-18a4b071d037",
+    "fields": {
+      "product": "df123eac-0f7e-4c9d-a735-fb4c1438f8bc",
+      "location": "US",
+      "name": "Mens Hoodie Fleece",
+      "description": "Comfortable men's fleece hoodie.",
+      "price": 39.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "b11c99ee-e1dc-48ea-8a2b-79e92bf0baf0",
+    "fields": {
+      "product": "df123eac-0f7e-4c9d-a735-fb4c1438f8bc",
+      "location": "UK",
+      "name": "Mens Hoodie Fleece",
+      "description": "Comfortable men's fleece hoodie.",
+      "price": 39.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "65f9615a-c054-4401-9a46-104da7b02357",
+    "fields": {
+      "product": "df123eac-0f7e-4c9d-a735-fb4c1438f8bc",
+      "location": "CA",
+      "name": "Mens Hoodie Fleece",
+      "description": "Comfortable men's fleece hoodie.",
+      "price": 39.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "79b4e7ee-1e43-47df-88c9-7b8351f9e2d0",
+    "fields": {
+      "product": "df123eac-0f7e-4c9d-a735-fb4c1438f8bc",
+      "location": "AU",
+      "name": "Mens Hoodie Fleece",
+      "description": "Comfortable men's fleece hoodie.",
+      "price": 39.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "da086488-5c07-4ec7-a000-ebc4dde4eb9e",
+    "fields": {
+      "product": "cc8e63bd-332d-4f8e-93b1-33232d5360f0",
+      "location": "UK",
+      "name": "Mens T-Shirt",
+      "description": "Casual men's t-shirt available in multiple colors.",
+      "price": 19.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "66d55e32-b8ba-4c3b-9881-88a3a74e599a",
+    "fields": {
+      "product": "cc8e63bd-332d-4f8e-93b1-33232d5360f0",
+      "location": "CA",
+      "name": "Mens T-Shirt",
+      "description": "Casual men's t-shirt available in multiple colors.",
+      "price": 19.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "b77fbef7-266c-4647-8040-9e5f32e17a79",
+    "fields": {
+      "product": "cc8e63bd-332d-4f8e-93b1-33232d5360f0",
+      "location": "AU",
+      "name": "Mens T-Shirt",
+      "description": "Casual men's t-shirt available in multiple colors.",
+      "price": 19.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "0279c69c-7d59-4bf2-9eb9-a5eba58b2221",
+    "fields": {
+      "product": "e5a9d9f3-489d-4607-88ab-c7a2a7e9d2bb",
+      "location": "US",
+      "name": "Mens Polo Shirt",
+      "description": "Classic men's polo shirt for casual and semi-formal wear.",
+      "price": 24.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "5246277e-c5b7-4087-a7af-adaa6d505a96",
+    "fields": {
+      "product": "e5a9d9f3-489d-4607-88ab-c7a2a7e9d2bb",
+      "location": "UK",
+      "name": "Mens Polo Shirt",
+      "description": "Classic men's polo shirt for casual and semi-formal wear.",
+      "price": 24.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "df9d383c-6f56-40e7-ac1e-eaa9c6f93a9b",
+    "fields": {
+      "product": "e5a9d9f3-489d-4607-88ab-c7a2a7e9d2bb",
+      "location": "AU",
+      "name": "Mens Polo Shirt",
+      "description": "Classic men's polo shirt for casual and semi-formal wear.",
+      "price": 24.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "d4390ef7-11f6-48a4-9895-19d0ee6fdcda",
+    "fields": {
+      "product": "af7c7f85-0fdb-4c81-a76c-0bc3f32e4a5a",
+      "location": "AU",
+      "name": "Dress Shirt - Long Sleeve",
+      "description": "Classic boys' long sleeve dress shirt.",
+      "price": 17.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "ca17f047-d033-4ac8-b840-1a3b08bc13bd",
+    "fields": {
+      "product": "64d2f933-3576-41b5-a40f-fc2e975812ee",
+      "location": "AU",
+      "name": "Casual Shirt - Long Sleeve",
+      "description": "Comfortable boys' casual long sleeve shirt.",
+      "price": 16.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "87c37329-d47b-4cdd-8f4f-a7ff9dbd816e",
+    "fields": {
+      "product": "d3d13426-7c03-4e42-9f88-2f8be8c9e786",
+      "location": "AU",
+      "name": "Casual Shirt - Short Sleeve",
+      "description": "Lightweight boys' casual short sleeve shirt.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "d8dd36fd-e7b8-4a92-9f71-8047fa799fde",
+    "fields": {
+      "product": "a6518d2e-46cd-4f0d-89a8-9e1f4399b1d0",
+      "location": "AU",
+      "name": "Denim Pant",
+      "description": "Durable boys' denim pant.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "993d8635-4fce-44e7-ac51-b18cac030fdf",
+    "fields": {
+      "product": "f214caa2-b24c-4d20-8bdb-6e8a9e60eae3",
+      "location": "AU",
+      "name": "Cargo Long Pant",
+      "description": "Functional boys' cargo long pant.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "43c46066-5b01-49ee-b0f8-243cb4122179",
+    "fields": {
+      "product": "3a0d492d-5a8a-4b04-b3e0-2ff5e8c6e24f",
+      "location": "AU",
+      "name": "Cargo Half Pant",
+      "description": "Casual boys' cargo half pant.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "874f0250-f768-4619-b3f5-64218327e7a4",
+    "fields": {
+      "product": "b8e0a3ec-00ff-4f0e-9847-831da383d832",
+      "location": "AU",
+      "name": "Winter Jacket",
+      "description": "Warm boys' winter jacket.",
+      "price": 49.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "9790da4a-7467-4b9e-a3e4-574eeba23413",
+    "fields": {
+      "product": "0287f2a9-cb2a-48a2-b2c4-74ae8466d37f",
+      "location": "AU",
+      "name": "Summer Jacket",
+      "description": "Light boys' summer jacket.",
+      "price": 34.99
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "63c7164c-876d-482d-9b96-7e7be4c9c98d",
+    "fields": {
+      "product": "45c7a85d-7eaf-4e9a-9a5f-9e949e62a631",
+      "location": "AU",
+      "name": "V-Neck Sweater",
+      "description": "Cozy boys' V-neck sweater.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "e1b27114-5db6-4e0f-ab3c-18c4149dd677",
+    "fields": {
+      "product": "302cb988-1740-4c06-a49c-29d6f1d1d8f2",
+      "location": "AU",
+      "name": "Crew Neck Sweater",
+      "description": "Classic boys' crew neck sweater.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "0beb46eb-b5f2-4988-bfa4-886d219714fe",
+    "fields": {
+      "product": "9d07f347-4f47-4eb8-a40b-5087cc2bdfd2",
+      "location": "AU",
+      "name": "Hoodie Fleece",
+      "description": "Warm boys' fleece hoodie.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "5896bf88-6bac-4b2e-a430-abc9dc1d42e7",
+    "fields": {
+      "product": "ccf69b5e-3113-408a-91a0-6985df90a9a9",
+      "location": "AU",
+      "name": "T-Shirt",
+      "description": "Casual boys' T-shirt.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "29e52e1e-3c55-4808-966c-557261fa53b4",
+    "fields": {
+      "product": "a1eae6d3-9797-49e9-912b-01577d3524a7",
+      "location": "AU",
+      "name": "Polo Shirt",
+      "description": "Classic boys' polo shirt.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "e786671f-13fe-455f-9d0a-110b8f93e0de",
+    "fields": {
+      "product": "b3a9f2c4-59e8-4d72-b2d9-f36e42f8a67a",
+      "location": "AU",
+      "name": "womens Shirt - Long Sleeve",
+      "description": "Elegant womens long sleeve shirt.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "95cc0f03-da36-47bc-b074-b2851d1f399a",
+    "fields": {
+      "product": "c19e245d-773a-4a49-8d7e-20c3c9d2c17e",
+      "location": "AU",
+      "name": "Saree With Blouse Piece",
+      "description": "Traditional womens saree with blouse piece.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "675f5a1b-5d3e-44a5-a5ac-623272697cb8",
+    "fields": {
+      "product": "84f6c0b3-120d-4e72-bd17-d8256e6a7e6f",
+      "location": "AU",
+      "name": "Salwar Kameez",
+      "description": "Classic womens salwar kameez set.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "72b4d6b3-d7d2-4fb3-a4a2-38d5a3e628a3",
+    "fields": {
+      "product": "a5b2d5f8-5767-4dfe-87ea-8b67a253c1ab",
+      "location": "AU",
+      "name": "womens Long Pant",
+      "description": "Comfortable womens long pant.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "aeb87c3f-c850-4184-b12d-b858d57146b7",
+    "fields": {
+      "product": "0a58b73d-d33b-4424-b917-f3e35c740312",
+      "location": "AU",
+      "name": "womens Short Pant",
+      "description": "Casual womens short pant.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "5f8b2133-892e-47b8-ab02-9b657df9d286",
+    "fields": {
+      "product": "09d9db71-6774-4c4d-8c37-134bb2b769c0",
+      "location": "AU",
+      "name": "womens Cardigan",
+      "description": "Stylish womens cardigan for layering.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "01e5dfb0-a3bf-40cf-9402-f5ce080cae1f",
+    "fields": {
+      "product": "c4f0e3de-0655-4d25-b575-1b3b6a4f3c53",
+      "location": "AU",
+      "name": "womens Winter Jacket",
+      "description": "Warm womens winter jacket.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "ee6b054b-4090-41dc-8010-4fe834423f39",
+    "fields": {
+      "product": "9f8e84cb-6e36-4e9c-9d0b-7686a2c411f3",
+      "location": "AU",
+      "name": "womens Summer Jacket",
+      "description": "Lightweight womens summer jacket.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "02b23157-bf6b-49ed-b8b4-783b8147d034",
+    "fields": {
+      "product": "25136f3d-243b-4574-9303-7ad810c15d65",
+      "location": "AU",
+      "name": "V-Neck Sweater",
+      "description": "Comfortable womens V-neck sweater.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "195319be-b886-48ea-bc1a-70b3fd17ce77",
+    "fields": {
+      "product": "7a71ebbc-f4bb-42c5-82d3-cb56e5f95c23",
+      "location": "AU",
+      "name": "Crew Neck Sweater",
+      "description": "Classic womens crew neck sweater.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "07500d37-21c8-4d2d-a116-0737165d2c4f",
+    "fields": {
+      "product": "9e1e3b0f-1c1d-43fa-9307-c61e3d9b8c90",
+      "location": "AU",
+      "name": "Hoodie Fleece",
+      "description": "Cozy womens fleece hoodie.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "5e8a39c3-6ebd-49a3-876a-b4d018a8d2e9",
+    "fields": {
+      "product": "357ac10a-b6a8-4f8a-b412-2c2e50d86ed9",
+      "location": "AU",
+      "name": "womens Tank Top",
+      "description": "Casual womens tank top for summer.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "3bdaccd5-9336-4657-b1c4-14e392dbefd6",
+    "fields": {
+      "product": "4e09357b-735f-4a3e-a8a7-7b64ac314c6c",
+      "location": "AU",
+      "name": "womens Top",
+      "description": "Stylish womens casual top.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "4fee8e4a-8abc-4834-a418-370cbcef5f16",
+    "fields": {
+      "product": "5d8b12f4-5a2a-411a-9f20-34ac87b1d75e",
+      "location": "AU",
+      "name": "Girls Shirt - Long Sleeve",
+      "description": "Classic girls' long sleeve shirt.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "ed4a66fa-407b-40c8-90d2-aeecbddc0fbe",
+    "fields": {
+      "product": "721e12f0-b2f7-4d8c-a311-7d9c1ee271aa",
+      "location": "AU",
+      "name": "Saree With Blouse Piece",
+      "description": "Elegant girls' saree with matching blouse piece.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "70c72ad2-268a-45b5-b20a-c26acff11ca6",
+    "fields": {
+      "product": "a9f01123-e1b8-4c3d-b6c3-d4323ec023ad",
+      "location": "AU",
+      "name": "Salwar",
+      "description": "Comfortable girls' salwar.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "0545bb29-d254-4e2c-84ea-6dc21ff6ff76",
+    "fields": {
+      "product": "f7b8c6e1-762b-4e03-9d67-2cddb5762e5e",
+      "location": "AU",
+      "name": "Kameaz",
+      "description": "Traditional girls' kameaz.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "6410dbf5-21cd-423a-a47d-19eef4e649f1",
+    "fields": {
+      "product": "142c97cc-234a-4c6a-93ca-82f37e414d38",
+      "location": "AU",
+      "name": "Girls Long Pant",
+      "description": "Girls' comfortable long pant.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "e51fb505-c864-4df0-bb8d-66b210d7ea9a",
+    "fields": {
+      "product": "f14745f7-c1f7-4a17-8ed3-23e72b8e74a3",
+      "location": "AU",
+      "name": "Girls Short Pant",
+      "description": "Cool girls' short pant for casual wear.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "ab2faf7e-5579-4b1d-b98a-e004e9ba21ea",
+    "fields": {
+      "product": "43e0295a-270b-4f88-8765-17e2542cbe1f",
+      "location": "AU",
+      "name": "Girls Hot Pant",
+      "description": "Trendy girls' hot pant.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "cb91dc07-0930-44a3-9a65-ce615affaee0",
+    "fields": {
+      "product": "33e0e3f0-9434-4451-b0cb-5a6a156cc9bb",
+      "location": "AU",
+      "name": "Girls Winter Jacket",
+      "description": "Warm and cozy girls' winter jacket.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "1bf30011-fa3a-4efb-9c4d-3d0387b6aabb",
+    "fields": {
+      "product": "d850c87e-b561-4a2c-8a09-857fe4f44b68",
+      "location": "AU",
+      "name": "Girls Summer Jacket",
+      "description": "Lightweight girls' summer jacket.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "a36135f8-f079-4c2f-a380-b4c1ca73da4a",
+    "fields": {
+      "product": "9b3b8f12-4f53-4b3e-9181-4b4a36f31211",
+      "location": "AU",
+      "name": "Girls V-Neck Sweater",
+      "description": "Comfortable girls' v-neck sweater.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "7fd47988-52a0-4c30-8bb6-9d9701b9d178",
+    "fields": {
+      "product": "a7487c07-68a9-4e82-b812-5410ddc2ae9f",
+      "location": "AU",
+      "name": "Girls Crew Neck Sweater",
+      "description": "Classic girls' crew neck sweater.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "22d6523f-ea84-41ca-bdbe-d33c3d2b523a",
+    "fields": {
+      "product": "58b7f7bc-1bba-49a1-a19f-8340b886d0e8",
+      "location": "AU",
+      "name": "Girls Hoodie Fleece",
+      "description": "Warm fleece hoodie for girls.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "3fa3a73a-3004-4ca5-9570-09c67c958639",
+    "fields": {
+      "product": "f8c827c7-3f30-4f2d-9d82-43f23a72a7d1",
+      "location": "AU",
+      "name": "Girls Tank Top",
+      "description": "Comfortable girls' tank top.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "b9a5ef07-ede9-43af-9dde-83ceaa0878c6",
+    "fields": {
+      "product": "1d9efb08-45ab-43a7-b04a-b0e6d94298c7",
+      "location": "AU",
+      "name": "Girls Top",
+      "description": "Stylish girls' top.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "78592083-6cca-4dea-9940-c258d45fdfd6",
+    "fields": {
+      "product": "f3a1459a-3c01-4ee0-bd26-5d80316ca3e8",
+      "location": "AU",
+      "name": "Babies Shirt Long Sleeve",
+      "description": "Soft and comfortable long sleeve shirt for babies.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "bf6da385-4cf8-490d-ae27-3b974f8e4d31",
+    "fields": {
+      "product": "e8bd0bf3-9260-4fa3-8a9c-28d97d1e8e23",
+      "location": "AU",
+      "name": "Babies Shirt Short Sleeve",
+      "description": "Light and breezy short sleeve shirt for babies.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "c670e837-97da-4f56-8089-108fdeecbe4f",
+    "fields": {
+      "product": "7a6f1a9d-c6f7-46a8-9b0a-f7e2361e7694",
+      "location": "AU",
+      "name": "Babies Long Sleeve Dress 1",
+      "description": "Cute long sleeve dress for babies.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "c70cd3e1-dbda-4db1-8b96-b2ae6b35704c",
+    "fields": {
+      "product": "c95c8f09-ffb0-42e7-a63e-3b49c64e8c55",
+      "location": "AU",
+      "name": "Babies Long Sleeve Dress 2",
+      "description": "Adorable long sleeve dress for babies.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "74216737-0877-46a0-8d49-47b51fb07917",
+    "fields": {
+      "product": "0ffdbd8d-978a-4f8a-a8c1-2a1d68fa9db0",
+      "location": "AU",
+      "name": "Babies Long Sleeve Dress 3",
+      "description": "Stylish long sleeve dress for babies.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "f1f2c7fd-d517-4cbb-8739-982965c50b1d",
+    "fields": {
+      "product": "9a565f45-c920-44d6-9284-91d9bc3a18a7",
+      "location": "AU",
+      "name": "Babies Long Sleeve Dress 4",
+      "description": "Comfortable long sleeve dress for babies.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "3651b9ab-e8ab-4fda-a681-2f0b3c3a1d1d",
+    "fields": {
+      "product": "2a7d04f2-6f52-4b90-bb06-836c9206b91f",
+      "location": "AU",
+      "name": "Babies Long Sleeve Dress 5",
+      "description": "Elegant long sleeve dress for babies.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "4e5429ae-0d74-4dcd-ae13-867318e2fa60",
+    "fields": {
+      "product": "90ddf4f3-1206-4e45-b45c-433c05aef5ad",
+      "location": "AU",
+      "name": "Babies Winter Jacket",
+      "description": "Warm winter jacket for babies.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "89164a4a-74bd-418a-a266-02da66ec0442",
+    "fields": {
+      "product": "2b4120d7-824f-40d3-8e03-d68a6823c6fc",
+      "location": "AU",
+      "name": "Babies Summer Jacket",
+      "description": "Lightweight summer jacket for babies.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "2b6bc554-b453-4865-b16e-748e4e315ed8",
+    "fields": {
+      "product": "c4db0df4-7215-44a2-a74d-7ad5ed2f120f",
+      "location": "AU",
+      "name": "Babies V-Neck Sweater",
+      "description": "Cozy V-neck sweater for babies.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "cbf6417c-fd9a-4584-9a16-09fe8edac742",
+    "fields": {
+      "product": "6a4c8a5e-9f5a-4f1e-9338-55f6b1a1d6e0",
+      "location": "AU",
+      "name": "Babies Crew Neck Sweater",
+      "description": "Classic crew neck sweater for babies.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "96d443d6-8958-47c8-b43c-fde280c95644",
+    "fields": {
+      "product": "54a1e2b8-1d93-45b3-b3af-c6e6edb0d47e",
+      "location": "AU",
+      "name": "Babies Hoodie Fleece",
+      "description": "Warm fleece hoodie for babies.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "69a8efc5-d3e2-4dd3-aa79-78b2f48ec57d",
+    "fields": {
+      "product": "8e7d3cb6-9fa0-4d60-aeef-6c9b2c6df3a1",
+      "location": "AU",
+      "name": "Babies Long Sleeve Dress 6",
+      "description": "Comfortable long sleeve dress for babies.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "270a6fe1-4075-43de-a18a-f808c2232ec9",
+    "fields": {
+      "product": "109f4bc1-2b5a-4561-9832-3f13423d0dcd",
+      "location": "AU",
+      "name": "Babies Long Sleeve Dress 7",
+      "description": "Stylish long sleeve dress for babies.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "1facaf7c-e182-4cd8-b37d-8d69f298f51d",
+    "fields": {
+      "product": "a1c598a8-8bb2-4b3f-8e35-d58a58fcdb4e",
+      "location": "AU",
+      "name": "Babies Long Sleeve Dress 8",
+      "description": "Elegant long sleeve dress for babies.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "cd02bfc2-9004-4fbb-856d-01c2bdd57450",
+    "fields": {
+      "product": "31b3aeb4-6cb7-4fa3-9b3b-48c1d4d7d926",
+      "location": "AU",
+      "name": "Babies Long Sleeve Dress 9",
+      "description": "Soft long sleeve dress for babies.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "92a0e035-1021-4616-b483-e0bd6f2143ce",
+    "fields": {
+      "product": "d51a8f1b-f097-44d0-b35e-546d7a7e2e7c",
+      "location": "AU",
+      "name": "Cap Denim 1",
+      "description": "Classic denim cap for everyday wear.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "2723c4cd-e7ab-43f3-ad2d-f55665019411",
+    "fields": {
+      "product": "7a2f9e89-bb30-42f9-8d2e-846c403b11b2",
+      "location": "AU",
+      "name": "Cap Twill 1",
+      "description": "Durable twill fabric cap for casual style.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "6cee9d65-c794-4839-910e-85c7a976e44e",
+    "fields": {
+      "product": "1845f32e-0ae4-4ec8-b7bc-6ff52292b62a",
+      "location": "AU",
+      "name": "Cap Denim 2",
+      "description": "Stylish denim cap with adjustable strap.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "24090534-e9e1-4ab9-8dd8-25b879f67dd5",
+    "fields": {
+      "product": "62e97de3-6477-4f21-9e3c-6f0f7ec9531b",
+      "location": "AU",
+      "name": "Cap Twill 2",
+      "description": "Comfortable twill cap for outdoor activities.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "42833ad0-d2b8-4b6b-8836-709bab521163",
+    "fields": {
+      "product": "e96e5e2f-d4f4-44b4-b1a3-758b512a9b7c",
+      "location": "AU",
+      "name": "Cap Denim 3",
+      "description": "Denim cap with classic design and fit.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "f025f102-37ef-4742-9036-5ac38b732b6b",
+    "fields": {
+      "product": "a9b3cdd1-731f-4b8b-9b21-c3d78f4d0eaf",
+      "location": "AU",
+      "name": "Long Sleeve Shirt & Denim Long Pant",
+      "description": "Classic long sleeve shirt paired with denim long pants, perfect for school uniforms.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "e2d20ebd-144a-4da9-b1df-436dbb4c52e1",
+    "fields": {
+      "product": "e92bc734-9e03-4a71-9d1f-4ed73f4a392d",
+      "location": "AU",
+      "name": "Polo Shirt and Denim Long Pant",
+      "description": "Comfortable polo shirt paired with denim long pants, ideal for school wear.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "ec64bf5c-9980-4a7b-b193-6c0eb854bab5",
+    "fields": {
+      "product": "4a7f6a51-dc2b-46ae-8a37-91de26a2b8bc",
+      "location": "AU",
+      "name": "Long Sleeve Shirt and Twill Long Pant",
+      "description": "Durable long sleeve shirt with twill long pants for school uniform use.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "905fdfa2-e45f-4cfc-90e6-6ae83bfb451b",
+    "fields": {
+      "product": "ca0d5b1e-9b6a-4f1b-b360-03f9cde32df5",
+      "location": "AU",
+      "name": "Polo Shirt and Twill Long Pant",
+      "description": "Casual polo shirt combined with twill long pants for school uniforms.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "f3f1d01d-bb40-4a21-bc9c-1d06bc7fdba3",
+    "fields": {
+      "product": "e7d3020c-98b3-4ef9-bbd3-9b28f6e5ca7e",
+      "location": "AU",
+      "name": "Medical Uniform Set 1",
+      "description": "Complete medical uniform set including top and bottom - Set 1, comfortable and durable.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "e08210a6-e36d-492d-8d0d-5e33e3783a0e",
+    "fields": {
+      "product": "b03c5fcd-1f0f-49e9-9880-1c8bfc3a0bfb",
+      "location": "AU",
+      "name": "Medical Uniform Set 2",
+      "description": "Complete medical uniform set including top and bottom - Set 2, professional and breathable.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "e95d44b3-edbe-4e10-9fad-727a4a5c63f5",
+    "fields": {
+      "product": "40f8a9cc-1c1f-4d3a-83e0-dc53e12a4f7b",
+      "location": "AU",
+      "name": "Medical Uniform Set 3",
+      "description": "Complete medical uniform set including top and bottom - Set 3, lightweight and easy to maintain.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "ce70b9cd-f7ea-4dcd-a1a3-1a473fd9549a",
+    "fields": {
+      "product": "f23e459b-5e64-4c0f-b94d-cf6aee1f54d7",
+      "location": "AU",
+      "name": "Medical Uniform Set 4",
+      "description": "Complete medical uniform set including top and bottom - Set 4, designed for maximum comfort.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "9bc1db14-714b-4741-9bdc-a972eda31b1d",
+    "fields": {
+      "product": "a2f06b0a-9f39-4a91-98a6-2c8e5e9f5bc7",
+      "location": "AU",
+      "name": "Single Bed Set",
+      "description": "Complete single bed set including bedsheet, pillow covers, and duvet cover.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "d76db7dd-f42f-4a6d-b1ab-14a089ecf568",
+    "fields": {
+      "product": "d94cb785-5d2f-41b6-8baf-c7b56c0bf8a2",
+      "location": "AU",
+      "name": "Double Bed Set",
+      "description": "Complete double bed set with high-quality fabric and elegant design.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "7690f387-c488-4ce6-90c4-c8e4562b5d40",
+    "fields": {
+      "product": "f95c012f-3a31-4d9b-bdca-ff3a6a9b830e",
+      "location": "AU",
+      "name": "Queen Bed Set",
+      "description": "Queen size bed set with soft and durable materials for a comfortable sleep.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "08ecf65e-c141-4b9e-af43-ccb362a88843",
+    "fields": {
+      "product": "e4d4e4d7-3d02-4e32-8b5d-8f879ad3a5b8",
+      "location": "AU",
+      "name": "King Bed Set",
+      "description": "King size bed set with luxurious fabric and premium quality stitching.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "040d2895-a994-424f-9d5b-f68c1aca438a",
+    "fields": {
+      "product": "a91f5ed0-57e9-4ec9-9e15-712adbf0c69a",
+      "location": "AU",
+      "name": "Lipstick - Matt + Gloss",
+      "description": "Lipsticks available in matt and gloss finishes with vibrant colors.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "8d75b41b-8bb7-4d4c-8571-3b6e321e77a7",
+    "fields": {
+      "product": "f81307ea-4e23-43e8-bd2e-59e94c9f1f2c",
+      "location": "AU",
+      "name": "Eyeliner",
+      "description": "Smooth, long-lasting eyeliners for precise application.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "08867376-86c8-45e9-9553-cc2293e0130b",
+    "fields": {
+      "product": "4b5c88b7-3c6e-4a2c-978e-11d631ed685f",
+      "location": "AU",
+      "name": "Mascara",
+      "description": "Volumizing and lengthening mascara for fuller lashes.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "60fa483d-f240-4453-b74d-d4baca85646b",
+    "fields": {
+      "product": "2edaf927-8e54-432d-8e2b-ecf45f97a82a",
+      "location": "AU",
+      "name": "Blush",
+      "description": "Natural-looking blush to add a healthy glow to your cheeks.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "9631bd71-b58c-454f-8947-5fc63ddde421",
+    "fields": {
+      "product": "9a5a2a2a-fd8a-44d3-bc82-98d5d51c54a6",
+      "location": "AU",
+      "name": "Moisturizer",
+      "description": "Hydrating moisturizer suitable for all skin types.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "908473e0-85df-4fa7-843a-e16e954d2be2",
+    "fields": {
+      "product": "bdb7b317-4e13-4edb-9de6-1d1e1a3e7c90",
+      "location": "AU",
+      "name": "Foundation",
+      "description": "Lightweight foundation for smooth and even skin tone.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "28bf678d-47a1-448e-b758-bf66c678b7d4",
+    "fields": {
+      "product": "3de4253f-0f2a-4d48-b3e0-3f95c6e7e678",
+      "location": "AU",
+      "name": "Bronzer",
+      "description": "Bronzer for a sun-kissed glow and natural contour.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "394f88c0-06c8-4e22-8623-4cd8fabac8f0",
+    "fields": {
+      "product": "8f3451a0-05b6-44e7-bc22-9f9e2ecb3e48",
+      "location": "AU",
+      "name": "Setting Spray / Powder",
+      "description": "Setting spray and powder to keep your makeup flawless all day.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "86240366-55f8-468f-bd9b-dc9bba5fd33d",
+    "fields": {
+      "product": "c6c9a7b5-2d42-414f-9c2f-1d94d04b9a7d",
+      "location": "AU",
+      "name": "Face Cleaner",
+      "description": "Gentle face cleanser suitable for daily use.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "89543017-ed9c-482c-aa23-2c594ebc1f86",
+    "fields": {
+      "product": "7b0f96a6-7839-45d1-bd99-8742d8febb1a",
+      "location": "AU",
+      "name": "Earrings",
+      "description": "Stylish earrings in various designs to complement any outfit.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "42c8feab-f5d1-4f17-8d29-e4e7c4fff278",
+    "fields": {
+      "product": "5f1c8e4d-4e7a-4f72-84db-23732a6c9653",
+      "location": "AU",
+      "name": "Rings",
+      "description": "Elegant rings crafted with precision and style.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "37dec6c4-1427-4ebb-8181-75a83c39cc5f",
+    "fields": {
+      "product": "d15c8ee0-9e54-4b0e-80d8-66e019c9d9f2",
+      "location": "AU",
+      "name": "Necklaces",
+      "description": "Beautiful necklaces for every occasion and style.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "5121b9fd-ad54-4c32-ba8d-1025fd2a3cd7",
+    "fields": {
+      "product": "e5f0a7ca-89b8-4a23-8f35-10b3b1b2f4d3",
+      "location": "AU",
+      "name": "Bracelets",
+      "description": "Chic bracelets designed to add elegance to your wrist.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "cbfd8475-16bd-4b6e-b204-b4fe84e6d7b5",
+    "fields": {
+      "product": "f8b1ec50-d591-4a6c-877d-2748cce9a72b",
+      "location": "AU",
+      "name": "Hoops",
+      "description": "Trendy hoop earrings available in multiple sizes and finishes.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "a4159094-8892-43fe-a213-a85d653eefc5",
+    "fields": {
+      "product": "94c92f57-6a7d-4d4a-82ea-c883f2b2fbd1",
+      "location": "AU",
+      "name": "Women Purse",
+      "description": "Stylish and spacious women’s purse for daily use.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "92524696-80a6-4846-9d08-a11cb343ac96",
+    "fields": {
+      "product": "cb3645a8-cd3b-4417-8d89-f3e78bc9a32a",
+      "location": "AU",
+      "name": "Women Wallet Set",
+      "description": "Elegant wallet set perfect for organizing essentials.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "974b9b8f-4e89-474c-a71f-e06f8a6efaca",
+    "fields": {
+      "product": "bb7ee4f1-144d-4e4e-8c35-5c78b88e029f",
+      "location": "AU",
+      "name": "Women Wallet Set Leather",
+      "description": "Premium leather wallet set with classic design.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "6606b818-c083-4f62-bf9f-89951ba7a4fb",
+    "fields": {
+      "product": "07e7e208-8d42-4c4c-bf1a-2d6900a688a5",
+      "location": "AU",
+      "name": "Women Wallet Set PU Leather",
+      "description": "Affordable PU leather wallet set with multiple compartments.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "69ed7750-14ba-414c-831d-37edd6a8caac",
+    "fields": {
+      "product": "21a5f893-1e14-4ca9-913a-7c45f49b8b19",
+      "location": "AU",
+      "name": "Mens Shoes",
+      "description": "Men's shoes collection.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "a628984d-0329-4216-8f3d-705aa8b1aae0",
+    "fields": {
+      "product": "362db99c-81c7-4b8d-a6e6-8ff6745f7c33",
+      "location": "AU",
+      "name": "Running Shoes",
+      "description": "Comfortable and durable running shoes.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "b6a9112b-9576-4d53-b9b5-06b703d7f105",
+    "fields": {
+      "product": "5e0df22d-7855-423b-b9e5-385a1570c91d",
+      "location": "AU",
+      "name": "Leather Shoes",
+      "description": "Classic leather shoes for all occasions.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "267f0510-eaa2-4ca9-a899-04db0b7153d0",
+    "fields": {
+      "product": "cc9a5e9a-f9c1-4060-91b9-d3d679c19f3a",
+      "location": "AU",
+      "name": "Womens shoes",
+      "description": "Stylish and comfortable shoes for women.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "8ef126eb-3b6f-452b-946d-a5cb8048d016",
+    "fields": {
+      "product": "eac7f5d1-5a32-4f07-b7e4-8c58264b7f25",
+      "location": "AU",
+      "name": "Babies Shoes 1-5",
+      "description": "Soft and safe shoes for babies.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "f2f636a3-ef3a-437e-910e-d08bda7031ae",
+    "fields": {
+      "product": "2e51fbd8-96b8-4be9-b661-5f9d1fa13c6a",
+      "location": "AU",
+      "name": "Babies Shoes 1-5",
+      "description": "Soft and safe shoes for babies.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "b9bd0aa7-032e-46ed-abd5-893c63594ad2",
+    "fields": {
+      "product": "8e89a8e9-18be-4eb9-8a7c-cfdc92194ed9",
+      "location": "AU",
+      "name": "Babies Shoes 1-5",
+      "description": "Soft and safe shoes for babies.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "0fab36d2-2d61-45e2-a784-8122f34faada",
+    "fields": {
+      "product": "6b29ed40-6d5d-4e4b-8a89-aba2aa17791e",
+      "location": "AU",
+      "name": "Babies Shoes 1-5",
+      "description": "Soft and safe shoes for babies.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "1dd5619a-0cb4-457e-af48-70cd06b03df6",
+    "fields": {
+      "product": "b41a0db9-c616-44aa-8e8d-e098aa6aeb3b",
+      "location": "AU",
+      "name": "Babies Shoes 1-5",
+      "description": "Soft and safe shoes for babies.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "983272de-f367-4580-8cbe-a8bfccedc6f5",
+    "fields": {
+      "product": "29e4173d-cdd0-4684-8361-d0e42bf6f11f",
+      "location": "AU",
+      "name": "Babies Shoes 1-5",
+      "description": "Soft and safe shoes for babies.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "8b9d844e-0b9e-4dd6-9c26-e5a33203d508",
+    "fields": {
+      "product": "4d71b68f-316a-47b9-9f38-7f7a6e8d7e0c",
+      "location": "AU",
+      "name": "Mens Watch",
+      "description": "Men's wrist watch collection.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "58def6e9-1ec3-43ca-9d8e-ac97464b52e3",
+    "fields": {
+      "product": "c2ed183a-5e2a-4371-82c7-302c59bc594a",
+      "location": "AU",
+      "name": "Women Watch",
+      "description": "Women's wrist watch collection.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "e818edf2-a3b7-4ad2-b84b-2db14235c14e",
+    "fields": {
+      "product": "6ebd98ef-fccc-4eb2-b36d-5a8e2e6b4f68",
+      "location": "AU",
+      "name": "Women Bracelet Watch",
+      "description": "Elegant bracelet watches for women.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "8f6bb057-57fb-4ce4-8bc1-9324071637e9",
+    "fields": {
+      "product": "f2900c30-6a9f-4b8f-a678-90d3b352f59f",
+      "location": "AU",
+      "name": "Unisex Watch 1",
+      "description": "Unisex watch model 1.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "03550852-55b0-47ae-86fb-446d71e8aa2e",
+    "fields": {
+      "product": "b4e2f47a-3de9-4fc2-b6f6-8de3ed95703d",
+      "location": "AU",
+      "name": "Unisex Watch 2",
+      "description": "Unisex watch model 2.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "6be01a0e-2c58-4eb1-9b98-3d9ba1ef00cb",
+    "fields": {
+      "product": "f54772e1-dfcf-4f5c-bc6c-c1e5c8cb0b6a",
+      "location": "AU",
+      "name": "Unisex Watch 3",
+      "description": "Unisex watch model 3.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "ca0eb0e6-bc56-4282-9add-bed632c0f94d",
+    "fields": {
+      "product": "9930d4ee-bf3d-4d63-8cda-0d6aee8a30b0",
+      "location": "AU",
+      "name": "Unisex Watch 4",
+      "description": "Unisex watch model 4.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "f222d5e7-290a-4b93-afdb-e6e63186ba6e",
+    "fields": {
+      "product": "af8b5d1f-9e15-4ee8-a10f-920c631bb512",
+      "location": "AU",
+      "name": "Unisex Watch 5",
+      "description": "Unisex watch model 5.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "114b6ece-0b1d-4db1-b710-b8194784de18",
+    "fields": {
+      "product": "a8f3b428-0a91-45f0-b88c-2e48467a5e3d",
+      "location": "AU",
+      "name": "Unisex Watch 6",
+      "description": "Unisex watch model 6.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "56a2b1bc-3551-4d5d-b592-614c02a1776a",
+    "fields": {
+      "product": "6e2d7c90-040e-4d2f-9fa6-ec4b4b232e21",
+      "location": "AU",
+      "name": "Unisex Watch 7",
+      "description": "Unisex watch model 7.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "617de80a-735a-47a5-aaf0-724705ea9a43",
+    "fields": {
+      "product": "1b85c17e-0e3b-4d58-9a17-81e5e3215d84",
+      "location": "AU",
+      "name": "Eye Drop 1",
+      "description": "Eye Drop product 1 for eye care.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "8a357599-a3cb-410f-a26a-0de428cc7a0b",
+    "fields": {
+      "product": "f4d8f3a2-2a98-4a23-8a4f-349d5831a651",
+      "location": "AU",
+      "name": "Eye Drop 2",
+      "description": "Eye Drop product 2 for eye care.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "1e8564f9-cb59-49cb-bb1a-5955d6a3e5c0",
+    "fields": {
+      "product": "c37aebd7-877b-49ed-8c9e-9456f71f06c9",
+      "location": "AU",
+      "name": "Hylo-Comod",
+      "description": "Hylo-Comod eye drops for dry eyes.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "37713cf0-3c30-4266-b2c2-77107da7a566",
+    "fields": {
+      "product": "a3f5421e-b2e7-47b6-9f98-7b13f054a4c8",
+      "location": "AU",
+      "name": "Vitamin D",
+      "description": "Vitamin D supplement.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "cc50b5b0-4276-42cd-a4be-e6f67ab06870",
+    "fields": {
+      "product": "e9c1d9a3-2d7e-41b2-bec4-462c76d7ef9b",
+      "location": "AU",
+      "name": "Vitamin C",
+      "description": "Vitamin C supplement.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "57a993f3-147d-42c5-965f-3bbd10d821a8",
+    "fields": {
+      "product": "5fbb7c96-6e23-41b0-a6c0-4bbf87d15fcb",
+      "location": "AU",
+      "name": "Vitamin E",
+      "description": "Vitamin E supplement.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "c54b78d8-dc46-4822-9bf9-b6b9ce27743e",
+    "fields": {
+      "product": "b35c6b8f-e3f6-4c5a-bd12-3a560efb2db3",
+      "location": "AU",
+      "name": "Magnesium Cream",
+      "description": "Magnesium cream for muscle relief.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "c6ad7c61-7c82-433d-bc6c-a25df77c467c",
+    "fields": {
+      "product": "d6a420f0-4d67-4a6f-836d-c9fdd431e8a7",
+      "location": "AU",
+      "name": "Tiger Balm",
+      "description": "Tiger Balm for pain relief.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "f4e6381a-fa2d-4ade-aca9-58a7aa32edc6",
+    "fields": {
+      "product": "7e49c84d-81f5-4b90-b2a0-9e8ca3a80d06",
+      "location": "AU",
+      "name": "Arnica",
+      "description": "Arnica for topical pain relief.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "aea949a4-46b2-4991-ad79-dc49bb669f5c",
+    "fields": {
+      "product": "fec9a170-5a31-42db-81d9-8a9d5e7b2f90",
+      "location": "AU",
+      "name": "Vitamin B",
+      "description": "Vitamin B supplement.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "37295df0-c9a3-4800-b4c8-c8a017b3e741",
+    "fields": {
+      "product": "00ab8d3f-5e1b-4c1e-9f48-ef591f46f788",
+      "location": "AU",
+      "name": "Honey Cold Pressed Olive Oil (EVOO)",
+      "description": "Honey infused cold pressed extra virgin olive oil.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "16604252-e9ea-44ef-b801-cbcc539809cb",
+    "fields": {
+      "product": "a5f92d3a-2c89-4f8f-b527-97c5a645e8c2",
+      "location": "AU",
+      "name": "Data Cable",
+      "description": "High-quality data cable for mobile devices.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "ea8e2cff-ba45-4157-a7cf-9ffe40a5d98f",
+    "fields": {
+      "product": "b7e1f3ac-9f8a-4b57-8b1b-37a4e7f7c1de",
+      "location": "AU",
+      "name": "Power Connector",
+      "description": "Reliable power connector for electronics.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "23e30adf-e37b-4236-8686-44306b1683a0",
+    "fields": {
+      "product": "c3f42f23-1a2d-4b0d-85f7-ffb83731c50d",
+      "location": "AU",
+      "name": "Power Bank",
+      "description": "Portable power bank for mobile charging.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "ed45e755-830c-44c7-bc02-2ea51687b1fa",
+    "fields": {
+      "product": "d2b8aead-59e1-4b3a-9ac9-9f7a46c8720c",
+      "location": "AU",
+      "name": "Mobile Cover - MOBILE 1",
+      "description": "Protective mobile phone cover - Model 1.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "c86dfa90-5e86-4054-91bc-e01161115637",
+    "fields": {
+      "product": "e487c5b9-1cd5-4a53-82c6-b0c8d4c71e53",
+      "location": "AU",
+      "name": "Mobile Cover - MOBILE 2",
+      "description": "Protective mobile phone cover - Model 2.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "529609c7-5861-445d-a28d-2c0aa63d0067",
+    "fields": {
+      "product": "f4f5c5a1-cb6b-4d3d-a53c-87d5f17b25d9",
+      "location": "AU",
+      "name": "Mobile Phone 3",
+      "description": "Latest mobile phone model 3.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "0d0b1eb4-fee0-46e8-a10d-68d7abac9cb3",
+    "fields": {
+      "product": "70a9325d-cd7f-4b5e-9cb1-7a6ec4aef24a",
+      "location": "AU",
+      "name": "Shower Gel",
+      "description": "Refreshing shower gel for all skin types.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "06e66c4d-c8f4-4060-ab5a-6da4a2b9b7c0",
+    "fields": {
+      "product": "879bc3b1-7e3a-40c7-bfad-97b4357864ef",
+      "location": "AU",
+      "name": "Shampoo",
+      "description": "Nourishing shampoo for healthy hair.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "cf6c4b6d-70e3-4ff5-ae64-fd28358572c1",
+    "fields": {
+      "product": "91cbd3a8-8f6b-49c0-b827-d3c7a64f8e77",
+      "location": "AU",
+      "name": "Hair Oil",
+      "description": "Natural hair oil for hair growth and shine.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "57ca08ff-4bf5-4cee-bd74-bdaad46c3427",
+    "fields": {
+      "product": "a5a7f9eb-4c3a-4ee4-8379-c9de5b4a3a97",
+      "location": "AU",
+      "name": "Men's Perfume",
+      "description": "Elegant men's perfume with long-lasting fragrance.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "47e79459-8529-474a-a3d3-2bf975c330fe",
+    "fields": {
+      "product": "b8f9d827-2f15-40c0-9b88-9f7297d1eac4",
+      "location": "AU",
+      "name": "Women's Perfume",
+      "description": "Floral and fresh women's perfume.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "6621a6b3-a4cd-4a65-8067-d0167760f64f",
+    "fields": {
+      "product": "c06a5f9b-1d34-4bbd-87b1-2b5e29d90f3d",
+      "location": "AU",
+      "name": "Mouth Wash",
+      "description": "Refreshing mouth wash for oral hygiene.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "e49c80cf-c1bf-4623-8033-d94d62042a09",
+    "fields": {
+      "product": "d4c7f05e-9b71-4a9b-bab2-6f1f9ebc462a",
+      "location": "AU",
+      "name": "Body Soap",
+      "description": "Gentle body soap for daily use.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "bd87b425-696c-448d-b82e-6576e8fe4aac",
+    "fields": {
+      "product": "e33f7ad0-9df4-4a6e-a0b2-0a31d06d802e",
+      "location": "AU",
+      "name": "Face Wash",
+      "description": "Refreshing face wash for clean skin.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "4c94b010-d5c4-406c-ac9e-ca8f462a7ce7",
+    "fields": {
+      "product": "f1d7c1a3-5b4c-49b2-8f81-f9c5e4c3e28d",
+      "location": "AU",
+      "name": "Toothpaste",
+      "description": "Fluoride toothpaste for healthy teeth.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "d4d44419-7e88-46a9-8acd-784b46460804",
+    "fields": {
+      "product": "0f47e51c-3742-4636-9b0f-c3f1ed9456b0",
+      "location": "AU",
+      "name": "Air Freshener 1",
+      "description": "Fresh scent air freshener for home.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "1e03e749-0b50-4f2a-aa83-40a8f1f8642e",
+    "fields": {
+      "product": "1a92b01d-5a0f-42a8-8f6a-b9d0bda5b4c1",
+      "location": "AU",
+      "name": "Air Freshener 2",
+      "description": "Long-lasting air freshener with pleasant fragrance.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "c034fc6e-c3f4-4974-ae41-1bd1077a5867",
+    "fields": {
+      "product": "2bcf5d32-09ad-4a1e-bb6c-f8d5f8d1c7e0",
+      "location": "AU",
+      "name": "Towels",
+      "description": "Soft and absorbent towels for everyday use.",
+      "price": 0.0
+    }
+  },
+  {
+    "model": "base.ProductLocationModel",
+    "pk": "45c96753-7790-45a1-b2e5-9d5eadcc7af0",
+    "fields": {
+      "product": "3e4f0c8f-4737-4a93-98c9-7cacf28d5a13",
+      "location": "AU",
+      "name": "Cotton",
+      "description": "Pure cotton fabric for various uses.",
+      "price": 0.0
+    }
+  }
+]

@@ -2,11 +2,21 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+import dotenv
 
+dotenv.load_dotenv() # Load environment variables from .env file
 
 def main():
     """Run administrative tasks."""
+
+    # Guard Python version at runtime
+    if sys.version_info < (3, 12):
+        raise SystemExit(
+            f"Python 3.12+ required (found {sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro})"
+        )
+
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ecommerceBackend.settings')
+
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

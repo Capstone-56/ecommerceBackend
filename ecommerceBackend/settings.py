@@ -11,10 +11,16 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from base import Constants
+from dotenv import load_dotenv
+import socket
+
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv(BASE_DIR / ".env")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -22,11 +28,33 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-2sv!-pb6m8^gach8^p0b4v)z1!(uri74&k59jotkyc5(07_-ab'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+def get_environment():
+    """Auto-detect environment"""
+    env = os.environ.get('ENVIRONMENT')
+    if env:
+        return env.lower()
 
-ALLOWED_HOSTS = []
+    hostname = socket.gethostname()
+    if 'ip-' in hostname or 'ec2' in hostname.lower():
+        return 'staging'
+    return 'local'
 
+
+ENVIRONMENT = get_environment()
+IS_LOCAL = ENVIRONMENT == 'local'
+IS_STAGING = ENVIRONMENT == 'staging'
+DEBUG = IS_LOCAL    # SECURITY WARNING: don't run with debug turned on in production!
+
+print(f"Environment: {ENVIRONMENT}")
+
+ALLOWED_HOSTS = [
+    "3.25.193.75",
+    "ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
+    "localhost",
+    "127.0.0.1",
+    "172.31.13.60",
+    "*"
+]
 
 # Application definition
 
@@ -37,20 +65,56 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'corsheaders',
+    'mptt',
     "rest_framework",
-    "base"
+    "base",
+
+    "rest_framework_simplejwt",
+    "rest_framework_simplejwt.token_blacklist",
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    "api.middleware.RefreshCookieMiddleware",
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "https://test-staging.d2mnsn6al9q61p.amplifyapp.com",
+    "http://3.25.193.75",
+    "http://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
+    "https://3.25.193.75",
+    "https://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
+    "https://dev.d2mnsn6al9q61p.amplifyapp.com",
+    "https://bdnx.com",
+    "https://www.bdnx.com",
+]
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_EXPOSE_HEADERS = ["X-Clear-Auth-State"]
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:5173",
+    "https://test-staging.d2mnsn6al9q61p.amplifyapp.com",
+    "http://3.25.193.75",
+    "http://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
+    "https://3.25.193.75", 
+    "https://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
+    "https://dev.d2mnsn6al9q61p.amplifyapp.com",
+    "https://bdnx.com",
+    "https://www.bdnx.com",
+]
+CSRF_COOKIE_SECURE   = True
+CSRF_COOKIE_SAMESITE = "Lax"
+SESSION_COOKIE_SECURE   = True
+SESSION_COOKIE_SAMESITE = "Lax"
 
 ROOT_URLCONF = 'ecommerceBackend.urls'
 
@@ -76,9 +140,13 @@ WSGI_APPLICATION = 'ecommerceBackend.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": os.environ.get("DB_ENGINE", "django.db.backends.postgresql"),
+        "NAME": os.environ.get("DB_NAME", "ecommerce_db"),
+        "USER": os.environ.get("DB_USER", "ecommerce_admin"),
+        "PASSWORD": os.environ.get("DB_PASSWORD", "capstone56"),
+        "HOST": os.environ.get("DB_HOST", "localhost"),
+        "PORT": os.environ.get("DB_PORT", "5432"),
     }
 }
 
@@ -114,10 +182,72 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 APPEND_SLASH=False
+
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+
+    "PAGE_SIZE": Constants.DEFAULT_PAGINATOR_PAGE_SIZE,
+
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "authentication.refresh_authentication.RefreshAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
+
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.AllowAny",
+    ],
+
+    # JSON first, then browsable API
+    "DEFAULT_RENDERER_CLASSES": (
+        ["rest_framework.renderers.JSONRenderer"]
+        if IS_STAGING
+        else ["rest_framework.renderers.JSONRenderer", "rest_framework.renderers.BrowsableAPIRenderer"]
+    ),
+
+    # Set JSON as default content type
+    "DEFAULT_CONTENT_NEGOTIATION_CLASS": "rest_framework.negotiation.DefaultContentNegotiation"
+}
+
+SIMPLE_JWT = {
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "ACCESS_TOKEN_LIFETIME": Constants.ACCESS_TOKEN_LIFETIME,
+    "REFRESH_TOKEN_LIFETIME": Constants.REFRESH_TOKEN_LIFETIME,
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": SECRET_KEY,
+}
+
+AUTH_USER_MODEL = "base.UserModel"
+
+# Pepper used in hashing (dev env)
+PEPPER = os.environ.get("PASSWORD_PEPPER", "A6vN3rZt5KqLp8UwXy9T0bGhJf2EsMc1QrZn7PdCiVoLwAxYeBuTsNgKhMfRxCvJ")
+
+# Use the custom password hasher
+PASSWORD_HASHERS = [
+    "base.password_hasher.BCryptPepperHasher",
+    "django.contrib.auth.hashers.PBKDF2PasswordHasher",  # fallback
+]
+
+# 24 hours for token expiry
+PASSWORD_RESET_TIMEOUT = 86400
+
+FRONTEND_URL_LOCAL = "http://localhost:5173"
+FRONTEND_URL_PROD = "https://bdnx.com"
+
+# Stripe keys
+STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
+STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET")
+
+# AWS Secrets.
+AWS_S3_BUCKET_NAME = os.getenv("AWS_S3_BUCKET_NAME")
+AWS_REGION = os.getenv("AWS_REGION")
+AWS_ACCESS_KEY = os.getenv("AWS_ACCESS_KEY")
+AWS_SECRET_KEY = os.getenv("AWS_SECRET_KEY")
+AWS_CLOUD_FRONT_DOMAIN = os.getenv("AWS_CLOUD_FRONT_DOMAIN")
