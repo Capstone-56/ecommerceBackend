@@ -6,7 +6,7 @@ def store_hashed_refresh(user, raw_refresh_token):
     Hash & save the raw refresh token on the user.
     """
     user.refreshToken = make_password(raw_refresh_token)
-    user.save(update_fields=[Constants.REFRESH_TOKEN])
+    user.save(update_fields=[Constants.CookieName.REFRESH_TOKEN])
 
 def verify_hashed_refresh(user, raw_refresh_token):
     """
@@ -16,4 +16,4 @@ def verify_hashed_refresh(user, raw_refresh_token):
 
 def clear_hashed_refresh(user):
     user.refreshToken = None
-    user.save(update_fields=[Constants.REFRESH_TOKEN])
+    user.save(update_fields=[Constants.CookieName.REFRESH_TOKEN])

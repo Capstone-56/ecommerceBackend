@@ -18,8 +18,8 @@ class RefreshAuthentication(JWTAuthentication):
     Issue a brand-new access token via AccessToken.for_user(user).
     """
     def authenticate(self, request):
-        rawAccess = request.COOKIES.get(Constants.ACCESS_TOKEN)
-        rawRefresh = request.COOKIES.get(Constants.REFRESH_TOKEN)
+        rawAccess = request.COOKIES.get(Constants.CookieName.ACCESS_TOKEN)
+        rawRefresh = request.COOKIES.get(Constants.CookieName.REFRESH_TOKEN)
         
         if rawAccess:
             try:
