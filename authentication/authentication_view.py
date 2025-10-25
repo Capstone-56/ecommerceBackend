@@ -152,7 +152,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
             return Response({"detail": "Account disabled"}, status=status.HTTP_403_FORBIDDEN)
 
         if user.mfa_enabled:
-            response = Response({"mfaRequired": True}, status=status.HTTP_200_OK)
+            response = Response({"mfaEnabled": True}, status=status.HTTP_200_OK)
             
             # Set HTTP-only cookie for MFA state
             response.set_cookie(
@@ -372,7 +372,8 @@ def setCookie(accessToken, refreshToken, user) -> Response:
     response = Response({
         "role": user.role,
         "id": user.id,
-        "username": user.username
+        "username": user.username,
+        "mfaEnabled": user.mfa_enabled
     }, status=200)
 
     response.set_cookie(
