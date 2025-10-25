@@ -1,6 +1,11 @@
 from collections import defaultdict
+
+from django.utils import timezone
+
 from rest_framework import serializers
+
 from base.models import *
+from base.enums import *
 
 """
 Serializers for the corresponding models.
@@ -582,6 +587,148 @@ class OrderItemSerializer(serializers.ModelSerializer):
         read_only_fields = ["price", "productItem"]  # Price and productItem are handled by backend
 
 
+class ShipmentSerializer(serializers.ModelSerializer):
+    """
+    Serializer for ShipmentModel - used for reading shipments
+    """
+    shippingVendor = ShippingVendorSerializer(read_only=True)
+    items = OrderItemSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = ShipmentModel
+        fields = [
+            "id", "createdAt", "updatedAt", "order", "shippingVendor",
+            "trackingNumber", "status", "earliestDeliveryDate", 
+            "latestDeliveryDate", "deliveredAt", "items"
+        ]
+        read_only_fields = ["id", "createdAt", "updatedAt"]
+
+
+class CreateShipmentSerializer(serializers.ModelSerializer):
+    """
+    Serializer for creating a shipment with order items
+    All new shipments are created with 'pending' status by default
+    """
+    orderId = serializers.CharField(write_only=True)
+    shippingVendorId = serializers.IntegerField(write_only=True)
+    orderItemIds = serializers.ListField(
+        child=serializers.UUIDField(),
+        write_only=True,
+        min_length=1,
+        help_text="List of order item IDs to include in this shipment (at least 1 required)"
+    )
+    
+    class Meta:
+        model = ShipmentModel
+        fields = [
+            "id", "orderId", "shippingVendorId", "orderItemIds",
+            "trackingNumber", "earliestDeliveryDate", 
+            "latestDeliveryDate"
+        ]
+        read_only_fields = ["id", "status"]
+    
+    def validate(self, data):
+        """
+        Validate that all order items belong to the specified order
+        """
+        order_id = data.get("orderId")
+        order_item_ids = data.get("orderItemIds", [])
+        
+        # Verify order exists
+        try:
+            order = OrderModel.objects.get(id=order_id)
+        except OrderModel.DoesNotExist:
+            raise serializers.ValidationError(f"Order with id {order_id} does not exist")
+        
+        # Verify all order items exist and belong to this order
+        order_items = OrderItemModel.objects.filter(id__in=order_item_ids, order=order)
+        
+        if order_items.count() != len(order_item_ids):
+            raise serializers.ValidationError(
+                "One or more order items are invalid or do not belong to the specified order"
+            )
+        
+        # Check if any items are already assigned to another shipment
+        already_shipped = order_items.filter(shipment__isnull=False)
+        if already_shipped.exists():
+            already_shipped_ids = list(already_shipped.values_list('id', flat=True))
+            raise serializers.ValidationError(
+                f"Order items {already_shipped_ids} are already assigned to a shipment"
+            )
+        
+        # Verify shipping vendor exists
+        try:
+            shipping_vendor = ShippingVendorModel.objects.get(id=data.get("shippingVendorId"))
+            if not shipping_vendor.isActive:
+                raise serializers.ValidationError(
+                    f"Shipping vendor {shipping_vendor.name} is not active"
+                )
+        except ShippingVendorModel.DoesNotExist:
+            raise serializers.ValidationError(
+                f"Shipping vendor with id {data.get('shippingVendorId')} does not exist"
+            )
+        
+        return data
+    
+    def create(self, validated_data):
+        """
+        Create a shipment and assign order items to it
+        """
+        order_id = validated_data.pop("orderId")
+        shipping_vendor_id = validated_data.pop("shippingVendorId")
+        order_item_ids = validated_data.pop("orderItemIds")
+        
+        order = OrderModel.objects.get(id=order_id)
+        shipping_vendor = ShippingVendorModel.objects.get(id=shipping_vendor_id)
+        
+        shipment = ShipmentModel.objects.create(
+            order=order,
+            shippingVendor=shipping_vendor,
+            **validated_data
+        )
+        
+        # Assign order items to this shipment
+        OrderItemModel.objects.filter(id__in=order_item_ids).update(shipment=shipment)
+        
+        return shipment
+
+
+class UpdateShipmentSerializer(serializers.ModelSerializer):
+    """
+    Serializer for updating a shipment (PATCH)
+    Allows updating status, tracking number, and delivery dates
+    """
+    class Meta:
+        model = ShipmentModel
+        fields = [
+            "status", "earliestDeliveryDate", 
+            "latestDeliveryDate", "deliveredAt"
+        ]
+    
+    def validate_status(self, value):
+        """Validate that the status is a valid SHIPMENT_STATUS"""
+        valid_statuses = [status.value for status in SHIPMENT_STATUS]
+        if value not in valid_statuses:
+            raise serializers.ValidationError("Invalid status")
+            
+        return value
+    
+    def update(self, instance, validated_data):
+        """
+        Update shipment fields. The updatedAt field is automatically 
+        updated by Django's auto_now=True
+        """
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        
+        # If status is set to 'delivered', automatically set deliveredAt
+        if validated_data.get('status') == 'delivered' and not instance.deliveredAt:
+            instance.deliveredAt = timezone.now()
+        
+        instance.save()
+        return instance
+
+
 class GuestUserSerializer(serializers.ModelSerializer):
     """
     Serializer for GuestUserModel
@@ -598,13 +745,15 @@ class OrderSerializer(serializers.ModelSerializer):
     """
     user = UserModelSerializer(read_only=True)
     guestUser = GuestUserSerializer(read_only=True)
+    address = AddressSerializer(read_only=True)
     items = OrderItemSerializer(many=True, read_only=True)
+    shipments = ShipmentSerializer(many=True, read_only=True)
     
     class Meta:
         model = OrderModel
         fields = [
             "id", "createdAt", "user", "guestUser", "address",
-            "totalPrice", "status", "items"
+            "totalPrice", "status", "items", "shipments"
         ]
         read_only_fields = ["user", "guestUser"]
 
