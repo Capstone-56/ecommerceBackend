@@ -1,5 +1,5 @@
 # eCommerce Server
-This repo is responsible for developing the server for the eCommerce Website
+This repo is responsible for developing the server for the BDNX Website
 
 ## Local Database Setup
 ### Install Postgres server and PgAdmin4
