@@ -3,7 +3,6 @@ env/
 .venv/
 .idea/
 .vs/ecommerceBackend/
-.vs/bdnxBackend/
 .vs/slnx.sqlite
 .DS_Store
 .env
