@@ -25,6 +25,8 @@ load_dotenv(BASE_DIR / ".env")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
+SECRET_KEY=os.getenv("JWT_SECRET_KEY", "django-insecure-2sv!-pb6m8^gach8^p0b4v)z1!(uri74&k59jotkyc5(07_-ab")
+
 def get_environment():
     """Auto-detect environment"""
     env = os.environ.get('ENVIRONMENT')
@@ -225,7 +227,7 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": Constants.ACCESS_TOKEN_LIFETIME,
     "REFRESH_TOKEN_LIFETIME": Constants.REFRESH_TOKEN_LIFETIME,
     "ALGORITHM": "HS256",
-    "SIGNING_KEY": os.getenv("JWT_SECRET_KEY", "django-insecure-2sv!-pb6m8^gach8^p0b4v)z1!(uri74&k59jotkyc5(07_-ab")
+    "SIGNING_KEY": SECRET_KEY
 }
 
 AUTH_USER_MODEL = "base.UserModel"
