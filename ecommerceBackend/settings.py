@@ -25,9 +25,6 @@ load_dotenv(BASE_DIR / ".env")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-2sv!-pb6m8^gach8^p0b4v)z1!(uri74&k59jotkyc5(07_-ab'
-
 def get_environment():
     """Auto-detect environment"""
     env = os.environ.get('ENVIRONMENT')
@@ -47,6 +44,7 @@ DEBUG = IS_LOCAL    # SECURITY WARNING: don't run with debug turned on in produc
 
 print(f"Environment: {ENVIRONMENT}")
 
+# TODO: reduce this to necessary connections only
 ALLOWED_HOSTS = [
     "3.25.193.75",
     "ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
@@ -86,6 +84,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# TODO: reduce this to necessary connections only
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "https://test-staging.d2mnsn6al9q61p.amplifyapp.com",
@@ -93,13 +92,14 @@ CORS_ALLOWED_ORIGINS = [
     "http://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
     "https://3.25.193.75",
     "https://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
-    "https://dev.d2mnsn6al9q61p.amplifyapp.com",
+    "https://dev.d5b52nnp5ggvx.amplifyapp.com",
     "https://bdnx.com",
     "https://www.bdnx.com",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
 CORS_EXPOSE_HEADERS = ["X-Clear-Auth-State"]
+# TODO: reduce this to necessary connections only
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
     "https://test-staging.d2mnsn6al9q61p.amplifyapp.com",
@@ -107,7 +107,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
     "https://3.25.193.75", 
     "https://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
-    "https://dev.d2mnsn6al9q61p.amplifyapp.com",
+    "https://dev.d5b52nnp5ggvx.amplifyapp.com",
     "https://bdnx.com",
     "https://www.bdnx.com",
 ]
@@ -189,6 +189,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
+# integer is the default field for a table's primary key
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 APPEND_SLASH=False
@@ -218,17 +219,19 @@ REST_FRAMEWORK = {
     "DEFAULT_CONTENT_NEGOTIATION_CLASS": "rest_framework.negotiation.DefaultContentNegotiation"
 }
 
+# TODO: create a JWT secret key for staging/prod and store in env variable
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),
     "ACCESS_TOKEN_LIFETIME": Constants.ACCESS_TOKEN_LIFETIME,
     "REFRESH_TOKEN_LIFETIME": Constants.REFRESH_TOKEN_LIFETIME,
     "ALGORITHM": "HS256",
-    "SIGNING_KEY": SECRET_KEY,
+    "SIGNING_KEY": os.getenv("JWT_SECRET_KEY", "django-insecure-2sv!-pb6m8^gach8^p0b4v)z1!(uri74&k59jotkyc5(07_-ab")
 }
 
 AUTH_USER_MODEL = "base.UserModel"
 
 # Pepper used in hashing (dev env)
+# TODO: create a pepper for staging/prod and store in env variable
 PEPPER = os.environ.get("PASSWORD_PEPPER", "A6vN3rZt5KqLp8UwXy9T0bGhJf2EsMc1QrZn7PdCiVoLwAxYeBuTsNgKhMfRxCvJ")
 
 # Use the custom password hasher
@@ -241,7 +244,7 @@ PASSWORD_HASHERS = [
 PASSWORD_RESET_TIMEOUT = 86400
 
 FRONTEND_URL_LOCAL = "http://localhost:5173"
-FRONTEND_URL_PROD = "https://bdnx.com"
+FRONTEND_URL_PROD = "https://dev.d5b52nnp5ggvx.amplifyapp.com"
 
 # Stripe keys
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
