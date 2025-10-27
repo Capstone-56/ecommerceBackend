@@ -267,7 +267,7 @@ class StripeViewSet(viewsets.ViewSet):
                     value=guest_id,
                     max_age=GUEST_COOKIE_MAX_AGE,
                     httponly=True,
-                    samesite="Lax",
+                    samesite="None",
                     secure=True,
                 )
             return resp

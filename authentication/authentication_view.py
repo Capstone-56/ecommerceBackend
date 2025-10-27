@@ -74,7 +74,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
                     str(user.id),
                     httponly=True,
                     secure=True,
-                    samesite="Lax",
+                    samesite="None",
                     max_age=int(Constants.MFA_STATE_LIFETIME.total_seconds())
                 )
 
@@ -160,7 +160,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
                 str(user.id),
                 httponly=True,
                 secure=True,
-                samesite="Lax",
+                samesite="None",
                 max_age=int(Constants.MFA_STATE_LIFETIME.total_seconds())
             )
             
@@ -381,7 +381,7 @@ def setCookie(accessToken, refreshToken, user) -> Response:
         str(accessToken),
         httponly=True,
         secure=True,
-        samesite="Lax",
+        samesite="None",
         max_age=int(Constants.ACCESS_TOKEN_LIFETIME.total_seconds())
     )
 
@@ -390,7 +390,7 @@ def setCookie(accessToken, refreshToken, user) -> Response:
         str(refreshToken),
         httponly=True,
         secure=True,
-        samesite="Lax",
+        samesite="None",
         max_age=int(Constants.REFRESH_TOKEN_LIFETIME.total_seconds())
     )
 
