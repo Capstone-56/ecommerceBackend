@@ -10,3 +10,6 @@ class Constants:
         ACCESS_TOKEN = "accessToken"
         REFRESH_TOKEN = "refreshToken"
         MFA_USER_ID = "mfaUserId"
+
+    class CookiePolicy:
+        SAME_SITE="None"    # TODO: change to "Lax" once front-end is hosted on bdnx.com or its sub-domain
