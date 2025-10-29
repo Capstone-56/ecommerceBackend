@@ -12,6 +12,8 @@ from django.utils.decorators import method_decorator
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
+
+from base import Constants
 from base.models import ProductItemModel, ProductLocationModel, ProductItemLocationModel
 
 from api.services import OrderCreationService
@@ -267,7 +269,7 @@ class StripeViewSet(viewsets.ViewSet):
                     value=guest_id,
                     max_age=GUEST_COOKIE_MAX_AGE,
                     httponly=True,
-                    samesite="None",
+                    samesite=Constants.CookiePolicy.SAME_SITE,
                     secure=True,
                 )
             return resp

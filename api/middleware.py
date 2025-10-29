@@ -25,7 +25,7 @@ class RefreshCookieMiddleware:
                 new_access,
                 httponly=True,
                 secure=True,
-                samesite="None",
+                samesite=Constants.CookiePolicy.SAME_SITE,
                 max_age=int(Constants.ACCESS_TOKEN_LIFETIME.total_seconds()),
             )
         
