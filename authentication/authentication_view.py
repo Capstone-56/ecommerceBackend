@@ -100,6 +100,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
             return HttpResponseBadRequest("Invalid signup session")
         
         try:
+            # TODO: add mfa_enabled=TRUE and is_active=False to this query
             user = UserModel.objects.get(id=user_id)
         except UserModel.DoesNotExist:
             return HttpResponseBadRequest("Invalid user ID")
@@ -186,6 +187,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
             return HttpResponseBadRequest("Invalid MFA session")
         
         try:
+            # TODO: add is_active=True to this query
             user = UserModel.objects.get(id=user_id, mfa_enabled=True)
         except UserModel.DoesNotExist:
             return HttpResponseBadRequest("Invalid user or MFA not enabled")
@@ -231,6 +233,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
             return HttpResponseBadRequest("Invalid MFA session")
         
         try:
+            # TODO: add is_active=True to this query
             user = UserModel.objects.get(id=user_id, mfa_enabled=True)
         except UserModel.DoesNotExist:
             return HttpResponseBadRequest("Invalid user or MFA not enabled")

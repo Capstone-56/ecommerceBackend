@@ -7,6 +7,7 @@ from authentication.email_templates import mfa_email, signup_verification_email
 
 from ecommerceBackend import settings
 
+# TODO (OPTIONAL): move this to authentication/services
 class TOTPMFAService:
     def __init__(self):
         self.ses_client = boto3.client(

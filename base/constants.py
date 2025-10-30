@@ -13,3 +13,6 @@ class Constants:
 
     class CookiePolicy:
         SAME_SITE="None"    # TODO: change to "Lax" once front-end is hosted on bdnx.com or its sub-domain
+
+    class Session:
+        NEW_ACCESS_TOKEN = "_new_access_token"

@@ -4,7 +4,7 @@ from django.contrib.auth.hashers import BasePasswordHasher
 
 class BCryptPepperHasher(BasePasswordHasher):
     """
-    Password hasher that combines bcrypt with an application‐wide pepper.
+    Custom Password hasher that combines bcrypt with an application‐wide pepper.
 
     This hasher generates a salt via bcrypt, appends a secret pepper
     from settings to the raw password, and then hashes the result.
