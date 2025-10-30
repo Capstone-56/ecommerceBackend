@@ -11,6 +11,7 @@ from base.enums import *
 Serializers for the corresponding models.
 Converts model instances to and from JSON format for API interactions.
 """
+# TODO: Separate serializers to different files for business logic's separation of concern
 
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:

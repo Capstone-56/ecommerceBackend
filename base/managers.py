@@ -29,6 +29,7 @@ class UserManager(BaseUserManager):
         return self._create_user(username, email, password, **extra_fields)
 
 
+    # Can potentially be removed if not using Django's superuser semantic
     def create_superuser(self, username, email, password=None, **extra_fields):
         """
         Create a superuser (staff and superuser privileges).

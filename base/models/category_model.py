@@ -4,13 +4,8 @@ from django.core.exceptions import ValidationError
 from mptt.models import MPTTModel, TreeForeignKey
 
 class CategoryModel(MPTTModel):
-    internalName = models.CharField(
-        max_length=255,
-        editable=False,
-        unique=True,
-        primary_key=True
-    )
-    name = models.CharField(max_length=255)
+    internalName = models.CharField(max_length=255, editable=False, unique=True, primary_key=True) # e.g., men-shirts
+    name = models.CharField(max_length=255) # e.g., Men Shirts
     description = models.CharField(max_length=255)
     parentCategory = TreeForeignKey(
         "self",

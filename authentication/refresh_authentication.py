@@ -1,17 +1,20 @@
 from django.conf import settings
+from django.contrib.auth import get_user_model
+
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 from rest_framework_simplejwt.backends import TokenBackend
-from django.contrib.auth import get_user_model
+
 from base.utils import verify_hashed_refresh
 from base import Constants
 
+# TODO: find out if this can use the UserModel from base
 User = get_user_model()
 
 class RefreshAuthentication(JWTAuthentication):
     """
-    Default authentication class, customising based on JWTAuthentication class
+    Custom default authentication class, customising based on JWTAuthentication class
     Try to authenticate via the HttpOnly accessToken cookie.
     If it’s expired, decode it (ignoring expiry) to get userId.
     Lookup the user and verify they still have a valid (hashed) refresh in DB.
@@ -67,7 +70,7 @@ class RefreshAuthentication(JWTAuthentication):
         
         # Also store in session for middleware to pick up
         if hasattr(request, "session"):
-            request.session["_new_access_token"] = str(newAccess)
+            request.session[Constants.Session.NEW_ACCESS_TOKEN] = str(newAccess)
 
         validated = self.get_validated_token(request._access)
         return self.get_user(validated), validated

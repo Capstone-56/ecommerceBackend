@@ -89,7 +89,6 @@ MIDDLEWARE = [
 # TODO: reduce this to necessary connections only
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "https://test-staging.d2mnsn6al9q61p.amplifyapp.com",
     "http://3.25.193.75",
     "http://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
     "https://3.25.193.75",
@@ -104,7 +103,6 @@ CORS_EXPOSE_HEADERS = ["X-Clear-Auth-State"]
 # TODO: reduce this to necessary connections only
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
-    "https://test-staging.d2mnsn6al9q61p.amplifyapp.com",
     "http://3.25.193.75",
     "http://ec2-3-25-193-75.ap-southeast-2.compute.amazonaws.com",
     "https://3.25.193.75", 
@@ -190,11 +188,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField' # integer is the default field for a table's primary key
 
-# integer is the default field for a table's primary key
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-
-APPEND_SLASH=False
+APPEND_SLASH=False  # By default, DRF's endpoints have slash at the end (e.g, /api/product/), we're disabling this
 
 REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
@@ -246,7 +242,7 @@ PASSWORD_HASHERS = [
 PASSWORD_RESET_TIMEOUT = 86400
 
 FRONTEND_URL_LOCAL = "http://localhost:5173"
-FRONTEND_URL_PROD = "https://dev.d5b52nnp5ggvx.amplifyapp.com"
+FRONTEND_URL_PROD = "https://dev.d5b52nnp5ggvx.amplifyapp.com" # TODO: change back to bdnx.com or its sub-domain
 
 # Stripe keys
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")

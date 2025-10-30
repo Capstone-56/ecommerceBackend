@@ -1,5 +1,6 @@
 from base.constants import Constants
 
+# TODO: change class name to something more generic, like AuthMiddleware
 class RefreshCookieMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
@@ -13,11 +14,11 @@ class RefreshCookieMiddleware:
         
         # Also check session if request attribute is not found
         if not new_access and hasattr(request, "session"):
-            new_access = request.session.get("_new_access_token")
+            new_access = request.session.get(Constants.Session.NEW_ACCESS_TOKEN)
             
             if new_access:
                 # Clear from session after using
-                del request.session["_new_access_token"]
+                del request.session[Constants.Session.NEW_ACCESS_TOKEN]
         
         if new_access:
             response.set_cookie(
